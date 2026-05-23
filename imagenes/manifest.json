@@ -1,0 +1,522 @@
+{
+  "version": "1.0",
+  "total": 56,
+  "categories": {
+    "entrantes": [
+      {
+        "id": "gazpacho_andaluz",
+        "title": "Gazpacho Andaluz",
+        "subtitle": "Sopa fría de tomate",
+        "emoji": "🥣",
+        "path": "imagenes/platos/entrantes/gazpacho_andaluz.jpg",
+        "price_info": "1,20 €/rac · MP",
+        "extra_info": "15' prep · 0' cocción"
+      },
+      {
+        "id": "salmorejo_cordobes",
+        "title": "Salmorejo Cordobés",
+        "subtitle": "Crema de tomate con jamón",
+        "emoji": "🍅",
+        "path": "imagenes/platos/entrantes/salmorejo_cordobes.jpg",
+        "price_info": "1,80 €/rac · MP",
+        "extra_info": "10' prep"
+      },
+      {
+        "id": "pulpo_gallega",
+        "title": "Pulpo a la Gallega",
+        "subtitle": "Con pimentón de la Vera",
+        "emoji": "🐙",
+        "path": "imagenes/platos/entrantes/pulpo_gallega.jpg",
+        "price_info": "5,80 €/rac · MP",
+        "extra_info": "10' + 50' cocción"
+      },
+      {
+        "id": "gambas_ajillo",
+        "title": "Gambas al Ajillo",
+        "subtitle": "En cazuela de barro",
+        "emoji": "🦐",
+        "path": "imagenes/platos/entrantes/gambas_ajillo.jpg",
+        "price_info": "4,20 €/rac · MP",
+        "extra_info": "8' prep · 5' cocción"
+      },
+      {
+        "id": "croquetas_jamon",
+        "title": "Croquetas de Jamón",
+        "subtitle": "Bechamel densa, bellota",
+        "emoji": "🧆",
+        "path": "imagenes/platos/entrantes/croquetas_jamon.jpg",
+        "price_info": "2,60 €/rac · MP",
+        "extra_info": "30' prep · 20' cocción"
+      },
+      {
+        "id": "ensalada_gamba_roja",
+        "title": "Ensalada Gamba Roja",
+        "subtitle": "Con aguacate y vinagreta",
+        "emoji": "🥗",
+        "path": "imagenes/platos/entrantes/ensalada_gamba_roja.jpg",
+        "price_info": "6,80 €/rac · MP",
+        "extra_info": "12' prep"
+      },
+      {
+        "id": "tataki_atun_rojo",
+        "title": "Tataki de Atún Rojo",
+        "subtitle": "Sésamo, soja y jengibre",
+        "emoji": "🐟",
+        "path": "imagenes/platos/entrantes/tataki_atun_rojo.jpg",
+        "price_info": "7,50 €/rac · MP",
+        "extra_info": "15' prep · 2' cocción"
+      },
+      {
+        "id": "carpaccio_ternera",
+        "title": "Carpaccio de Ternera",
+        "subtitle": "Rúcula, parmesano y alcaparras",
+        "emoji": "🥩",
+        "path": "imagenes/platos/entrantes/carpaccio_ternera.jpg",
+        "price_info": "5,20 €/rac · MP",
+        "extra_info": "20' prep"
+      },
+      {
+        "id": "tostas_foie_higos",
+        "title": "Tostas de Foie con Higos",
+        "subtitle": "Mi-cuit sobre brioche",
+        "emoji": "🍞",
+        "path": "imagenes/platos/entrantes/tostas_foie_higos.jpg",
+        "price_info": "5,80 €/rac · MP",
+        "extra_info": "10' prep"
+      },
+      {
+        "id": "piquillos_bacalao",
+        "title": "Pimientos del Piquillo",
+        "subtitle": "Rellenos de brandada",
+        "emoji": "🫑",
+        "path": "imagenes/platos/entrantes/piquillos_bacalao.jpg",
+        "price_info": "3,80 €/rac · MP",
+        "extra_info": "20' prep · 15' cocción"
+      }
+    ],
+    "primeros": [
+      {
+        "id": "paella_valenciana",
+        "title": "Paella Valenciana",
+        "subtitle": "Pollo, conejo y garrofón",
+        "emoji": "🥘",
+        "path": "imagenes/platos/primeros/paella_valenciana.jpg",
+        "price_info": "3,80 €/rac · MP",
+        "extra_info": "20' prep · 40' cocción"
+      },
+      {
+        "id": "arroz_negro_sepia",
+        "title": "Arroz Negro con Sepia",
+        "subtitle": "Con tinta de calamar",
+        "emoji": "🦑",
+        "path": "imagenes/platos/primeros/arroz_negro_sepia.jpg",
+        "price_info": "4,20 €/rac · MP",
+        "extra_info": "20' prep · 35' cocción"
+      },
+      {
+        "id": "risotto_setas_trufa",
+        "title": "Risotto de Setas y Trufa",
+        "subtitle": "Carnaroli, parmesano, trufa",
+        "emoji": "🍄",
+        "path": "imagenes/platos/primeros/risotto_setas_trufa.jpg",
+        "price_info": "5,80 €/rac · MP",
+        "extra_info": "15' prep · 25' cocción"
+      },
+      {
+        "id": "espaguetis_almejas",
+        "title": "Espaguetis con Almejas",
+        "subtitle": "Almejas gallegas y Albariño",
+        "emoji": "🍝",
+        "path": "imagenes/platos/primeros/espaguetis_almejas.jpg",
+        "price_info": "4,50 €/rac · MP",
+        "extra_info": "10' prep · 15' cocción"
+      },
+      {
+        "id": "fideua_marisco",
+        "title": "Fideuà de Marisco",
+        "subtitle": "Gambas, mejillones y sepia",
+        "emoji": "🦞",
+        "path": "imagenes/platos/primeros/fideua_marisco.jpg",
+        "price_info": "5,20 €/rac · MP",
+        "extra_info": "20' prep · 30' cocción"
+      },
+      {
+        "id": "gazpachuelo_malagueno",
+        "title": "Gazpachuelo Malagueño",
+        "subtitle": "Caldo emulsionado con mayo",
+        "emoji": "🍲",
+        "path": "imagenes/platos/primeros/gazpachuelo_malagueno.jpg",
+        "price_info": "3,40 €/rac · MP",
+        "extra_info": "15' prep · 20' cocción"
+      },
+      {
+        "id": "lentejas_chorizo",
+        "title": "Lentejas con Chorizo",
+        "subtitle": "Guiso tradicional",
+        "emoji": "🫘",
+        "path": "imagenes/platos/primeros/lentejas_chorizo.jpg",
+        "price_info": "1,80 €/rac · MP",
+        "extra_info": "15' prep · 50' cocción"
+      },
+      {
+        "id": "arroz_bogavante",
+        "title": "Arroz con Bogavante",
+        "subtitle": "Caldoso, flameado con brandy",
+        "emoji": "🦞",
+        "path": "imagenes/platos/primeros/arroz_bogavante.jpg",
+        "price_info": "14,50€/rac · MP",
+        "extra_info": "25' prep · 35' cocción"
+      },
+      {
+        "id": "crema_calabaza_coco",
+        "title": "Crema de Calabaza",
+        "subtitle": "Con coco y jengibre",
+        "emoji": "🎃",
+        "path": "imagenes/platos/primeros/crema_calabaza_coco.jpg",
+        "price_info": "1,60 €/rac · MP",
+        "extra_info": "10' prep · 40' cocción"
+      },
+      {
+        "id": "sopa_pescado",
+        "title": "Sopa de Pescado",
+        "subtitle": "Rape, mejillón y fideos",
+        "emoji": "🍵",
+        "path": "imagenes/platos/primeros/sopa_pescado.jpg",
+        "price_info": "3,20 €/rac · MP",
+        "extra_info": "20' prep · 30' cocción"
+      }
+    ],
+    "segundos": [
+      {
+        "id": "solomillo_rioja",
+        "title": "Solomillo con Rioja",
+        "subtitle": "Reducción de vino tinto",
+        "emoji": "🥩",
+        "path": "imagenes/platos/segundos/solomillo_rioja.jpg",
+        "price_info": "9,80 €/rac · MP",
+        "extra_info": "15' prep · 15' cocción"
+      },
+      {
+        "id": "lubina_horno",
+        "title": "Lubina al Horno",
+        "subtitle": "Con patatas panadera",
+        "emoji": "🐟",
+        "path": "imagenes/platos/segundos/lubina_horno.jpg",
+        "price_info": "7,20 €/rac · MP",
+        "extra_info": "15' prep · 30' cocción"
+      },
+      {
+        "id": "dorada_sal",
+        "title": "Dorada a la Sal",
+        "subtitle": "Costra de sal, ritual mesa",
+        "emoji": "🐠",
+        "path": "imagenes/platos/segundos/dorada_sal.jpg",
+        "price_info": "6,50 €/rac · MP",
+        "extra_info": "10' prep · 25' cocción"
+      },
+      {
+        "id": "secreto_iberico",
+        "title": "Secreto Ibérico",
+        "subtitle": "Con patatas bravas y alioli",
+        "emoji": "🐷",
+        "path": "imagenes/platos/segundos/secreto_iberico.jpg",
+        "price_info": "5,60 €/rac · MP",
+        "extra_info": "10' prep · 12' cocción"
+      },
+      {
+        "id": "carrillada_vino_tinto",
+        "title": "Carrillada en Vino Tinto",
+        "subtitle": "Estofada 3h, puré de patata",
+        "emoji": "🍷",
+        "path": "imagenes/platos/segundos/carrillada_vino_tinto.jpg",
+        "price_info": "4,80 €/rac · MP",
+        "extra_info": "3h cocción lenta"
+      },
+      {
+        "id": "gamba_roja_plancha",
+        "title": "Gamba Roja a la Plancha",
+        "subtitle": "Gamba roja de Málaga",
+        "emoji": "🦐",
+        "path": "imagenes/platos/segundos/gamba_roja_plancha.jpg",
+        "price_info": "12,50€/rac · MP",
+        "extra_info": "5' prep · 3' plancha"
+      },
+      {
+        "id": "pulpo_brasa_parmentier",
+        "title": "Pulpo a la Brasa",
+        "subtitle": "Con parmentier ahumado",
+        "emoji": "🐙",
+        "path": "imagenes/platos/segundos/pulpo_brasa_parmentier.jpg",
+        "price_info": "8,20 €/rac · MP",
+        "extra_info": "20' prep · 60' cocción"
+      },
+      {
+        "id": "bacalao_pilpil",
+        "title": "Bacalao al Pil-Pil",
+        "subtitle": "Confitado en AOVE de ajo",
+        "emoji": "🐟",
+        "path": "imagenes/platos/segundos/bacalao_pilpil.jpg",
+        "price_info": "6,80 €/rac · MP",
+        "extra_info": "30' prep · 25' cocción"
+      },
+      {
+        "id": "pato_confit_naranja",
+        "title": "Pato Confit con Naranja",
+        "subtitle": "Salsa bigarade, crujiente",
+        "emoji": "🦆",
+        "path": "imagenes/platos/segundos/pato_confit_naranja.jpg",
+        "price_info": "7,20 €/rac · MP",
+        "extra_info": "20' prep · 2,5h cocción"
+      },
+      {
+        "id": "fritura_malaguena",
+        "title": "Fritura Malagueña",
+        "subtitle": "Boquerones, calamares, gambas",
+        "emoji": "🍤",
+        "path": "imagenes/platos/segundos/fritura_malaguena.jpg",
+        "price_info": "5,80 €/rac · MP",
+        "extra_info": "15' prep · 10' cocción"
+      }
+    ],
+    "postres": [
+      {
+        "id": "crema_catalana",
+        "title": "Crema Catalana",
+        "subtitle": "Costra de azúcar quemado",
+        "emoji": "🍮",
+        "path": "imagenes/platos/postres/crema_catalana.jpg",
+        "price_info": "1,20 €/rac · MP",
+        "extra_info": "15' prep · 15' cocción"
+      },
+      {
+        "id": "tiramisu_clasico",
+        "title": "Tiramisú Clásico",
+        "subtitle": "Mascarpone, espresso, cacao",
+        "emoji": "☕",
+        "path": "imagenes/platos/postres/tiramisu_clasico.jpg",
+        "price_info": "2,20 €/rac · MP",
+        "extra_info": "30' prep"
+      },
+      {
+        "id": "coulant_chocolate",
+        "title": "Coulant de Chocolate",
+        "subtitle": "Interior fundente 70% cacao",
+        "emoji": "🍫",
+        "path": "imagenes/platos/postres/coulant_chocolate.jpg",
+        "price_info": "1,80 €/rac · MP",
+        "extra_info": "20' prep · 12' horno"
+      },
+      {
+        "id": "tarta_queso_vina",
+        "title": "Tarta de Queso La Viña",
+        "subtitle": "Cremosa, fundente por dentro",
+        "emoji": "🧀",
+        "path": "imagenes/platos/postres/tarta_queso_vina.jpg",
+        "price_info": "1,60 €/rac · MP",
+        "extra_info": "15' prep · 45' horno"
+      },
+      {
+        "id": "panna_cotta_rojos",
+        "title": "Panna Cotta",
+        "subtitle": "Con coulis de frutos rojos",
+        "emoji": "🍓",
+        "path": "imagenes/platos/postres/panna_cotta_rojos.jpg",
+        "price_info": "1,40 €/rac · MP",
+        "extra_info": "15' prep · 10' cocción"
+      },
+      {
+        "id": "torrijas_caramelizadas",
+        "title": "Torrijas Caramelizadas",
+        "subtitle": "Brioche, leche de canela",
+        "emoji": "🍞",
+        "path": "imagenes/platos/postres/torrijas_caramelizadas.jpg",
+        "price_info": "1,30 €/rac · MP",
+        "extra_info": "20' prep · 10' cocción"
+      },
+      {
+        "id": "bienmesabe_malagueno",
+        "title": "Bienmesabe Malagueño",
+        "subtitle": "Crema almendrada tradicional",
+        "emoji": "🍯",
+        "path": "imagenes/platos/postres/bienmesabe_malagueno.jpg",
+        "price_info": "1,50 €/rac · MP",
+        "extra_info": "10' prep · 15' cocción"
+      },
+      {
+        "id": "mousse_choco_blanco",
+        "title": "Mousse Chocolate Blanco",
+        "subtitle": "Con frambuesas y coulis",
+        "emoji": "🤍",
+        "path": "imagenes/platos/postres/mousse_choco_blanco.jpg",
+        "price_info": "1,80 €/rac · MP",
+        "extra_info": "20' prep"
+      },
+      {
+        "id": "flan_huevo_casero",
+        "title": "Flan de Huevo Casero",
+        "subtitle": "Con caramelo oscuro profundo",
+        "emoji": "🥚",
+        "path": "imagenes/platos/postres/flan_huevo_casero.jpg",
+        "price_info": "0,90 €/rac · MP",
+        "extra_info": "15' prep · 45' horno"
+      },
+      {
+        "id": "sorbete_mango_lima",
+        "title": "Sorbete de Mango y Lima",
+        "subtitle": "Artesanal, menta fresca",
+        "emoji": "🥭",
+        "path": "imagenes/platos/postres/sorbete_mango_lima.jpg",
+        "price_info": "1,60 €/rac · MP",
+        "extra_info": "20' prep"
+      }
+    ],
+    "bebidas": [
+      {
+        "id": "vinos_blancos",
+        "title": "Vinos Blancos",
+        "subtitle": "DO Málaga · Rías Baixas · Rueda",
+        "emoji": "🥂",
+        "path": "imagenes/bebidas/bebidas/vinos_blancos.jpg",
+        "price_info": "desde 5,50 €/copa",
+        "extra_info": "Selección sommelier"
+      },
+      {
+        "id": "vinos_tintos",
+        "title": "Vinos Tintos",
+        "subtitle": "DOCa Rioja · Ribera del Duero",
+        "emoji": "🍷",
+        "path": "imagenes/bebidas/bebidas/vinos_tintos.jpg",
+        "price_info": "desde 5,50 €/copa",
+        "extra_info": "Reservas y gran reserva"
+      },
+      {
+        "id": "espumosos",
+        "title": "Espumosos & Cava",
+        "subtitle": "Cava Gramona · Moët & Chandon",
+        "emoji": "🍾",
+        "path": "imagenes/bebidas/bebidas/espumosos.jpg",
+        "price_info": "desde 9,50 €/copa",
+        "extra_info": "Para cada momento"
+      },
+      {
+        "id": "cocteles",
+        "title": "Cócteles de Autor",
+        "subtitle": "Signature Costa del Sol",
+        "emoji": "🍸",
+        "path": "imagenes/bebidas/bebidas/cocteles.jpg",
+        "price_info": "desde 8,50 €",
+        "extra_info": "Bartender en sala"
+      },
+      {
+        "id": "cervezas",
+        "title": "Cervezas",
+        "subtitle": "Victoria Málaga · Artesanas",
+        "emoji": "🍺",
+        "path": "imagenes/bebidas/bebidas/cervezas.jpg",
+        "price_info": "desde 2,50 €",
+        "extra_info": "Local y premium"
+      },
+      {
+        "id": "destilados",
+        "title": "Destilados Premium",
+        "subtitle": "Whisky · Gin · Ron · Tequila",
+        "emoji": "🥃",
+        "path": "imagenes/bebidas/bebidas/destilados.jpg",
+        "price_info": "desde 4,50 €",
+        "extra_info": "Carta de 30+ referencias"
+      },
+      {
+        "id": "sin_alcohol",
+        "title": "Sin Alcohol & Cafés",
+        "subtitle": "Zumos naturales · Especialidad",
+        "emoji": "🥤",
+        "path": "imagenes/bebidas/bebidas/sin_alcohol.jpg",
+        "price_info": "desde 1,80 €",
+        "extra_info": "Café de origen único"
+      },
+      {
+        "id": "jerez_generosos",
+        "title": "Jerez & Generosos",
+        "subtitle": "Fino · Palo Cortado · Pedro X.",
+        "emoji": "🍶",
+        "path": "imagenes/bebidas/bebidas/jerez_generosos.jpg",
+        "price_info": "desde 4,50 €/copa",
+        "extra_info": "Servicio de sumiller"
+      }
+    ],
+    "eventos": [
+      {
+        "id": "boda",
+        "title": "Boda",
+        "subtitle": "El día más especial de tu vida",
+        "emoji": "💍",
+        "path": "imagenes/eventos/eventos/boda.jpg",
+        "price_info": "Desde 42 €/pax",
+        "extra_info": "Servicio completo"
+      },
+      {
+        "id": "comunion",
+        "title": "Comunión",
+        "subtitle": "Celebración íntima en familia",
+        "emoji": "🕊️",
+        "path": "imagenes/eventos/eventos/comunion.jpg",
+        "price_info": "Desde 28 €/pax",
+        "extra_info": "Menú especial niños"
+      },
+      {
+        "id": "corporativo",
+        "title": "Evento Corporativo",
+        "subtitle": "Convenciones y galas de empresa",
+        "emoji": "🏢",
+        "path": "imagenes/eventos/eventos/corporativo.jpg",
+        "price_info": "Desde 38 €/pax",
+        "extra_info": "Factura disponible"
+      },
+      {
+        "id": "cumpleanos",
+        "title": "Cumpleaños",
+        "subtitle": "Celebra como te mereces",
+        "emoji": "🎂",
+        "path": "imagenes/eventos/eventos/cumpleanos.jpg",
+        "price_info": "Desde 28 €/pax",
+        "extra_info": "Tarta incluida"
+      },
+      {
+        "id": "aniversario",
+        "title": "Aniversario",
+        "subtitle": "Cada año que merece celebrarse",
+        "emoji": "🥂",
+        "path": "imagenes/eventos/eventos/aniversario.jpg",
+        "price_info": "Desde 38 €/pax",
+        "extra_info": "Detalles de cortesía"
+      },
+      {
+        "id": "coctel",
+        "title": "Cóctel & Networking",
+        "subtitle": "De pie, dinámico y elegante",
+        "emoji": "🍸",
+        "path": "imagenes/eventos/eventos/coctel.jpg",
+        "price_info": "Desde 22 €/pax",
+        "extra_info": "Fingerfood gourmet"
+      },
+      {
+        "id": "bautizo",
+        "title": "Bautizo",
+        "subtitle": "La bienvenida más dulce",
+        "emoji": "👶",
+        "path": "imagenes/eventos/eventos/bautizo.jpg",
+        "price_info": "Desde 28 €/pax",
+        "extra_info": "Menú especial bebés"
+      },
+      {
+        "id": "galeria",
+        "title": "Galería & Arte",
+        "subtitle": "Vernissage y eventos culturales",
+        "emoji": "🎨",
+        "path": "imagenes/eventos/eventos/galeria.jpg",
+        "price_info": "Desde 18 €/pax",
+        "extra_info": "Catering artístico"
+      }
+    ]
+  }
+}

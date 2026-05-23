@@ -1,0 +1,40 @@
+# ── Datos sensibles / binarios grandes ──
+OFERTA BODAS Y EVENTOS 2011 HOTEL REINA CRISTINA.xls
+
+# ── Base de datos generada ──
+database/*.db
+database/*.db-journal
+database/*.db-wal
+database/*.db-shm
+
+# ── Logs ──
+logs/
+*.log
+
+# ── Python ──
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.venv/
+venv/
+
+# ── Editores / IDEs ──
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Sistema operativo ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Credenciales y secretos ──
+.env
+.env.local
+*.key
+*.pem
+secrets.json

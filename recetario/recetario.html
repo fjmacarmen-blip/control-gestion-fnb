@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recetario · Control Gestión F&B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim: rgba(201,168,76,0.15);
+  --cream: #f5f0e8;
+  --dark: #0d0d0d;
+  --dark2: #141414;
+  --dark3: #1c1c1c;
+  --dark4: #242424;
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+  --text: #e8e2d9;
+  --text-muted: #8a8278;
+  --red: #b5341c;
+  --red-light: #d4432a;
+  --radius: 18px;
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.6);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+  --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--dark2); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ══════════════ HEADER ══════════════ */
+header {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(13,13,13,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 70px;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 14px;
+}
+.logo-mark {
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, var(--gold), var(--red));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 14px rgba(201,168,76,0.3);
+}
+.logo-text h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--cream); letter-spacing: 0.3px;
+}
+.logo-text p { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+.btn-ghost {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--text-muted); padding: 7px 14px; border-radius: 8px;
+  cursor: pointer; font-size: 0.8rem; font-family: 'Inter', sans-serif;
+  transition: var(--transition); display: flex; align-items: center; gap: 6px;
+}
+.btn-ghost:hover { background: var(--gold-dim); color: var(--gold); border-color: var(--gold); }
+
+/* ══════════════ HERO BANNER ══════════════ */
+.hero {
+  background: linear-gradient(160deg, #1a0a00 0%, #0d0d0d 40%, #0a0d1a 100%);
+  padding: 60px 40px 50px;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--glass-border);
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+              radial-gradient(ellipse 40% 60% at 10% 80%, rgba(181,52,28,0.05) 0%, transparent 70%);
+}
+.hero-inner { position: relative; max-width: 700px; }
+.hero-eyebrow {
+  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+.hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700; line-height: 1.2;
+  color: var(--cream); margin-bottom: 14px;
+}
+.hero h2 em { font-style: italic; color: var(--gold); }
+.hero p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; max-width: 500px; }
+
+.hero-stats {
+  display: flex; gap: 32px; margin-top: 32px;
+  flex-wrap: wrap;
+}
+.hero-stat .val {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 700; color: var(--gold);
+  line-height: 1;
+}
+.hero-stat .lbl { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ══════════════ SEARCH BAR ══════════════ */
+.search-wrap {
+  padding: 16px 40px;
+  background: var(--dark2);
+  border-bottom: 1px solid var(--glass-border);
+  display: flex; gap: 12px;
+}
+.search-box {
+  flex: 1; position: relative;
+}
+.search-box input {
+  width: 100%; padding: 11px 16px 11px 42px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 10px; color: var(--text); font-family: 'Inter', sans-serif;
+  font-size: 0.9rem; outline: none; transition: var(--transition);
+}
+.search-box input:focus { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+.search-box input::placeholder { color: var(--text-muted); }
+.search-icon {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); font-size: 0.85rem;
+}
+.btn-clear {
+  background: none; border: 1px solid var(--glass-border); color: var(--text-muted);
+  padding: 0 14px; border-radius: 10px; cursor: pointer; font-size: 0.8rem;
+  transition: var(--transition); font-family: 'Inter', sans-serif;
+}
+.btn-clear:hover { color: var(--red-light); border-color: var(--red-light); }
+
+/* ══════════════ NAV TABS ══════════════ */
+nav {
+  background: var(--dark2); border-bottom: 1px solid var(--glass-border);
+  padding: 0 40px; display: flex; gap: 2px; overflow-x: auto;
+}
+nav::-webkit-scrollbar { height: 2px; }
+.tab {
+  padding: 15px 22px; cursor: pointer; white-space: nowrap;
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500;
+  color: var(--text-muted); background: none; border: none;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: var(--transition); display: flex; align-items: center; gap: 7px;
+  letter-spacing: 0.3px;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 600; }
+.tab-pill {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--text-muted); border-radius: 10px; padding: 1px 7px;
+  font-size: 0.68rem;
+}
+.tab.active .tab-pill { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+
+/* ══════════════ MAIN ══════════════ */
+main { padding: 36px 40px; }
+.section { display: none; }
+.section.active { display: block; animation: fadeUp 0.4s ease both; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-head { margin-bottom: 28px; }
+.section-head h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem; color: var(--cream);
+}
+.section-head p { color: var(--text-muted); font-size: 0.82rem; margin-top: 5px; }
+
+/* ══════════════ RECIPE CARDS ══════════════ */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: var(--dark3);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  overflow: hidden; cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  animation: fadeUp 0.5s ease both;
+}
+.card:nth-child(2) { animation-delay: 0.05s; }
+.card:nth-child(3) { animation-delay: 0.10s; }
+.card:nth-child(4) { animation-delay: 0.15s; }
+.card:nth-child(n+5) { animation-delay: 0.2s; }
+
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.03), transparent);
+  opacity: 0; transition: var(--transition);
+}
+.card:hover { transform: translateY(-5px); border-color: rgba(201,168,76,0.3); box-shadow: var(--shadow-card); }
+.card:hover::before { opacity: 1; }
+
+.card-thumb {
+  height: 140px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-thumb img {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; z-index: 0;
+  transition: transform 0.4s ease;
+  filter: brightness(0.85) saturate(1.1);
+}
+.card:hover .card-thumb img { transform: scale(1.06); }
+.card-thumb .emoji { font-size: 3.8rem; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)); z-index: 1; }
+.card-thumb .emoji-overlay {
+  position: absolute; bottom: 10px; right: 12px;
+  font-size: 1.8rem; z-index: 2;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
+  opacity: 0.9;
+}
+.card-thumb::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 55%;
+  background: linear-gradient(transparent, rgba(10,10,10,0.75));
+  z-index: 1;
+}
+
+.card-difficulty {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  border-radius: 6px; padding: 3px 9px;
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.5px;
+}
+.diff-baja  { color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+.diff-media { color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+.diff-alta  { color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+
+.card-body { padding: 18px 18px 12px; }
+.card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 600; color: var(--cream);
+  margin-bottom: 5px; line-height: 1.3;
+}
+.card-sub { font-size: 0.76rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px; }
+.card-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+.chip {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 20px; padding: 3px 10px;
+  font-size: 0.7rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 4px;
+}
+
+.card-footer {
+  padding: 12px 18px 15px;
+  border-top: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-cost .mp { font-size: 0.72rem; color: var(--text-muted); }
+.card-cost .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 700; color: var(--gold);
+}
+.card-cost .pvp { font-size: 0.7rem; color: var(--text-muted); }
+
+.btn-view {
+  background: linear-gradient(135deg, var(--gold), #a8722a);
+  color: #0d0d0d; border: none; border-radius: 8px;
+  padding: 7px 15px; cursor: pointer;
+  font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 600;
+  transition: var(--transition); letter-spacing: 0.3px;
+}
+.btn-view:hover { transform: scale(1.04); box-shadow: 0 4px 16px rgba(201,168,76,0.4); }
+
+/* ══════════════ MODAL ══════════════ */
+.overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+  align-items: center; justify-content: center; padding: 24px;
+}
+.overlay.open { display: flex; animation: fadeIn 0.2s ease both; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: var(--dark2); border: 1px solid var(--glass-border);
+  border-radius: 24px; width: 100%; max-width: 720px;
+  max-height: 88vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.3s cubic-bezier(0.4,0,0.2,1) both;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.modal::-webkit-scrollbar { width: 4px; }
+
+.modal-hero {
+  height: 220px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 24px 24px 0 0;
+}
+.modal-hero-img {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; z-index: 0;
+  filter: brightness(0.72) saturate(1.2);
+  transform: scale(1.03);
+}
+.modal-hero .big-emoji { font-size: 6rem; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5)); z-index: 1; }
+.modal-hero-emoji {
+  position: absolute; bottom: 16px; right: 20px; z-index: 3;
+  font-size: 3rem; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
+  opacity: 0.9;
+}
+.modal-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 40%, var(--dark2) 100%);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px; z-index: 10;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border); color: var(--text-muted);
+  width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+}
+.modal-close:hover { color: var(--text); border-color: var(--text-muted); }
+
+.modal-body { padding: 28px 30px 32px; }
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; color: var(--cream); margin-bottom: 4px;
+}
+.modal-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+.modal-alergen {
+  display: inline-block; font-size: 0.72rem;
+  background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.2);
+  color: #f87171; border-radius: 6px; padding: 2px 10px; margin-bottom: 20px;
+}
+
+.modal-times {
+  display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.time-box {
+  flex: 1; min-width: 90px;
+  background: var(--dark3); border: 1px solid var(--glass-border);
+  border-radius: 12px; padding: 12px 14px; text-align: center;
+}
+.time-box .tv {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; color: var(--gold); font-weight: 700;
+}
+.time-box .tl { font-size: 0.68rem; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Divider */
+.modal-divider {
+  border: none; border-top: 1px solid var(--glass-border); margin: 20px 0;
+}
+.modal-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--gold); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* Ingredients */
+.ing-list { display: flex; flex-direction: column; gap: 1px; }
+.ing-row {
+  display: grid; grid-template-columns: 90px 1fr auto;
+  padding: 8px 10px; border-radius: 8px; transition: var(--transition);
+  font-size: 0.85rem; align-items: center;
+}
+.ing-row:hover { background: var(--glass); }
+.ing-row .qty { color: var(--gold); font-weight: 600; text-align: right; padding-right: 14px; }
+.ing-row .name { color: var(--text); }
+.ing-row .note { color: var(--text-muted); font-size: 0.75rem; font-style: italic; }
+
+/* Steps */
+.steps { list-style: none; counter-reset: step; display: flex; flex-direction: column; gap: 4px; }
+.steps li {
+  counter-increment: step;
+  padding: 10px 10px 10px 42px; position: relative;
+  font-size: 0.87rem; line-height: 1.65; border-radius: 8px;
+  color: var(--text); transition: var(--transition);
+}
+.steps li:hover { background: var(--glass); }
+.steps li::before {
+  content: counter(step);
+  position: absolute; left: 8px; top: 10px;
+  width: 22px; height: 22px;
+  background: linear-gradient(135deg, var(--gold), #a8722a);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; color: #0d0d0d;
+}
+
+/* Escandallo box */
+.escandallo-box {
+  background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(181,52,28,0.05));
+  border: 1px solid rgba(201,168,76,0.25); border-radius: 14px;
+  padding: 18px 20px; margin-top: 16px;
+}
+.esc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.esc-row .label { font-size: 0.8rem; color: var(--text-muted); }
+.esc-row .val { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold); font-weight: 700; }
+.esc-pvp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 12px; }
+.pvp-cell {
+  background: var(--dark3); border: 1px solid var(--glass-border);
+  border-radius: 10px; padding: 10px 12px; text-align: center;
+}
+.pvp-cell .fc { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.pvp-cell .price { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--cream); font-weight: 600; margin-top: 3px; }
+.pvp-cell.highlight { border-color: rgba(201,168,76,0.4); background: var(--gold-dim); }
+.pvp-cell.highlight .price { color: var(--gold); }
+.esc-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 12px; line-height: 1.6; padding-top: 10px; border-top: 1px solid var(--glass-border); }
+
+/* ══════════════ BEVERAGES ══════════════ */
+.bev-cat { margin-bottom: 40px; }
+.bev-cat-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; color: var(--cream);
+  padding-bottom: 12px; margin-bottom: 20px;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex; align-items: center; gap: 10px;
+}
+.bev-cat-title span { font-size: 1.4rem; }
+
+.bev-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px;
+}
+.bev-card {
+  background: var(--dark3); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 16px 18px;
+  transition: var(--transition);
+}
+.bev-card:hover { border-color: rgba(201,168,76,0.25); background: var(--dark4); }
+.bev-region {
+  font-size: 0.67rem; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+.bev-region::before { content: ''; width: 16px; height: 1px; background: var(--gold); }
+.bev-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--cream); margin-bottom: 5px; line-height: 1.3; }
+.bev-desc { font-size: 0.76rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
+.bev-price { font-size: 0.85rem; color: var(--gold); font-weight: 600; }
+
+/* ══════════════ COSTES FIJOS ══════════════ */
+.costs-panel {
+  background: var(--dark3); border: 1px solid var(--glass-border);
+  border-radius: var(--radius); padding: 22px 26px; margin-bottom: 24px;
+}
+.costs-panel h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--gold); margin-bottom: 18px;
+}
+.controls-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
+.ctrl-group label { font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+.ctrl-group input {
+  background: var(--dark2); border: 1px solid var(--glass-border);
+  color: var(--cream); border-radius: 8px; padding: 8px 12px;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem; width: 110px;
+  outline: none; transition: var(--transition);
+}
+.ctrl-group input:focus { border-color: var(--gold); }
+
+.kpi-strip {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+  gap: 14px; margin-bottom: 24px;
+}
+.kpi {
+  background: var(--dark3); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 16px 18px;
+}
+.kpi.highlight { border-color: rgba(201,168,76,0.3); background: var(--gold-dim); }
+.kpi .lbl { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.kpi .val { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold); font-weight: 700; }
+.kpi .sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+
+.costs-tbl { width: 100%; border-collapse: collapse; }
+.costs-tbl th {
+  background: var(--dark2); padding: 11px 14px; text-align: left;
+  font-size: 0.72rem; color: var(--text-muted); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  border-bottom: 1px solid var(--glass-border);
+}
+.costs-tbl th:not(:first-child):not(:nth-child(2)) { text-align: right; }
+.costs-tbl td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.85rem; vertical-align: middle; }
+.costs-tbl td:not(:first-child):not(:nth-child(2)) { text-align: right; }
+.costs-tbl tr:hover td { background: rgba(255,255,255,0.02); }
+.costs-tbl .concept { font-weight: 500; color: var(--cream); }
+.costs-tbl .desc { font-size: 0.75rem; color: var(--text-muted); }
+.costs-tbl .amount { color: var(--gold); font-weight: 600; font-family: 'Playfair Display', serif; font-size: 0.95rem; }
+.costs-tbl .pct { color: var(--text-muted); font-size: 0.78rem; }
+.costs-tbl tfoot td { border-top: 1px solid rgba(201,168,76,0.3); font-weight: 700; color: var(--gold); padding-top: 14px; }
+.costs-tbl tfoot .amount { font-size: 1.1rem; }
+
+.costs-note {
+  margin-top: 18px; padding: 14px 18px;
+  background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 10px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.7;
+}
+.costs-note strong { color: var(--gold); }
+
+/* ══════════════ EMPTY STATE ══════════════ */
+.empty { text-align: center; padding: 70px 20px; color: var(--text-muted); }
+.empty .ico { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+
+/* ══════════════ RESPONSIVE ══════════════ */
+@media (max-width: 640px) {
+  header { padding: 0 16px; }
+  .hero { padding: 36px 20px; }
+  .search-wrap, nav { padding-left: 16px; padding-right: 16px; }
+  main { padding: 24px 16px; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .modal-body { padding: 20px; }
+  .esc-pvp-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media print {
+  header, nav, .search-wrap, .hero, .overlay, .btn-view, .btn-ghost { display: none !important; }
+  body { background: #fff; color: #000; }
+  .card { break-inside: avoid; background: #f9f9f9; border: 1px solid #ddd; }
+  main { padding: 0; }
+}
+
+/* Gradient palette for card thumbs */
+.g1 { background: linear-gradient(135deg,#7f1d1d,#b91c1c); }
+.g2 { background: linear-gradient(135deg,#431407,#c2410c); }
+.g3 { background: linear-gradient(135deg,#1e3a5f,#2563eb); }
+.g4 { background: linear-gradient(135deg,#14532d,#16a34a); }
+.g5 { background: linear-gradient(135deg,#3b0764,#7c3aed); }
+.g6 { background: linear-gradient(135deg,#134e4a,#0d9488); }
+.g7 { background: linear-gradient(135deg,#713f12,#ca8a04); }
+.g8 { background: linear-gradient(135deg,#831843,#db2777); }
+.g9 { background: linear-gradient(135deg,#1e1b4b,#4338ca); }
+.g0 { background: linear-gradient(135deg,#064e3b,#059669); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-mark">🍽️</div>
+    <div class="logo-text">
+      <h1>Control Gestión F&B</h1>
+      <p>Recetario · Carta · Escandallo</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn-ghost" onclick="window.print()">🖨 Imprimir</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Temporada 2026 · Costa del Sol</div>
+    <h2>Recetario & <em>Carta Completa</em></h2>
+    <p>Recetas de autor con escandallos detallados, carta de bebidas y análisis de costes fijos para restaurante gama media-alta.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="val">40</div><div class="lbl">Recetas</div></div>
+      <div class="hero-stat"><div class="val">8</div><div class="lbl">Secciones bebida</div></div>
+      <div class="hero-stat"><div class="val">18</div><div class="lbl">Conceptos coste</div></div>
+      <div class="hero-stat"><div class="val">7,49€</div><div class="lbl">Coste fijo/plato</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Buscar recetas, ingredientes, bebidas…" oninput="doSearch(this.value)">
+  </div>
+  <button class="btn-clear" onclick="clearSearch()">✕ Limpiar</button>
+</div>
+
+<!-- TABS -->
+<nav id="tabsNav">
+  <button class="tab active" data-sec="entrantes">🥗 Entrantes <span class="tab-pill">10</span></button>
+  <button class="tab" data-sec="primeros">🥘 Primeros <span class="tab-pill">10</span></button>
+  <button class="tab" data-sec="segundos">🥩 Segundos <span class="tab-pill">10</span></button>
+  <button class="tab" data-sec="postres">🍮 Postres <span class="tab-pill">10</span></button>
+  <button class="tab" data-sec="coctel">🥂 Cóctel de Pie <span class="tab-pill">12</span></button>
+  <button class="tab" data-sec="bebidas">🍷 Bebidas & Carta</button>
+  <button class="tab" data-sec="costes">📊 Costes Fijos</button>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="section active" id="sec-entrantes">
+    <div class="section-head"><h2>🥗 Entrantes</h2><p>Tapas, apertivos y presentaciones de temporada</p></div>
+    <div class="cards-grid" id="grid-entrantes"></div>
+  </div>
+  <div class="section" id="sec-primeros">
+    <div class="section-head"><h2>🥘 Primeros Platos</h2><p>Arroces, pastas, sopas y guisos tradicionales</p></div>
+    <div class="cards-grid" id="grid-primeros"></div>
+  </div>
+  <div class="section" id="sec-segundos">
+    <div class="section-head"><h2>🥩 Segundos Platos</h2><p>Carnes, pescados y platos principales de autor</p></div>
+    <div class="cards-grid" id="grid-segundos"></div>
+  </div>
+  <div class="section" id="sec-postres">
+    <div class="section-head"><h2>🍮 Postres</h2><p>Dulces, cremosos y tentaciones de temporada</p></div>
+    <div class="cards-grid" id="grid-postres"></div>
+  </div>
+  <div class="section" id="sec-coctel">
+    <div class="section-head"><h2>🥂 Cóctel de Pie — Finger Food</h2><p>Pinchos fríos, calientes y mini postres para eventos sin asignación de mesa · Coste por pieza</p></div>
+    <div class="cards-grid" id="grid-coctel"></div>
+  </div>
+  <div class="section" id="sec-bebidas">
+    <div class="section-head"><h2>🍷 Carta de Bebidas</h2><p>Vinos · Espumosos · Cócteles · Destilados · Sin alcohol</p></div>
+    <div id="bev-root"></div>
+  </div>
+  <div class="section" id="sec-costes">
+    <div class="section-head"><h2>📊 Costes Fijos por Plato</h2><p>Calculadora interactiva · Referencia para escandallo completo</p></div>
+    <div class="costs-panel">
+      <h3>⚙️ Parámetros del establecimiento</h3>
+      <div class="controls-row">
+        <div class="ctrl-group"><label>Platos / día</label><input type="number" id="cPlatos" value="180" min="1" oninput="calcCostes()"></div>
+        <div class="ctrl-group"><label>Días / mes</label><input type="number" id="cDias" value="25" min="1" oninput="calcCostes()"></div>
+        <div class="ctrl-group"><label>Coste fijo mensual (€)</label><input type="number" id="cMensual" value="45000" min="1" oninput="calcCostes()"></div>
+      </div>
+    </div>
+    <div class="kpi-strip" id="kpiStrip"></div>
+    <table class="costs-tbl">
+      <thead><tr><th>Concepto</th><th>Descripción</th><th>€ / mes</th><th>€ / plato</th><th>%</th></tr></thead>
+      <tbody id="costsTbody"></tbody>
+      <tfoot id="costsTfoot"></tfoot>
+    </table>
+    <div class="costs-note">
+      <strong>📌 Metodología:</strong> Costes fijos repartidos entre el nº total de platos al mes (platos/día × días).
+      Referencia: restaurante Costa del Sol, gama media, 60 comensales/día, ~3 platos/comensal.
+      Fuentes: ESAH 2024, Hostelería de España, benchmarks del sector. Ajustar a la realidad de cada establecimiento.
+    </div>
+  </div>
+</main>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="closeOverlay(event)">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA — RECETAS
+// ═══════════════════════════════════════════════
+const R = {
+  entrantes: [
+    { n:"Gazpacho Andaluz", e:"🥣", g:"g1", sub:"Sopa fría de tomate tradicional andaluza",
+      prep:15, coc:0, rac:1, dif:"Baja", mp:1.20, alergen:"Gluten, Sulfitos",
+      ing:[["800g","Tomate pera maduro","troceado"],["100g","Pepino","pelado"],["60g","Pimiento verde","sin semillas"],["1 diente","Ajo","sin germen"],["80ml","AOVE","virgen extra"],["30ml","Vinagre de Jerez",""],["50g","Pan del día anterior","remojado"],["Sal","al gusto",""]],
+      pasos:["Remojar el pan en agua fría 5 min. Escurrir.","Triturar todos los vegetales con el pan, ajo, sal y vinagre en batidora de vaso.","Incorporar el AOVE en hilo fino sin dejar de batir para emulsionar.","Pasar por colador chino. Rectificar acidez y sal.","Refrigerar mínimo 2 h. Servir muy frío con guarnición de pepino, tomate y pan frito en daditos."]},
+    { n:"Salmorejo Cordobés", e:"🍅", g:"g2", sub:"Crema espesa de tomate con jamón ibérico y huevo",
+      prep:10, coc:0, rac:1, dif:"Baja", mp:1.80, alergen:"Gluten, Huevo",
+      ing:[["600g","Tomate pera","muy maduro"],["150g","Pan de telera","sin corteza"],["1 diente","Ajo",""],["100ml","AOVE Hojiblanca",""],["15ml","Vinagre de Jerez",""],["30g","Jamón ibérico","virutas para servir"],["1ud","Huevo cocido","para servir"]],
+      pasos:["Remojar el pan en agua fría 10 min. Escurrir.","Triturar el tomate con el ajo hasta obtener puré fino.","Añadir el pan y triturar hasta textura muy cremosa y homogénea.","Emulsionar con AOVE en hilo fino. Añadir vinagre y sal.","Refrigerar ≥ 2 h. Servir con huevo duro rallado y virutas de jamón ibérico."]},
+    { n:"Pulpo a la Gallega", e:"🐙", g:"g3", sub:"Pulpo cocido con pimentón de la Vera, sal y AOVE",
+      prep:10, coc:50, rac:1, dif:"Media", mp:5.80, alergen:"Moluscos",
+      ing:[["250g","Pulpo cocido","o crudo"],["200g","Patata cachelo","en rodajas"],["50ml","AOVE",""],["5g","Pimentón dulce de la Vera",""],["2g","Pimentón picante",""],["8g","Sal gruesa",""]],
+      pasos:["Si el pulpo es crudo: congelar 48h, descongelar y cocer en agua sin sal 40-50 min. Dejar enfriar en el agua.","Cocer las patatas en agua con sal hasta tiernas. Escurrir.","Cortar el pulpo en rodajas de 1 cm con tijera.","Disponer patatas en tabla de madera. Colocar el pulpo encima.","Regar con AOVE generoso. Espolvorear pimentón dulce y picante. Terminar con sal gruesa."]},
+    { n:"Gambas al Ajillo", e:"🦐", g:"g2", sub:"Gambas salteadas en aceite con ajo y guindilla cayena",
+      prep:8, coc:5, rac:1, dif:"Baja", mp:4.20, alergen:"Crustáceos, Sulfitos",
+      ing:[["200g","Gamba mediana","pelada"],["4 dientes","Ajo","laminados"],["1ud","Guindilla cayena","sin semillas"],["80ml","AOVE",""],["30ml","Vino blanco Verdejo",""],["Perejil picado","y sal",""]],
+      pasos:["Calentar el AOVE con el ajo laminado y la guindilla a fuego medio hasta que dore ligeramente.","Subir el fuego al máximo. Añadir las gambas salpimentadas.","Saltear 90 segundos. Desglasar con vino blanco.","Terminar 30 seg más hasta evaporar el alcohol.","Servir en cazuela de barro muy caliente con perejil picado. Acompañar pan rústico."]},
+    { n:"Croquetas de Jamón Ibérico", e:"🧆", g:"g7", sub:"Bechamel densa con jamón de bellota, crujiente empanado",
+      prep:30, coc:20, rac:3, dif:"Alta", mp:2.60, alergen:"Gluten, Leche, Huevo",
+      ing:[["120g","Jamón ibérico de bellota","picado fino"],["60g","Mantequilla",""],["80g","Harina",""],["600ml","Leche entera","caliente"],["5g","Nuez moscada",""],["2ud","Huevo","para rebozar"],["100g","Pan rallado fino",""]],
+      pasos:["Fundir mantequilla, añadir harina y tostar 2 min (roux rubio).","Incorporar la leche caliente poco a poco sin dejar de remover hasta bechamel muy espesa.","Añadir el jamón picado. Salpimentar con nuez moscada. Cocer 5 min removiendo.","Extender en bandeja. Cubrir con film a piel. Refrigerar ≥ 4 h.","Formar croquetas 30g/ud, pasar por harina, huevo y pan rallado. Freír en aceite 180°C, 2-3 min hasta doradas."]},
+    { n:"Ensalada Gamba Roja y Aguacate", e:"🥗", g:"g4", sub:"Gamba roja de Málaga con aguacate y vinagreta cítrica",
+      prep:12, coc:3, rac:1, dif:"Baja", mp:6.80, alergen:"Crustáceos",
+      ing:[["120g","Gamba roja de Málaga","cocida y pelada"],["1ud","Aguacate","en dados"],["60g","Escarola",""],["50g","Cherry multicolor","cortados"],["30ml","AOVE",""],["20ml","Zumo de limón",""],["5g","Ralladura de lima",""]],
+      pasos:["Cocer las gambas 2 min en agua salada hirviendo. Enfriar en agua con hielo. Pelar.","Emulsionar AOVE con zumo de limón, ralladura de lima, sal y pimienta.","Disponer la escarola en el centro del plato.","Colocar los dados de aguacate y los cherrys. Coronar con las gambas.","Aliñar con la vinagreta cítrica en el momento de servir."]},
+    { n:"Tataki de Atún Rojo", e:"🐟", g:"g3", sub:"Lomo de atún rojo marcado con sésamo, soja y jengibre",
+      prep:15, coc:2, rac:1, dif:"Media", mp:7.50, alergen:"Pescado, Soja, Sésamo",
+      ing:[["160g","Atún rojo fresco","lomo limpio"],["30g","Sésamo tostado","negro y blanco"],["40ml","Salsa de soja",""],["20ml","Mirin",""],["10g","Jengibre fresco","rallado"],["30g","Wakame","hidratado"],["10g","Cebollino",""]],
+      pasos:["Marinar el lomo en soja, mirin y jengibre 10 min. Escurrir y secar.","Envolver el lomo en sésamo mezclado presionando para adherir.","Calentar sartén al máximo. Marcar el atún 20 seg por cada cara (interior crudo).","Reposar 2 min. Cortar en láminas de 5 mm con cuchillo húmedo.","Servir sobre wakame. Salsear con reducción de soja. Decorar con cebollino."]},
+    { n:"Carpaccio de Ternera", e:"🥩", g:"g5", sub:"Láminas de solomillo, rúcula, parmesano y AOVE",
+      prep:20, coc:0, rac:1, dif:"Media", mp:5.20, alergen:"Leche",
+      ing:[["150g","Solomillo de ternera","parcialmente congelado"],["40g","Rúcula fresca",""],["30g","Parmesano","en lascas, 24 meses"],["40ml","AOVE suave",""],["20ml","Zumo de limón",""],["10g","Alcaparras","escurridas"],["Sal en escamas","y pimienta",""]],
+      pasos:["Congelar el solomillo 1 h para facilitar el corte. Retirar 10 min antes.","Laminar a 1-2 mm con cuchillo afilado o fiambreadora.","Extender las láminas en plato frío, sin solapar.","Aliñar con AOVE, zumo de limón, sal en escamas y pimienta.","Colocar la rúcula en el centro, las alcaparras y terminar con lascas de parmesano."]},
+    { n:"Tostas de Foie con Higos", e:"🍞", g:"g7", sub:"Mi-cuit de pato sobre brioche, mermelada de higos y Oporto",
+      prep:10, coc:5, rac:1, dif:"Baja", mp:5.80, alergen:"Gluten, Leche, Frutos secos",
+      ing:[["80g","Mi-cuit de pato","en escalopas"],["2ud","Pan brioche","rodajas tostadas"],["40g","Mermelada de higos","artesana"],["30ml","Reducción de Oporto",""],["Flor de sal","y cebollino",""],["20g","Nueces picadas",""]],
+      pasos:["Tostar el pan brioche en tostadora o plancha hasta dorado.","Extender una capa de mermelada de higos sobre el pan caliente.","Colocar las escalopas de mi-cuit a temperatura ambiente.","Regar con reducción de Oporto. Espolvorear flor de sal.","Terminar con nueces picadas y cebollino. Servir inmediatamente."]},
+    { n:"Pimientos del Piquillo con Bacalao", e:"🫑", g:"g1", sub:"Brandada de bacalao en piquillos con velouté",
+      prep:20, coc:15, rac:1, dif:"Media", mp:3.80, alergen:"Pescado, Leche",
+      ing:[["4ud","Pimientos del piquillo","escurridos"],["160g","Bacalao desalado","desmigado"],["80ml","Nata 35%",""],["2 dientes","Ajo",""],["50ml","AOVE",""],["150ml","Caldo de piquillos","para la salsa"]],
+      pasos:["Desalar el bacalao 24-48h cambiando el agua. Escurrir y desmigar.","Confitar el bacalao con ajo en AOVE a 60°C durante 15 min.","Triturar con la nata caliente hasta brandada cremosa. Salpimentar.","Rellenar los piquillos con la brandada. Cerrar la abertura.","Marcar en plancha 2 min por lado. Servir sobre velouté de piquillos."]},
+  ],
+
+  primeros: [
+    { n:"Paella Valenciana", e:"🥘", g:"g7", sub:"Arroz seco con pollo, conejo, ferraura y garrofón",
+      prep:20, coc:40, rac:2, dif:"Alta", mp:3.80, alergen:"Ninguno",
+      ing:[["400g","Arroz bomba",""],["400g","Pollo troceado","muslos"],["300g","Conejo troceado",""],["150g","Judía verde ferraura",""],["100g","Garrofón",""],["200g","Tomate maduro rallado",""],["2g","Azafrán",""],["1,2L","Caldo de pollo",""]],
+      pasos:["Calentar AOVE en paella. Dorar el pollo y conejo con sal hasta caramelizar.","Añadir judía verde, sofreír 3 min. Incorporar tomate rallado y reducir 5 min.","Añadir pimentón. Verter el caldo caliente con azafrán disuelto.","Hervir 5 min. Añadir el arroz en cruz y el garrofón. Distribuir bien.","Cocer a fuego vivo 10 min y medio 8 min. No remover. Reposar tapado 5 min."]},
+    { n:"Arroz Negro con Sepia", e:"🦑", g:"g9", sub:"Arroz meloso con tinta de calamar, sepia y alioli",
+      prep:20, coc:35, rac:2, dif:"Media", mp:4.20, alergen:"Moluscos, Sulfitos",
+      ing:[["360g","Arroz bomba",""],["400g","Sepia limpia","en trozos"],["4 sobres","Tinta de calamar",""],["1ud","Cebolla","picada"],["3 dientes","Ajo",""],["80ml","Vino blanco",""],["1,1L","Fumet de pescado",""],["Alioli","para acompañar",""]],
+      pasos:["Sofreír ajo y cebolla en AOVE hasta pochados. Añadir la sepia.","Incorporar el tomate y reducir. Añadir vino blanco y evaporar.","Añadir la tinta disuelta en un poco de fumet.","Incorporar el arroz. Cubrir con el fumet caliente. Cocinar 18 min.","Terminar con AOVE en hilo. Servir con alioli en cuenco aparte."]},
+    { n:"Risotto de Setas y Trufa", e:"🍄", g:"g6", sub:"Arroz carnaroli cremoso con setas de temporada y trufa",
+      prep:15, coc:25, rac:2, dif:"Alta", mp:5.80, alergen:"Leche, Sulfitos",
+      ing:[["360g","Arroz carnaroli",""],["300g","Setas variadas","boletus, shiitake"],["10g","Trufa negra rallada",""],["1ud","Cebolla","picada fina"],["80ml","Vino blanco seco",""],["60g","Mantequilla fría","en dados"],["60g","Parmesano","rallado"],["1,2L","Caldo de verduras","caliente"]],
+      pasos:["Sofreír la cebolla en AOVE a fuego suave hasta transparente.","Añadir el arroz y nacarar 2 min sin dejar de remover.","Desglasar con vino blanco. Evaporar.","Incorporar el caldo caliente cazo a cazo, removiendo 18 min continuamente.","Añadir las setas salteadas. Mantecar fuera del fuego con mantequilla y parmesano. Terminar con trufa."]},
+    { n:"Espaguetis con Almejas", e:"🍝", g:"g2", sub:"Pasta al dente con almejas gallegas, ajo y vino blanco",
+      prep:10, coc:15, rac:1, dif:"Baja", mp:4.50, alergen:"Gluten, Moluscos, Sulfitos",
+      ing:[["180g","Espaguetis",""],["300g","Almejas gallegas","bien lavadas"],["4 dientes","Ajo","laminados"],["100ml","Vino blanco Albariño",""],["60ml","AOVE",""],["20g","Perejil","picado"]],
+      pasos:["Cocer la pasta en agua salada abundante al dente. Reservar agua de cocción.","Sofreír ajo y guindilla en AOVE. Añadir almejas y vino. Tapar hasta que abran.","Retirar las que no abran.","Añadir la pasta escurrida a la sartén. Saltear 1 min añadiendo agua de cocción para ligar la salsa.","Terminar con perejil picado y AOVE en crudo. Servir inmediatamente."]},
+    { n:"Fideuà de Marisco", e:"🦞", g:"g2", sub:"Fideos nº 4 con gambas, mejillones y fumet concentrado",
+      prep:20, coc:30, rac:2, dif:"Media", mp:5.20, alergen:"Gluten, Crustáceos, Moluscos",
+      ing:[["360g","Fideos nº 4",""],["200g","Gamba arrocera",""],["200g","Mejillón cocido",""],["150g","Sepia","en tiras"],["150g","Tomate triturado",""],["1L","Fumet de pescado",""],["2g","Azafrán",""],["Alioli","para acompañar",""]],
+      pasos:["Sofreír la sepia en AOVE hasta dorada. Añadir tomate y reducir bien.","Añadir los fideos en seco, tostar 2 min removiendo.","Verter el fumet caliente con azafrán. Distribuir gambas y mejillones.","Cocinar a fuego vivo 8-10 min hasta que los fideos absorban el caldo.","Gratinar en horno 2 min para que los fideos queden erguidos. Servir con alioli."]},
+    { n:"Gazpachuelo Malagueño", e:"🍲", g:"g6", sub:"Caldo emulsionado con mayonesa, patata y colas de gamba",
+      prep:15, coc:20, rac:1, dif:"Media", mp:3.40, alergen:"Pescado, Crustáceos, Huevo",
+      ing:[["150g","Patata","en dados"],["100g","Cola de gamba",""],["80g","Mayonesa casera",""],["600ml","Fumet de merluza",""],["50g","Pan tostado","para servir"],["Perejil","picado",""]],
+      pasos:["Cocer las patatas en el fumet a fuego suave hasta tiernas.","Retirar del fuego y enfriar ligeramente (80°C aprox).","Añadir las colas de gamba y dejar que se hagan con el calor residual.","Incorporar la mayonesa a cucharadas batiendo suavemente para emulsionar sin que corte.","Rectificar de sal. Servir caliente con pan tostado y perejil picado."]},
+    { n:"Lentejas con Chorizo", e:"🫘", g:"g2", sub:"Guiso tradicional de lentejas pardinas con verduras y embutido",
+      prep:15, coc:50, rac:2, dif:"Baja", mp:1.80, alergen:"Gluten",
+      ing:[["350g","Lentejas pardinas","sin remojar"],["120g","Chorizo fresco","en rodajas"],["80g","Morcilla de cebolla",""],["1ud","Cebolla",""],["2ud","Zanahoria","en dados"],["1 hoja","Laurel",""],["1 cdta","Pimentón dulce",""]],
+      pasos:["Sofreír en AOVE la cebolla, ajo y zanahoria hasta pochados.","Añadir el pimentón rápido. Incorporar chorizo y morcilla. Sofreír 3 min.","Añadir las lentejas lavadas, el laurel y cubrir con agua fría.","Cocer a fuego medio 40-50 min hasta que las lentejas estén tiernas.","Rectificar sal. Reposar 5 min antes de servir. Acompañar con pan de pueblo."]},
+    { n:"Arroz con Bogavante", e:"🦞", g:"g1", sub:"Arroz meloso con bogavante, sofrito y azafrán",
+      prep:25, coc:35, rac:2, dif:"Alta", mp:14.50, alergen:"Crustáceos, Sulfitos",
+      ing:[["1ud","Bogavante vivo","600g aprox"],["360g","Arroz bomba",""],["1ud","Cebolla","picada"],["200g","Tomate rallado",""],["80ml","Brandy","para flambear"],["1,1L","Fumet concentrado",""],["2g","Azafrán",""]],
+      pasos:["Partir el bogavante en vivo: cabeza, pinzas, cola en medallones.","Marcar en AOVE muy caliente por ambas caras. Flamear con brandy. Retirar.","En el mismo aceite, sofreír ajo y cebolla. Añadir tomate y reducir.","Incorporar el arroz, nacarar 1 min. Verter el fumet con azafrán.","Cocinar 12 min, incorporar el bogavante los últimos 5 min. Reposar 3 min. Servir caldoso."]},
+    { n:"Crema de Calabaza y Coco", e:"🎃", g:"g2", sub:"Crema aterciopelada de calabaza asada, coco y jengibre",
+      prep:10, coc:40, rac:1, dif:"Baja", mp:1.60, alergen:"Leche",
+      ing:[["400g","Calabaza butternut","asada al horno"],["100ml","Leche de coco",""],["1ud","Cebolla",""],["10g","Jengibre fresco",""],["500ml","Caldo de verduras",""],["Pipas de calabaza","tostadas para decorar",""]],
+      pasos:["Asar la calabaza cortada en cuartos a 200°C, 35 min hasta caramelizar.","Sofreír cebolla y jengibre en AOVE hasta pochados.","Añadir la pulpa de calabaza asada y el caldo. Hervir 5 min.","Incorporar la leche de coco. Triturar hasta crema muy fina. Pasar por colador.","Rectificar. Servir con hilo de nata, pipas tostadas y AOVE."]},
+    { n:"Sopa de Pescado Malagueña", e:"🍵", g:"g6", sub:"Caldo de rape y mejillón con fideos cabello de ángel",
+      prep:20, coc:30, rac:1, dif:"Media", mp:3.20, alergen:"Pescado, Moluscos, Gluten",
+      ing:[["150g","Rape en tacos",""],["100g","Mejillón cocido",""],["40g","Fideos cabello de ángel",""],["1ud","Cebolla",""],["600ml","Fumet de pescado",""],["2g","Pimentón dulce",""],["Azafrán","al gusto",""]],
+      pasos:["Sofreír ajo y cebolla. Añadir tomate y pimentón. Reducir 8 min.","Verter el fumet y el azafrán. Hervir 10 min. Triturar el sofrito con túrmix.","Colar el caldo resultante. Llevar a ebullición.","Añadir los fideos y cocer 4 min.","Incorporar el rape y los mejillones. Cocinar 2 min más. Rectificar. Servir muy caliente."]},
+  ],
+
+  segundos: [
+    { n:"Solomillo con Reducción de Rioja", e:"🥩", g:"g1", sub:"Medallones de ternera, reducción de vino tinto y patata paja",
+      prep:15, coc:15, rac:1, dif:"Media", mp:9.80, alergen:"Leche, Sulfitos",
+      ing:[["220g","Solomillo de ternera","medallones de 2 cm"],["200ml","Vino tinto Rioja",""],["100ml","Fondo oscuro de ternera",""],["15g","Mantequilla","fría"],["150g","Patata","para paja"],["Sal y pimienta","al gusto",""]],
+      pasos:["Reducir el vino tinto a la mitad. Añadir el fondo y reducir hasta glaseado. Montar con mantequilla fría.","Secar los medallones con papel. Salpimentar en el momento.","Plancha muy caliente con AOVE. Marcar 2 min por cara para punto medio.","Reposar 3 min sobre rejilla.","Freír la patata en juliana muy fina a 180°C hasta crujiente. Servir el solomillo con salsa y patata paja."]},
+    { n:"Lubina al Horno", e:"🐟", g:"g3", sub:"Lubina entera al horno con patatas panadera y hierbas",
+      prep:15, coc:30, rac:2, dif:"Baja", mp:7.20, alergen:"Pescado, Sulfitos",
+      ing:[["1ud","Lubina fresca 600g","limpia y escamada"],["300g","Patata","en rodajas finas"],["1ud","Cebolla","en aros"],["1ud","Limón","en rodajas"],["80ml","Vino blanco Albariño",""],["80ml","AOVE",""],["Laurel, tomillo, perejil",""]],
+      pasos:["Precalentar horno a 200°C. Untar la fuente con AOVE.","Disponer las patatas en rodajas y la cebolla. Salpimentar. Hornear 15 min.","Hacer 3 cortes en la lubina. Rellenar con limón y hierbas. Salpimentar.","Colocar la lubina sobre las patatas. Regar con vino y AOVE.","Hornear 20-25 min. Servir en la misma fuente con las patatas."]},
+    { n:"Dorada a la Sal", e:"🐠", g:"g3", sub:"Dorada entera en costra de sal gruesa, ritual en mesa",
+      prep:10, coc:25, rac:2, dif:"Baja", mp:6.50, alergen:"Pescado, Huevo",
+      ing:[["1ud","Dorada fresca 600g","sin escamar"],["2kg","Sal gruesa",""],["2 claras","Huevo","para ligar la sal"],["1ud","Limón","para el interior"],["Hierbas aromáticas",""],["40ml","AOVE","para servir"]],
+      pasos:["Precalentar horno a 220°C. Mezclar la sal gruesa con las claras de huevo.","Rellenar el interior de la dorada con rodajas de limón y hierbas.","Cubrir la base de la fuente con 1 cm de sal. Colocar la dorada. Cubrir completamente.","Hornear 20-25 min (10 min por 500g de pescado).","En sala: romper la costra con golpe seco. Retirar la piel. Servir los lomos con AOVE y vinagre de Jerez."]},
+    { n:"Secreto Ibérico con Patatas Bravas", e:"🐷", g:"g7", sub:"Secreto de cerdo ibérico a la brasa con salsa brava y alioli",
+      prep:10, coc:12, rac:1, dif:"Baja", mp:5.60, alergen:"Huevo",
+      ing:[["250g","Secreto ibérico","a temperatura ambiente"],["200g","Patata","en dados"],["60ml","Salsa brava casera",""],["30ml","Alioli casero",""],["Sal gruesa y romero",""]],
+      pasos:["Sacar el secreto de nevera 30 min antes. Salpimentar en el momento.","Plancha o parrilla a fuego muy alto. Cocinar el secreto 4-5 min por cara.","Reposar la carne 3 min. Cortar en diagonal.","Freír las patatas en dados a 180°C hasta doradas. Escurrir.","Servir el secreto con las patatas, napar con salsa brava y alioli en línea."]},
+    { n:"Carrillada en Vino Tinto", e:"🍷", g:"g5", sub:"Carrillada ibérica estofada lentamente con puré de patata",
+      prep:20, coc:180, rac:1, dif:"Alta", mp:4.80, alergen:"Leche, Sulfitos",
+      ing:[["250g","Carrillada de cerdo ibérico",""],["400ml","Vino tinto Ribera",""],["1ud","Cebolla",""],["2ud","Zanahoria",""],["Laurel, tomillo, pimienta en grano",""],["300g","Patata","para puré"],["60g","Mantequilla",""],["100ml","Nata",""]],
+      pasos:["Sellar las carrilladas salpimentadas en AOVE por todos los lados hasta doradas.","En la misma cazuela, sofreír las verduras. Añadir el vino y las hierbas. Incorporar la carne.","Estofar a fuego muy lento 2,5-3 h hasta que la carne ceda a la presión.","Retirar la carne. Colar la salsa y reducir hasta ligerosa consistencia.","Servir la carrillada con el jugo y puré de patata (patata + mantequilla + nata)."]},
+    { n:"Gamba Roja a la Plancha", e:"🦐", g:"g1", sub:"Gamba roja de Málaga a la plancha, pura esencia del mediterráneo",
+      prep:5, coc:3, rac:1, dif:"Baja", mp:12.50, alergen:"Crustáceos",
+      ing:[["300g","Gamba roja de Málaga","fresca, 8-10 unidades"],["30ml","AOVE",""],["8g","Sal gruesa",""],["Limón","para acompañar",""],["Pan con tomate",""]],
+      pasos:["Dejar las gambas a temperatura ambiente 15 min. No lavar.","Plancha de hierro fundido muy caliente. Pincelar con AOVE.","Colocar las gambas en plancha. Sal gruesa por encima.","Cocinar 60-90 segundos por cara. El interior debe quedar jugoso.","Servir inmediatamente con limón y pan con tomate. El jugo de la cabeza es el premio."]},
+    { n:"Pulpo a la Brasa con Parmentier", e:"🐙", g:"g2", sub:"Tentáculos de pulpo sobre parmentier ahumado de patata",
+      prep:20, coc:60, rac:1, dif:"Alta", mp:8.20, alergen:"Moluscos, Leche",
+      ing:[["280g","Pulpo cocido","tentáculos"],["200g","Patata","para parmentier"],["80g","Mantequilla",""],["80ml","Nata",""],["5g","Pimentón ahumado",""],["Microgreens","para decorar",""]],
+      pasos:["Cocer el pulpo si es crudo (45-50 min). Enfriar y separar tentáculos.","Hacer el parmentier: cocer las patatas, triturar con mantequilla y nata calientes hasta crema sedosa.","Marcar los tentáculos en brasa o plancha muy caliente hasta tostados por fuera.","Disponer el parmentier en el plato con cuchara o manga.","Colocar los tentáculos. Regar con AOVE. Espolvorear pimentón. Terminar con microgreens."]},
+    { n:"Bacalao al Pil-Pil", e:"🐟", g:"g6", sub:"Bacalao confitado en aceite de ajo con emulsión de su gelatina",
+      prep:30, coc:25, rac:1, dif:"Alta", mp:6.80, alergen:"Pescado",
+      ing:[["250g","Lomo de bacalao desalado","con piel"],["200ml","AOVE suave",""],["4 dientes","Ajo","laminados"],["1ud","Guindilla cayena",""],["Perejil","picado",""]],
+      pasos:["Desalar el bacalao 48h en nevera cambiando el agua cada 8h.","Confitar el ajo en el AOVE a 60°C, 10 min. Retirar el ajo.","Confitar el bacalao (piel arriba) en el mismo aceite a 65°C, 12-15 min.","Retirar el bacalao. Con el aceite templado, mover la cazuela en círculos para emulsionar la gelatina.","Montar la salsa pil-pil añadiendo el bacalao. Servir con ajo frito y perejil."]},
+    { n:"Pato Confit con Naranja", e:"🦆", g:"g7", sub:"Muslo de pato confitado con salsa bigarade de naranja",
+      prep:20, coc:150, rac:1, dif:"Alta", mp:7.20, alergen:"Sulfitos",
+      ing:[["1ud","Muslo de pato","confitado o fresco"],["300ml","Grasa de pato","para confitar"],["2ud","Naranja ecológica","zumo y ralladura"],["50ml","Vinagre de vino",""],["100ml","Fondo de ave",""],["30g","Azúcar","para caramelizar"]],
+      pasos:["Si es fresco: curar el muslo con sal, hierbas y ajo 12h. Confitar a 80°C en grasa de pato 2h.","Caramelizar el azúcar. Desglasar con vinagre de naranja. Añadir zumo y fondo.","Reducir la salsa bigarade hasta consistencia de jarabe.","Dorar el muslo confitado en sartén 5 min por la piel hasta crujiente.","Servir el muslo crujiente con la salsa y guarnición de endibias o puré."]},
+    { n:"Fritura Malagueña", e:"🍤", g:"g7", sub:"Surtido de pescaíto frito: boquerones, calamares y puntillitas",
+      prep:15, coc:10, rac:1, dif:"Baja", mp:5.80, alergen:"Gluten, Crustáceos, Moluscos, Pescado",
+      ing:[["80g","Boquerones frescos","limpios"],["80g","Anillas de calamar",""],["80g","Gambas medianas","con cáscara"],["60g","Puntillitas (chopitos)",""],["150g","Harina de fritura",""],["Limón","para servir",""]],
+      pasos:["Secar bien el pescado con papel de cocina. Salar levemente.","Pasar por harina de fritura sacudiendo el exceso.","Freír en abundante aceite de girasol a 180-190°C en pequeñas tandas.","Boquerones: 2 min. Calamares: 2-3 min. Gambas: 2 min. Puntillitas: 90 seg.","Escurrir en papel. Sal al gusto. Servir inmediatamente en papel de estraza con limón."]},
+  ],
+
+  postres: [
+    { n:"Crema Catalana", e:"🍮", g:"g7", sub:"Natilla de vainilla y canela con costra de azúcar quemado",
+      prep:15, coc:15, rac:1, dif:"Media", mp:1.20, alergen:"Leche, Huevo, Gluten",
+      ing:[["4 yemas","Huevo",""],["100g","Azúcar",""],["30g","Maicena",""],["600ml","Leche entera",""],["1ud","Rama de canela",""],["1ud","Piel de limón",""],["30g","Azúcar moreno","para quemar"]],
+      pasos:["Infusionar la leche con canela y piel de limón. Llevar a ebullición suave.","Batir las yemas con azúcar y maicena hasta blanquear.","Verter la leche caliente colada sobre las yemas en hilo, removiendo.","Devolver al cazo. Cocer a fuego medio removiendo hasta espesar (no hervir).","Distribuir en cazuelitas. Enfriar. Cubrir con azúcar moreno y quemar con soplete antes de servir."]},
+    { n:"Tiramisú Clásico", e:"☕", g:"g6", sub:"Bizcochos en espresso, mascarpone batido y cacao",
+      prep:30, coc:0, rac:2, dif:"Media", mp:2.20, alergen:"Gluten, Huevo, Leche, Sulfitos",
+      ing:[["200g","Bizcochos de soletilla",""],["250g","Mascarpone",""],["3ud","Huevo","separados"],["80g","Azúcar",""],["200ml","Café espresso","frío"],["30ml","Amaretto",""],["30g","Cacao en polvo",""]],
+      pasos:["Batir yemas con azúcar hasta blanquear. Incorporar el mascarpone con movimientos envolventes.","Montar las claras a punto de nieve firme. Mezclar con la crema de mascarpone suavemente.","Mezclar el café frío con el amaretto.","Empapar los bizcochos rápidamente en el café. Disponer en capas alternando bizcocho y crema.","Refrigerar mínimo 4h. Espolvorear abundante cacao antes de servir."]},
+    { n:"Coulant de Chocolate", e:"🍫", g:"g5", sub:"Bizcocho caliente con interior fundente de chocolate 70%",
+      prep:20, coc:12, rac:1, dif:"Alta", mp:1.80, alergen:"Leche, Huevo, Gluten",
+      ing:[["100g","Chocolate negro 70%",""],["80g","Mantequilla",""],["2ud","Huevo entero",""],["2ud","Yema",""],["60g","Azúcar",""],["25g","Harina",""],["Helado de vainilla","para acompañar",""]],
+      pasos:["Fundir el chocolate con la mantequilla al baño maría. Enfriar ligeramente.","Batir huevos enteros, yemas y azúcar hasta mezcla espumosa.","Incorporar el chocolate fundido. Añadir la harina tamizada con movimientos envolventes.","Verter en moldes individuales engrasados con cacao. Refrigerar 30 min.","Hornear a 200°C exactamente 10-12 min. Desmoldar y servir con helado."]},
+    { n:"Tarta de Queso La Viña", e:"🧀", g:"g2", sub:"Cremosa, dorada por fuera y fundente por dentro",
+      prep:15, coc:45, rac:6, dif:"Baja", mp:1.60, alergen:"Leche, Huevo, Gluten",
+      ing:[["600g","Queso crema","tipo Philadelphia"],["200ml","Nata 35%",""],["4ud","Huevo",""],["180g","Azúcar",""],["25g","Harina",""],["Mermelada de frutos rojos","para acompañar",""]],
+      pasos:["Precalentar horno a 220°C.","Batir todos los ingredientes en orden hasta masa homogénea.","Forrar molde de 20cm con papel de horno mojado. Verter la masa.","Hornear 40-45 min hasta que esté dorada y temblorosa en el centro.","Enfriar a temperatura ambiente. Refrigerar 4h. Servir a temperatura ambiente con mermelada."]},
+    { n:"Panna Cotta con Frutos Rojos", e:"🍓", g:"g8", sub:"Crema italiana de nata con coulis de frutos del bosque",
+      prep:15, coc:10, rac:1, dif:"Baja", mp:1.40, alergen:"Leche, Pescado",
+      ing:[["300ml","Nata 35%",""],["50ml","Leche entera",""],["50g","Azúcar",""],["3 hojas","Gelatina",""],["1 vaina","Vainilla",""],["100g","Frutos rojos","frescos"],["30g","Azúcar","para el coulis"]],
+      pasos:["Hidratar la gelatina en agua fría 5 min.","Calentar la nata, leche, azúcar y vainilla hasta casi hervir.","Escurrir la gelatina e incorporar a la mezcla caliente. Remover.","Verter en moldes de silicona. Refrigerar mínimo 4h.","Preparar coulis: cocer los frutos rojos con azúcar y limón 5 min. Triturar y colar. Desmoldar y servir con el coulis."]},
+    { n:"Torrijas Caramelizadas", e:"🍞", g:"g7", sub:"Pan brioche en leche de canela, frito y caramelizado con soplete",
+      prep:20, coc:10, rac:1, dif:"Media", mp:1.30, alergen:"Gluten, Leche, Huevo",
+      ing:[["2 rodajas","Pan brioche","2 cm grosor"],["200ml","Leche entera",""],["1ud","Rama de canela",""],["1ud","Piel de naranja",""],["2ud","Huevo","para rebozar"],["50g","Azúcar moreno","para caramelizar"],["Helado de canela","para acompañar",""]],
+      pasos:["Infusionar la leche con canela y piel de naranja 10 min. Enfriar.","Empapar el pan en la leche aromatizada 5 min por lado.","Rebozar en huevo batido.","Freír en aceite a 170°C 2 min por lado hasta doradas.","Escurrir. Espolvorear azúcar moreno. Quemar con soplete para caramelizar. Servir con helado."]},
+    { n:"Bienmesabe Malagueño", e:"🍯", g:"g7", sub:"Crema almendrada tradicional de Málaga con helado de mantecado",
+      prep:10, coc:15, rac:1, dif:"Baja", mp:1.50, alergen:"Frutos secos, Huevo",
+      ing:[["100g","Almendra marcona","pelada y tostada"],["80g","Azúcar",""],["4 yemas","Huevo",""],["200ml","Agua",""],["Canela molida",""],["Ralladura de limón",""],["Helado de mantecado",""]],
+      pasos:["Triturar las almendras tostadas hasta harina fina.","Hervir el agua con el azúcar 5 min (almíbar ligero).","Batir las yemas. Incorporar el almíbar caliente en hilo sin dejar de batir.","Añadir la almendra molida, canela y ralladura. Cocer a fuego suave removiendo hasta espesar.","Servir tibio en cuenco con bola de helado de mantecado y almendra laminada tostada."]},
+    { n:"Mousse de Chocolate Blanco", e:"🤍", g:"g5", sub:"Mousse etérea de chocolate blanco con frambuesas",
+      prep:20, coc:5, rac:2, dif:"Media", mp:1.80, alergen:"Leche, Huevo",
+      ing:[["200g","Chocolate blanco","de calidad"],["300ml","Nata 35%","muy fría"],["2 claras","Huevo",""],["30g","Azúcar",""],["80g","Frambuesas frescas",""],["30ml","Coulis de frambuesa",""]],
+      pasos:["Fundir el chocolate blanco al baño maría. Enfriar a 35°C.","Semi montar la nata. Montar las claras con el azúcar a pico firme.","Mezclar el chocolate con la nata montada con movimientos envolventes.","Incorporar las claras en dos tiempos.","Refrigerar 3h en copas. Servir con frambuesas frescas y coulis."]},
+    { n:"Flan de Huevo Casero", e:"🥚", g:"g2", sub:"Flan clásico al baño maría con caramelo oscuro profundo",
+      prep:15, coc:45, rac:4, dif:"Media", mp:0.90, alergen:"Leche, Huevo",
+      ing:[["5ud","Huevo entero",""],["2ud","Yema",""],["100g","Azúcar","para el flan"],["500ml","Leche entera",""],["1 vaina","Vainilla",""],["100g","Azúcar","para caramelo"]],
+      pasos:["Caramelizar 100g azúcar con agua en el molde directamente hasta color ámbar oscuro.","Infusionar la leche con la vainilla. Batir huevos con azúcar hasta combinar.","Añadir la leche caliente colada sobre los huevos en hilo. Mezclar suavemente.","Colar y verter en el molde caramelizado. Cocer al baño maría en horno 165°C, 40-45 min.","Refrigerar mínimo 4h. Desmoldar en el momento del servicio sobre el plato."]},
+    { n:"Sorbete de Mango y Lima", e:"🥭", g:"g0", sub:"Sorbete artesanal de mango alphonso con zest de lima",
+      prep:20, coc:10, rac:2, dif:"Media", mp:1.60, alergen:"Sulfitos",
+      ing:[["400g","Mango alphonso","muy maduro"],["100g","Azúcar",""],["100ml","Agua",""],["2ud","Lima","zumo y ralladura"],["20ml","Ron blanco","opcional"],["Menta fresca","para decorar",""]],
+      pasos:["Preparar almíbar: hervir agua y azúcar 3 min. Enfriar.","Triturar la pulpa de mango con el zumo y ralladura de lima.","Mezclar con el almíbar frío y el ron.","Congelar en heladera o en recipiente plano removiendo cada 30 min durante 3h.","Servir en copa con ralladura de lima y menta fresca."]},
+  ],
+
+  coctel: [
+    { n:"Croqueta Líquida de Jamón Ibérico", e:"🧆", g:"g7", sub:"Bechamel ultraespesa con jamón bellota · pieza de cóctel",
+      prep:35, coc:20, rac:20, dif:"Alta", mp:0.28, alergen:"Gluten, Leche, Huevo",
+      ing:[["140g","Jamón ibérico bellota","picado muy fino"],["70g","Mantequilla",""],["90g","Harina",""],["700ml","Leche entera","caliente"],["2 claras","Huevo","para rebozar"],["120g","Pan rallado fino",""],["Aceite de oliva","para freír",""]],
+      pasos:["Fundir mantequilla. Tostar la harina 2 min (roux). Incorporar la leche caliente en 3 veces sin dejar de batir.","Cocer la bechamel a fuego lento 8 min hasta muy espesa. Añadir el jamón. Salpimentar.","Extender en bandeja, cubrir a piel con film. Refrigerar mínimo 5h.","Porcionar en 10g/pieza. Formar bolitas perfectas con las manos mojadas.","Pasar por harina · huevo batido · pan rallado fino. Freír en aceite 185°C exactamente 90 segundos. Servir caliente."]},
+    { n:"Tartar de Atún Rojo en Cucurucho", e:"🐟", g:"g3", sub:"Tartar de atún rojo sobre cucurucho crujiente de alga nori",
+      prep:20, coc:0, rac:20, dif:"Alta", mp:0.75, alergen:"Pescado, Soja, Sésamo",
+      ing:[["200g","Atún rojo fresco","lomo limpio"],["20ml","Salsa de soja",""],["10ml","Aceite de sésamo",""],["5g","Jengibre","rallado"],["10g","Tobiko naranja",""],["20ud","Cucuruchos de alga nori","5cm"],["Aguacate","para base",""]],
+      pasos:["Cortar el atún en daditos de 4mm. No triturar — textura es clave.","Marinar con soja, sésamo y jengibre. Reposar 5 min en frío.","Preparar los cucuruchos: hojas de nori cortadas en cuadrados, formar conos y sellar con grano de arroz.","Poner media cucharadita de aguacate en crema en la base del cucurucho.","Colocar el tartar encima. Coronar con tobiko naranja. Servir inmediatamente."]},
+    { n:"Canapé de Foie Mi-cuit con Higos y Oporto", e:"🍞", g:"g7", sub:"Escalopa de foie sobre brioche tostado con chutney de higo",
+      prep:12, coc:3, rac:20, dif:"Baja", mp:0.60, alergen:"Gluten, Leche, Frutos secos",
+      ing:[["200g","Foie mi-cuit de pato","en escalopas 10g"],["20 rebanadas","Pan brioche","mini 3x3cm"],["60g","Chutney de higos",""],["40ml","Reducción de Oporto",""],["Flor de sal","y cebollino",""]],
+      pasos:["Cortar el brioche en cuadrados de 3x3cm. Tostar en plancha 1 min por lado hasta dorado.","Extender una punta de chutney de higos sobre el pan caliente.","Colocar la escalopa de foie a temperatura ambiente encima.","Añadir 3 gotas de reducción de Oporto por pieza.","Terminar con flor de sal y un trocito de cebollino. Servir a temperatura ambiente."]},
+    { n:"Gamba Roja Málaga sobre Tosta de Nori", e:"🦐", g:"g1", sub:"Gamba roja cruda · guacamole de jalapeño · flor de sal",
+      prep:15, coc:0, rac:20, dif:"Media", mp:1.25, alergen:"Crustáceos, Algas",
+      ing:[["20ud","Gamba roja de Málaga","pelada cruda"],["1ud","Aguacate","maduro"],["5g","Jalapeño","sin semillas"],["20ml","Zumo de lima",""],["20 trozos","Tostada de alga nori","3x5cm"],["Flor de sal al gusto",""]],
+      pasos:["Machacar el aguacate con jalapeño picado, zumo de lima y sal hasta guacamole rústico.","Marcar levemente las gambas (20 seg solo por una cara) en plancha muy caliente con sal gorda.","Colocar una cucharadita de guacamole sobre cada tosta de nori.","Colocar la gamba encima con la cara marcada visible.","Terminar con flor de sal y microgreens. Servir inmediatamente."]},
+    { n:"Vasito de Gazpacho Andaluz con Viruta de Jamón", e:"🥣", g:"g1", sub:"Gazpacho espeso en vasito chupito · viruta ibérica · AOVE",
+      prep:10, coc:0, rac:20, dif:"Baja", mp:0.22, alergen:"Gluten, Sulfitos",
+      ing:[["500g","Tomate pera","muy maduro"],["50g","Pepino","pelado"],["30g","Pimiento verde",""],["1 diente","Ajo",""],["50ml","AOVE Hojiblanca",""],["15ml","Vinagre de Jerez",""],["40g","Viruta de jamón ibérico",""],["20 vasitos","Chupito transparente",""]],
+      pasos:["Triturar todos los vegetales con sal y vinagre hasta puré homogéneo.","Emulsionar con el AOVE en hilo fino sin dejar de batir.","Pasar por colador fino. Ajustar sal y acidez. Refrigerar mínimo 2h.","Verter en vasitos de chupito de 40ml con boquilla o cuchara.","Coronar con media viruta de jamón ibérico y 3 gotas de AOVE. Servir muy frío."]},
+    { n:"Blini de Salmón Ahumado y Crème Fraîche", e:"🐠", g:"g3", sub:"Blini de trigo sarraceno · salmón ahumado en frío · alcaparras",
+      prep:20, coc:15, rac:20, dif:"Media", mp:0.45, alergen:"Gluten, Pescado, Leche",
+      ing:[["150g","Harina de trigo sarraceno",""],["200ml","Leche",""],["1ud","Huevo",""],["5g","Levadura seca",""],["200g","Salmón ahumado en frío","en lonchas"],["80g","Crème fraîche",""],["20g","Alcaparras pequeñas",""],["Eneldo fresco",""]],
+      pasos:["Mezclar la harina con la levadura, el huevo y la leche tibia. Reposar 20 min.","Cocinar en plancha antiadherente con mantequilla: discos de 5cm, 1 min por cara. Reservar.","Poner media cucharadita de crème fraîche sobre cada blini frío.","Colocar media loncha de salmón ahumado encima formando una rosa.","Añadir 1 alcaparra encima y tallo de eneldo. Servir a temperatura ambiente."]},
+    { n:"Mini Brioche de Solomillo al Foie Caliente", e:"🥩", g:"g5", sub:"Solomillo rosado · escalopa de foie · reducción Pedro Ximénez",
+      prep:15, coc:8, rac:20, dif:"Alta", mp:1.10, alergen:"Gluten, Leche, Sulfitos",
+      ing:[["400g","Solomillo de ternera","medallones de 15g"],["100g","Foie fresco de pato","escalopas"],["20ud","Mini brioches","4cm cortados en 2"],["60ml","Reducción Pedro Ximénez",""],["Sal en escamas","y pimienta",""]],
+      pasos:["Tostar el interior de los brioches en plancha seca 30 seg. Reservar.","Salpimentar los medallones de solomillo. Plancha muy caliente 45 seg por cara. Reposar.","En la misma plancha, marcar el foie 20 seg por cara. Sazonar.","Montar: base brioche → medallón → escalopa de foie caliente.","Añadir 3 gotas de PX. Flor de sal encima. Servir inmediatamente."]},
+    { n:"Langostino en Tempura con Mayo de Wasabi", e:"🦐", g:"g2", sub:"Langostino XXL en tempura ligera de cerveza · mayonesa wasabi",
+      prep:15, coc:3, rac:20, dif:"Media", mp:0.85, alergen:"Gluten, Crustáceos, Huevo",
+      ing:[["20ud","Langostino XXL","pelado cola entera"],["150g","Harina de tempura",""],["200ml","Cerveza muy fría",""],["80g","Mayonesa",""],["10g","Pasta de wasabi",""],["Aceite de oliva suave","para freír",""]],
+      pasos:["Mezclar la harina de tempura con la cerveza fría sin batir en exceso — grumos ligeros son correctos.","Preparar la mayo de wasabi: mezclar la mayonesa con el wasabi. Reservar en manga.","Sujetar el langostino por la cola. Sumergir en la tempura fría dejando la cola libre.","Freír en aceite a 180°C durante 90 segundos hasta crujiente y dorado.","Servir en cuchara de degustación con punto de mayo wasabi y tobiko."]},
+    { n:"Cucharilla de Salmorejo con Huevo de Codorniz", e:"🍅", g:"g2", sub:"Salmorejo espeso · polvo de pimentón · yema de codorniz curada",
+      prep:12, coc:5, rac:20, dif:"Baja", mp:0.18, alergen:"Gluten, Huevo",
+      ing:[["400g","Tomate pera","muy maduro"],["100g","Pan telera","sin corteza"],["60ml","AOVE",""],["10ml","Vinagre de Jerez",""],["10ud","Huevo de codorniz",""],["5g","Pimentón de la Vera",""],["20 cucharillas","de degustación",""]],
+      pasos:["Cocer los huevos de codorniz 4 min. Enfriar en agua-hielo. Pelar y cortar por la mitad.","Triturar el tomate con el pan remojado, AOVE y vinagre hasta crema densa.","Rectificar sal. Refrigerar mínimo 1h.","Cargar las cucharillas de degustación con salmorejo con manga pastelera.","Colocar medio huevo de codorniz encima. Espolvorear pimentón con tamiz fino. Servir muy frío."]},
+    { n:"Gyoza de Gamba y Jengibre con Ponzu", e:"🥟", g:"g6", sub:"Gyoza japonesa artesanal rellena de gamba roja y jengibre fresco",
+      prep:30, coc:5, rac:20, dif:"Alta", mp:0.55, alergen:"Gluten, Crustáceos, Soja",
+      ing:[["20 obleas","Masa de gyoza",""],["200g","Gamba roja pelada","picada"],["10g","Jengibre fresco","rallado"],["2 dientes","Ajo","picado fino"],["20ml","Salsa de soja",""],["10ml","Aceite de sésamo",""],["60ml","Salsa ponzu","para mojar"]],
+      pasos:["Picar la gamba en daditos pequeños. Mezclar con jengibre, ajo, soja y sésamo.","Colocar media cucharadita de relleno en el centro de cada oblea.","Humedecer el borde. Plegar formando 5-6 pliegues en acordeón.","Calentar sartén con aceite. Dorar la base de las gyozas 2 min. Añadir 50ml agua y tapar 3 min.","Servir con ponzu para mojar. La base debe quedar crujiente y la parte superior tierna."]},
+    { n:"Mini Pavlova de Frutos del Bosque", e:"🍓", g:"g8", sub:"Merengue crujiente · chantilly · frutos rojos frescos · coulis",
+      prep:20, coc:90, rac:20, dif:"Media", mp:0.30, alergen:"Huevo, Leche",
+      ing:[["3 claras","Huevo","a temperatura ambiente"],["180g","Azúcar",""],["5g","Maizena",""],["5ml","Vinagre de vino blanco",""],["200ml","Nata 35%","para montar"],["100g","Frutos del bosque","frescos"],["30ml","Coulis de frambuesa",""]],
+      pasos:["Montar las claras a punto de nieve. Incorporar el azúcar en 3 veces batiendo hasta merengue brillante.","Añadir la maizena y el vinagre. Mezclar suave.","Formar discos de 5cm sobre papel de horno. Horno 100°C, 90 min. Enfriar dentro del horno.","Montar la nata fría con una pizca de azúcar.","Colocar una cucharadita de nata en cada merengue. Añadir frutos rojos y terminar con coulis."]},
+    { n:"Coulant de Chocolate Negro en Vasito", e:"🍫", g:"g5", sub:"Interior fundente 70% cacao · formato vasito individual · helado vainilla",
+      prep:15, coc:8, rac:20, dif:"Media", mp:0.38, alergen:"Gluten, Leche, Huevo",
+      ing:[["200g","Chocolate negro 70%","Valrhona"],["120g","Mantequilla",""],["4ud","Huevo entero",""],["4ud","Yema",""],["80g","Azúcar",""],["40g","Harina",""],["20 vasitos","mini aptos horno","50ml"]],
+      pasos:["Fundir chocolate con mantequilla al baño maría. Enfriar a 40°C.","Batir huevos, yemas y azúcar hasta blanquear. Añadir el chocolate fundido.","Incorporar la harina tamizada con movimientos suaves.","Verter en vasitos engrasados y enharinados hasta 2/3 de capacidad. Refrigerar hasta servicio.","Hornear a 200°C durante 7-8 minutos exactos. El centro debe quedar líquido. Servir en el vasito con una lámina de helado de vainilla."]},
+  ],
+};
+
+// ═══════════════════════════════════════════════
+// DATA — BEBIDAS
+// ═══════════════════════════════════════════════
+const B = [
+  { titulo:"Espumosos & Champagne", ico:"🍾", items:[
+    { n:"Cava Gramona III Lustros Brut Nature", r:"DO Cava · Penedès", d:"Macabeo/Xarel·lo, 60 meses crianza, elegante y complejo. Brioche y fruta blanca.", p:"9,50 € copa · 38 € botella" },
+    { n:"Champagne Moët & Chandon Brut Impérial", r:"Champagne, Francia", d:"Blend clásico, notas de brioche, melocotón blanco y cítricos.", p:"14 € copa · 68 € botella" },
+    { n:"Veuve Clicquot Yellow Label", r:"Champagne, Francia", d:"Potente y estructurado. Un icónico que no necesita presentación.", p:"16 € copa · 75 € botella" },
+    { n:"Freixenet Cordon Negro Brut", r:"DO Cava · Penedès", d:"Refrescante y versátil para aperitivo o maridaje ligero.", p:"5 € copa · 18 € botella" },
+  ]},
+  { titulo:"Vinos Blancos", ico:"🥂", items:[
+    { n:"Bentomiz Ariyanas", r:"DO Málaga", d:"Moscatel de Alejandría seco, cítrico y mineral. El mejor blanco de la Costa del Sol. Maridaje: gamba roja, boquerones.", p:"7 € copa · 28 € botella" },
+    { n:"Qué Bonito Cacareaba Blanco", r:"DO Jerez", d:"Palomino Fino sobre albariza. Salinidad, flores blancas y levadura fresca.", p:"6 € copa · 24 € botella" },
+    { n:"Pazo San Mauro Albariño", r:"DO Rías Baixas", d:"Fresco, frutal y cítrico. Perfecta acidez para marisco y pescados.", p:"6,50 € copa · 26 € botella" },
+    { n:"Martinsancho Verdejo", r:"DO Rueda", d:"Hierba verde, melocotón blanco y largo postgusto mineral.", p:"5,50 € copa · 22 € botella" },
+    { n:"Hugel Gewurztraminer Classic", r:"Alsacia, Francia", d:"Lichi, rosa y especias. Ideal para foie y quesos de pasta blanda.", p:"7,50 € copa · 30 € botella" },
+  ]},
+  { titulo:"Vinos Tintos", ico:"🍷", items:[
+    { n:"Sierra de Cártama Rojo de Málaga", r:"DO Málaga", d:"Syrah y Romé, frutos negros y pimienta. Carácter local, producción limitada.", p:"6,50 € copa · 26 € botella" },
+    { n:"La Rioja Alta Gran Reserva 890", r:"DOCa Rioja", d:"Tempranillo 100%, cuero, tabaco y frutos rojos secos. Icónico y longevo.", p:"18 € copa · 90 € botella" },
+    { n:"Flor de Pingus", r:"DO Ribera del Duero", d:"Tinto Fino, poderoso y elegante. La versión accesible de una leyenda.", p:"22 € copa · 110 € botella" },
+    { n:"Protos Crianza", r:"DO Ribera del Duero", d:"Tempranillo 12 meses en roble. Ciruelas negras y vainilla bien integradas.", p:"6 € copa · 24 € botella" },
+    { n:"Cune Reserva", r:"DOCa Rioja", d:"Clásico bien equilibrado. Fruta y madera integradas. Excelente relación calidad-precio.", p:"5,50 € copa · 22 € botella" },
+  ]},
+  { titulo:"Rosados, Jerez & Generosos", ico:"🌸", items:[
+    { n:"Muga Rosado", r:"DOCa Rioja", d:"Garnacha y Viura. Salmon intenso, fresa y guayaba. Fresco y mineral.", p:"6 € copa · 24 € botella" },
+    { n:"Tío Pepe Fino en Rama", r:"DO Jerez-Xérès", d:"Punzante, salino y seco. Con aceitunas o gambas al ajillo es insuperable.", p:"4,50 € copa" },
+    { n:"González Byass Leonor Palo Cortado", r:"DO Jerez", d:"Seco y elegante. Entre el fino y el amontillado. Nueces y naranja confitada.", p:"6 € copa" },
+    { n:"Pedro Ximénez Toro Albalá Don PX", r:"DO Montilla-Moriles", d:"Denso, raisins, chocolate negro y café. Vertido sobre helado de vainilla es excepcional.", p:"5,50 € copa" },
+  ]},
+  { titulo:"Cervezas", ico:"🍺", items:[
+    { n:"Victoria Málaga (caña / botellín)", r:"Málaga", d:"Lager rubia local, refrescante y ligera. Sabor característico malagueño. La cerveza de la Costa.", p:"Caña 2,50 € · Botellín 3,50 €" },
+    { n:"Estrella Damm", r:"Barcelona", d:"Lager premium. Medalla Monde Selection. Bien equilibrada.", p:"Caña 2,50 € · Botellín 3,50 €" },
+    { n:"Mahou Sin Gluten", r:"Madrid", d:"Lager sin gluten apta para celíacos. Mismo sabor que la original.", p:"Botellín 4 €" },
+    { n:"Cerveza Artesana IPA (rotación mensual)", r:"Andalucía", d:"Lúpulo aromático, tropical o cítrico según temporada. Pregunta por la selección del mes.", p:"Botellín 5,50 €" },
+  ]},
+  { titulo:"Cócteles de Autor", ico:"🍹", items:[
+    { n:"Brisa Mediterránea", r:"Signature", d:"Ron blanco, agua de coco, zumo de lima, menta fresca, ginger beer. El cóctel del verano en la Costa del Sol.", p:"9,50 €" },
+    { n:"Málaga Sour", r:"Signature", d:"Moscatel DO Málaga, bourbon, limón, clara de huevo y angostura. Suave y sorprendente.", p:"10 €" },
+    { n:"Aperol Spritz", r:"Clásico", d:"Aperol, cava brut, agua con gas y naranja. El aperitivo de moda.", p:"8,50 €" },
+    { n:"Mojito Andaluz", r:"Fusión", d:"Ron Havana 3 años, lima, hierba buena malagueña, azúcar de caña y soda.", p:"9 €" },
+    { n:"Negroni", r:"Clásico", d:"Ginebra, Campari, vermut rojo y twist de naranja. Perfecto antes de cenar.", p:"10 €" },
+    { n:"Espresso Martini", r:"Moderno", d:"Vodka, licor de café, espresso doble y crema de café. El digestivo de moda.", p:"10,50 €" },
+  ]},
+  { titulo:"Destilados & Espirituosos", ico:"🥃", items:[
+    { n:"Gin Tonic Premium (Hendrick's / Monkey 47)", r:"", d:"Con tónica artesana Fever-Tree, botánicos y garnish ad hoc. Consultar opciones.", p:"12 €" },
+    { n:"Whisky Macallan 12 años", r:"Speyside, Escocia", d:"Single malt, influencia de barricas de jerez. Naranja y especias. Solo o con hielo.", p:"14 €" },
+    { n:"Ron Diplomatico Reserva", r:"Venezuela", d:"Añejado en barricas de bourbon y jerez. Caramelo y frutas tropicales.", p:"10 €" },
+    { n:"Vermut Rojo Yzaguirre Reserva", r:"Terra Alta", d:"Con olivas gordales y chips de naranja. El aperitivo inevitable.", p:"5,50 €" },
+    { n:"Orujo de Galicia Santiago Apóstol", r:"Galicia", d:"Suave y aromático, con o sin café. El punto final perfecto.", p:"4,50 €" },
+  ]},
+  { titulo:"Sin Alcohol, Aguas & Cafés", ico:"🥤", items:[
+    { n:"Agua Mineral (Lanjarón / Font Vella)", r:"Sierra Nevada", d:"Natural o con gas. Vaso o botella pequeña / grande.", p:"Vaso 1,50 € · Botella 3 €" },
+    { n:"Refrescos & Tónicas", r:"", d:"Coca-Cola, Fanta, Tónica Fever-Tree, Bitter Kas. De grifo o botella premium.", p:"3 €" },
+    { n:"Zumo Natural Exprimido", r:"Málaga", d:"Naranja, zanahoria o naranja-jengibre. Exprimido en el momento.", p:"4,50 €" },
+    { n:"Café Espresso / Cortado / Americano", r:"Arábica Etiopía", d:"Mezcla de origen único, tostado artesanal. Leche ecológica.", p:"1,80 € / 2 € / 2,50 €" },
+    { n:"Cappuccino / Café Latte", r:"", d:"Con leche ecológica de vaca o alternativa vegetal (avena, soja, coco).", p:"3 € / 3,50 €" },
+    { n:"Infusiones de Temporada", r:"Andalucía", d:"Manzanilla malagueña, poleo, tila, jengibre-limón. Servidas en tetera.", p:"2,50 €" },
+  ]},
+];
+
+// ═══════════════════════════════════════════════
+// DATA — COSTES FIJOS
+// ═══════════════════════════════════════════════
+const CF = [
+  { c:"💼 Personal", d:"Salarios + SS + extras chef, cocineros, camareros, barra", mes:18000 },
+  { c:"🏠 Alquiler / Hipoteca", d:"Local zona turística Costa del Sol, 200-300 m²", mes:4000 },
+  { c:"⚡ Energía (gas + electricidad)", d:"Cocina industrial, climatización y cámaras frigoríficas", mes:2500 },
+  { c:"🧺 Lavandería y lencería", d:"Lavado de mantelería, servilletas y uniformes (servicio externo)", mes:1600 },
+  { c:"🍽️ Mermas, roturas y vajilla", d:"Deterioro de vajilla, cristalería y mermas no computadas en receta", mes:1600 },
+  { c:"🔧 Amortización de equipos", d:"Maquinaria de cocina, hornos, cámaras (10-15 años)", mes:900 },
+  { c:"🫧 Productos limpieza y lavavajillas", d:"Detergentes, lavavajillas industrial y productos APPCC", mes:900 },
+  { c:"🧹 Limpieza general y desinfección", d:"Empresa de limpieza + productos para cocina, sala y baños", mes:950 },
+  { c:"🍞 Pan, aceitunas y amenities de mesa", d:"Pan artesano diario, aceitunas, aperitivos de cortesía", mes:450 },
+  { c:"🔩 Mantenimiento preventivo", d:"Cocina, frío, climatización e instalaciones eléctricas", mes:500 },
+  { c:"📋 Asesoría laboral y contable", d:"Gestoría integral, declaraciones fiscales y trimestrales", mes:500 },
+  { c:"💳 Gastos financieros y bancarios", d:"Comisiones bancarias, TPV y tasas de cobro con tarjeta", mes:600 },
+  { c:"📣 Marketing y presencia digital", d:"Google Ads, RRSS, TripAdvisor Premium, fotografía gastronómica", mes:300 },
+  { c:"📡 Telecom, software y reservas", d:"Internet, TPV, ElTenedor/TheFork, gestión y reservas online", mes:200 },
+  { c:"🛡️ Seguros multirriesgo", d:"RC, incendio, robo y seguro de hostelería", mes:400 },
+  { c:"🏛️ Tasas municipales y licencias", d:"IBI, tasa de basura, licencia de actividad y terraza", mes:180 },
+  { c:"👕 Uniformes y vestuario", d:"Reposición anual de uniformes de sala y cocina", mes:120 },
+  { c:"📚 Formación y APPCC", d:"Cursos, manipulación alimentaria, formación obligatoria", mes:100 },
+];
+
+// ═══════════════════════════════════════════════
+// RENDER — CARDS
+// ═══════════════════════════════════════════════
+function diffClass(d) {
+  return { "Baja":"diff-baja", "Media":"diff-media", "Alta":"diff-alta" }[d] || "diff-media";
+}
+
+// ═══════════════════════════════════════════════
+// MAPA DE IMÁGENES — recetas → ruta JPG
+// ═══════════════════════════════════════════════
+const BASE_IMG = '../imagenes/platos/';
+const IMG_MAP = {
+  // Entrantes
+  "Gazpacho Andaluz":                 BASE_IMG + "entrantes/gazpacho_andaluz.jpg",
+  "Salmorejo Cordobés":               BASE_IMG + "entrantes/salmorejo_cordobes.jpg",
+  "Pulpo a la Gallega":               BASE_IMG + "entrantes/pulpo_gallega.jpg",
+  "Gambas al Ajillo":                 BASE_IMG + "entrantes/gambas_ajillo.jpg",
+  "Croquetas de Jamón Ibérico":       BASE_IMG + "entrantes/croquetas_jamon.jpg",
+  "Ensalada Gamba Roja y Aguacate":   BASE_IMG + "entrantes/ensalada_gamba_roja.jpg",
+  "Tataki de Atún Rojo":              BASE_IMG + "entrantes/tataki_atun_rojo.jpg",
+  "Carpaccio de Ternera":             BASE_IMG + "entrantes/carpaccio_ternera.jpg",
+  "Tostas de Foie con Higos":         BASE_IMG + "entrantes/tostas_foie_higos.jpg",
+  "Pimientos del Piquillo con Bacalao": BASE_IMG + "entrantes/piquillos_bacalao.jpg",
+  // Primeros
+  "Paella Valenciana":                BASE_IMG + "primeros/paella_valenciana.jpg",
+  "Arroz Negro con Sepia":            BASE_IMG + "primeros/arroz_negro_sepia.jpg",
+  "Risotto de Setas y Trufa":         BASE_IMG + "primeros/risotto_setas_trufa.jpg",
+  "Espaguetis con Almejas":           BASE_IMG + "primeros/espaguetis_almejas.jpg",
+  "Fideuà de Marisco":                BASE_IMG + "primeros/fideua_marisco.jpg",
+  "Gazpachuelo Malagueño":            BASE_IMG + "primeros/gazpachuelo_malagueno.jpg",
+  "Lentejas con Chorizo":             BASE_IMG + "primeros/lentejas_chorizo.jpg",
+  "Arroz con Bogavante":              BASE_IMG + "primeros/arroz_bogavante.jpg",
+  "Crema de Calabaza y Coco":         BASE_IMG + "primeros/crema_calabaza_coco.jpg",
+  "Sopa de Pescado Malagueña":        BASE_IMG + "primeros/sopa_pescado.jpg",
+  // Segundos
+  "Solomillo con Reducción de Rioja": BASE_IMG + "segundos/solomillo_rioja.jpg",
+  "Lubina al Horno":                  BASE_IMG + "segundos/lubina_horno.jpg",
+  "Dorada a la Sal":                  BASE_IMG + "segundos/dorada_sal.jpg",
+  "Secreto Ibérico con Patatas Bravas": BASE_IMG + "segundos/secreto_iberico.jpg",
+  "Carrillada en Vino Tinto":         BASE_IMG + "segundos/carrillada_vino_tinto.jpg",
+  "Gamba Roja a la Plancha":          BASE_IMG + "segundos/gamba_roja_plancha.jpg",
+  "Pulpo a la Brasa con Parmentier":  BASE_IMG + "segundos/pulpo_brasa_parmentier.jpg",
+  "Bacalao al Pil-Pil":               BASE_IMG + "segundos/bacalao_pilpil.jpg",
+  "Pato Confit con Naranja":          BASE_IMG + "segundos/pato_confit_naranja.jpg",
+  "Fritura Malagueña":                BASE_IMG + "segundos/fritura_malaguena.jpg",
+  // Cóctel de Pie (reutilizamos imágenes de las categorías afines)
+  "Croqueta Líquida de Jamón Ibérico":      BASE_IMG + "entrantes/croquetas_jamon.jpg",
+  "Tartar de Atún Rojo en Cucurucho":       BASE_IMG + "entrantes/tataki_atun_rojo.jpg",
+  "Canapé de Foie Mi-cuit con Higos y Oporto": BASE_IMG + "entrantes/tostas_foie_higos.jpg",
+  "Gamba Roja Málaga sobre Tosta de Nori":  BASE_IMG + "entrantes/gambas_ajillo.jpg",
+  "Vasito de Gazpacho Andaluz con Viruta de Jamón": BASE_IMG + "entrantes/gazpacho_andaluz.jpg",
+  "Blini de Salmón Ahumado y Crème Fraîche": BASE_IMG + "entrantes/carpaccio_ternera.jpg",
+  "Mini Brioche de Solomillo al Foie Caliente": BASE_IMG + "segundos/solomillo_rioja.jpg",
+  "Langostino en Tempura con Mayo de Wasabi": BASE_IMG + "entrantes/ensalada_gamba_roja.jpg",
+  "Cucharilla de Salmorejo con Huevo de Codorniz": BASE_IMG + "entrantes/salmorejo_cordobes.jpg",
+  "Gyoza de Gamba y Jengibre con Ponzu":    BASE_IMG + "entrantes/piquillos_bacalao.jpg",
+  "Mini Pavlova de Frutos del Bosque":      BASE_IMG + "postres/panna_cotta_rojos.jpg",
+  "Coulant de Chocolate Negro en Vasito":   BASE_IMG + "postres/coulant_chocolate.jpg",
+  // Postres
+  "Crema Catalana":                   BASE_IMG + "postres/crema_catalana.jpg",
+  "Tiramisú Clásico":                 BASE_IMG + "postres/tiramisu_clasico.jpg",
+  "Coulant de Chocolate":             BASE_IMG + "postres/coulant_chocolate.jpg",
+  "Tarta de Queso La Viña":           BASE_IMG + "postres/tarta_queso_vina.jpg",
+  "Panna Cotta con Frutos Rojos":     BASE_IMG + "postres/panna_cotta_rojos.jpg",
+  "Torrijas Caramelizadas":           BASE_IMG + "postres/torrijas_caramelizadas.jpg",
+  "Bienmesabe Malagueño":             BASE_IMG + "postres/bienmesabe_malagueno.jpg",
+  "Mousse de Chocolate Blanco":       BASE_IMG + "postres/mousse_choco_blanco.jpg",
+  "Flan de Huevo Casero":             BASE_IMG + "postres/flan_huevo_casero.jpg",
+  "Sorbete de Mango y Lima":          BASE_IMG + "postres/sorbete_mango_lima.jpg",
+};
+
+function renderRecipes(cat) {
+  var grid = document.getElementById('grid-' + cat);
+  if (!grid) return;
+  grid.innerHTML = '';
+  (R[cat] || []).forEach(function(r, i) {
+    var pvpMin = (r.mp / 0.35).toFixed(2);
+    var pvpMax = (r.mp / 0.28).toFixed(2);
+    var c = document.createElement('div');
+    c.className = 'card';
+    c.dataset.idx = i;
+    c.dataset.cat = cat;
+    c.dataset.search = (r.n + ' ' + r.sub + ' ' + (r.ing||[]).map(function(x){return x[1];}).join(' ')).toLowerCase();
+    var imgSrc = IMG_MAP[r.n];
+    c.innerHTML =
+      '<div class="card-thumb ' + r.g + '">' +
+        (imgSrc ? '<img src="' + imgSrc + '" alt="' + r.n + '" loading="lazy">' : '<span class="emoji">' + r.e + '</span>') +
+        (imgSrc ? '<span class="emoji-overlay">' + r.e + '</span>' : '') +
+        '<span class="card-difficulty ' + diffClass(r.dif) + '">' + r.dif + '</span>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<div class="card-name">' + r.n + '</div>' +
+        '<div class="card-sub">' + r.sub + '</div>' +
+        '<div class="card-chips">' +
+          (r.prep > 0 ? '<span class="chip">🔪 ' + r.prep + ' min</span>' : '') +
+          (r.coc > 0  ? '<span class="chip">🔥 ' + r.coc + ' min</span>' : '') +
+          '<span class="chip">👥 ' + r.rac + ' rac.</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-footer">' +
+        '<div class="card-cost">' +
+          '<div class="mp">Materia prima</div>' +
+          '<div class="num">' + r.mp.toFixed(2) + ' €</div>' +
+          '<div class="pvp">PVP: ' + pvpMin + ' – ' + pvpMax + ' €</div>' +
+        '</div>' +
+        '<button class="btn-view" onclick="openModal(\'' + cat + '\',' + i + ')">Ver receta →</button>' +
+      '</div>';
+    grid.appendChild(c);
+  });
+}
+
+function renderAll() {
+  ['entrantes','primeros','segundos','postres','coctel'].forEach(renderRecipes);
+}
+
+// ═══════════════════════════════════════════════
+// RENDER — BEBIDAS
+// ═══════════════════════════════════════════════
+function renderBebidas() {
+  var root = document.getElementById('bev-root');
+  root.innerHTML = '';
+  B.forEach(function(sec) {
+    var wrap = document.createElement('div');
+    wrap.className = 'bev-cat';
+    wrap.innerHTML = '<div class="bev-cat-title"><span>' + sec.ico + '</span>' + sec.titulo + '</div>';
+    var grid = document.createElement('div');
+    grid.className = 'bev-grid';
+    sec.items.forEach(function(it) {
+      var card = document.createElement('div');
+      card.className = 'bev-card';
+      card.innerHTML =
+        (it.r ? '<div class="bev-region">' + it.r + '</div>' : '') +
+        '<div class="bev-name">' + it.n + '</div>' +
+        '<div class="bev-desc">' + it.d + '</div>' +
+        '<div class="bev-price">' + it.p + '</div>';
+      grid.appendChild(card);
+    });
+    wrap.appendChild(grid);
+    root.appendChild(wrap);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// RENDER — COSTES
+// ═══════════════════════════════════════════════
+function calcCostes() {
+  var platos = parseFloat(document.getElementById('cPlatos').value) || 180;
+  var dias   = parseFloat(document.getElementById('cDias').value) || 25;
+  var mens   = parseFloat(document.getElementById('cMensual').value) || 45000;
+  var total  = platos * dias;
+  var baseSum = CF.reduce(function(a,c){return a+c.mes;},0);
+
+  var sumMes = 0, sumPlato = 0;
+  var tbody = document.getElementById('costsTbody');
+  tbody.innerHTML = '';
+
+  CF.forEach(function(cf) {
+    var m = cf.mes * (mens / baseSum);
+    var p = m / total;
+    var pct = (p / (mens / total)) * 100;
+    sumMes += m; sumPlato += p;
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><span class="concept">' + cf.c + '</span></td>' +
+      '<td><span class="desc">' + cf.d + '</span></td>' +
+      '<td class="amount">' + m.toFixed(0) + ' €</td>' +
+      '<td class="amount">' + p.toFixed(2) + ' €</td>' +
+      '<td class="pct">' + pct.toFixed(1) + ' %</td>';
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('costsTfoot').innerHTML =
+    '<tr>' +
+      '<td colspan="2"><strong>TOTAL COSTES FIJOS</strong></td>' +
+      '<td class="amount"><strong>' + sumMes.toFixed(0) + ' €/mes</strong></td>' +
+      '<td class="amount"><strong>' + sumPlato.toFixed(2) + ' €/plato</strong></td>' +
+      '<td class="pct"><strong>100 %</strong></td>' +
+    '</tr>';
+
+  var pvpMin28 = (sumPlato / 0.28).toFixed(2);
+  var pvpComp  = ((sumPlato + 3.50) / 0.30).toFixed(2);
+  document.getElementById('kpiStrip').innerHTML =
+    '<div class="kpi"><div class="lbl">Platos / mes</div><div class="val">' + total.toLocaleString() + '</div><div class="sub">platos × días</div></div>' +
+    '<div class="kpi highlight"><div class="lbl">Coste fijo / plato</div><div class="val">' + sumPlato.toFixed(2) + ' €</div><div class="sub">referencia escandallo</div></div>' +
+    '<div class="kpi"><div class="lbl">PVP mínimo técnico</div><div class="val">' + pvpMin28 + ' €</div><div class="sub">food cost 28%</div></div>' +
+    '<div class="kpi"><div class="lbl">PVP coste completo</div><div class="val">' + pvpComp + ' €</div><div class="sub">MP 3,50€ + fijos, margen 30%</div></div>';
+}
+
+// ═══════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════
+function openModal(cat, idx) {
+  var r = R[cat][idx];
+  var isCoctel = cat === 'coctel';
+  var mpLote = isCoctel ? (r.mp * r.rac) : r.mp;
+  var pvpA = (mpLote / 0.35).toFixed(2);
+  var pvpB = (mpLote / 0.30).toFixed(2);
+  var pvpC = (mpLote / 0.28).toFixed(2);
+  var racLabel = isCoctel ? 'Piezas/lote' : 'Raciones';
+
+  var ings = (r.ing||[]).map(function(row) {
+    return '<div class="ing-row"><span class="qty">' + row[0] + '</span><span class="name">' + row[1] + '</span><span class="note">' + row[2] + '</span></div>';
+  }).join('');
+  var steps = (r.pasos||[]).map(function(p) { return '<li>' + p + '</li>'; }).join('');
+
+  var escandalloHTML;
+  if (isCoctel) {
+    var pvpSugerido = ((r.mp * r.rac + 3.50) / 0.35).toFixed(2);
+    var costeMO = (r.mp * 1.4).toFixed(2);
+    escandalloHTML =
+      '<div class="esc-row"><span class="label">Coste MP / pieza</span><span class="val">' + r.mp.toFixed(2) + ' €</span></div>' +
+      '<div class="esc-row" style="border-top:1px solid rgba(201,168,76,0.15);padding-top:8px;margin-top:4px">' +
+        '<span class="label">Coste MP lote (' + r.rac + ' piezas)</span><span class="val">' + mpLote.toFixed(2) + ' €</span>' +
+      '</div>' +
+      '<div class="esc-pvp-grid" style="margin-top:12px">' +
+        '<div class="pvp-cell"><div class="fc">PVP lote · fc 35%</div><div class="price">' + pvpA + ' €</div></div>' +
+        '<div class="pvp-cell highlight"><div class="fc">PVP lote · fc 30% ★</div><div class="price">' + pvpB + ' €</div></div>' +
+        '<div class="pvp-cell"><div class="fc">PVP lote · fc 28%</div><div class="price">' + pvpC + ' €</div></div>' +
+      '</div>' +
+      '<div class="esc-note">Precio/pax evento (20 piezas): <strong style="color:var(--gold)">' + pvpSugerido + ' €/pax</strong>' +
+        ' · Coste pieza c/MO: <strong>~' + costeMO + ' €</strong></div>';
+  } else {
+    var pvpCompleto = ((r.mp + 7.49) / 0.50).toFixed(2);
+    var fcReal = ((r.mp / ((r.mp + 7.49) / 0.50)) * 100).toFixed(1);
+    escandalloHTML =
+      '<div class="esc-row"><span class="label">Coste materia prima / ración</span><span class="val">' + r.mp.toFixed(2) + ' €</span></div>' +
+      '<div class="esc-pvp-grid">' +
+        '<div class="pvp-cell"><div class="fc">Food cost 35%</div><div class="price">' + pvpA + ' €</div></div>' +
+        '<div class="pvp-cell highlight"><div class="fc">Food cost 30% ★</div><div class="price">' + pvpB + ' €</div></div>' +
+        '<div class="pvp-cell"><div class="fc">Food cost 28%</div><div class="price">' + pvpC + ' €</div></div>' +
+      '</div>' +
+      '<div class="esc-note">PVP coste completo (MP + fijos ~7,49€, margen 30%): ' +
+        '<strong style="color:var(--gold);font-size:1.1rem">' + pvpCompleto + ' €</strong>' +
+        ' · Food cost real: <strong>' + fcReal + '%</strong></div>';
+  }
+
+  var modalImg = IMG_MAP[r.n];
+  document.getElementById('modal').innerHTML =
+    '<div class="modal-hero ' + r.g + '">' +
+      (modalImg ? '<img class="modal-hero-img" src="' + modalImg + '" alt="' + r.n.replace(/"/g,"&quot;") + '">' : '<div class="big-emoji">' + r.e + '</div>') +
+      '<div class="modal-hero-overlay"></div>' +
+      (modalImg ? '<div class="modal-hero-emoji">' + r.e + '</div>' : '') +
+      '<button class="modal-close" onclick="closeModal()">✕</button>' +
+    '</div>' +
+    '<div class="modal-body">' +
+      '<div class="modal-title">' + r.n + '</div>' +
+      '<div class="modal-subtitle">' + r.sub + '</div>' +
+      '<span class="modal-alergen">⚠ Alérgenos: ' + (r.alergen || 'Sin alérgenos principales') + '</span>' +
+      '<div class="modal-times">' +
+        '<div class="time-box"><div class="tv">' + r.prep + '\'</div><div class="tl">Preparación</div></div>' +
+        '<div class="time-box"><div class="tv">' + r.coc + '\'</div><div class="tl">Cocción</div></div>' +
+        '<div class="time-box"><div class="tv">' + (r.prep+r.coc) + '\'</div><div class="tl">Total</div></div>' +
+        '<div class="time-box"><div class="tv">' + r.rac + '</div><div class="tl">' + racLabel + '</div></div>' +
+        '<div class="time-box"><div class="tv ' + diffClass(r.dif) + '">' + r.dif + '</div><div class="tl">Dificultad</div></div>' +
+      '</div>' +
+      '<hr class="modal-divider">' +
+      '<div class="modal-section-title">🧵 Ingredientes</div>' +
+      '<div class="ing-list">' + ings + '</div>' +
+      '<hr class="modal-divider">' +
+      '<div class="modal-section-title">👨‍🍳 Elaboración paso a paso</div>' +
+      '<ol class="steps">' + steps + '</ol>' +
+      '<hr class="modal-divider">' +
+      '<div class="modal-section-title">💰 Escandallo · Materia Prima</div>' +
+      '<div class="escandallo-box">' + escandalloHTML + '</div>' +
+    '</div>';
+
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeOverlay(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+document.getElementById('tabsNav').addEventListener('click', function(e) {
+  var btn = e.target.closest('.tab');
+  if (!btn) return;
+  var sec = btn.dataset.sec;
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('sec-' + sec).classList.add('active');
+  clearSearch();
+});
+
+// ═══════════════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════════════
+function doSearch(term) {
+  var t = term.toLowerCase().trim();
+  if (!t) { clearSearch(); return; }
+  document.querySelectorAll('.tab').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+  ['entrantes','primeros','segundos','postres','coctel'].forEach(function(cat) {
+    document.getElementById('sec-' + cat).classList.add('active');
+  });
+  document.querySelectorAll('.card').forEach(function(c) {
+    c.style.display = (c.dataset.search && c.dataset.search.includes(t)) ? '' : 'none';
+  });
+}
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.card').forEach(function(c) { c.style.display = ''; });
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+renderAll();
+renderBebidas();
+calcCostes();
+</script>
+</body>
+</html>
