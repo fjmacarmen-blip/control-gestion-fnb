@@ -5,42 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diseña tu Evento · Presupuesto Personalizado</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════════════
-   VARIABLES & RESET
+   VARIABLES & RESET — Navy Boutique (paleta del CV)
 ══════════════════════════════════════════════════ */
 :root {
+  /* ── Navy + Gold ── */
+  --bg:         #0a1628;
+  --card:       #0f2040;
+  --card2:      #122b54;
+  --card3:      #1a3666;
   --gold:       #c9a84c;
-  --gold-light: #e8c97a;
-  --gold-dim:   rgba(201,168,76,.12);
+  --gold-light: #e8c96a;
+  --gold-deep:  #9d8237;
+  --gold-dim:   rgba(201,168,76,.10);
   --gold-glow:  rgba(201,168,76,.25);
-  --cream:      #f5f0e8;
-  --dark:       #0a0a0a;
-  --dark2:      #111111;
-  --dark3:      #191919;
-  --dark4:      #222222;
+  --gold-border:rgba(201,168,76,.30);
+  --text:       #e8eaf0;
+  --text-soft:  #c4cad6;
+  --muted:      #7a8499;
+  --green:      #22c55e;
+  --red:        #b5341c;
   --glass:      rgba(255,255,255,.04);
   --glass2:     rgba(255,255,255,.07);
-  --border:     rgba(255,255,255,.08);
+  --border:     rgba(255,255,255,.07);
   --border2:    rgba(255,255,255,.13);
-  --text:       #e2ddd5;
-  --muted:      #78736a;
-  --red:        #b5341c;
-  --green:      #2d7a4f;
-  --r: 16px;
-  --shadow: 0 8px 40px rgba(0,0,0,.55);
-  --t: all .28s cubic-bezier(.4,0,.2,1);
+  /* aliases retro-compat */
+  --cream:      #e8eaf0;
+  --dark:       #0a1628;
+  --dark2:      #0f2040;
+  --dark3:      #122b54;
+  --dark4:      #1a3666;
+  --r:          16px;
+  --shadow:     0 8px 40px rgba(0,0,0,.55);
+  --t:          all .28s cubic-bezier(.4,0,.2,1);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
+img{display:block; max-width:100%;}
 body{
-  font-family:'Inter',system-ui,sans-serif;
-  background:var(--dark); color:var(--text);
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(201,168,76,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 85% 100%, rgba(201,168,76,.03) 0%, transparent 55%);
+  background-attachment:fixed;
+  color:var(--text);
   min-height:100vh; overflow-x:hidden;
 }
 ::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-track{background:var(--dark2);}
+::-webkit-scrollbar-track{background:var(--card);}
 ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
 
 /* ══════════════════════════════════════════════════
@@ -58,7 +73,7 @@ body{
    HEADER
 ══════════════════════════════════════════════════ */
 .app-header {
-  background:rgba(10,10,10,.97); backdrop-filter:blur(20px);
+  background:rgba(10,22,40,.94); backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
   padding:16px 36px;
   display:flex; align-items:center; justify-content:space-between;
@@ -71,7 +86,7 @@ body{
   display:flex; align-items:center; justify-content:center;
   font-size:1.2rem; box-shadow:0 4px 14px var(--gold-glow);
 }
-.hlogo-text h1 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--cream); }
+.hlogo-text h1 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--cream); }
 .hlogo-text p  { font-size:.68rem; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; }
 .hpax { display:flex; align-items:center; gap:10px; }
 .pax-label { font-size:.75rem; color:var(--muted); }
@@ -87,7 +102,7 @@ body{
 .pax-num {
   width:44px; height:34px; background:none; border:none; border-left:1px solid var(--border); border-right:1px solid var(--border);
   color:var(--cream); font-size:.95rem; font-weight:600; text-align:center;
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
 }
 .pax-num:focus { outline:none; }
 
@@ -132,7 +147,7 @@ body{
   display:flex; align-items:center; gap:8px; margin-bottom:10px;
 }
 .step-eyebrow::before { content:''; width:24px; height:1px; background:var(--gold); }
-.step-head h2 { font-family:'Playfair Display',serif; font-size:2rem; color:var(--cream); line-height:1.2; }
+.step-head h2 { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--cream); line-height:1.2; }
 .step-head p  { color:var(--muted); font-size:.88rem; margin-top:8px; line-height:1.7; }
 
 /* ══════════════════════════════════════════════════
@@ -169,7 +184,7 @@ body{
 .sel-card.selected .sel-check::after { content:'✓'; font-weight:700; }
 
 .sel-icon { font-size:2.4rem; margin-bottom:10px; display:block; }
-.sel-name { font-family:'Playfair Display',serif; font-size:1rem; color:var(--cream); margin-bottom:4px; font-weight:600; }
+.sel-name { font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--cream); margin-bottom:4px; font-weight:600; }
 .sel-desc { font-size:.75rem; color:var(--muted); line-height:1.6; margin-bottom:10px; }
 .sel-price { font-size:.88rem; color:var(--gold); font-weight:600; }
 .sel-price-note { font-size:.7rem; color:var(--muted); }
@@ -191,7 +206,7 @@ body{
   filter:drop-shadow(0 3px 8px rgba(0,0,0,0.7)); }
 .pkg-thumb::after {
   content:''; position:absolute; bottom:0; left:0; right:0; height:55%;
-  background:linear-gradient(transparent,rgba(10,10,10,0.8)); z-index:1;
+  background:linear-gradient(transparent,rgba(10,22,40,0.65)); z-index:1;
 }
 
 /* Event type cards with image */
@@ -209,7 +224,7 @@ body{
 .sel-card.evt-img:hover .evt-thumb img { transform:scale(1.07); }
 .evt-thumb::after {
   content:''; position:absolute; bottom:0; left:0; right:0; height:60%;
-  background:linear-gradient(transparent,rgba(10,10,10,0.85)); z-index:1;
+  background:linear-gradient(transparent,rgba(10,22,40,0.65)); z-index:1;
 }
 .evt-thumb-icon {
   position:absolute; bottom:8px; left:12px; z-index:3;
@@ -260,7 +275,7 @@ body{
    SUBSECTION TITLE
 ══════════════════════════════════════════════════ */
 .sub-title {
-  font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--cream);
+  font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:var(--cream);
   margin:32px 0 16px; padding-bottom:10px; border-bottom:1px solid var(--border);
   display:flex; align-items:center; gap:10px;
 }
@@ -275,7 +290,7 @@ body{
 .form-group input, .form-group select, .form-group textarea {
   width:100%; padding:11px 14px;
   background:var(--dark3); border:1px solid var(--border2);
-  border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:.9rem;
+  border-radius:10px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:.9rem;
   outline:none; transition:var(--t);
 }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
@@ -325,7 +340,7 @@ body{
   margin-top:40px; padding-top:24px; border-top:1px solid var(--border);
 }
 .btn-prev, .btn-next {
-  padding:12px 28px; border-radius:10px; font-family:'Inter',sans-serif;
+  padding:12px 28px; border-radius:10px; font-family:'DM Sans',sans-serif;
   font-size:.9rem; font-weight:600; cursor:pointer; transition:var(--t);
   display:flex; align-items:center; gap:8px; border:none;
 }
@@ -333,7 +348,7 @@ body{
 .btn-prev:hover { color:var(--text); border-color:var(--text); }
 .btn-next {
   background:linear-gradient(135deg,var(--gold),#8b5e1a);
-  color:#0a0a0a;
+  color:var(--bg);
 }
 .btn-next:hover { transform:translateX(3px); box-shadow:0 4px 18px var(--gold-glow); }
 .step-progress-text { font-size:.8rem; color:var(--muted); }
@@ -346,7 +361,7 @@ body{
   border-bottom:1px solid var(--border);
 }
 .side-title {
-  font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--cream);
+  font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--cream);
   margin-bottom:4px;
 }
 .side-pax { font-size:.75rem; color:var(--muted); }
@@ -356,7 +371,7 @@ body{
 }
 .total-lbl { font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
 .total-num {
-  font-family:'Playfair Display',serif; font-size:2.4rem;
+  font-family:'Cormorant Garamond',serif; font-size:2.4rem;
   color:var(--gold); font-weight:700; line-height:1;
 }
 .total-sub { font-size:.72rem; color:var(--muted); margin-top:6px; }
@@ -392,14 +407,14 @@ body{
 .btn-presupuesto {
   width:100%; padding:13px; border-radius:10px;
   background:linear-gradient(135deg,var(--gold),#8b5e1a);
-  color:#0a0a0a; font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+  color:var(--bg); font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:700;
   border:none; cursor:pointer; transition:var(--t); letter-spacing:.3px;
 }
 .btn-presupuesto:hover { box-shadow:0 6px 24px var(--gold-glow); transform:translateY(-1px); }
 .btn-print {
   width:100%; padding:10px; border-radius:10px; margin-top:8px;
   background:var(--dark3); color:var(--muted); border:1px solid var(--border2);
-  font-family:'Inter',sans-serif; font-size:.82rem; cursor:pointer; transition:var(--t);
+  font-family:'DM Sans',sans-serif; font-size:.82rem; cursor:pointer; transition:var(--t);
 }
 .btn-print:hover { color:var(--text); border-color:var(--text); }
 
@@ -410,7 +425,7 @@ body{
 .final-card {
   background:var(--dark3); border:1px solid var(--border); border-radius:14px; padding:20px;
 }
-.final-card h3 { font-family:'Playfair Display',serif; font-size:.95rem; color:var(--gold); margin-bottom:12px; }
+.final-card h3 { font-family:'Cormorant Garamond',serif; font-size:.95rem; color:var(--gold); margin-bottom:12px; }
 .final-row { display:flex; justify-content:space-between; font-size:.82rem; padding:5px 0; border-bottom:1px solid rgba(255,255,255,.04); }
 .final-row:last-child { border-bottom:none; }
 .final-row .fn { color:var(--muted); }
@@ -422,14 +437,14 @@ body{
 }
 .ftc-lbl { font-size:.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin-bottom:10px; }
 .ftc-num {
-  font-family:'Playfair Display',serif; font-size:3rem; color:var(--gold);
+  font-family:'Cormorant Garamond',serif; font-size:3rem; color:var(--gold);
   font-weight:700; line-height:1;
 }
 .ftc-pax { font-size:.85rem; color:var(--muted); margin-top:8px; }
 .ftc-ref { font-size:.75rem; color:var(--muted); margin-top:6px; font-style:italic; }
 
 .client-form { background:var(--dark3); border:1px solid var(--border); border-radius:14px; padding:24px; margin-bottom:20px; }
-.client-form h3 { font-family:'Playfair Display',serif; font-size:1rem; color:var(--cream); margin-bottom:18px; }
+.client-form h3 { font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--cream); margin-bottom:18px; }
 
 /* ══════════════════════════════════════════════════
    SPECIAL: FLORES PICKER
@@ -482,15 +497,76 @@ body{
   margin-bottom:20px;
 }
 .nota-box strong { color:var(--gold); }
-.g1{background:linear-gradient(135deg,#7f1d1d,#b91c1c);}
-.g2{background:linear-gradient(135deg,#431407,#c2410c);}
-.g3{background:linear-gradient(135deg,#1e3a5f,#1d4ed8);}
-.g4{background:linear-gradient(135deg,#14532d,#15803d);}
-.g5{background:linear-gradient(135deg,#3b0764,#7c3aed);}
-.g6{background:linear-gradient(135deg,#134e4a,#0f766e);}
-.g7{background:linear-gradient(135deg,#713f12,#d97706);}
-.g8{background:linear-gradient(135deg,#831843,#db2777);}
-.g9{background:linear-gradient(135deg,#1e1b4b,#4338ca);}
+/* Gradient placeholders armonizados a navy */
+.g1, .g2, .g3, .g4, .g5, .g6, .g7, .g8, .g9 { background:linear-gradient(135deg,var(--card2),var(--card)); }
+.g1{background:linear-gradient(135deg,#1a2640,#0f2040);}
+.g2{background:linear-gradient(135deg,#1f2c4c,#122b54);}
+.g3{background:linear-gradient(135deg,#142848,#0f2040);}
+.g4{background:linear-gradient(135deg,#1a3666,#122b54);}
+.g5{background:linear-gradient(135deg,#16294a,#0a1628);}
+.g6{background:linear-gradient(135deg,#1c3358,#122b54);}
+.g7{background:linear-gradient(135deg,#233d6b,#1a3666);}
+.g8{background:linear-gradient(135deg,#182d52,#0f2040);}
+.g9{background:linear-gradient(135deg,#1d3360,#122b54);}
+
+/* ════════════════════════════════════════
+   CÓCTEL DETALLADO (sección informativa cuando se elige paquete cóctel)
+══════════════════════════════════════════ */
+.ck-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:20px;
+}
+.ck-block {
+  background:var(--card); border:1px solid var(--border); border-radius:14px;
+  padding:22px;
+}
+.ck-head {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem; color:var(--gold);
+  margin-bottom:14px;
+  display:flex; align-items:center; gap:10px;
+  font-weight:600;
+}
+.ck-head::after {
+  content:''; flex:1; height:1px;
+  background:linear-gradient(to right, var(--gold-border), transparent);
+}
+.ck-item {
+  padding:9px 0; border-bottom:1px solid var(--border);
+}
+.ck-item:last-child { border-bottom:none; }
+.ck-name {
+  font-size:.85rem; color:var(--cream); margin-bottom:3px;
+  font-weight:500; line-height:1.35;
+}
+.ck-desc {
+  font-size:.74rem; color:var(--muted); line-height:1.45;
+}
+.ck-section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem; color:var(--cream); font-weight:600;
+  margin:32px 0 14px;
+  display:flex; align-items:center; gap:14px;
+}
+.ck-stations {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:14px;
+}
+.ck-station {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:12px; padding:18px; text-align:center;
+  transition:var(--t);
+}
+.ck-station:hover { border-color:var(--gold-border); background:var(--card2); }
+.ck-station-ico { font-size:1.8rem; margin-bottom:8px; }
+.ck-station-name {
+  font-size:.82rem; color:var(--cream);
+  margin-bottom:4px; font-weight:600;
+}
+.ck-station-desc { font-size:.72rem; color:var(--muted); line-height:1.5; }
+@media(max-width:760px){
+  .ck-grid { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
@@ -599,31 +675,77 @@ body{
       </div>
 
       <div id="coctelInfoBox" style="display:none;margin-top:28px;">
-        <div class="sub-title">🥂 Detalle del Cóctel de Pie seleccionado</div>
-        <div class="nota-box" style="border-color:rgba(201,168,76,.35);background:rgba(201,168,76,.05);">
+        <div class="sub-title">🥂 Detalle de la oferta · Cóctel de Pie</div>
+        <div class="nota-box" style="border-color:var(--gold-border);background:var(--gold-dim);">
           <strong style="color:var(--gold);">Cóctel de pie · Sin asignación de mesa</strong><br>
-          El cóctel de pie permite libertad total de movimiento para tus invitados. Perfecto para networking, recepciones y eventos donde la conversación es protagonista. El personal de sala circula continuamente con bandejas de finger food. Puedes completar el evento con opciones de animación, flores y montaje en el paso siguiente.
+          El cóctel de pie permite libertad total de movimiento para tus invitados. Perfecto para networking, recepciones y eventos donde la conversación es protagonista. El personal de sala circula continuamente con bandejas de finger food.
         </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;">
-          <div style="background:var(--dark4);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
-            <div style="font-size:1.8rem;margin-bottom:6px;">🧊</div>
-            <div style="font-size:.8rem;color:var(--cream);font-weight:600;margin-bottom:4px;">Finger Food Frío</div>
-            <div style="font-size:.72rem;color:var(--muted);">Tataki · Foie · Gamba roja · Gazpacho · Ostras · Jamón ibérico</div>
+
+        <!-- Finger Food Frío + Caliente -->
+        <div class="ck-grid">
+          <div class="ck-block">
+            <div class="ck-head">🧊 Finger Food Frío</div>
+            <div class="ck-item"><div class="ck-name">Tartar de atún rojo y aguacate en cucurucho crujiente</div><div class="ck-desc">Atún rojo de almadraba · wasabi · tobiko naranja</div></div>
+            <div class="ck-item"><div class="ck-name">Canapé de foie mi-cuit con chutney de mango y higo</div><div class="ck-desc">Foie de pato · pan brioche tostado · reducción de Oporto</div></div>
+            <div class="ck-item"><div class="ck-name">Gamba roja de Málaga sobre tosta de alga nori</div><div class="ck-desc">Gamba roja cruda · guacamole · flor de sal · limón</div></div>
+            <div class="ck-item"><div class="ck-name">Gazpacho andaluz en vasito con jamón ibérico</div><div class="ck-desc">Tomate pera · AOVE Hojiblanca · viruta de bellota</div></div>
+            <div class="ck-item"><div class="ck-name">Blini con salmón ahumado y crème fraîche</div><div class="ck-desc">Salmón noruego en frío · alcaparras · eneldo</div></div>
+            <div class="ck-item"><div class="ck-name">Montadito de ventresca de atún con cherry y albahaca</div><div class="ck-desc">Ventresca en aceite · cherry confitado</div></div>
+            <div class="ck-item"><div class="ck-name">Cucharilla de salmorejo con huevo de codorniz</div><div class="ck-desc">Salmorejo espeso · pimentón de la Vera</div></div>
+            <div class="ck-item"><div class="ck-name">Brocheta de manchego con uva moscatel y miel</div><div class="ck-desc">Manchego 12 meses · uva de Málaga · miel del campo</div></div>
+            <div class="ck-item"><div class="ck-name">Jamón ibérico de bellota en cucurucho de pan</div><div class="ck-desc">100% ibérico de bellota · pan de masa madre</div></div>
+            <div class="ck-item"><div class="ck-name">Ostras de Galicia con granizado de pepino y vodka</div><div class="ck-desc">Ostras finas nº3 · limón · Tabasco</div></div>
           </div>
-          <div style="background:var(--dark4);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
-            <div style="font-size:1.8rem;margin-bottom:6px;">🔥</div>
-            <div style="font-size:.8rem;color:var(--cream);font-weight:600;margin-bottom:4px;">Finger Food Caliente</div>
-            <div style="font-size:.72rem;color:var(--muted);">Croquetas · Solomillo foie · Langostino tempura · Niguiri llama</div>
-          </div>
-          <div style="background:var(--dark4);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
-            <div style="font-size:1.8rem;margin-bottom:6px;">🍮</div>
-            <div style="font-size:.8rem;color:var(--cream);font-weight:600;margin-bottom:4px;">Mini Postres</div>
-            <div style="font-size:.72rem;color:var(--muted);">Coulant · Bienmesabe · Macarón · Crema catalana · Panna cotta</div>
+
+          <div class="ck-block">
+            <div class="ck-head">🔥 Finger Food Caliente</div>
+            <div class="ck-item"><div class="ck-name">Croqueta líquida de jamón ibérico de bellota</div><div class="ck-desc">Bechamel densa · jamón bellota · empanado fino</div></div>
+            <div class="ck-item"><div class="ck-name">Croqueta de boletus y trufa negra</div><div class="ck-desc">Boletus edulis · trufa melanosporum · parmesano</div></div>
+            <div class="ck-item"><div class="ck-name">Montadito de solomillo con foie caliente y PX</div><div class="ck-desc">Solomillo rosado · escalopa de foie · pan de sésamo</div></div>
+            <div class="ck-item"><div class="ck-name">Mini brioche de pulled pork ibérico</div><div class="ck-desc">Cerdo ibérico 12h baja temperatura · cebolla caramelizada</div></div>
+            <div class="ck-item"><div class="ck-name">Langostino en tempura con mayo de wasabi</div><div class="ck-desc">Langostino XXL · tempura ligera · tobiko</div></div>
+            <div class="ck-item"><div class="ck-name">Niguiri de atún rojo marcado a la llama</div><div class="ck-desc">Arroz de sushi · atún rojo · ponzu · cebollino</div></div>
+            <div class="ck-item"><div class="ck-name">Buñuelo de bacalao con alioli negro de tinta</div><div class="ck-desc">Bacalao desalado · masa airada · tinta de calamar</div></div>
+            <div class="ck-item"><div class="ck-name">Mini empanada de pisto andaluz con huevo de codorniz</div><div class="ck-desc">Masa hojaldrada · pisto malagueño · yema</div></div>
+            <div class="ck-item"><div class="ck-name">Gyoza de gambas y jengibre con ponzu</div><div class="ck-desc">Masa artesanal · gamba roja · yuzu</div></div>
+            <div class="ck-item"><div class="ck-name">Pimiento de Padrón con brandada de bacalao</div><div class="ck-desc">Pimiento en tempura · brandada cremosa</div></div>
           </div>
         </div>
-        <div style="margin-top:14px;padding:12px 16px;background:var(--dark4);border-radius:10px;border:1px solid var(--border);font-size:.78rem;color:var(--muted);">
-          📋 <strong style="color:var(--cream);">Estaciones en vivo disponibles</strong> en paquete Cóctel Miramar (38€/pax):
-          Carving de jamón ibérico · Barra de sushi · Pasta fresca · Wok asiático · Tabla de quesos · Barra de ostras · Ceviche bar
+
+        <!-- Estaciones en vivo -->
+        <div class="ck-section-title">🍳 Estaciones en Vivo <span style="font-weight:400;color:var(--muted);font-size:.78rem;">— A elección según paquete</span></div>
+        <div class="ck-stations">
+          <div class="ck-station"><div class="ck-station-ico">🥩</div><div class="ck-station-name">Carving de Jamón Ibérico</div><div class="ck-station-desc">Maestro cortador · 100% bellota D.O.P. Guijuelo</div></div>
+          <div class="ck-station"><div class="ck-station-ico">🍝</div><div class="ck-station-name">Pasta Fresca en Vivo</div><div class="ck-station-desc">Espaguetis carbonara · Risotto de boletus · Tagliolini trufa</div></div>
+          <div class="ck-station"><div class="ck-station-ico">🍣</div><div class="ck-station-name">Barra de Sushi</div><div class="ck-station-desc">Maestro sushiman · Niguiris, maki, uramaki · Ostras y gamba</div></div>
+          <div class="ck-station"><div class="ck-station-ico">🥘</div><div class="ck-station-name">Wok Asiático</div><div class="ck-station-desc">Fideos · Pollo teriyaki · Gambas salsa ostra · Verduras wok</div></div>
+          <div class="ck-station"><div class="ck-station-ico">🧀</div><div class="ck-station-name">Tabla de Quesos y Embutidos</div><div class="ck-station-desc">15 quesos · Embutidos ibéricos · Mermeladas y frutos secos</div></div>
+          <div class="ck-station"><div class="ck-station-ico">🦪</div><div class="ck-station-name">Barra de Ostras y Mariscos</div><div class="ck-station-desc">Ostras de Galicia · Gambas · Navajas · Berberechos</div></div>
+          <div class="ck-station"><div class="ck-station-ico">🍕</div><div class="ck-station-name">Pizzas al Horno de Leña</div><div class="ck-station-desc">Masa madre 48h · Margherita · Trufa y parmesano</div></div>
+          <div class="ck-station"><div class="ck-station-ico">🫙</div><div class="ck-station-name">Ceviche Bar</div><div class="ck-station-desc">Lenguado · Leche de tigre · Maíz morado · Ají amarillo</div></div>
+        </div>
+
+        <!-- Mini postres -->
+        <div class="ck-section-title">🍮 Mesa de Finger Desserts</div>
+        <div class="ck-grid">
+          <div class="ck-block">
+            <div class="ck-head" style="font-size:.85rem;">🍫 Dulces de Autor</div>
+            <div class="ck-item"><div class="ck-name">Coulant de chocolate negro 72% en vasito</div><div class="ck-desc">Con helado de vainilla Bourbon · en mini cocotte</div></div>
+            <div class="ck-item"><div class="ck-name">Crema catalana flameada en cucharilla</div><div class="ck-desc">Costrada de azúcar morena · flameada en sala</div></div>
+            <div class="ck-item"><div class="ck-name">Bienmesabe malagueño en tartaleta</div><div class="ck-desc">Crema almendrada tradicional · masa fina crujiente</div></div>
+            <div class="ck-item"><div class="ck-name">Mini tarta de queso La Viña</div><div class="ck-desc">Formato individual 4cm · interior fundente</div></div>
+            <div class="ck-item"><div class="ck-name">Macarón de frambuesa y lichi</div><div class="ck-desc">Coquilles crujientes · ganache · coulis lichi</div></div>
+            <div class="ck-item"><div class="ck-name">Panna cotta de coco con coulis de frutos del bosque</div><div class="ck-desc">Vasito 40ml · presentación elegante</div></div>
+          </div>
+          <div class="ck-block">
+            <div class="ck-head" style="font-size:.85rem;">🍓 Frutas y Dulces</div>
+            <div class="ck-item"><div class="ck-name">Brocheta de fresa con chocolate negro</div><div class="ck-desc">Fresa XL · chocolate 70% · granillo de avellana</div></div>
+            <div class="ck-item"><div class="ck-name">Mini pavlova con chantilly y frutos del bosque</div><div class="ck-desc">Merengue crujiente · nata · arándanos frescos</div></div>
+            <div class="ck-item"><div class="ck-name">Sorbete de limón en su propia cáscara</div><div class="ck-desc">Limón de la costa · vodka · menta fresca</div></div>
+            <div class="ck-item"><div class="ck-name">Trufa de chocolate belga con cacao y flor de sal</div><div class="ck-desc">Ganache oscura · rebozada en cacao Valrhona</div></div>
+            <div class="ck-item"><div class="ck-name">Mini éclair de praliné y avellana</div><div class="ck-desc">Masa choux · crema praliné · glaseado caramel</div></div>
+            <div class="ck-item"><div class="ck-name">Piruleta de caramelo con almendra tostada</div><div class="ck-desc">Caramelo artesanal · almendra marcona · flor de sal</div></div>
+          </div>
         </div>
       </div>
 
