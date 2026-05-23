@@ -70,26 +70,7 @@ INSERT OR IGNORE INTO recetas (nombre, descripcion, categoria, tipo_cocina, raci
 -- ESCANDALLOS BASE (datos de referencia para los 40 platos)
 -- food_cost_pct = 30% como objetivo, costes fijos ~7.49 €/plato
 -- ============================================================
-INSERT OR IGNORE INTO escandallos (receta_id, nombre, coste_mp, coste_personal, coste_energia, coste_mermas, coste_indirecto, otros_costes, coste_total, food_cost_pct, pvp_calculado, pvp_sugerido, pvp_real, margen_bruto, margen_pct, notas)
-SELECT
-    r.id,
-    r.nombre,
-    mp.coste_mp,
-    4.00  AS coste_personal,
-    0.55  AS coste_energia,
-    0.35  AS coste_mermas,
-    1.50  AS coste_indirecto,
-    1.09  AS otros_costes,
-    ROUND(mp.coste_mp + 4.00 + 0.55 + 0.35 + 1.50 + 1.09, 2) AS coste_total,
-    30.0  AS food_cost_pct,
-    ROUND(mp.coste_mp / 0.30, 2) AS pvp_calculado,
-    ROUND(ROUND(mp.coste_mp / 0.30, 0) + 0.5 - (ROUND(mp.coste_mp / 0.30, 0) % 1), 2) AS pvp_sugerido,
-    NULL  AS pvp_real,
-    NULL  AS margen_bruto,
-    NULL  AS margen_pct,
-    'Escandallo base generado automáticamente. Ajustar pvp_real tras validación.'
-FROM recetas r
-JOIN (VALUES
+WITH mp(nombre_r, coste_mp) AS (VALUES
     ('Gazpacho Andaluz',                        1.20),
     ('Salmorejo Cordobés',                       1.80),
     ('Pulpo a la Gallega',                       5.80),
@@ -130,7 +111,27 @@ JOIN (VALUES
     ('Mousse de Chocolate Blanco',               1.80),
     ('Flan de Huevo Casero',                     0.90),
     ('Sorbete de Mango y Lima',                  1.60)
-) AS mp(nombre_r, coste_mp) ON r.nombre = mp.nombre_r
+)
+INSERT OR IGNORE INTO escandallos (receta_id, nombre, coste_mp, coste_personal, coste_energia, coste_mermas, coste_indirecto, otros_costes, coste_total, food_cost_pct, pvp_calculado, pvp_sugerido, pvp_real, margen_bruto, margen_pct, notas)
+SELECT
+    r.id,
+    r.nombre,
+    mp.coste_mp,
+    4.00,
+    0.55,
+    0.35,
+    1.50,
+    1.09,
+    ROUND(mp.coste_mp + 4.00 + 0.55 + 0.35 + 1.50 + 1.09, 2),
+    30.0,
+    ROUND(mp.coste_mp / 0.30, 2),
+    ROUND(ROUND(mp.coste_mp / 0.30, 0) + 0.5 - (ROUND(mp.coste_mp / 0.30, 0) % 1), 2),
+    NULL,
+    NULL,
+    NULL,
+    'Escandallo base generado automáticamente. Ajustar pvp_real tras validación.'
+FROM recetas r
+JOIN mp ON r.nombre = mp.nombre_r
 WHERE NOT EXISTS (SELECT 1 FROM escandallos e WHERE e.receta_id = r.id);
 
 -- Actualizar márgenes donde pvp_real no está definido (usar pvp_sugerido como base)
@@ -147,6 +148,13 @@ WHERE pvp_real IS NULL AND pvp_sugerido IS NOT NULL;
 INSERT OR IGNORE INTO menus (nombre, descripcion, tipo, temporada, activo, notas) VALUES
 ('Menú Degustación Costa del Sol', 'Menú de 5 pasos con lo mejor de la temporada', 'degustacion', 'verano', 1, 'Precio cerrado por pax, incluye agua y pan');
 
+WITH mp(nombre_r, seccion, pvp, orden) AS (VALUES
+    ('Gazpacho Andaluz',                 'aperitivo',  3.50, 1),
+    ('Tataki de Atún Rojo',              'entrante',  16.00, 2),
+    ('Arroz con Bogavante',              'primero',   28.00, 3),
+    ('Solomillo con Reducción de Rioja', 'segundo',   26.00, 4),
+    ('Bienmesabe Malagueño',             'postre',     8.00, 5)
+)
 INSERT OR IGNORE INTO menu_platos (menu_id, receta_id, seccion, pvp_menu, orden)
 SELECT
     (SELECT id FROM menus WHERE nombre = 'Menú Degustación Costa del Sol'),
@@ -155,13 +163,7 @@ SELECT
     mp.pvp,
     mp.orden
 FROM recetas r
-JOIN (VALUES
-    ('Gazpacho Andaluz',             'aperitivo',   3.50, 1),
-    ('Tataki de Atún Rojo',          'entrante',   16.00, 2),
-    ('Arroz con Bogavante',          'primero',    28.00, 3),
-    ('Solomillo con Reducción de Rioja', 'segundo', 26.00, 4),
-    ('Bienmesabe Malagueño',         'postre',      8.00, 5)
-) AS mp(nombre_r, seccion, pvp, orden) ON r.nombre = mp.nombre_r;
+JOIN mp ON r.nombre = mp.nombre_r;
 
 -- ============================================================
 -- VERIFICACIÓN FINAL
