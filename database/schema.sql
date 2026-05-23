@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS ingredientes_receta (
     unidad_id       INTEGER NOT NULL REFERENCES unidades_medida(id),
 
     -- Mermas
-    merma_pct       REAL DEFAULT 0,               -- % de merma al preparar (0-100)
+    merma_pct       REAL DEFAULT 0 CHECK(merma_pct >= 0 AND merma_pct < 100),
     cantidad_bruta  REAL GENERATED ALWAYS AS     -- cantidad antes de merma
                     (cantidad / (1 - merma_pct/100.0)) STORED,
 

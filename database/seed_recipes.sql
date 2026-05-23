@@ -83,7 +83,7 @@ SELECT
     ROUND(mp.coste_mp + 4.00 + 0.55 + 0.35 + 1.50 + 1.09, 2) AS coste_total,
     30.0  AS food_cost_pct,
     ROUND(mp.coste_mp / 0.30, 2) AS pvp_calculado,
-    ROUND(ROUND(mp.coste_mp / 0.30, 0) + 0.5 - MOD(ROUND(mp.coste_mp / 0.30, 0), 1), 2) AS pvp_sugerido,
+    ROUND(ROUND(mp.coste_mp / 0.30, 0) + 0.5 - (ROUND(mp.coste_mp / 0.30, 0) % 1), 2) AS pvp_sugerido,
     NULL  AS pvp_real,
     NULL  AS margen_bruto,
     NULL  AS margen_pct,
