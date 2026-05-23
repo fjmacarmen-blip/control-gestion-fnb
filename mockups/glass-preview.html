@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glassmorphism Refinado · Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:       #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-deep:  #a8862d;
+  --gold-dim:   rgba(201, 168, 76, 0.15);
+  --gold-glow:  rgba(201, 168, 76, 0.25);
+  --cream:      #f5f0e8;
+  --dark:       #0a0a0a;
+  --dark2:      #111;
+  --dark3:      #161616;
+  --red:        #b5341c;
+  --text:       #e8e2d9;
+  --muted:      #8a8278;
+
+  /* GLASS LAYERS — 3 intensidades para iterar */
+  --glass-subtle:  rgba(255, 255, 255, 0.03);
+  --glass-medium:  rgba(255, 255, 255, 0.06);
+  --glass-strong:  rgba(255, 255, 255, 0.09);
+  --glass-border-subtle: rgba(255, 255, 255, 0.06);
+  --glass-border-medium: rgba(255, 255, 255, 0.10);
+  --glass-border-gold:   rgba(201, 168, 76, 0.22);
+
+  /* Halos doradas */
+  --halo-soft:   0 8px 32px rgba(201, 168, 76, 0.08);
+  --halo-medium: 0 12px 48px rgba(201, 168, 76, 0.18);
+  --halo-strong: 0 20px 60px rgba(201, 168, 76, 0.30);
+
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 24px;
+  --t: all .4s cubic-bezier(.22, 1, .36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-size: 15px;
+  line-height: 1.6;
+
+  /* Background base + capas decorativas para dar contexto al blur */
+  background: var(--dark);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(201, 168, 76, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 50% at 85% 30%, rgba(181, 52, 28, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 50% 90%, rgba(201, 168, 76, 0.04) 0%, transparent 60%),
+    linear-gradient(180deg, #0a0a0a 0%, #0d0a07 50%, #0a0a0a 100%);
+  background-attachment: fixed;
+}
+
+/* Grain sutil (textura) en el fondo */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ════════════ NAV GLASS ════════════ */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--glass-border-medium);
+  padding: 18px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-mark {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem;
+  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.nav-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; color: var(--cream); letter-spacing: 0.3px;
+}
+.nav-subtitle {
+  font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold); margin-top: 2px;
+}
+.nav-tag {
+  background: var(--glass-medium);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border-gold);
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 0.72rem; color: var(--gold);
+  letter-spacing: 1.5px; text-transform: uppercase;
+}
+
+/* ════════════ HERO ════════════ */
+.hero {
+  position: relative; z-index: 1;
+  padding: 120px 48px 80px;
+  max-width: 1200px; margin: 0 auto;
+  text-align: center;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold);
+  background: var(--glass-subtle);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border-gold);
+  padding: 8px 18px; border-radius: 100px;
+  margin-bottom: 28px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 20px; height: 1px; background: var(--gold);
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700; line-height: 1.05;
+  color: var(--cream); margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: 1.05rem; color: var(--muted);
+  max-width: 620px; margin: 0 auto 48px;
+  line-height: 1.7;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color: #0a0a0a;
+  padding: 16px 36px;
+  border-radius: 100px;
+  font-weight: 600; font-size: 0.92rem;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  box-shadow: var(--halo-medium), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: var(--t);
+  text-decoration: none;
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--halo-strong), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.hero-cta-ghost {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--glass-medium);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border-gold);
+  color: var(--cream);
+  padding: 16px 36px; border-radius: 100px;
+  font-weight: 500; font-size: 0.92rem;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  margin-left: 14px;
+  cursor: pointer; transition: var(--t);
+  text-decoration: none;
+}
+.hero-cta-ghost:hover {
+  background: var(--glass-strong);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ════════════ SECCIÓN ════════════ */
+.section {
+  position: relative; z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 48px;
+}
+.section-head {
+  margin-bottom: 48px;
+}
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+}
+.section-eyebrow::before {
+  content: ''; width: 30px; height: 1px; background: var(--gold);
+}
+.section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700; color: var(--cream);
+  letter-spacing: -0.01em;
+}
+.section-desc {
+  color: var(--muted); max-width: 660px;
+  margin-top: 14px; line-height: 1.7;
+}
+
+/* ════════════ RECIPE CARDS GLASS ════════════ */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.recipe-card {
+  position: relative;
+  background: var(--glass-medium);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  border: 1px solid var(--glass-border-medium);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: var(--t);
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.recipe-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--glass-border-gold);
+  box-shadow: var(--halo-medium), 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.rc-thumb {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.rc-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+}
+.recipe-card:hover .rc-thumb img {
+  transform: scale(1.06);
+}
+.rc-thumb::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 10, 0.85) 100%);
+  pointer-events: none;
+}
+.rc-badge {
+  position: absolute; top: 14px; right: 14px;
+  background: var(--glass-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border-gold);
+  padding: 5px 12px; border-radius: 100px;
+  font-size: 0.66rem; color: var(--gold);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  font-weight: 600;
+  z-index: 2;
+}
+.rc-chip-time {
+  position: absolute; bottom: 14px; left: 14px;
+  display: flex; align-items: center; gap: 6px;
+  background: var(--glass-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border-medium);
+  padding: 5px 12px; border-radius: 100px;
+  font-size: 0.72rem; color: var(--cream);
+  z-index: 2;
+}
+.rc-body {
+  padding: 22px 22px 24px;
+}
+.rc-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--cream);
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+.rc-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 18px;
+  min-height: 38px;
+}
+.rc-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--glass-border-subtle);
+}
+.rc-price {
+  display: flex; flex-direction: column;
+}
+.rc-price-label {
+  font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 1.5px; text-transform: uppercase;
+}
+.rc-price-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; color: var(--gold);
+  font-weight: 600; margin-top: 2px;
+}
+.rc-action {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--gold); font-size: 0.8rem;
+  font-weight: 500; letter-spacing: 0.5px;
+  transition: gap .3s;
+}
+.recipe-card:hover .rc-action { gap: 10px; }
+
+/* ════════════ COMPARATIVA INTENSIDADES ════════════ */
+.intensity-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 32px;
+}
+.intensity-card {
+  position: relative;
+  border-radius: var(--r-md);
+  padding: 32px 28px;
+  text-align: center;
+  min-height: 220px;
+  display: flex; flex-direction: column; justify-content: center;
+  transition: var(--t);
+}
+.intensity-card.subtle {
+  background: var(--glass-subtle);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border-subtle);
+}
+.intensity-card.medium {
+  background: var(--glass-medium);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  border: 1px solid var(--glass-border-medium);
+  box-shadow: var(--halo-soft);
+}
+.intensity-card.strong {
+  background: var(--glass-strong);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid var(--glass-border-gold);
+  box-shadow: var(--halo-medium);
+}
+.intensity-card:hover { transform: translateY(-3px); }
+.intensity-label {
+  font-size: 0.65rem; color: var(--gold);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.intensity-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; color: var(--cream);
+  margin-bottom: 10px;
+}
+.intensity-card p {
+  font-size: 0.82rem; color: var(--muted); line-height: 1.7;
+}
+
+/* ════════════ STEP SAMPLE (presupuestador) ════════════ */
+.step-panel {
+  background: var(--glass-medium);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  border: 1px solid var(--glass-border-medium);
+  border-radius: var(--r-lg);
+  padding: 36px;
+  box-shadow: var(--halo-soft);
+}
+.step-progress {
+  display: flex; gap: 16px;
+  margin-bottom: 32px;
+}
+.step-pill {
+  flex: 1;
+  background: var(--glass-subtle);
+  border: 1px solid var(--glass-border-subtle);
+  border-radius: 100px;
+  padding: 10px 18px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 10px;
+}
+.step-pill.done { color: #4ade80; border-color: rgba(74, 222, 128, 0.25); }
+.step-pill.active {
+  background: var(--gold-dim);
+  border-color: var(--glass-border-gold);
+  color: var(--gold);
+  font-weight: 600;
+}
+.step-pill-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--glass-medium); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700;
+}
+.step-pill.done .step-pill-num { background: #4ade80; color: #000; }
+.step-pill.active .step-pill-num { background: var(--gold); color: #000; }
+
+.opt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.opt-card {
+  background: var(--glass-subtle);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--glass-border-subtle);
+  border-radius: var(--r-md);
+  padding: 22px 20px;
+  cursor: pointer;
+  transition: var(--t);
+  position: relative;
+}
+.opt-card:hover {
+  border-color: var(--glass-border-gold);
+  background: var(--glass-medium);
+}
+.opt-card.selected {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+  box-shadow: var(--halo-soft);
+}
+.opt-card.selected::before {
+  content: '✓';
+  position: absolute; top: 14px; right: 14px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--gold); color: #000;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700;
+}
+.opt-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.opt-name {
+  font-weight: 600; color: var(--cream);
+  font-size: 0.95rem; margin-bottom: 4px;
+}
+.opt-desc {
+  font-size: 0.75rem; color: var(--muted);
+  line-height: 1.5;
+}
+.opt-price {
+  margin-top: 12px;
+  font-family: 'Playfair Display', serif;
+  color: var(--gold); font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* ════════════ FOOTER NOTE ════════════ */
+.footer-note {
+  text-align: center;
+  padding: 80px 48px 60px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.footer-note strong { color: var(--gold); }
+
+@media (max-width: 760px) {
+  .nav, .hero, .section { padding-left: 24px; padding-right: 24px; }
+  .intensity-row { grid-template-columns: 1fr; }
+  .hero-cta-ghost { margin-left: 0; margin-top: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-mark">🍽️</div>
+    <div>
+      <div class="nav-title">Gran Hotel Miramar Dorado</div>
+      <div class="nav-subtitle">Mockup · Glassmorphism Refinado</div>
+    </div>
+  </div>
+  <div class="nav-tag">Preview v1</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Costa del Sol · 5★ Gran Lujo</div>
+  <h1>Cocina de <em>autor</em><br>en el Mediterráneo</h1>
+  <p class="hero-sub">Una experiencia gastronómica única en uno de los hoteles más emblemáticos de Marbella. Eventos personalizados, carta de temporada y atención de equipo profesional.</p>
+  <a href="#" class="hero-cta">Diseñar mi evento →</a>
+  <a href="#" class="hero-cta-ghost">Ver carta</a>
+</section>
+
+<!-- CARDS DE PLATOS -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-eyebrow">Nuestra Carta</div>
+    <h2>Platos seleccionados</h2>
+    <p class="section-desc">Las recetas con foto y descripción, listas para tu evento o para inspirar el menú. Cada plato refleja temporada, producto local y técnica de autor.</p>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="recipe-card">
+      <div class="rc-thumb">
+        <img src="../imagenes/platos/entrantes/gazpacho_andaluz.jpg" alt="Gazpacho Andaluz" loading="lazy">
+        <span class="rc-badge">Entrante</span>
+        <span class="rc-chip-time">⏱ 15 min</span>
+      </div>
+      <div class="rc-body">
+        <div class="rc-name">Gazpacho Andaluz</div>
+        <div class="rc-sub">Sopa fría de tomate tradicional con AOVE Hojiblanca y vinagre de Jerez</div>
+        <div class="rc-foot">
+          <div class="rc-price">
+            <span class="rc-price-label">Desde</span>
+            <span class="rc-price-val">4,00 €</span>
+          </div>
+          <span class="rc-action">Ver receta →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="recipe-card">
+      <div class="rc-thumb">
+        <img src="../imagenes/platos/primeros/paella_valenciana.jpg" alt="Paella Valenciana" loading="lazy">
+        <span class="rc-badge">Primero</span>
+        <span class="rc-chip-time">⏱ 60 min</span>
+      </div>
+      <div class="rc-body">
+        <div class="rc-name">Paella Valenciana</div>
+        <div class="rc-sub">Arroz seco con pollo, conejo, ferraura, garrofón y azafrán de la Mancha</div>
+        <div class="rc-foot">
+          <div class="rc-price">
+            <span class="rc-price-label">Desde</span>
+            <span class="rc-price-val">10,00 €</span>
+          </div>
+          <span class="rc-action">Ver receta →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="recipe-card">
+      <div class="rc-thumb">
+        <img src="../imagenes/platos/segundos/solomillo_rioja.jpg" alt="Solomillo con Reducción de Rioja" loading="lazy">
+        <span class="rc-badge">Segundo</span>
+        <span class="rc-chip-time">⏱ 30 min</span>
+      </div>
+      <div class="rc-body">
+        <div class="rc-name">Solomillo con Reducción de Rioja</div>
+        <div class="rc-sub">Medallones de ternera a la plancha con reducción de vino tinto y patata paja</div>
+        <div class="rc-foot">
+          <div class="rc-price">
+            <span class="rc-price-label">Desde</span>
+            <span class="rc-price-val">22,00 €</span>
+          </div>
+          <span class="rc-action">Ver receta →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="recipe-card">
+      <div class="rc-thumb">
+        <img src="../imagenes/platos/postres/tarta_queso_vina.jpg" alt="Tarta de Queso La Viña" loading="lazy">
+        <span class="rc-badge">Postre</span>
+        <span class="rc-chip-time">⏱ 60 min</span>
+      </div>
+      <div class="rc-body">
+        <div class="rc-name">Tarta de Queso La Viña</div>
+        <div class="rc-sub">Tarta cremosa dorada por fuera y fundente por dentro, estilo San Sebastián</div>
+        <div class="rc-foot">
+          <div class="rc-price">
+            <span class="rc-price-label">Desde</span>
+            <span class="rc-price-val">5,50 €</span>
+          </div>
+          <span class="rc-action">Ver receta →</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARATIVA INTENSIDADES -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-eyebrow">Decisión visual</div>
+    <h2>Intensidad del cristal</h2>
+    <p class="section-desc">Tres niveles de blur y opacidad sobre los mismos fondos. Mira cuál encaja mejor con el tono del hotel y dímelo. Después aplicaré ese nivel a todo el sistema.</p>
+  </div>
+
+  <div class="intensity-row">
+    <div class="intensity-card subtle">
+      <div class="intensity-label">Opción A · Sutil</div>
+      <h3>Apenas perceptible</h3>
+      <p>Blur ligero (12px), borde casi invisible. El cristal está, pero discreto. Sensación editorial.</p>
+    </div>
+    <div class="intensity-card medium">
+      <div class="intensity-label">Opción B · Medio ★</div>
+      <h3>Equilibrio premium</h3>
+      <p>Blur 28px con saturación 140%, halo dorado suave. Es el estándar de hoteles de lujo modernos.</p>
+    </div>
+    <div class="intensity-card strong">
+      <div class="intensity-label">Opción C · Marcado</div>
+      <h3>Cristal de joyería</h3>
+      <p>Blur 40px saturación 180%, halo dorado evidente. Más teatral, ideal si quieres impacto visual fuerte.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SAMPLE STEP PRESUPUESTADOR -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-eyebrow">Aplicación · Presupuestador</div>
+    <h2>Selección de opciones</h2>
+    <p class="section-desc">Así se vería un paso del cotizador con este lenguaje visual. Las cards seleccionables con feedback dorado, el progress bar como pills traslúcidas.</p>
+  </div>
+
+  <div class="step-panel">
+    <div class="step-progress">
+      <div class="step-pill done">
+        <span class="step-pill-num">1</span> Tipo de evento
+      </div>
+      <div class="step-pill done">
+        <span class="step-pill-num">2</span> Fecha y pax
+      </div>
+      <div class="step-pill active">
+        <span class="step-pill-num">3</span> Menú
+      </div>
+      <div class="step-pill">
+        <span class="step-pill-num">4</span> Bebidas
+      </div>
+    </div>
+
+    <div class="opt-grid">
+      <div class="opt-card">
+        <div class="opt-icon">🥗</div>
+        <div class="opt-name">Menú Esencial</div>
+        <div class="opt-desc">Cóctel · 1 entrante · 1 primero · 1 segundo · postre · café</div>
+        <div class="opt-price">28 € / pax</div>
+      </div>
+      <div class="opt-card selected">
+        <div class="opt-icon">🍽️</div>
+        <div class="opt-name">Menú Selecta</div>
+        <div class="opt-desc">Cóctel · 2 entrantes · 1 primero · 1 segundo · 2 postres · café</div>
+        <div class="opt-price">42 € / pax</div>
+      </div>
+      <div class="opt-card">
+        <div class="opt-icon">🌟</div>
+        <div class="opt-name">Menú Gourmet</div>
+        <div class="opt-desc">Cóctel premium · 3 entrantes · 1 primero · 2 segundos · 3 postres · café</div>
+        <div class="opt-price">62 € / pax</div>
+      </div>
+      <div class="opt-card">
+        <div class="opt-icon">👑</div>
+        <div class="opt-name">Menú de Autor</div>
+        <div class="opt-desc">Degustación 7 pasos con maridaje, presentación de autor y experiencia gastronómica completa</div>
+        <div class="opt-price">88 € / pax</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-note">
+  <strong>Mockup standalone</strong> · No usa datos de la BD · Las fotos son las reales del proyecto · Iteración 1
+</div>
+
+</body>
+</html>

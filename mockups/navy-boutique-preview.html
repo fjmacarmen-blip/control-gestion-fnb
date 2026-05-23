@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navy Boutique · Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ── Paleta del CV personal ── */
+  --bg:         #0a1628;        /* navy oscuro profundo */
+  --card:       #0f2040;        /* navy medio (cards) */
+  --card2:      #122b54;        /* navy más claro (cards destacadas) */
+  --card3:      #1a3666;        /* navy aún más claro (hover) */
+
+  --gold:       #c9a84c;
+  --gold-light: #e8c96a;
+  --gold-deep:  #9d8237;
+  --gold-bg:    rgba(201, 168, 76, 0.10);
+  --gold-border:rgba(201, 168, 76, 0.30);
+
+  --text:       #e8eaf0;
+  --text-soft:  #c4cad6;
+  --muted:      #7a8499;
+  --muted-deep: #4a5568;
+
+  --border:     rgba(255, 255, 255, 0.07);
+  --border2:    rgba(255, 255, 255, 0.13);
+
+  --green:      #22c55e;
+
+  --r-sm:       8px;
+  --r-md:       14px;
+  --r-lg:       18px;
+
+  --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.30);
+  --shadow-card: 0 8px 36px rgba(0, 0, 0, 0.45);
+
+  --t: all .32s cubic-bezier(.4, 0, .2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(201, 168, 76, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 85% 100%, rgba(201, 168, 76, 0.04) 0%, transparent 55%);
+  background-attachment: fixed;
+  font-size: 15px; line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* IMÁGENES: FIX bug previo — display block siempre */
+img { display: block; max-width: 100%; }
+
+/* ════════════════════════════════════════
+   NAV
+════════════════════════════════════════ */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10, 22, 40, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 44px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none;
+}
+.nav-mark {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color: var(--bg);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.05rem; font-weight: 700;
+  font-family: 'Cormorant Garamond', serif;
+  box-shadow: 0 4px 14px rgba(201, 168, 76, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.nav-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; color: var(--text);
+  font-weight: 600; letter-spacing: 0.3px;
+}
+.nav-sub {
+  font-size: 0.62rem; color: var(--gold);
+  letter-spacing: 2.5px; text-transform: uppercase;
+  margin-top: 2px;
+}
+.nav-links { display: flex; gap: 30px; }
+.nav-links a {
+  font-size: 0.85rem; color: var(--text-soft);
+  text-decoration: none; transition: var(--t);
+  position: relative; padding: 4px 0;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 100%; height: 1px; background: var(--gold);
+}
+.nav-cta {
+  background: var(--gold);
+  color: var(--bg);
+  padding: 10px 22px; border-radius: 100px;
+  font-size: 0.82rem; font-weight: 600;
+  text-decoration: none; transition: var(--t);
+  letter-spacing: 0.3px;
+}
+.nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+/* ════════════════════════════════════════
+   HERO ÍNTIMO
+════════════════════════════════════════ */
+.hero {
+  max-width: 1280px; margin: 0 auto;
+  padding: 80px 44px 100px;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 56px; align-items: center;
+}
+.hero-text { padding-right: 16px; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-border);
+  color: var(--gold);
+  padding: 8px 16px; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-bottom: 26px;
+}
+.hero-eyebrow::before {
+  content: '★'; color: var(--gold);
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.6rem, 5.5vw, 4.5rem);
+  font-weight: 600; line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 22px;
+  letter-spacing: -0.01em;
+}
+.hero h1 em {
+  font-style: italic; color: var(--gold);
+  font-weight: 500;
+}
+.hero-sub {
+  font-size: 1.05rem; color: var(--text-soft);
+  margin-bottom: 36px; max-width: 460px;
+  line-height: 1.7;
+}
+.hero-actions {
+  display: flex; gap: 14px; flex-wrap: wrap;
+}
+.btn-primary {
+  background: var(--gold);
+  color: var(--bg);
+  padding: 14px 28px; border-radius: 100px;
+  font-size: 0.92rem; font-weight: 600;
+  text-decoration: none; transition: var(--t);
+  letter-spacing: 0.2px;
+  display: inline-flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.30);
+}
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(201, 168, 76, 0.45);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  padding: 14px 28px; border-radius: 100px;
+  font-size: 0.92rem; font-weight: 500;
+  text-decoration: none; transition: var(--t);
+  border: 1px solid var(--border2);
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.btn-secondary:hover {
+  background: var(--gold-bg);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.hero-img-wrap {
+  position: relative;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border2);
+}
+.hero-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.hero-img-stamp {
+  position: absolute; top: 22px; left: 22px;
+  background: rgba(10, 22, 40, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border2);
+  padding: 9px 16px; border-radius: 100px;
+  font-size: 0.7rem;
+  color: var(--text);
+  letter-spacing: 0.3px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-img-stamp::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--green); border-radius: 50%;
+  box-shadow: 0 0 8px var(--green);
+}
+.hero-stats {
+  position: absolute; bottom: 22px; left: 22px; right: 22px;
+  background: rgba(10, 22, 40, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 16px 20px;
+  display: flex; justify-content: space-around; gap: 14px;
+}
+.hero-stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; color: var(--gold);
+  font-weight: 700; line-height: 1;
+}
+.hero-stat-label {
+  font-size: 0.68rem; color: var(--muted);
+  margin-top: 4px; letter-spacing: 0.3px;
+}
+
+/* ════════════════════════════════════════
+   SECCIÓN
+════════════════════════════════════════ */
+.section {
+  max-width: 1280px; margin: 0 auto;
+  padding: 60px 44px;
+}
+.section-head {
+  margin-bottom: 48px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;
+}
+.section-head-text { max-width: 620px; }
+.section-eyebrow {
+  font-size: 0.72rem; color: var(--gold);
+  font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.section-eyebrow::before {
+  content: ''; width: 24px; height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+}
+.section h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.1rem, 3.8vw, 3.2rem);
+  font-weight: 600; color: var(--text);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.section h2 em {
+  font-style: italic; color: var(--gold);
+}
+.section-lead {
+  color: var(--text-soft);
+  font-size: 0.98rem;
+  line-height: 1.7;
+  margin-top: 14px;
+}
+.section-link {
+  font-size: 0.85rem; color: var(--gold);
+  text-decoration: none; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: gap .3s;
+  flex-shrink: 0;
+  padding-bottom: 14px;
+}
+.section-link:hover { gap: 12px; }
+
+/* ════════════════════════════════════════
+   FILTROS PILL
+════════════════════════════════════════ */
+.filters {
+  display: flex; gap: 10px;
+  margin-bottom: 36px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.filter-pill {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--t);
+}
+.filter-pill:hover {
+  border-color: var(--gold-border);
+  color: var(--text);
+  background: var(--card2);
+}
+.filter-pill.active {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.25);
+}
+
+/* ════════════════════════════════════════
+   CARDS DE PLATO (navy boutique)
+════════════════════════════════════════ */
+.dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 24px;
+}
+.dish {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: var(--t);
+  cursor: pointer;
+  border: 1px solid var(--border);
+}
+.dish:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-border);
+  box-shadow: var(--shadow-card);
+  background: var(--card2);
+}
+.dish-img-wrap {
+  position: relative;
+  aspect-ratio: 5/4;
+  overflow: hidden;
+  background: var(--card2);
+}
+.dish-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+}
+.dish:hover .dish-img { transform: scale(1.06); }
+.dish-tag {
+  position: absolute; top: 14px; left: 14px;
+  background: rgba(10, 22, 40, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.dish-heart {
+  position: absolute; top: 14px; right: 14px;
+  width: 34px; height: 34px;
+  background: rgba(10, 22, 40, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: var(--t);
+}
+.dish-heart:hover {
+  color: var(--gold-light);
+  border-color: var(--gold);
+  transform: scale(1.1);
+}
+.dish-body { padding: 20px 22px 22px; }
+.dish-meta {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.78rem; color: var(--muted);
+  margin-bottom: 8px;
+}
+.dish-meta::before {
+  content: '★';
+  color: var(--gold);
+}
+.dish-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem; color: var(--text);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.dish-desc {
+  font-size: 0.82rem; color: var(--text-soft);
+  line-height: 1.55;
+  margin-bottom: 16px;
+  min-height: 38px;
+}
+.dish-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.dish-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; color: var(--text);
+  font-weight: 700;
+}
+.dish-price-from {
+  font-size: 0.72rem; color: var(--muted);
+  margin-right: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+}
+.dish-add {
+  background: var(--gold-bg);
+  color: var(--gold);
+  border: 1px solid var(--gold-border);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: var(--t);
+}
+.dish:hover .dish-add {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+/* ════════════════════════════════════════
+   EVENTOS A MEDIDA — CTA BLOCK
+════════════════════════════════════════ */
+.events-block {
+  margin-top: 80px;
+  background: var(--card);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  border: 1px solid var(--gold-border);
+  box-shadow: var(--shadow-card);
+}
+.events-img-wrap {
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
+}
+.events-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.events-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 50%, var(--card) 100%);
+  z-index: 1;
+}
+.events-text {
+  padding: 48px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.events-text .section-eyebrow { margin-bottom: 12px; }
+.events-text h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.1rem;
+  font-weight: 600; color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+.events-text h3 em { font-style: italic; color: var(--gold); }
+.events-text p {
+  color: var(--text-soft);
+  margin-bottom: 26px;
+  line-height: 1.7;
+}
+.events-features {
+  display: grid; gap: 12px;
+  margin-bottom: 32px;
+}
+.events-feature {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 0.92rem; color: var(--text-soft);
+}
+.events-feature::before {
+  content: '✦';
+  color: var(--gold);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════
+   MOCKUP NOTE
+════════════════════════════════════════ */
+.mockup-note {
+  text-align: center; padding: 50px 32px;
+  color: var(--muted); font-size: 0.78rem;
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+.mockup-note strong { color: var(--gold); }
+.palette-swatch {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 12px;
+}
+.palette-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1px solid var(--border2);
+}
+
+@media (max-width: 880px) {
+  .nav { padding: 14px 22px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 60px 22px; gap: 40px; }
+  .hero-text { padding-right: 0; }
+  .section { padding: 60px 22px; }
+  .section-head { flex-direction: column; align-items: flex-start; }
+  .events-block { grid-template-columns: 1fr; }
+  .events-img-wrap { min-height: 240px; }
+  .events-img-overlay {
+    background: linear-gradient(180deg, transparent 50%, var(--card) 100%);
+  }
+  .events-text { padding: 36px 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand">
+    <div class="nav-mark">M</div>
+    <div>
+      <div class="nav-title">Miramar Dorado</div>
+      <div class="nav-sub">Costa del Sol · 5★</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#" class="active">Carta</a>
+    <a href="#">El Hotel</a>
+    <a href="#">Eventos</a>
+    <a href="#">Contacto</a>
+  </div>
+  <a href="#" class="nav-cta">Reservar</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Marbella · Costa del Sol</div>
+    <h1>Cocina de temporada,<br>servicio que <em>recuerdas</em>.</h1>
+    <p class="hero-sub">Cuarenta recetas seleccionadas con producto local, técnica de autor y un equipo que cuida cada detalle. Para tu visita, tu evento, o simplemente una buena mesa.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Ver carta →</a>
+      <a href="#" class="btn-secondary">Diseñar mi evento</a>
+    </div>
+  </div>
+  <div class="hero-img-wrap">
+    <img class="hero-img" src="../imagenes/platos/primeros/arroz_bogavante.jpg" alt="Arroz con Bogavante">
+    <div class="hero-img-stamp">Plato del día</div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val">40</div>
+        <div class="hero-stat-label">Recetas</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">8</div>
+        <div class="hero-stat-label">Eventos</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">15</div>
+        <div class="hero-stat-label">Años</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-head-text">
+      <div class="section-eyebrow">Nuestra Carta</div>
+      <h2>Platos para <em>cada momento</em></h2>
+      <p class="section-lead">Entrantes, arroces, pescados y postres. Cocina mediterránea con producto del día, pensada para compartir.</p>
+    </div>
+    <a href="#" class="section-link">Ver carta completa →</a>
+  </div>
+
+  <div class="filters">
+    <button class="filter-pill active">Todos</button>
+    <button class="filter-pill">Entrantes</button>
+    <button class="filter-pill">Arroces</button>
+    <button class="filter-pill">Pescados</button>
+    <button class="filter-pill">Carnes</button>
+    <button class="filter-pill">Postres</button>
+    <button class="filter-pill">Sin gluten</button>
+  </div>
+
+  <div class="dishes-grid">
+
+    <article class="dish">
+      <div class="dish-img-wrap">
+        <img class="dish-img" src="../imagenes/platos/entrantes/gazpacho_andaluz.jpg" alt="Gazpacho Andaluz">
+        <span class="dish-tag">Entrante</span>
+        <button class="dish-heart">♡</button>
+      </div>
+      <div class="dish-body">
+        <div class="dish-meta">4,8 · Best seller</div>
+        <h3 class="dish-name">Gazpacho Andaluz</h3>
+        <p class="dish-desc">Sopa fría de tomate con AOVE Hojiblanca y viruta de jamón ibérico</p>
+        <div class="dish-foot">
+          <div class="dish-price"><span class="dish-price-from">desde</span>4,00 €</div>
+          <button class="dish-add">+ Añadir</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="dish">
+      <div class="dish-img-wrap">
+        <img class="dish-img" src="../imagenes/platos/primeros/paella_valenciana.jpg" alt="Paella Valenciana">
+        <span class="dish-tag">Arroz</span>
+        <button class="dish-heart">♡</button>
+      </div>
+      <div class="dish-body">
+        <div class="dish-meta">4,9 · Recomendado</div>
+        <h3 class="dish-name">Paella Valenciana</h3>
+        <p class="dish-desc">Arroz bomba con pollo, conejo, ferraura, garrofón y azafrán</p>
+        <div class="dish-foot">
+          <div class="dish-price"><span class="dish-price-from">desde</span>10,00 €</div>
+          <button class="dish-add">+ Añadir</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="dish">
+      <div class="dish-img-wrap">
+        <img class="dish-img" src="../imagenes/platos/segundos/solomillo_rioja.jpg" alt="Solomillo con Rioja">
+        <span class="dish-tag">Carne</span>
+        <button class="dish-heart">♡</button>
+      </div>
+      <div class="dish-body">
+        <div class="dish-meta">4,7 · Premium</div>
+        <h3 class="dish-name">Solomillo con Reducción de Rioja</h3>
+        <p class="dish-desc">Medallones de ternera, reducción de vino tinto y patata paja</p>
+        <div class="dish-foot">
+          <div class="dish-price"><span class="dish-price-from">desde</span>22,00 €</div>
+          <button class="dish-add">+ Añadir</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="dish">
+      <div class="dish-img-wrap">
+        <img class="dish-img" src="../imagenes/platos/postres/tarta_queso_vina.jpg" alt="Tarta de Queso La Viña">
+        <span class="dish-tag">Postre</span>
+        <button class="dish-heart">♡</button>
+      </div>
+      <div class="dish-body">
+        <div class="dish-meta">4,9 · Casero</div>
+        <h3 class="dish-name">Tarta de Queso La Viña</h3>
+        <p class="dish-desc">Cremosa por dentro, caramelizada por fuera. Estilo donostiarra</p>
+        <div class="dish-foot">
+          <div class="dish-price"><span class="dish-price-from">desde</span>5,50 €</div>
+          <button class="dish-add">+ Añadir</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- BLOQUE EVENTOS A MEDIDA -->
+  <div class="events-block">
+    <div class="events-img-wrap">
+      <img class="events-img" src="../imagenes/eventos/eventos/boda.jpg" alt="Eventos">
+      <div class="events-img-overlay"></div>
+    </div>
+    <div class="events-text">
+      <div class="section-eyebrow">Eventos a medida</div>
+      <h3>Diseña tu día <em>especial</em></h3>
+      <p>Bodas, comuniones, aniversarios y eventos corporativos. Te acompañamos en cada decisión, desde el menú hasta el último centro de mesa.</p>
+      <div class="events-features">
+        <div class="events-feature">Menús degustación desde 28 €/pax</div>
+        <div class="events-feature">Espacios desde 30 hasta 320 personas</div>
+        <div class="events-feature">Coordinador dedicado durante toda la jornada</div>
+      </div>
+      <div>
+        <a href="#" class="btn-primary">Empezar mi presupuesto →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="mockup-note">
+  <strong>Mockup · Navy Boutique</strong> ·
+  Paleta heredada de tu CV personal · Cormorant Garamond + DM Sans · Bug de imgs arreglado (display: block)
+  <br><br>
+  <span class="palette-swatch"><span class="palette-dot" style="background:#0a1628"></span> bg #0a1628</span>
+  <span class="palette-swatch"><span class="palette-dot" style="background:#0f2040"></span> card #0f2040</span>
+  <span class="palette-swatch"><span class="palette-dot" style="background:#122b54"></span> card2 #122b54</span>
+  <span class="palette-swatch"><span class="palette-dot" style="background:#c9a84c"></span> gold #c9a84c</span>
+</div>
+
+</body>
+</html>
