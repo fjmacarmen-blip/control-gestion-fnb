@@ -18,8 +18,8 @@ INSERT OR IGNORE INTO recetas (nombre, descripcion, categoria, tipo_cocina, raci
 ('Ensalada Gamba Roja y Aguacate',      'Gamba roja de Málaga con aguacate, escarola y vinagreta cítrica de lima',                  'entrante', 'mediterránea', 1, 200, 12, 3, 'baja',  1),
 ('Tataki de Atún Rojo',                 'Lomo de atún rojo marcado con sésamo, salsa de soja, mirin y jengibre',                   'entrante', 'fusión',    1, 160, 15,  2,  'media', 1),
 ('Carpaccio de Ternera',                'Láminas finas de solomillo con rúcula, parmesano 24 meses y alcaparras',                   'entrante', 'italiana',  1, 180, 20,  0,  'media', 1),
-('Tostas de Foie con Mermelada de Higos','Mi-cuit de pato sobre pan brioche tostado con reducción de Oporto',                      'entrante', 'francesa',  1, 120, 10,  5,  'baja',  1),
-('Pimientos del Piquillo Rellenos de Bacalao','Brandada de bacalao en piquillos del norte con velouté de piquillos',               'entrante', 'española',  1, 200, 20,  15, 'media', 1);
+('Tostas de Foie con Higos',            'Mi-cuit de pato sobre pan brioche tostado con reducción de Oporto',                      'entrante', 'francesa',  1, 120, 10,  5,  'baja',  1),
+('Pimientos del Piquillo con Bacalao',  'Brandada de bacalao en piquillos del norte con velouté de piquillos',                    'entrante', 'española',  1, 200, 20,  15, 'media', 1);
 
 -- ============================================================
 -- RECETAS — PRIMEROS PLATOS
@@ -98,8 +98,8 @@ JOIN (VALUES
     ('Ensalada Gamba Roja y Aguacate',           6.80),
     ('Tataki de Atún Rojo',                      7.50),
     ('Carpaccio de Ternera',                     5.20),
-    ('Tostas de Foie con Mermelada de Higos',    5.80),
-    ('Pimientos del Piquillo Rellenos de Bacalao', 3.80),
+    ('Tostas de Foie con Higos',                 5.80),
+    ('Pimientos del Piquillo con Bacalao',       3.80),
     ('Paella Valenciana',                        3.80),
     ('Arroz Negro con Sepia',                    4.20),
     ('Risotto de Setas y Trufa',                 5.80),

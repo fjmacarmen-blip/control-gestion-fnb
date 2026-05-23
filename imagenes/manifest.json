@@ -41,7 +41,7 @@
       },
       {
         "id": "croquetas_jamon",
-        "title": "Croquetas de Jamón",
+        "title": "Croquetas de Jamón Ibérico",
         "subtitle": "Bechamel densa, bellota",
         "emoji": "🧆",
         "path": "imagenes/platos/entrantes/croquetas_jamon.jpg",
@@ -50,7 +50,7 @@
       },
       {
         "id": "ensalada_gamba_roja",
-        "title": "Ensalada Gamba Roja",
+        "title": "Ensalada Gamba Roja y Aguacate",
         "subtitle": "Con aguacate y vinagreta",
         "emoji": "🥗",
         "path": "imagenes/platos/entrantes/ensalada_gamba_roja.jpg",
@@ -86,7 +86,7 @@
       },
       {
         "id": "piquillos_bacalao",
-        "title": "Pimientos del Piquillo",
+        "title": "Pimientos del Piquillo con Bacalao",
         "subtitle": "Rellenos de brandada",
         "emoji": "🫑",
         "path": "imagenes/platos/entrantes/piquillos_bacalao.jpg",
@@ -169,7 +169,7 @@
       },
       {
         "id": "crema_calabaza_coco",
-        "title": "Crema de Calabaza",
+        "title": "Crema de Calabaza y Coco",
         "subtitle": "Con coco y jengibre",
         "emoji": "🎃",
         "path": "imagenes/platos/primeros/crema_calabaza_coco.jpg",
@@ -178,7 +178,7 @@
       },
       {
         "id": "sopa_pescado",
-        "title": "Sopa de Pescado",
+        "title": "Sopa de Pescado Malagueña",
         "subtitle": "Rape, mejillón y fideos",
         "emoji": "🍵",
         "path": "imagenes/platos/primeros/sopa_pescado.jpg",
@@ -189,7 +189,7 @@
     "segundos": [
       {
         "id": "solomillo_rioja",
-        "title": "Solomillo con Rioja",
+        "title": "Solomillo con Reducción de Rioja",
         "subtitle": "Reducción de vino tinto",
         "emoji": "🥩",
         "path": "imagenes/platos/segundos/solomillo_rioja.jpg",
@@ -216,7 +216,7 @@
       },
       {
         "id": "secreto_iberico",
-        "title": "Secreto Ibérico",
+        "title": "Secreto Ibérico con Patatas Bravas",
         "subtitle": "Con patatas bravas y alioli",
         "emoji": "🐷",
         "path": "imagenes/platos/segundos/secreto_iberico.jpg",
@@ -243,7 +243,7 @@
       },
       {
         "id": "pulpo_brasa_parmentier",
-        "title": "Pulpo a la Brasa",
+        "title": "Pulpo a la Brasa con Parmentier",
         "subtitle": "Con parmentier ahumado",
         "emoji": "🐙",
         "path": "imagenes/platos/segundos/pulpo_brasa_parmentier.jpg",
@@ -317,7 +317,7 @@
       },
       {
         "id": "panna_cotta_rojos",
-        "title": "Panna Cotta",
+        "title": "Panna Cotta con Frutos Rojos",
         "subtitle": "Con coulis de frutos rojos",
         "emoji": "🍓",
         "path": "imagenes/platos/postres/panna_cotta_rojos.jpg",
@@ -344,7 +344,7 @@
       },
       {
         "id": "mousse_choco_blanco",
-        "title": "Mousse Chocolate Blanco",
+        "title": "Mousse de Chocolate Blanco",
         "subtitle": "Con frambuesas y coulis",
         "emoji": "🤍",
         "path": "imagenes/platos/postres/mousse_choco_blanco.jpg",
