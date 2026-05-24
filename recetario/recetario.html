@@ -234,7 +234,10 @@ main { padding: 36px 40px; }
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(135deg, rgba(201,168,76,0.03), transparent);
   opacity: 0; transition: var(--transition);
+  pointer-events: none;   /* CRÍTICO: no bloquear clicks de los botones */
+  z-index: 0;
 }
+.card { isolation: isolate; }  /* aisla el stacking context del card */
 .card:hover { transform: translateY(-5px); border-color: rgba(201,168,76,0.3); box-shadow: var(--shadow-card); }
 .card:hover::before { opacity: 1; }
 
@@ -261,7 +264,7 @@ main { padding: 36px 40px; }
 .card-thumb::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 55%;
   background: linear-gradient(transparent, rgba(10,22,40,0.55));
-  z-index: 1;
+  z-index: 1; pointer-events: none;
 }
 
 .card-difficulty {
