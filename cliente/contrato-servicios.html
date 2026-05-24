@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contrato de Servicios · Control Gestión F&B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a1628; --card:#0f2040; --card2:#122b54; --card3:#1a3666;
+  --gold:#c9a84c; --gold-light:#e8c96a; --gold-deep:#9d8237;
+  --gold-dim:rgba(201,168,76,.10); --gold-border:rgba(201,168,76,.30);
+  --text:#e8eaf0; --text-soft:#c4cad6; --muted:#7a8499;
+  --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.13);
+  --r-sm:8px; --r-md:14px; --r-lg:18px;
+  --t:all .28s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+img{display:block;max-width:100%;}
+body{
+  font-family:'DM Sans',system-ui,sans-serif; background:var(--bg);
+  color:var(--text); line-height:1.65; min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(201,168,76,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 85% 100%, rgba(201,168,76,.03) 0%, transparent 55%);
+  background-attachment:fixed;
+}
+
+/* ── NAV ── */
+.nav {
+  position:sticky; top:0; z-index:100;
+  background:rgba(10,22,40,.94); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:16px 36px; display:flex; align-items:center; justify-content:space-between;
+}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-mark{
+  width:36px;height:36px;border-radius:9px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+  color:var(--bg); display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1rem;
+  box-shadow:0 4px 14px rgba(201,168,76,.35), inset 0 1px 0 rgba(255,255,255,.15);
+}
+.nav-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);font-weight:600;}
+.nav-sub{font-size:.62rem;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-top:2px;}
+.nav-actions{display:flex;gap:10px;}
+.btn{
+  background:transparent;color:var(--text);
+  padding:9px 18px; border-radius:8px;
+  font-family:'DM Sans',sans-serif; font-size:.82rem; font-weight:500;
+  border:1px solid var(--border2); cursor:pointer; transition:var(--t);
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+}
+.btn:hover{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);}
+.btn-primary{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+.btn-primary:hover{background:var(--gold-light);border-color:var(--gold-light);color:var(--bg);}
+
+/* ── DOCUMENT WRAP ── */
+.doc-wrap {
+  max-width:880px; margin:30px auto; padding:0 30px 80px;
+}
+.doc {
+  background:var(--card); border:1px solid var(--gold-border);
+  border-radius:18px; padding:48px 56px; box-shadow:0 12px 48px rgba(0,0,0,.45);
+  position:relative;
+}
+
+/* HEADER documento */
+.doc-header {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding-bottom:28px; border-bottom:2px solid var(--gold-border);
+  margin-bottom:32px;
+}
+.doc-header-left .doc-title-mini {
+  font-size:.7rem; letter-spacing:4px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:8px;
+}
+.doc-header-left h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem; color:var(--cream); font-weight:600;
+  line-height:1.1;
+}
+.doc-header-left h1 em{font-style:italic;color:var(--gold);}
+.doc-header-right{text-align:right;}
+.doc-header-right .ref {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem; color:var(--gold); font-weight:600;
+}
+.doc-header-right .meta {
+  font-size:.75rem; color:var(--muted); margin-top:4px;
+}
+
+/* SECCIÓN */
+.doc-section{margin-bottom:32px;}
+.doc-section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem; color:var(--gold); font-weight:600;
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:14px;
+  display:flex; align-items:center; gap:14px;
+}
+.doc-section-title::after {
+  content:''; flex:1; height:1px;
+  background:linear-gradient(to right, var(--gold-border), transparent);
+}
+
+/* TABLA datos partes */
+.parties-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.party-card {
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:12px; padding:20px 22px;
+}
+.party-label {
+  font-size:.68rem; color:var(--gold);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:8px;
+}
+.party-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem; color:var(--cream); font-weight:600;
+  margin-bottom:14px;
+}
+.party-row{display:flex;font-size:.84rem;padding:5px 0;}
+.party-key{color:var(--muted);min-width:110px;flex-shrink:0;}
+.party-val{color:var(--cream);}
+
+/* Detalles evento */
+.evt-table{width:100%;border-collapse:collapse;}
+.evt-table td{
+  padding:9px 14px; border-bottom:1px solid var(--border); font-size:.88rem;
+  vertical-align:top;
+}
+.evt-table td:first-child{
+  color:var(--muted); width:32%;
+  font-size:.78rem; letter-spacing:.3px;
+}
+.evt-table td:last-child{color:var(--cream);}
+.evt-table tr:last-child td{border-bottom:none;}
+
+/* Servicios contratados */
+.svc-block {
+  background:var(--bg); border:1px solid var(--border); border-radius:12px;
+  padding:18px 22px; margin-bottom:14px;
+}
+.svc-block-title {
+  font-size:.82rem; color:var(--gold); font-weight:600;
+  margin-bottom:8px; display:flex; align-items:center; gap:8px;
+}
+.svc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:.85rem;}
+.svc-row-name{color:var(--text-soft);}
+.svc-row-val{color:var(--cream); font-weight:500;}
+
+/* Importes */
+.amounts {
+  background:var(--card2); border:1px solid var(--gold-border);
+  border-radius:14px; padding:24px 28px; margin-top:12px;
+}
+.amount-row{display:flex;justify-content:space-between;padding:7px 0;font-size:.95rem;}
+.amount-row.total{
+  border-top:1px solid var(--gold-border); padding-top:14px; margin-top:8px;
+  font-family:'Cormorant Garamond',serif; font-size:1.45rem; color:var(--gold);
+  font-weight:700;
+}
+
+/* Cláusulas */
+.clauses{counter-reset:clause;}
+.clause{
+  padding:14px 0; border-bottom:1px solid var(--border);
+  position:relative; padding-left:32px;
+  counter-increment:clause;
+}
+.clause:last-child{border-bottom:none;}
+.clause::before {
+  content:counter(clause, decimal-leading-zero);
+  position:absolute; left:0; top:14px;
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700; color:var(--gold); font-size:.95rem;
+}
+.clause-title{
+  font-weight:600; color:var(--cream); font-size:.92rem;
+  margin-bottom:6px;
+}
+.clause-body{color:var(--text-soft); font-size:.85rem; line-height:1.7;}
+
+/* Firmas */
+.signatures{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:18px;}
+.sign-box {
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:12px; padding:22px;
+}
+.sign-label {
+  font-size:.68rem; color:var(--gold);
+  letter-spacing:2px; text-transform:uppercase; margin-bottom:8px;
+}
+.sign-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem; color:var(--cream); margin-bottom:32px;
+}
+.sign-line{
+  border-bottom:1px solid var(--text-soft);
+  height:36px; margin-bottom:6px;
+}
+.sign-foot{font-size:.72rem; color:var(--muted); text-align:center;}
+
+/* Empty state */
+.empty {
+  text-align:center; padding:80px 32px;
+  background:var(--card); border:1px dashed var(--gold-border); border-radius:18px;
+}
+.empty h2 {
+  font-family:'Cormorant Garamond',serif; font-size:1.6rem;
+  color:var(--cream); margin-bottom:14px;
+}
+.empty p { color:var(--text-soft); margin-bottom:24px; line-height:1.7; }
+
+/* PRINT */
+@media print {
+  body{background:#fff !important;color:#000 !important;}
+  .nav, .nav-actions, .doc-actions{display:none !important;}
+  .doc-wrap{margin:0;padding:0;max-width:none;}
+  .doc{
+    background:#fff !important; border:none !important;
+    box-shadow:none !important; padding:24px !important; border-radius:0 !important;
+  }
+  .doc-header h1{color:#0a1628 !important;}
+  .doc-header h1 em{color:#9d8237 !important;}
+  .doc-section-title{color:#9d8237 !important;}
+  .party-card, .svc-block, .amounts, .sign-box{
+    background:#f7f5ef !important; border:1px solid #ccc !important; color:#000 !important;
+  }
+  .party-name, .party-val, .evt-table td:last-child, .svc-row-val, .clause-title, .sign-name {color:#000 !important;}
+  .party-key, .evt-table td:first-child, .svc-row-name, .clause-body, .sign-foot, .doc-header-right .meta {color:#444 !important;}
+  .amounts{background:#fff8e5 !important;}
+  .amount-row.total{color:#8e6e22 !important;}
+  .clause::before{color:#8e6e22 !important;}
+}
+
+@media(max-width:640px) {
+  .doc-wrap{padding:0 14px 60px;margin:14px auto;}
+  .doc{padding:24px 22px;}
+  .doc-header{flex-direction:column;gap:14px;}
+  .doc-header-right{text-align:left;}
+  .parties-grid, .signatures{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="../hotel/ficha-tecnica.html" class="nav-brand">
+    <div class="nav-mark">M</div>
+    <div>
+      <div class="nav-title">Miramar Dorado</div>
+      <div class="nav-sub">Contrato de Servicios</div>
+    </div>
+  </a>
+  <div class="nav-actions">
+    <a href="presupuesto-evento.html" class="btn">← Volver al presupuesto</a>
+    <button class="btn btn-primary" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+  </div>
+</nav>
+
+<div class="doc-wrap" id="docWrap"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════
+// Lee datos del presupuesto desde sessionStorage y rellena el contrato
+// ══════════════════════════════════════════════════════════════════════
+const DATA_KEY = 'fnb_presupuesto_actual';
+
+function getEventData() {
+  try {
+    const raw = sessionStorage.getItem(DATA_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+const DATOS_HOTEL = {
+  razon:    'Gran Hotel Miramar Dorado, S.L.',
+  nif:      'B-29123456',
+  direccion:'Bulevar del Mediterráneo s/n, 29602 Marbella (Málaga)',
+  registro: 'Registro Turismo Andalucía: H/MA/01234',
+  telefono: '+34 952 830 711',
+  email:    'eventos@miramardorado.com',
+};
+
+function fmtEur(n) { return (n||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+function fmtFecha(iso) {
+  if (!iso) return '___ / ___ / ____';
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  } catch(e) { return iso; }
+}
+
+function renderDoc() {
+  const data = getEventData();
+  const wrap = document.getElementById('docWrap');
+
+  if (!data) {
+    wrap.innerHTML = `
+      <div class="empty">
+        <h2>No hay datos del presupuesto</h2>
+        <p>Para generar el contrato necesitas crear primero un presupuesto desde<br><strong>Diseña tu Evento</strong>. Cuando completes los 7 pasos, podrás generar este contrato automáticamente con todos los datos rellenos.</p>
+        <a href="presupuesto-evento.html" class="btn btn-primary">📋 Ir al presupuesto</a>
+      </div>`;
+    return;
+  }
+
+  const hoy = new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  const ref = data.referencia || ('CTR-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000));
+
+  // Servicios contratados desde data.sel
+  const sel = data.sel || {};
+  const pf = data.pf || 0;
+  const pt = data.pt || 0;
+
+  const svcMenu = sel.menuPkg
+    ? `<div class="svc-row"><span class="svc-row-name">${sel.menuPkg.name}</span><span class="svc-row-val">${sel.menuPkg.ppax > 0 ? fmtEur(sel.menuPkg.ppax*pf) : 'A calcular'}</span></div>`
+    : '';
+  const svcBeb = sel.bebPkg
+    ? `<div class="svc-row"><span class="svc-row-name">Bebidas: ${sel.bebPkg.name}</span><span class="svc-row-val">${fmtEur(sel.bebPkg.ppax*pf)}</span></div>`
+    : '';
+  const bebExtras = (sel.bebExtras||[]).map(b =>
+    `<div class="svc-row"><span class="svc-row-name">${b.name}</span><span class="svc-row-val">${fmtEur(b.pp?b.price*pf:b.price)}</span></div>`
+  ).join('');
+  const svcTable = sel.tablePkg
+    ? `<div class="svc-row"><span class="svc-row-name">Configuración: ${sel.tablePkg.name}</span><span class="svc-row-val">${fmtEur(sel.tablePkg.ppax*pt)}</span></div>`
+    : '';
+  const svcFlores = sel.centroMesa
+    ? `<div class="svc-row"><span class="svc-row-name">Centros de mesa: ${sel.centroMesa.name}</span><span class="svc-row-val">${fmtEur(sel.centroMesa.price_fijo + sel.centroMesa.price_mesa * Math.ceil(pt/8))}</span></div>`
+    : '';
+  const otrosExtras = [
+    ...(sel.luzExtras||[]),
+    ...(sel.montajeExtras||[]),
+    ...(sel.floralExtras||[]),
+    ...(sel.velasExtras||[]),
+    ...(sel.musica||[]),
+    ...(sel.show||[]),
+    ...(sel.foto||[]),
+    ...(sel.dulces||[]),
+  ].map(it => `<div class="svc-row"><span class="svc-row-name">${it.name}</span><span class="svc-row-val">${fmtEur(it.pp?it.price*pf:it.price)}</span></div>`).join('');
+
+  const subtotal = data.total || 0;
+  const iva = subtotal * 0.10;
+  const totalIva = subtotal + iva;
+  const senal = Math.round(totalIva * 0.30);
+
+  wrap.innerHTML = `
+    <div class="doc">
+
+      <!-- HEADER -->
+      <div class="doc-header">
+        <div class="doc-header-left">
+          <div class="doc-title-mini">Contrato de prestación de servicios</div>
+          <h1>Organización<br>de <em>evento</em></h1>
+        </div>
+        <div class="doc-header-right">
+          <div class="ref">Nº ${ref}</div>
+          <div class="meta">Marbella, ${hoy}</div>
+        </div>
+      </div>
+
+      <!-- PARTES -->
+      <div class="doc-section">
+        <div class="doc-section-title">Partes contratantes</div>
+        <div class="parties-grid">
+          <div class="party-card">
+            <div class="party-label">El prestador del servicio</div>
+            <div class="party-name">${DATOS_HOTEL.razon}</div>
+            <div class="party-row"><span class="party-key">CIF</span><span class="party-val">${DATOS_HOTEL.nif}</span></div>
+            <div class="party-row"><span class="party-key">Domicilio</span><span class="party-val">${DATOS_HOTEL.direccion}</span></div>
+            <div class="party-row"><span class="party-key">Registro</span><span class="party-val">${DATOS_HOTEL.registro}</span></div>
+            <div class="party-row"><span class="party-key">Contacto</span><span class="party-val">${DATOS_HOTEL.telefono}<br>${DATOS_HOTEL.email}</span></div>
+          </div>
+          <div class="party-card">
+            <div class="party-label">El cliente</div>
+            <div class="party-name">${data.cliente?.nombre || '_______________'}</div>
+            <div class="party-row"><span class="party-key">Email</span><span class="party-val">${data.cliente?.email || '_______________'}</span></div>
+            <div class="party-row"><span class="party-key">Teléfono</span><span class="party-val">${data.cliente?.tel || '_______________'}</span></div>
+            <div class="party-row"><span class="party-key">DNI / NIF</span><span class="party-val">${data.cliente?.dni || '_______________'}</span></div>
+            <div class="party-row"><span class="party-key">Domicilio</span><span class="party-val">${data.cliente?.direccion || '_______________'}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENTO -->
+      <div class="doc-section">
+        <div class="doc-section-title">Detalles del evento</div>
+        <table class="evt-table">
+          <tr><td>Tipo de celebración</td><td><strong>${sel.eventType?.name || '—'}</strong></td></tr>
+          <tr><td>Fecha del evento</td><td><strong>${fmtFecha(data.fecha)}</strong></td></tr>
+          <tr><td>Hora de inicio</td><td>${data.hora || '—'}</td></tr>
+          <tr><td>Duración estimada</td><td>${data.duracion || '—'} horas</td></tr>
+          <tr><td>Espacio reservado</td><td><strong>${data.espacio || '—'}</strong></td></tr>
+          <tr><td>Asistentes totales</td><td><strong>${pt}</strong> personas — ${data.adultos||0} adultos · ${data.ninos||0} niños · ${data.bebes||0} bebés</td></tr>
+          <tr><td>Pax facturable</td><td>${pf} (adultos + niños × 50 %)</td></tr>
+        </table>
+      </div>
+
+      <!-- SERVICIOS -->
+      <div class="doc-section">
+        <div class="doc-section-title">Servicios contratados</div>
+        ${svcMenu || svcBeb || bebExtras ? `
+          <div class="svc-block">
+            <div class="svc-block-title">🍽️ Gastronomía</div>
+            ${svcMenu}${svcBeb}${bebExtras}
+          </div>` : ''}
+        ${svcTable || svcFlores ? `
+          <div class="svc-block">
+            <div class="svc-block-title">🪑 Montaje y decoración</div>
+            ${svcTable}${svcFlores}
+          </div>` : ''}
+        ${otrosExtras ? `
+          <div class="svc-block">
+            <div class="svc-block-title">✨ Servicios adicionales</div>
+            ${otrosExtras}
+          </div>` : ''}
+        ${data.bebes > 0 ? `
+          <div class="svc-block">
+            <div class="svc-block-title">🍼 Necesidades especiales</div>
+            <div class="svc-row"><span class="svc-row-name">${data.bebes} silla(s) alta(s) para bebés</span><span class="svc-row-val">Incluida</span></div>
+          </div>` : ''}
+      </div>
+
+      <!-- IMPORTES -->
+      <div class="doc-section">
+        <div class="doc-section-title">Importe</div>
+        <div class="amounts">
+          <div class="amount-row"><span>Subtotal sin IVA</span><span>${fmtEur(subtotal)}</span></div>
+          <div class="amount-row"><span>IVA (10 %)</span><span>${fmtEur(iva)}</span></div>
+          <div class="amount-row total"><span>TOTAL con IVA</span><span>${fmtEur(totalIva)}</span></div>
+          <div class="amount-row" style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--gold-border);"><span>Señal a la firma (30 %)</span><span><strong>${fmtEur(senal)}</strong></span></div>
+          <div class="amount-row"><span>Resto a la entrega (70 %)</span><span>${fmtEur(totalIva - senal)}</span></div>
+        </div>
+      </div>
+
+      <!-- CLÁUSULAS -->
+      <div class="doc-section">
+        <div class="doc-section-title">Cláusulas</div>
+        <div class="clauses">
+          <div class="clause">
+            <div class="clause-title">Objeto del contrato</div>
+            <div class="clause-body">El prestador se compromete a organizar y ejecutar los servicios detallados, en la fecha y espacio acordados, conforme a las condiciones recogidas en el presupuesto Nº ${ref}.</div>
+          </div>
+          <div class="clause">
+            <div class="clause-title">Condiciones de pago</div>
+            <div class="clause-body">El cliente abonará a la firma del presente contrato una señal equivalente al 30 % del importe total con IVA (${fmtEur(senal)}). El 70 % restante (${fmtEur(totalIva - senal)}) será abonado siete (7) días naturales antes de la fecha del evento, mediante transferencia bancaria.</div>
+          </div>
+          <div class="clause">
+            <div class="clause-title">Anulación por el cliente</div>
+            <div class="clause-body">En caso de cancelación: <strong>más de 60 días</strong> antes del evento, se devolverá el 100 % de la señal. <strong>Entre 60 y 30 días:</strong> se retendrá el 50 % de la señal. <strong>Menos de 30 días:</strong> se retendrá el 100 % de la señal. <strong>Menos de 15 días:</strong> se facturará el 50 % del importe total.</div>
+          </div>
+          <div class="clause">
+            <div class="clause-title">Modificación del número de asistentes</div>
+            <div class="clause-body">Hasta siete (7) días antes del evento se admite una variación de hasta el ±10 % sobre los asistentes facturables (${pf} pax). Variaciones superiores requerirán acuerdo expreso y podrán ajustar el precio. El número definitivo se confirmará 72 h antes del evento.</div>
+          </div>
+          <div class="clause">
+            <div class="clause-title">Responsabilidad y seguros</div>
+            <div class="clause-body">El prestador dispone de seguro de responsabilidad civil para eventos por importe mínimo de 1.500.000 €. Quedan excluidos los daños causados por los invitados a las instalaciones o terceros, que serán responsabilidad del cliente.</div>
+          </div>
+          <div class="clause">
+            <div class="clause-title">Alergias e intolerancias</div>
+            <div class="clause-body">El cliente facilitará el listado definitivo de alergias e intolerancias 72 h antes del evento. El prestador cumple con el Reglamento UE 1169/2011 sobre información alimentaria. La carta detalla los 14 alérgenos principales por plato.</div>
+          </div>
+          <div class="clause">
+            <div class="clause-title">Protección de datos (RGPD)</div>
+            <div class="clause-body">Los datos personales facilitados serán tratados conforme al RGPD UE 2016/679 y la LOPDGDD. Finalidad: gestión del evento y comunicación. El cliente puede ejercer sus derechos en ${DATOS_HOTEL.email}.</div>
+          </div>
+          <div class="clause">
+            <div class="clause-title">Jurisdicción</div>
+            <div class="clause-body">Las partes se someten expresamente, con renuncia a su fuero propio si lo tuvieran, a los Juzgados y Tribunales de Marbella (Málaga) para cualquier controversia derivada del presente contrato.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FIRMAS -->
+      <div class="doc-section">
+        <div class="doc-section-title">Firmas</div>
+        <div class="signatures">
+          <div class="sign-box">
+            <div class="sign-label">Por el prestador</div>
+            <div class="sign-name">${DATOS_HOTEL.razon}</div>
+            <div class="sign-line"></div>
+            <div class="sign-foot">Firmado: ___________________________<br>Marbella, ${hoy}</div>
+          </div>
+          <div class="sign-box">
+            <div class="sign-label">Por el cliente</div>
+            <div class="sign-name">${data.cliente?.nombre || '_______________'}</div>
+            <div class="sign-line"></div>
+            <div class="sign-foot">DNI/NIF: ${data.cliente?.dni || '_______________'}<br>Conforme</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+renderDoc();
+</script>
+
+</body>
+</html>

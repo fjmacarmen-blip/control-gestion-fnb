@@ -1111,6 +1111,19 @@ body{
         <strong>📌 Importante:</strong> Este presupuesto es orientativo y está sujeto a disponibilidad. Un miembro de nuestro equipo se pondrá en contacto contigo en menos de 24 h para confirmar detalles y enviar la propuesta formal. Validez del presupuesto: 30 días.
       </div>
 
+      <div class="docs-actions" style="margin-top:24px;padding:22px;background:var(--card);border:1px dashed var(--gold-border);border-radius:14px;">
+        <div style="font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.1rem;font-weight:600;margin-bottom:12px;">📄 Documentos derivados</div>
+        <p style="color:var(--text-soft);font-size:.85rem;margin-bottom:16px;line-height:1.6;">Genera automáticamente el contrato legal o la orden de servicio (uso interno) con todos los datos de este presupuesto rellenos.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn-next" onclick="abrirContrato()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
+            📄 Generar Contrato de Servicios
+          </button>
+          <button class="btn-next" onclick="abrirOrdenServicio()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
+            📋 Generar Orden de Servicio (interno)
+          </button>
+        </div>
+      </div>
+
       <div class="step-nav">
         <button class="btn-prev" onclick="goStep(6)">← Revisar</button>
         <button class="btn-next" onclick="generateBudget()" style="background:linear-gradient(135deg,#2d7a4f,#166534);color:#fff;">
@@ -2068,6 +2081,61 @@ function generateBudget() {
   const total = calcTotal();
   const iva = total*0.10;
   alert(`✅ ¡Presupuesto enviado!\n\nRef: PRES-${new Date().getFullYear()}-${Math.floor(Math.random()*9000)+1000}\nCliente: ${name}\nTotal: ${fmtEur(total+iva)}\n\nNos pondremos en contacto contigo en menos de 24 h. ¡Gracias!`);
+}
+
+// ══════════════════════════════════════════════════
+// EXPORTAR datos del presupuesto a sessionStorage
+// Para que contrato-servicios.html y orden-servicio.html puedan rellenarse
+// ══════════════════════════════════════════════════
+function exportPresupuestoData() {
+  const total = calcTotal();
+  const venueEl = document.getElementById('eventVenue');
+  const venueText = venueEl ? venueEl.options[venueEl.selectedIndex]?.text : '';
+  const data = {
+    referencia: 'PRES-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000),
+    timestamp:  new Date().toISOString(),
+    cliente: {
+      nombre:    document.getElementById('finalName')?.value || document.getElementById('clientName')?.value || '',
+      email:     document.getElementById('finalEmail')?.value || document.getElementById('clientEmail')?.value || '',
+      tel:       document.getElementById('finalPhone')?.value || '',
+      dni:       document.getElementById('finalDni')?.value || '',
+      direccion: document.getElementById('finalAddress')?.value || '',
+    },
+    fecha:    document.getElementById('eventDate')?.value || '',
+    hora:     document.getElementById('eventTime')?.value || '',
+    duracion: document.getElementById('eventDuration')?.value || '',
+    espacio:  venueText,
+    notas:    document.getElementById('eventNotes')?.value || '',
+    adultos, ninos, bebes,
+    pt:       paxTotal(),
+    pf:       paxFacturable(),
+    sel:      JSON.parse(JSON.stringify(sel)), // copia profunda
+    total
+  };
+  sessionStorage.setItem('fnb_presupuesto_actual', JSON.stringify(data));
+  return data;
+}
+
+function abrirContrato() {
+  if (!sel.eventType || !sel.menuPkg) {
+    alert('Para generar el contrato necesitas haber seleccionado al menos el tipo de evento y un menú.');
+    return;
+  }
+  if (!document.getElementById('finalName')?.value && !document.getElementById('clientName')?.value) {
+    alert('Por favor, introduce el nombre del cliente antes de generar el contrato.');
+    return;
+  }
+  exportPresupuestoData();
+  window.open('contrato-servicios.html', '_blank');
+}
+
+function abrirOrdenServicio() {
+  if (!sel.eventType || !sel.menuPkg) {
+    alert('Para generar la orden de servicio necesitas haber seleccionado al menos el tipo de evento y un menú.');
+    return;
+  }
+  exportPresupuestoData();
+  window.open('orden-servicio.html', '_blank');
 }
 
 // ══════════════════════════════════════════════════
