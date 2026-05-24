@@ -39,3 +39,4 @@ desktop.ini
 *.pem
 secrets.json
 mockups/screenshot-*.png
+.test/

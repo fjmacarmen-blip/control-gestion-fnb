@@ -106,6 +106,189 @@ body{
 }
 .pax-num:focus { outline:none; }
 
+/* ── Pax summary header (read-only display, editable en step-1) ── */
+.pax-summary {
+  display:flex; flex-direction:column; align-items:flex-end;
+  padding:6px 14px; background:var(--card); border:1px solid var(--border2);
+  border-radius:10px; cursor:default;
+}
+.pax-total-num {
+  font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600;
+  color:var(--gold); line-height:1;
+}
+.pax-detail { font-size:.62rem; color:var(--muted); margin-top:3px; letter-spacing:.3px; }
+
+/* ── Paxbreakdown grid (en step-1) ── */
+.paxbk-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+  background:var(--card); border:1px solid var(--border); border-radius:14px;
+  padding:18px; margin-top:6px;
+}
+.paxbk-cell { text-align:center; }
+.paxbk-cell label {
+  display:block; font-size:.7rem; color:var(--muted);
+  letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;
+}
+.paxbk-cell .paxbk-help {
+  font-size:.62rem; color:var(--muted); margin-top:4px;
+  font-style:italic; line-height:1.3;
+}
+.paxbk-input-wrap {
+  display:flex; align-items:center; justify-content:center; gap:0;
+  background:var(--bg); border:1px solid var(--border2); border-radius:10px; overflow:hidden;
+  max-width:140px; margin:0 auto;
+}
+.paxbk-input-wrap button {
+  width:32px; height:34px; background:none; border:none; color:var(--text);
+  cursor:pointer; font-size:1rem; transition:var(--t);
+}
+.paxbk-input-wrap button:hover { background:var(--gold-dim); color:var(--gold); }
+.paxbk-input-wrap input {
+  width:54px; height:34px; background:transparent; border:none;
+  border-left:1px solid var(--border); border-right:1px solid var(--border);
+  color:var(--cream); font-size:1rem; font-weight:600; text-align:center;
+  font-family:'Cormorant Garamond',serif;
+}
+.paxbk-input-wrap input:focus { outline:none; }
+.paxbk-summary {
+  margin-top:14px; padding:10px 14px; background:var(--gold-dim);
+  border:1px solid var(--gold-border); border-radius:10px;
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:.85rem; color:var(--cream);
+}
+.paxbk-summary strong { color:var(--gold); }
+
+/* ════════════ Botón "Ver composición" en pkg-card ════════════ */
+.btn-composition {
+  margin-top:12px;
+  width:100%;
+  background:var(--gold-dim);
+  border:1px solid var(--gold-border);
+  color:var(--gold);
+  padding:8px 14px;
+  border-radius:8px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.78rem; font-weight:600;
+  cursor:pointer;
+  transition:var(--t);
+  letter-spacing:.3px;
+}
+.btn-composition:hover {
+  background:var(--gold);
+  color:var(--bg);
+}
+
+/* ════════════ MODAL Composición ════════════ */
+.comp-modal-overlay {
+  display:none;
+  position:fixed; inset:0; z-index:600;
+  background:rgba(10,22,40,.88);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  padding:24px;
+  align-items:flex-start; justify-content:center;
+  overflow-y:auto;
+}
+.comp-modal-overlay.open {
+  display:flex;
+  animation:fadeIn .25s ease both;
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.comp-modal {
+  background:var(--card);
+  border:1px solid var(--gold-border);
+  border-radius:18px;
+  width:100%; max-width:760px;
+  margin:24px auto;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+  animation:slideUp .3s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.comp-modal-hero {
+  position:relative;
+  height:240px;
+  overflow:hidden;
+}
+.comp-modal-hero img {
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  filter:saturate(1.05) brightness(.45);
+}
+.comp-modal-hero-content {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:30px 36px 28px;
+  background:linear-gradient(180deg, transparent 30%, rgba(15,32,64,.85) 100%);
+  z-index:1;
+}
+.comp-modal-hero .comp-icon {
+  font-size:2.2rem; margin-bottom:8px;
+}
+.comp-modal-hero h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem; color:var(--cream); font-weight:600;
+  line-height:1.15; margin-bottom:6px;
+}
+.comp-modal-hero p {
+  font-size:.88rem; color:var(--text-soft); margin-bottom:10px;
+  max-width:580px; line-height:1.55;
+}
+.comp-price {
+  display:inline-block;
+  background:var(--gold);
+  color:var(--bg);
+  padding:6px 14px; border-radius:100px;
+  font-size:.82rem; font-weight:600;
+  margin-top:6px;
+}
+.comp-modal-close {
+  position:absolute; top:18px; right:18px; z-index:2;
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(10,22,40,.85);
+  border:1px solid var(--border2);
+  color:var(--cream); cursor:pointer; font-size:1.1rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:var(--t);
+}
+.comp-modal-close:hover { background:var(--gold); color:var(--bg); border-color:var(--gold); }
+
+.comp-modal-body-inner {
+  padding:32px 36px 36px;
+}
+.comp-section {
+  margin-bottom:24px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--border);
+}
+.comp-section:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.comp-section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem; color:var(--gold);
+  font-weight:600; margin-bottom:10px;
+  letter-spacing:.2px;
+}
+.comp-list {
+  list-style:none; padding:0; margin:0;
+}
+.comp-list li {
+  position:relative; padding:5px 0 5px 20px;
+  font-size:.88rem; color:var(--text-soft);
+  line-height:1.55;
+}
+.comp-list li::before {
+  content:'✦';
+  position:absolute; left:0; top:5px;
+  color:var(--gold); font-size:.7rem;
+}
+@media(max-width:640px) {
+  .comp-modal-hero { height:200px; }
+  .comp-modal-hero-content { padding:22px 24px 20px; }
+  .comp-modal-hero h2 { font-size:1.5rem; }
+  .comp-modal-body-inner { padding:24px 24px 28px; }
+}
+
 /* ══════════════════════════════════════════════════
    PROGRESS BAR
 ══════════════════════════════════════════════════ */
@@ -587,11 +770,10 @@ body{
       </div>
     </div>
     <div class="hpax">
-      <span class="pax-label">Comensales</span>
-      <div class="pax-ctrl">
-        <button class="pax-btn" onclick="changePax(-10)">−</button>
-        <input class="pax-num" id="paxInput" type="number" value="100" min="10" max="2000" oninput="paxChanged()">
-        <button class="pax-btn" onclick="changePax(+10)">+</button>
+      <span class="pax-label">Asistentes</span>
+      <div class="pax-summary" id="paxHeaderSummary" title="Detalle en Paso 1">
+        <span class="pax-total-num" id="paxTotalNum">100</span>
+        <span class="pax-detail" id="paxHeaderDetail">100 adultos</span>
       </div>
     </div>
   </header>
@@ -643,6 +825,45 @@ body{
           </select>
         </div>
         <div class="form-group"><label>Notas adicionales</label><textarea id="eventNotes" placeholder="Restricciones alimentarias, peticiones especiales, detalles de temática…"></textarea></div>
+      </div>
+
+      <div class="sub-title" style="margin-top:28px;">👥 Asistentes al evento</div>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px;line-height:1.6;">
+        Los <strong style="color:var(--gold);">niños menores de 12 años</strong> tienen un descuento del 50% sobre el precio por pax.
+        Los <strong style="color:var(--gold);">bebés</strong> no pagan menú pero necesitan silla alta (se añadirá automáticamente al pedido).
+      </p>
+      <div class="paxbk-grid">
+        <div class="paxbk-cell">
+          <label>Adultos</label>
+          <div class="paxbk-input-wrap">
+            <button onclick="changePaxKind('adultos',-5)">−</button>
+            <input type="number" id="paxAdultos" value="100" min="0" max="2000" oninput="paxKindChanged('adultos')">
+            <button onclick="changePaxKind('adultos',+5)">+</button>
+          </div>
+          <div class="paxbk-help">Precio completo</div>
+        </div>
+        <div class="paxbk-cell">
+          <label>Niños (≤12 años)</label>
+          <div class="paxbk-input-wrap">
+            <button onclick="changePaxKind('ninos',-1)">−</button>
+            <input type="number" id="paxNinos" value="0" min="0" max="500" oninput="paxKindChanged('ninos')">
+            <button onclick="changePaxKind('ninos',+1)">+</button>
+          </div>
+          <div class="paxbk-help">−50 % sobre precio/pax</div>
+        </div>
+        <div class="paxbk-cell">
+          <label>Bebés (&lt;3 años)</label>
+          <div class="paxbk-input-wrap">
+            <button onclick="changePaxKind('bebes',-1)">−</button>
+            <input type="number" id="paxBebes" value="0" min="0" max="100" oninput="paxKindChanged('bebes')">
+            <button onclick="changePaxKind('bebes',+1)">+</button>
+          </div>
+          <div class="paxbk-help">Gratis · Silla alta incluida</div>
+        </div>
+      </div>
+      <div class="paxbk-summary">
+        <span>Total asistentes: <strong id="paxTotalLabel">100</strong></span>
+        <span>Pax facturable: <strong id="paxFacturableLabel">100</strong> <span style="color:var(--muted);font-size:.7rem;font-weight:400;">(adultos + niños × 0,5)</span></span>
       </div>
 
       <div class="step-nav">
@@ -890,6 +1111,19 @@ body{
         <strong>📌 Importante:</strong> Este presupuesto es orientativo y está sujeto a disponibilidad. Un miembro de nuestro equipo se pondrá en contacto contigo en menos de 24 h para confirmar detalles y enviar la propuesta formal. Validez del presupuesto: 30 días.
       </div>
 
+      <div class="docs-actions" style="margin-top:24px;padding:22px;background:var(--card);border:1px dashed var(--gold-border);border-radius:14px;">
+        <div style="font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.1rem;font-weight:600;margin-bottom:12px;">📄 Documentos derivados</div>
+        <p style="color:var(--text-soft);font-size:.85rem;margin-bottom:16px;line-height:1.6;">Genera automáticamente el contrato legal o la orden de servicio (uso interno) con todos los datos de este presupuesto rellenos.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn-next" onclick="abrirContrato()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
+            📄 Generar Contrato de Servicios
+          </button>
+          <button class="btn-next" onclick="abrirOrdenServicio()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
+            📋 Generar Orden de Servicio (interno)
+          </button>
+        </div>
+      </div>
+
       <div class="step-nav">
         <button class="btn-prev" onclick="goStep(6)">← Revisar</button>
         <button class="btn-next" onclick="generateBudget()" style="background:linear-gradient(135deg,#2d7a4f,#166534);color:#fff;">
@@ -967,16 +1201,119 @@ const eventTypes = [
 
 const menuPkgs = [
   // ─── Menús sentado ───────────────────────────────────────────────────────
-  { id:'eco',    type:'sentado',  badge:'badge-eco', g:'g4',  icon:'🥗', name:'Menú Esencial',      ppax:28, desc:'Cóctel de bienvenida · 1 entrante · 1 primero · 1 segundo · postre · café', incl:'Pan artesano · Agua',                           img: BASE_PLT+'entrantes/gazpacho_andaluz.jpg' },
-  { id:'est',    type:'sentado',  badge:'badge-est', g:'g6',  icon:'🍽️', name:'Menú Selecta',       ppax:42, desc:'Cóctel bienvenida · 2 entrantes · 1 primero · 1 segundo · 2 postres · café', incl:'Pan artesano · Agua · Petit fours',            img: BASE_PLT+'primeros/paella_valenciana.jpg' },
-  { id:'pre',    type:'sentado',  badge:'badge-pre', g:'g7',  icon:'🌟', name:'Menú Gourmet',       ppax:62, desc:'Cóctel premium · 3 entrantes · 1 primero · 2 segundos · 3 postres · café',  incl:'Pan artesano · Agua · Petit fours · Bienmesabe', img: BASE_PLT+'segundos/solomillo_rioja.jpg' },
-  { id:'lux',    type:'sentado',  badge:'badge-lux', g:'g8',  icon:'👑', name:'Menú de Autor',      ppax:88, desc:'Menú degustación 7 pasos con maridaje, presentación de autor y experiencia gastronómica completa', incl:'Todo incluido · Maridaje · Sumiller', img: BASE_PLT+'primeros/arroz_bogavante.jpg' },
-  { id:'buf',    type:'sentado',  badge:'badge-est', g:'g3',  icon:'🍢', name:'Buffet Premium',     ppax:38, desc:'Estaciones de comida con live cooking, carving de jamón y tabla de quesos',  incl:'Agua · Pan · Café',                            img: BASE_PLT+'entrantes/pulpo_gallega.jpg' },
-  { id:'custom', type:'sentado',  badge:'badge-est', g:'g9',  icon:'✏️', name:'A Medida',           ppax:0,  desc:'Elige tú cada plato del recetario. Precio calculado según selección',         incl:'Personalizable al 100%',                        img: BASE_PLT+'postres/tarta_queso_vina.jpg' },
+  { id:'eco',    type:'sentado',  badge:'badge-eco', g:'g4',  icon:'🥗', name:'Menú Esencial',      ppax:28, desc:'Cóctel de bienvenida · 1 entrante · 1 primero · 1 segundo · postre · café', incl:'Pan artesano · Agua',                           img: BASE_PLT+'entrantes/gazpacho_andaluz.jpg',
+    composition: {
+      'Cóctel de bienvenida': ['Vasito de Gazpacho Andaluz', 'Croqueta de jamón ibérico'],
+      'Entrantes (1 a elegir)': ['Gazpacho Andaluz', 'Salmorejo Cordobés', 'Ensalada Gamba Roja y Aguacate'],
+      'Primeros (1 a elegir)': ['Paella Valenciana', 'Risotto de Setas y Trufa', 'Crema de Calabaza y Coco'],
+      'Segundos (1 a elegir)': ['Lubina al Horno', 'Secreto Ibérico con Patatas Bravas', 'Carrillada en Vino Tinto'],
+      'Postre (1 a elegir)': ['Crema Catalana', 'Bienmesabe Malagueño', 'Sorbete de Mango y Lima'],
+      'Bodega': ['Vino tinto Rioja Crianza', 'Vino blanco Rueda', 'Agua mineral · Refrescos', 'Café de origen'],
+      'Servicios incluidos': ['Pan artesano de masa madre', 'Servicio de sala estándar', 'Servicio de mesa 5 horas']
+    }
+  },
+  { id:'est',    type:'sentado',  badge:'badge-est', g:'g6',  icon:'🍽️', name:'Menú Selecta',       ppax:42, desc:'Cóctel bienvenida · 2 entrantes · 1 primero · 1 segundo · 2 postres · café', incl:'Pan artesano · Agua · Petit fours',            img: BASE_PLT+'primeros/paella_valenciana.jpg',
+    composition: {
+      'Cóctel de bienvenida': ['Vasito de Gazpacho con jamón ibérico', 'Croqueta de jamón ibérico', 'Tartar de atún en cucurucho', 'Cucharilla de Salmorejo'],
+      'Entrantes (2 a elegir)': ['Gambas al Ajillo', 'Croquetas de Jamón Ibérico', 'Tataki de Atún Rojo', 'Pimientos del Piquillo con Bacalao', 'Carpaccio de Ternera'],
+      'Primeros (1 a elegir)': ['Paella Valenciana', 'Arroz Negro con Sepia', 'Fideuà de Marisco', 'Risotto de Setas y Trufa'],
+      'Segundos (1 a elegir)': ['Solomillo con Reducción de Rioja', 'Lubina al Horno', 'Dorada a la Sal', 'Bacalao al Pil-Pil'],
+      'Postres (2 a elegir)': ['Tarta de Queso La Viña', 'Coulant de Chocolate', 'Tiramisú Clásico', 'Panna Cotta con Frutos Rojos'],
+      'Bodega': ['Vino tinto Ribera del Duero', 'Albariño DO Rías Baixas', 'Cava brut para brindis', 'Agua · Refrescos', 'Café de especialidad'],
+      'Servicios incluidos': ['Pan artesano + AOVE Hojiblanca', 'Petit fours con café', 'Servicio de sala completo', 'Servicio de mesa 6 horas']
+    }
+  },
+  { id:'pre',    type:'sentado',  badge:'badge-pre', g:'g7',  icon:'🌟', name:'Menú Gourmet',       ppax:62, desc:'Cóctel premium · 3 entrantes · 1 primero · 2 segundos · 3 postres · café',  incl:'Pan artesano · Agua · Petit fours · Bienmesabe', img: BASE_PLT+'segundos/solomillo_rioja.jpg',
+    composition: {
+      'Cóctel premium de bienvenida': ['8 piezas finger food frío y caliente por pax', 'Gamba roja Málaga sobre tosta nori', 'Canapé de foie mi-cuit con higos', 'Cóctel de autor (1 por pax)'],
+      'Entrantes (3 a elegir)': ['Tostas de Foie con Higos', 'Tataki de Atún Rojo', 'Ensalada Gamba Roja y Aguacate', 'Carpaccio de Ternera', 'Pimientos del Piquillo con Bacalao'],
+      'Primero (1 a elegir)': ['Arroz con Bogavante', 'Risotto de Setas y Trufa', 'Fideuà de Marisco'],
+      'Segundos (2 a elegir)': ['Solomillo con Reducción de Rioja', 'Pulpo a la Brasa con Parmentier', 'Pato Confit con Naranja', 'Bacalao al Pil-Pil'],
+      'Postres (3 a elegir)': ['Tarta de Queso La Viña', 'Coulant de Chocolate', 'Bienmesabe Malagueño', 'Mousse de Chocolate Blanco', 'Sorbete de Mango y Lima'],
+      'Bodega': ['Vino tinto Gran Reserva', 'Albariño selección sommelier', 'Cava Gramona', 'Pedro Ximénez con postre', 'Agua · Refrescos premium', 'Café de origen único'],
+      'Servicios incluidos': ['Pan artesano + AOVE DO Málaga', 'Petit fours + bienmesabe', 'Bombones artesanos con café', 'Jefe de sala dedicado', 'Servicio de mesa 7 horas']
+    }
+  },
+  { id:'lux',    type:'sentado',  badge:'badge-lux', g:'g8',  icon:'👑', name:'Menú de Autor',      ppax:88, desc:'Menú degustación 7 pasos con maridaje, presentación de autor y experiencia gastronómica completa', incl:'Todo incluido · Maridaje · Sumiller', img: BASE_PLT+'primeros/arroz_bogavante.jpg',
+    composition: {
+      'Aperitivos (3 bocados sorpresa del chef)': ['Snack crujiente de la huerta', 'Esencia del mar', 'Bocado del momento'],
+      'Paso 1 — Entrante frío': ['Tataki de Atún Rojo con sésamo y yuzu'],
+      'Paso 2 — Entrante caliente': ['Croqueta líquida de jamón ibérico de bellota'],
+      'Paso 3 — Pescado': ['Bacalao al Pil-Pil con emulsión de su gelatina'],
+      'Paso 4 — Sorbete': ['Sorbete de Mango y Lima con ralladura de lima fresca'],
+      'Paso 5 — Carne': ['Solomillo con Reducción de Rioja y patata paja'],
+      'Paso 6 — Quesos': ['Tabla de 5 quesos artesanos · Manchego, Brie, Cabra, Roncal, Idiazábal'],
+      'Paso 7 — Postre': ['Coulant de Chocolate 72% con helado de vainilla Bourbon'],
+      'Mignardises': ['Petit fours · Trufas · Macarons artesanos'],
+      'Maridaje completo (7 vinos)': ['Cava Gramona III Lustros', 'Albariño Pazo San Mauro', 'Bentomiz Ariyanas (Moscatel seco)', 'Rioja Gran Reserva', 'Ribera del Duero Reserva', 'Pedro Ximénez Don PX', 'Café e infusiones'],
+      'Servicios incluidos': ['Sumiller exclusivo dedicado', 'Jefe de sala personal', 'Carving en mesa', 'Servicio de mesa 8 horas', 'Photocall gastronómico']
+    }
+  },
+  { id:'buf',    type:'sentado',  badge:'badge-est', g:'g3',  icon:'🍢', name:'Buffet Premium',     ppax:38, desc:'Estaciones de comida con live cooking, carving de jamón y tabla de quesos',  incl:'Agua · Pan · Café',                            img: BASE_PLT+'entrantes/pulpo_gallega.jpg',
+    composition: {
+      'Estación de entrantes fríos': ['Salmorejo Cordobés', 'Carpaccio de Ternera', 'Ensalada Gamba Roja', 'Tabla de embutidos ibéricos', 'Pan rústico variado'],
+      'Estación de quesos': ['Selección de 6 quesos nacionales e internacionales', 'Membrillo · Mermeladas · Frutos secos'],
+      'Estación de carving en vivo': ['Maestro cortador · Jamón ibérico de bellota D.O.P.', 'Lomo curado ibérico'],
+      'Estación caliente': ['Paella Valenciana', 'Lubina al Horno', 'Secreto Ibérico con patatas bravas'],
+      'Estación de postres': ['Tarta de Queso La Viña', 'Crema Catalana', 'Brochetas de fruta fresca'],
+      'Bodega': ['Vino tinto y blanco DO', 'Cava brut', 'Agua mineral · Refrescos', 'Café'],
+      'Servicios incluidos': ['Pan artesano', 'Cubertería buffet', 'Servicio de sala', 'Servicio de mesa 5 horas']
+    }
+  },
+  { id:'custom', type:'sentado',  badge:'badge-est', g:'g9',  icon:'✏️', name:'A Medida',           ppax:0,  desc:'Elige tú cada plato del recetario. Precio calculado según selección',         incl:'Personalizable al 100%',                        img: BASE_PLT+'postres/tarta_queso_vina.jpg',
+    composition: {
+      'Personalización completa': ['Eliges entrantes, primeros, segundos y postres uno a uno de la carta completa (40 platos)', 'El precio se calcula sumando el coste de cada plato por pax', 'Mínimo: 1 entrante + 1 primero + 1 segundo + 1 postre'],
+      'Bodega': ['Configurable en el paso siguiente'],
+      'Sugerencia': ['Si no tienes claro qué elegir, mira los menús cerrados; podemos partir de uno y modificar lo que quieras']
+    }
+  },
+  // ─── Menú celíacos (sin gluten) ────────────────────────────────────────
+  { id:'glut',  type:'sentado',  badge:'badge-pre', g:'g4',  icon:'🌾', name:'Menú Sin Gluten',     ppax:46, desc:'Menú completo apto celíacos · Cocina dedicada · Sin contaminación cruzada · 2 entrantes + 1 primero + 1 segundo + 2 postres', incl:'Pan sin gluten · Bebidas sin TACC · Postres sin gluten', img: BASE_PLT+'entrantes/gazpacho_andaluz.jpg',
+    composition: {
+      'Cóctel de bienvenida (sin gluten)': ['Vasito de Gazpacho Andaluz', 'Tartar de Atún Rojo sobre maíz tostado (sin gluten)', 'Brocheta de queso manchego con uva moscatel'],
+      'Entrantes sin gluten (2 a elegir)': ['Gazpacho Andaluz', 'Salmorejo Cordobés (sin pan)', 'Tataki de Atún Rojo (con tamari sin gluten)', 'Ensalada Gamba Roja y Aguacate', 'Carpaccio de Ternera (sin pan)'],
+      'Primero sin gluten (1 a elegir)': ['Paella Valenciana', 'Arroz Negro con Sepia', 'Risotto de Setas y Trufa', 'Arroz con Bogavante', 'Crema de Calabaza y Coco'],
+      'Segundos sin gluten (1 a elegir)': ['Lubina al Horno', 'Dorada a la Sal', 'Pulpo a la Brasa con Parmentier', 'Gamba Roja a la Plancha', 'Solomillo con Reducción de Rioja'],
+      'Postres sin gluten (2 a elegir)': ['Crema Catalana', 'Panna Cotta con Frutos Rojos', 'Sorbete de Mango y Lima', 'Flan de Huevo Casero', 'Mousse de Chocolate Blanco'],
+      'Bodega (toda sin gluten)': ['Vino tinto Rioja', 'Albariño', 'Cava brut', 'Agua · Refrescos · Café'],
+      'Garantías celíacos': ['Cocina dedicada con protocolo APPCC', 'Cero contaminación cruzada', 'Pan sin gluten artesano', 'Etiquetado de cada plato', 'Personal formado en alergias']
+    }
+  },
   // ─── Cóctel de Pie ───────────────────────────────────────────────────────
-  { id:'ck_brisa',  type:'coctel', badge:'badge-eco', g:'g6', icon:'🥂', name:'Cóctel Brisa',       ppax:18, desc:'2h · 6 pinchos fríos · 4 calientes · 2 mini postres · vinos y cava brindis', incl:'Agua · Refrescos · Vino · Cava brindis',         img: BASE_EVT+'coctel.jpg' },
-  { id:'ck_sol',    type:'coctel', badge:'badge-pre', g:'g7', icon:'🍾', name:'Cóctel Costa del Sol',ppax:26, desc:'3h · 8 fríos · 6 calientes · estación carving jamón ibérico · 3 mini postres · vino D.O. · cóctel bienvenida', incl:'Vino D.O. · Cava Gramona · Cóctel autor', img: BASE_EVT+'aniversario.jpg' },
-  { id:'ck_autor',  type:'coctel', badge:'badge-lux', g:'g8', icon:'✨', name:'Cóctel Miramar',     ppax:38, desc:'4h · 10 fríos · 8 calientes · 2 estaciones en vivo · mesa finger desserts · open bar · bartender', incl:'Open bar completo · Sumiller · Barra cócteles', img: BASE_EVT+'boda.jpg' },
+  { id:'ck_brisa',  type:'coctel', badge:'badge-eco', g:'g6', icon:'🥂', name:'Cóctel Brisa',       ppax:18, desc:'2h · 6 pinchos fríos · 4 calientes · 2 mini postres · vinos y cava brindis', incl:'Agua · Refrescos · Vino · Cava brindis',         img: BASE_EVT+'coctel.jpg',
+    composition: {
+      'Duración y formato': ['2 horas de servicio', 'Sin asignación de mesa · de pie con mesas altas'],
+      '6 pinchos fríos (selección del chef)': ['Tartar de atún rojo en cucurucho', 'Canapé de foie mi-cuit con higos', 'Gazpacho andaluz en vasito con jamón', 'Brocheta de manchego con uva moscatel', 'Cucharilla de salmorejo con codorniz', 'Jamón ibérico en cucurucho'],
+      '4 pinchos calientes (servicio continuo)': ['Croqueta líquida de jamón ibérico', 'Mini brioche de pulled pork', 'Buñuelo de bacalao', 'Gyoza de gambas y jengibre'],
+      '2 mini postres por pax': ['Coulant de chocolate en vasito', 'Crema catalana flameada en cucharilla'],
+      'Bodega': ['Vino tinto y blanco de la casa', 'Cava brut para el brindis', 'Agua · Refrescos'],
+      'Servicios incluidos': ['Personal de sala con bandejas', 'Mesas altas y cocteleras', 'Cubertería desechable premium']
+    }
+  },
+  { id:'ck_sol',    type:'coctel', badge:'badge-pre', g:'g7', icon:'🍾', name:'Cóctel Costa del Sol',ppax:26, desc:'3h · 8 fríos · 6 calientes · estación carving jamón ibérico · 3 mini postres · vino D.O. · cóctel bienvenida', incl:'Vino D.O. · Cava Gramona · Cóctel autor', img: BASE_EVT+'aniversario.jpg',
+    composition: {
+      'Duración y formato': ['3 horas de servicio', 'Sin asignación de mesa · cócteleras + zona lounge'],
+      'Cóctel de bienvenida': ['Cóctel de autor (1 por pax) elegido a la carta'],
+      '8 pinchos fríos gourmet': ['Tartar atún rojo', 'Canapé foie mi-cuit', 'Gamba roja Málaga sobre nori', 'Blini salmón ahumado', 'Brocheta manchego y uva', 'Ostras Galicia con granizado', 'Jamón ibérico en cucurucho', 'Cucharilla salmorejo'],
+      '6 pinchos calientes (3 rondas)': ['Croqueta jamón ibérico', 'Croqueta boletus y trufa', 'Mini brioche pulled pork', 'Langostino tempura wasabi', 'Niguiri atún marcado a la llama', 'Buñuelo bacalao con alioli negro'],
+      'Estación en vivo': ['Carving de jamón ibérico de bellota D.O.P. Guijuelo', 'Maestro cortador en sala'],
+      '3 mini postres de autor': ['Coulant chocolate', 'Crema catalana flameada', 'Bienmesabe malagueño'],
+      'Bodega': ['Vino tinto Ribera del Duero D.O.', 'Albariño D.O.', 'Cava Gramona III Lustros', 'Agua · Refrescos premium'],
+      'Servicios incluidos': ['Jefe de sala dedicado', 'Servicio continuo de bandejas', 'Cristalería de cristal']
+    }
+  },
+  { id:'ck_autor',  type:'coctel', badge:'badge-lux', g:'g8', icon:'✨', name:'Cóctel Miramar',     ppax:38, desc:'4h · 10 fríos · 8 calientes · 2 estaciones en vivo · mesa finger desserts · open bar · bartender', incl:'Open bar completo · Sumiller · Barra cócteles', img: BASE_EVT+'boda.jpg',
+    composition: {
+      'Duración y formato': ['4 horas de servicio premium', 'Open bar completo durante todo el evento'],
+      '10 pinchos fríos de alta gastronomía': ['Tartar de atún rojo en cucurucho', 'Canapé foie mi-cuit con higos y Oporto', 'Gamba roja de Málaga sobre nori', 'Vasito de gazpacho con viruta ibérica', 'Blini de salmón ahumado y crème fraîche', 'Montadito de ventresca con cherry confitado', 'Brocheta queso manchego con miel romero', 'Jamón ibérico de bellota en cucurucho', 'Ostras de Galicia con granizado de pepino', 'Cucharilla de salmorejo con codorniz'],
+      '8 pinchos calientes (servicio continuo)': ['Croqueta líquida de jamón ibérico', 'Croqueta de boletus y trufa negra', 'Montadito de solomillo con foie caliente y PX', 'Mini brioche de pulled pork ibérico', 'Langostino en tempura con mayo wasabi', 'Niguiri de atún rojo marcado a la llama', 'Buñuelo de bacalao con alioli negro de tinta', 'Gyoza de gambas y jengibre con ponzu'],
+      '2 estaciones en vivo (a elegir)': ['Carving de jamón ibérico D.O.P.', 'Barra de sushi con maestro sushiman', 'Pasta fresca al momento', 'Wok asiático', 'Barra de ostras y mariscos', 'Pizzas al horno de leña', 'Ceviche bar'],
+      'Mesa de finger desserts completa': ['Coulant de chocolate negro', 'Crema catalana flameada', 'Bienmesabe en tartaleta', 'Mini tarta de queso La Viña', 'Macarón de frambuesa y lichi', 'Panna cotta de coco', 'Brocheta de fresa con chocolate', 'Mini pavlova', 'Sorbete de limón', 'Trufa de chocolate belga', 'Mini éclair de praliné', 'Piruleta de caramelo'],
+      'Open Bar completo': ['Champagne brut', 'Vinos tintos y blancos premium', 'Cava Gramona III Lustros', 'Gin Bombay/Hendrick\'s', 'Whisky Macallan 12', 'Ron Diplomatico', 'Tequila premium', 'Vermut · Vinos generosos', 'Agua · Refrescos · Zumos naturales'],
+      'Barra de cócteles de autor': ['Bartender con 6 cócteles signature', 'Brisa Mediterránea', 'Málaga Sour', 'Negroni', 'Espresso Martini', 'Aperol Spritz', 'Mojito Andaluz'],
+      'Servicios incluidos': ['Sumiller exclusivo', 'Bartender dedicado', 'Jefe de sala', 'Servicio premium con cristalería de cristal']
+    }
+  },
 ];
 
 const dishData = {
@@ -1166,6 +1503,7 @@ function pkgCard(item, selKey, grid) {
   card.className = 'sel-card pkg';
   card.id = `rc_${selKey}_${item.id}`;
   const pp = item.ppax;
+  const hasComp = !!(item.composition && Object.keys(item.composition).length);
   card.innerHTML = `
     <div class="pkg-thumb ${item.g}">
       ${item.img ? `<img src="${item.img}" alt="${item.name}" loading="lazy">` : ''}
@@ -1178,24 +1516,76 @@ function pkgCard(item, selKey, grid) {
       <div class="sel-desc">${item.desc}</div>
       <div class="sel-price">${pp===0?'A calcular':`${pp} € / pax`}</div>
       ${item.incl ? `<div class="sel-price-note">✓ ${item.incl}</div>` : ''}
+      ${hasComp ? `<button class="btn-composition" data-pkg-id="${item.id}">Ver composición ▾</button>` : ''}
     </div>`;
-  card.onclick = () => {
+  card.onclick = (e) => {
+    if (e.target.classList.contains('btn-composition')) {
+      e.stopPropagation();
+      showComposition(item.id);
+      return;
+    }
     document.querySelectorAll(`[id^="rc_${selKey}_"]`).forEach(c=>c.classList.remove('selected'));
     card.classList.add('selected');
     sel[selKey] = item;
     if (selKey === 'menuPkg') {
       document.getElementById('customMenuWrap').style.display = item.id==='custom'?'block':'none';
+      // Mostrar coctelInfoBox solo para tipo cóctel
+      const cb = document.getElementById('coctelInfoBox');
+      if (cb) cb.style.display = item.type === 'coctel' ? 'block' : 'none';
     }
     updateSide();
   };
   document.getElementById(grid).appendChild(card);
 }
 
+// ══════════════════════════════════════════════════
+// MODAL: Composición detallada del menú
+// ══════════════════════════════════════════════════
+function showComposition(pkgId) {
+  const pkg = menuPkgs.find(p => p.id === pkgId);
+  if (!pkg || !pkg.composition) return;
+
+  const sections = Object.entries(pkg.composition).map(([title, items]) => `
+    <div class="comp-section">
+      <div class="comp-section-title">${title}</div>
+      <ul class="comp-list">
+        ${items.map(i => `<li>${i}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+
+  const body = document.getElementById('compModalBody');
+  body.innerHTML = `
+    <div class="comp-modal-hero ${pkg.g}">
+      ${pkg.img ? `<img src="${pkg.img}" alt="${pkg.name}">` : ''}
+      <div class="comp-modal-hero-content">
+        <div class="comp-icon">${pkg.icon}</div>
+        <h2>${pkg.name}</h2>
+        <p>${pkg.desc}</p>
+        <div class="comp-price">${pkg.ppax === 0 ? 'A calcular según selección' : `${pkg.ppax} € / pax · IVA no incluido`}</div>
+      </div>
+      <button class="comp-modal-close" onclick="closeComposition()">✕</button>
+    </div>
+    <div class="comp-modal-body-inner">
+      ${sections}
+    </div>
+  `;
+  document.getElementById('compModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeComposition() {
+  document.getElementById('compModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeCompOverlay(e) {
+  if (e.target.id === 'compModalOverlay') closeComposition();
+}
+
 function addonCard(item, selArr, grid) {
   const card = document.createElement('div');
   card.className = 'addon-card';
   card.id = `addon_${item.id}`;
-  const priceStr = item.pp ? `${item.price} € / pax (${(item.price*pax).toFixed(0)} €)` : `${item.price.toLocaleString()} €`;
+  const priceStr = item.pp ? `${item.price} € / pax (${(item.price*paxFacturable()).toFixed(0)} €)` : `${item.price.toLocaleString()} €`;
   card.innerHTML = `
     <div class="addon-check"></div>
     <span class="addon-ico">${item.ico}</span>
@@ -1212,7 +1602,7 @@ function addonCard(item, selArr, grid) {
 }
 
 function flowerCard(item, grid) {
-  const nMesas = Math.ceil(pax/8);
+  const nMesas = Math.ceil(paxTotal()/8);
   const total = item.price_fijo + item.price_mesa * nMesas;
   const card = document.createElement('div');
   card.className = 'flower-card';
@@ -1441,58 +1831,107 @@ function goStep(n) {
 }
 
 // ══════════════════════════════════════════════════
-// PAX
+// PAX — desglose adultos / niños / bebés
+//   · adultos:  precio completo
+//   · niños:    -50 % sobre el precio/pax (≤12 años)
+//   · bebés:    no pagan, requieren silla alta (<3 años)
 // ══════════════════════════════════════════════════
-function changePax(delta) {
-  pax = Math.max(10, Math.min(2000, pax + delta));
-  document.getElementById('paxInput').value = pax;
+let adultos = 100, ninos = 0, bebes = 0;
+
+function paxTotal()      { return adultos + ninos + bebes; }
+function paxFacturable() { return adultos + ninos * 0.5; }
+
+function changePaxKind(kind, delta) {
+  const limits = { adultos:[0,2000], ninos:[0,500], bebes:[0,100] };
+  const [lo, hi] = limits[kind];
+  if (kind === 'adultos') adultos = Math.max(lo, Math.min(hi, adultos + delta));
+  else if (kind === 'ninos') ninos = Math.max(lo, Math.min(hi, ninos + delta));
+  else if (kind === 'bebes') bebes = Math.max(lo, Math.min(hi, bebes + delta));
+  syncPaxInputs();
+  pax = paxTotal();
   updateSide();
 }
-function paxChanged() {
-  pax = Math.max(10, parseInt(document.getElementById('paxInput').value)||100);
+function paxKindChanged(kind) {
+  const el = document.getElementById('pax' + kind[0].toUpperCase() + kind.slice(1));
+  const v = Math.max(0, parseInt(el.value) || 0);
+  if (kind === 'adultos') adultos = v;
+  else if (kind === 'ninos') ninos = v;
+  else if (kind === 'bebes') bebes = v;
+  syncPaxInputs();
+  pax = paxTotal();
   updateSide();
 }
+function syncPaxInputs() {
+  const a = document.getElementById('paxAdultos');
+  const n = document.getElementById('paxNinos');
+  const b = document.getElementById('paxBebes');
+  if (a) a.value = adultos;
+  if (n) n.value = ninos;
+  if (b) b.value = bebes;
+  const lblT = document.getElementById('paxTotalLabel');
+  const lblF = document.getElementById('paxFacturableLabel');
+  if (lblT) lblT.textContent = paxTotal();
+  if (lblF) lblF.textContent = paxFacturable().toLocaleString('es-ES',{minimumFractionDigits:0,maximumFractionDigits:1});
+  // Header summary
+  const hdrNum = document.getElementById('paxTotalNum');
+  const hdrDet = document.getElementById('paxHeaderDetail');
+  if (hdrNum) hdrNum.textContent = paxTotal();
+  if (hdrDet) {
+    const parts = [];
+    if (adultos) parts.push(adultos + ' adultos');
+    if (ninos)   parts.push(ninos + ' niños');
+    if (bebes)   parts.push(bebes + ' bebés');
+    hdrDet.textContent = parts.join(' · ') || '0';
+  }
+}
+
+// Aliases retro-compat (algunos lugares siguen usando `pax` literal)
+function changePax(delta) { changePaxKind('adultos', delta); }
+function paxChanged() {}  // legacy — no se usa, todos los inputs llaman a paxKindChanged
 
 // ══════════════════════════════════════════════════
 // PRICE CALCULATION
+//   pf = pax facturable (adultos + niños/2) → usado en items "por pax"
+//   pt = pax total (todos)                  → usado en mesas/aforo
 // ══════════════════════════════════════════════════
 function calcTotal() {
   let t = 0;
+  const pf = paxFacturable();
+  const pt = paxTotal();
 
   // Menu
   if (sel.menuPkg) {
     if (sel.menuPkg.id === 'custom') {
-      // Sum custom dishes
       ['entrantes','primeros','segundos','postres'].forEach(cat => {
-        sel.customDishes[cat].forEach(d => t += d.ppax * pax);
+        sel.customDishes[cat].forEach(d => t += d.ppax * pf);
       });
     } else {
-      t += sel.menuPkg.ppax * pax;
+      t += sel.menuPkg.ppax * pf;
     }
   }
 
   // Bebidas
-  if (sel.bebPkg) t += sel.bebPkg.ppax * pax;
-  sel.bebExtras.forEach(b => t += b.pp ? b.price*pax : b.price);
+  if (sel.bebPkg) t += sel.bebPkg.ppax * pf;
+  sel.bebExtras.forEach(b => t += b.pp ? b.price*pf : b.price);
 
-  // Montaje
-  if (sel.tablePkg) t += sel.tablePkg.ppax * pax;
-  sel.luzExtras.forEach(l => t += l.pp ? l.price*pax : l.price);
-  sel.montajeExtras.forEach(m => t += m.pp ? m.price*pax : m.price);
+  // Montaje (silla, mesa: por persona total, no descuenta niños)
+  if (sel.tablePkg) t += sel.tablePkg.ppax * pt;
+  sel.luzExtras.forEach(l => t += l.pp ? l.price*pf : l.price);
+  sel.montajeExtras.forEach(m => t += m.pp ? m.price*pf : m.price);
 
-  // Flores
+  // Flores (mesa = 8 personas total)
   if (sel.centroMesa) {
-    const nMesas = Math.ceil(pax/8);
+    const nMesas = Math.ceil(pt/8);
     t += sel.centroMesa.price_fijo + sel.centroMesa.price_mesa * nMesas;
   }
-  sel.floralExtras.forEach(f => t += f.pp ? f.price*pax : f.price);
-  sel.velasExtras.forEach(v => t += v.pp ? v.price*pax : v.price);
+  sel.floralExtras.forEach(f => t += f.pp ? f.price*pf : f.price);
+  sel.velasExtras.forEach(v => t += v.pp ? v.price*pf : v.price);
 
-  // Animación
-  sel.musica.forEach(m => t += m.pp ? m.price*pax : m.price);
-  sel.show.forEach(s => t += s.pp ? s.price*pax : s.price);
-  sel.foto.forEach(f => t += f.pp ? f.price*pax : f.price);
-  sel.dulces.forEach(d => t += d.pp ? d.price*pax : d.price);
+  // Animación (precios por pax = facturable; precios fijos = absolutos)
+  sel.musica.forEach(m => t += m.pp ? m.price*pf : m.price);
+  sel.show.forEach(s  => t += s.pp ? s.price*pf : s.price);
+  sel.foto.forEach(f  => t += f.pp ? f.price*pf : f.price);
+  sel.dulces.forEach(d=> t += d.pp ? d.price*pf : d.price);
 
   return t;
 }
@@ -1506,37 +1945,48 @@ function updateSide() {
   const total = calcTotal();
   const iva   = total * 0.10;
   const totalIva = total + iva;
-  const ppax = pax > 0 ? total/pax : 0;
+  const pf = paxFacturable();
+  const pt = paxTotal();
+  const ppax = pt > 0 ? total/pt : 0;
 
   document.getElementById('sideTotal').textContent = fmtEur(total);
   document.getElementById('sideTotalPax').textContent = ppax.toFixed(2)+' €/pax';
-  document.getElementById('sidePaxInfo').textContent = `${pax} comensales`;
+  // info pax: total + desglose corto
+  const sideInfoBits = [];
+  if (adultos) sideInfoBits.push(adultos+'A');
+  if (ninos)   sideInfoBits.push(ninos+'N');
+  if (bebes)   sideInfoBits.push(bebes+'B');
+  document.getElementById('sidePaxInfo').textContent = `${pt} pax · ${sideInfoBits.join('+')}`;
 
   // Sections in sidebar
   const sections = [
     { title:'🎊 Evento',  items: sel.eventType ? [{n:sel.eventType.name, v:'-'}] : [] },
-    { title:'🍽️ Menú',   items: sel.menuPkg ? [{n:sel.menuPkg.name, v: sel.menuPkg.ppax > 0 ? fmtEur(sel.menuPkg.ppax*pax) : 'a calcular'}] : [] },
+    { title:'🍽️ Menú',   items: sel.menuPkg ? [{n:sel.menuPkg.name, v: sel.menuPkg.ppax > 0 ? fmtEur(sel.menuPkg.ppax*pf) : 'a calcular'}] : [] },
     { title:'🍷 Bebidas', items: [
-      ...(sel.bebPkg ? [{n:sel.bebPkg.name, v:fmtEur(sel.bebPkg.ppax*pax)}] : []),
-      ...sel.bebExtras.map(b=>({n:b.name, v:fmtEur(b.pp?b.price*pax:b.price)}))
+      ...(sel.bebPkg ? [{n:sel.bebPkg.name, v:fmtEur(sel.bebPkg.ppax*pf)}] : []),
+      ...sel.bebExtras.map(b=>({n:b.name, v:fmtEur(b.pp?b.price*pf:b.price)}))
     ]},
     { title:'🪑 Montaje', items: [
-      ...(sel.tablePkg ? [{n:sel.tablePkg.name, v:fmtEur(sel.tablePkg.ppax*pax)}] : []),
-      ...sel.luzExtras.map(l=>({n:l.name, v:fmtEur(l.pp?l.price*pax:l.price)})),
-      ...sel.montajeExtras.map(m=>({n:m.name, v:fmtEur(m.pp?m.price*pax:m.price)}))
+      ...(sel.tablePkg ? [{n:sel.tablePkg.name, v:fmtEur(sel.tablePkg.ppax*pt)}] : []),
+      ...(bebes > 0 ? [{n:`🍼 ${bebes} silla(s) alta(s) bebé`, v:'incluida'}] : []),
+      ...sel.luzExtras.map(l=>({n:l.name, v:fmtEur(l.pp?l.price*pf:l.price)})),
+      ...sel.montajeExtras.map(m=>({n:m.name, v:fmtEur(m.pp?m.price*pf:m.price)}))
     ]},
     { title:'🌸 Flores', items: [
-      ...(sel.centroMesa ? [{n:sel.centroMesa.name, v:fmtEur(sel.centroMesa.price_fijo+sel.centroMesa.price_mesa*Math.ceil(pax/8))}] : []),
+      ...(sel.centroMesa ? [{n:sel.centroMesa.name, v:fmtEur(sel.centroMesa.price_fijo+sel.centroMesa.price_mesa*Math.ceil(pt/8))}] : []),
       ...sel.floralExtras.map(f=>({n:f.name, v:fmtEur(f.price)})),
       ...sel.velasExtras.map(v=>({n:v.name, v:fmtEur(v.price)}))
     ]},
     { title:'🎵 Animación', items: [
-      ...sel.musica.map(m=>({n:m.name, v:fmtEur(m.pp?m.price*pax:m.price)})),
-      ...sel.show.map(s=>({n:s.name, v:fmtEur(s.pp?s.price*pax:s.price)})),
-      ...sel.foto.map(f=>({n:f.name, v:fmtEur(f.pp?f.price*pax:f.price)})),
-      ...sel.dulces.map(d=>({n:d.name, v:fmtEur(d.pp?d.price*pax:d.price)}))
+      ...sel.musica.map(m=>({n:m.name, v:fmtEur(m.pp?m.price*pf:m.price)})),
+      ...sel.show.map(s=>({n:s.name, v:fmtEur(s.pp?s.price*pf:s.price)})),
+      ...sel.foto.map(f=>({n:f.name, v:fmtEur(f.pp?f.price*pf:f.price)})),
+      ...sel.dulces.map(d=>({n:d.name, v:fmtEur(d.pp?d.price*pf:d.price)}))
     ]},
   ];
+
+  // Refresca header summary también
+  syncPaxInputs();
 
   const sideBody = document.getElementById('sideBody');
   sideBody.innerHTML = '';
@@ -1563,7 +2013,9 @@ function updateSide() {
 function buildFinalSummary() {
   const total = calcTotal();
   const iva = total * 0.10;
-  const ppax = pax > 0 ? total/pax : 0;
+  const pt = paxTotal();
+  const pf = paxFacturable();
+  const ppax = pt > 0 ? total/pt : 0;
   const ref = `PRES-${new Date().getFullYear()}-${String(Math.floor(Math.random()*9000)+1000)}`;
 
   document.getElementById('finalTotal').textContent = fmtEur(total + iva);
@@ -1584,24 +2036,25 @@ function buildFinalSummary() {
       ['Fecha',    document.getElementById('eventDate')?.value || '—'],
       ['Espacio',  document.getElementById('eventVenue')?.options[document.getElementById('eventVenue')?.selectedIndex]?.text || '—'],
       ['Duración', document.getElementById('eventDuration')?.value + ' horas' || '—'],
-      ['Comensales', pax + ' pax'],
+      ['Asistentes', `${pt} (${adultos} adultos · ${ninos} niños · ${bebes} bebés)`],
+      ['Pax facturable', `${pf} (niños al 50%, bebés gratis)`],
     ]},
     { t:'🍽️ Gastronomía', rows: [
       ['Menú', sel.menuPkg?.name || '—'],
       ['Bebidas', sel.bebPkg?.name || '—'],
-      ...sel.bebExtras.map(b=>[b.name, fmtEur(b.pp?b.price*pax:b.price)]),
+      ...sel.bebExtras.map(b=>[b.name, fmtEur(b.pp?b.price*pf:b.price)]),
     ]},
     { t:'🪑 Montaje & Decoración', rows: [
       ['Configuración', sel.tablePkg?.name || '—'],
       ['Flores', sel.centroMesa?.name || '—'],
       ...sel.luzExtras.map(l=>[l.name, fmtEur(l.price)]),
-      ...sel.montajeExtras.map(m=>[m.name, fmtEur(m.pp?m.price*pax:m.price)]),
+      ...sel.montajeExtras.map(m=>[m.name, fmtEur(m.pp?m.price*pf:m.price)]),
     ]},
     { t:'🎵 Entretenimiento', rows: [
       ...sel.musica.map(m=>[m.name, fmtEur(m.price)]),
       ...sel.show.map(s=>[s.name, fmtEur(s.price)]),
       ...sel.foto.map(f=>[f.name, fmtEur(f.price)]),
-      ...sel.dulces.map(d=>[d.name, fmtEur(d.pp?d.price*pax:d.price)]),
+      ...sel.dulces.map(d=>[d.name, fmtEur(d.pp?d.price*pf:d.price)]),
     ]},
     { t:'💰 Desglose económico', rows: [
       ['Subtotal sin IVA', fmtEur(total)],
@@ -1631,11 +2084,73 @@ function generateBudget() {
 }
 
 // ══════════════════════════════════════════════════
+// EXPORTAR datos del presupuesto a sessionStorage
+// Para que contrato-servicios.html y orden-servicio.html puedan rellenarse
+// ══════════════════════════════════════════════════
+function exportPresupuestoData() {
+  const total = calcTotal();
+  const venueEl = document.getElementById('eventVenue');
+  const venueText = venueEl ? venueEl.options[venueEl.selectedIndex]?.text : '';
+  const data = {
+    referencia: 'PRES-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000),
+    timestamp:  new Date().toISOString(),
+    cliente: {
+      nombre:    document.getElementById('finalName')?.value || document.getElementById('clientName')?.value || '',
+      email:     document.getElementById('finalEmail')?.value || document.getElementById('clientEmail')?.value || '',
+      tel:       document.getElementById('finalPhone')?.value || '',
+      dni:       document.getElementById('finalDni')?.value || '',
+      direccion: document.getElementById('finalAddress')?.value || '',
+    },
+    fecha:    document.getElementById('eventDate')?.value || '',
+    hora:     document.getElementById('eventTime')?.value || '',
+    duracion: document.getElementById('eventDuration')?.value || '',
+    espacio:  venueText,
+    notas:    document.getElementById('eventNotes')?.value || '',
+    adultos, ninos, bebes,
+    pt:       paxTotal(),
+    pf:       paxFacturable(),
+    sel:      JSON.parse(JSON.stringify(sel)), // copia profunda
+    total
+  };
+  sessionStorage.setItem('fnb_presupuesto_actual', JSON.stringify(data));
+  return data;
+}
+
+function abrirContrato() {
+  if (!sel.eventType || !sel.menuPkg) {
+    alert('Para generar el contrato necesitas haber seleccionado al menos el tipo de evento y un menú.');
+    return;
+  }
+  if (!document.getElementById('finalName')?.value && !document.getElementById('clientName')?.value) {
+    alert('Por favor, introduce el nombre del cliente antes de generar el contrato.');
+    return;
+  }
+  exportPresupuestoData();
+  window.open('contrato-servicios.html', '_blank');
+}
+
+function abrirOrdenServicio() {
+  if (!sel.eventType || !sel.menuPkg) {
+    alert('Para generar la orden de servicio necesitas haber seleccionado al menos el tipo de evento y un menú.');
+    return;
+  }
+  exportPresupuestoData();
+  window.open('orden-servicio.html', '_blank');
+}
+
+// ══════════════════════════════════════════════════
 // BOOT
 // ══════════════════════════════════════════════════
 initGrids();
 renderProgress();
 updateSide();
+syncPaxInputs();
 </script>
+
+<!-- MODAL Composición detallada de menús -->
+<div class="comp-modal-overlay" id="compModalOverlay" onclick="closeCompOverlay(event)">
+  <div class="comp-modal" id="compModalBody" onclick="event.stopPropagation()"></div>
+</div>
+
 </body>
 </html>

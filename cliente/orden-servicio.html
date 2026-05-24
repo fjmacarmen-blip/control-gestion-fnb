@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orden de Servicio · Control Gestión F&B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a1628; --card:#0f2040; --card2:#122b54; --card3:#1a3666;
+  --gold:#c9a84c; --gold-light:#e8c96a; --gold-deep:#9d8237;
+  --gold-dim:rgba(201,168,76,.10); --gold-border:rgba(201,168,76,.30);
+  --text:#e8eaf0; --text-soft:#c4cad6; --muted:#7a8499;
+  --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.13);
+  --sala:#3b82f6;     /* azul */
+  --cocina:#ef4444;   /* rojo  */
+  --pisos:#22c55e;    /* verde */
+  --mantenimiento:#f59e0b; /* ámbar */
+  --t:all .28s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+img{display:block;max-width:100%;}
+body{
+  font-family:'DM Sans',system-ui,sans-serif; background:var(--bg);
+  color:var(--text); line-height:1.6; min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(201,168,76,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 85% 100%, rgba(201,168,76,.03) 0%, transparent 55%);
+  background-attachment:fixed;
+}
+
+/* NAV */
+.nav {
+  position:sticky; top:0; z-index:100;
+  background:rgba(10,22,40,.94); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:16px 36px; display:flex; align-items:center; justify-content:space-between;
+}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-mark{
+  width:36px;height:36px;border-radius:9px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+  color:var(--bg); display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1rem;
+}
+.nav-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);font-weight:600;}
+.nav-sub{font-size:.62rem;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-top:2px;}
+.nav-actions{display:flex;gap:10px;}
+.btn{
+  background:transparent;color:var(--text);
+  padding:9px 18px; border-radius:8px;
+  font-family:'DM Sans',sans-serif; font-size:.82rem; font-weight:500;
+  border:1px solid var(--border2); cursor:pointer; transition:var(--t);
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+}
+.btn:hover{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);}
+.btn-primary{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+.btn-primary:hover{background:var(--gold-light);border-color:var(--gold-light);}
+
+/* DOC */
+.doc-wrap{max-width:1200px;margin:30px auto;padding:0 30px 80px;}
+.doc-header {
+  background:var(--card); border:1px solid var(--gold-border);
+  border-radius:18px; padding:32px 36px; margin-bottom:24px;
+  display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center;
+  box-shadow:0 12px 48px rgba(0,0,0,.45);
+}
+.doc-title-mini {
+  font-size:.7rem; letter-spacing:4px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:8px;
+}
+.doc-header h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem; color:var(--cream); font-weight:600; line-height:1.1;
+}
+.doc-header h1 em{font-style:italic;color:var(--gold);}
+.doc-meta{font-size:.78rem;color:var(--muted);margin-top:8px;}
+
+.stats-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+}
+.stat-card {
+  background:var(--bg); border:1px solid var(--border); border-radius:12px;
+  padding:18px; text-align:center; min-width:120px;
+}
+.stat-val {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.7rem; color:var(--gold); font-weight:700; line-height:1;
+}
+.stat-label{font-size:.65rem;color:var(--muted);margin-top:6px;letter-spacing:1px;text-transform:uppercase;}
+
+/* SECCIÓN */
+.section {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:18px; padding:28px 32px; margin-bottom:24px;
+}
+.section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem; color:var(--gold); font-weight:600;
+  margin-bottom:20px;
+  display:flex; align-items:center; gap:14px;
+}
+.section-title::after {
+  content:''; flex:1; height:1px;
+  background:linear-gradient(to right, var(--gold-border), transparent);
+}
+
+/* PLANO SVG */
+.plano-wrap {
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:14px; padding:20px; overflow:auto;
+  display:flex; justify-content:center;
+}
+.plano-svg { max-width:100%; height:auto; }
+.plano-legend {
+  display:flex; gap:18px; flex-wrap:wrap; margin-top:14px;
+  font-size:.78rem; color:var(--muted);
+}
+.plano-legend-item{display:flex;align-items:center;gap:6px;}
+.plano-legend-dot {
+  width:14px; height:14px; border-radius:50%;
+  border:2px solid var(--gold);
+}
+.plano-legend-dot.rect{border-radius:3px;}
+
+/* TABLA DEPARTAMENTOS */
+.dept-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.dept-card {
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:14px; padding:22px;
+  border-left:4px solid var(--gold);
+}
+.dept-card.sala{border-left-color:var(--sala);}
+.dept-card.cocina{border-left-color:var(--cocina);}
+.dept-card.pisos{border-left-color:var(--pisos);}
+.dept-card.mantenimiento{border-left-color:var(--mantenimiento);}
+.dept-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:14px; padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.dept-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem; color:var(--cream); font-weight:600;
+}
+.dept-people {
+  background:var(--card2); padding:3px 10px; border-radius:100px;
+  font-size:.72rem; color:var(--gold); font-weight:600;
+}
+.dept-rows{display:grid;gap:6px;}
+.dept-row{display:flex;justify-content:space-between;font-size:.84rem;padding:4px 0;}
+.dept-row-name{color:var(--text-soft);}
+.dept-row-val{color:var(--cream);font-weight:500;}
+
+/* TABLA PEDIDOS */
+.order-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.order-block {
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:12px; padding:18px 22px;
+}
+.order-block-title {
+  font-size:.78rem; color:var(--gold); font-weight:600;
+  letter-spacing:1.5px; text-transform:uppercase;
+  margin-bottom:12px; display:flex; align-items:center; gap:8px;
+}
+.order-table{width:100%;border-collapse:collapse;}
+.order-table tr{border-bottom:1px solid var(--border);}
+.order-table tr:last-child{border-bottom:none;}
+.order-table td{padding:7px 0;font-size:.84rem;color:var(--text-soft);}
+.order-table td:last-child{
+  text-align:right; color:var(--cream);
+  font-weight:600; font-family:'Cormorant Garamond',serif;
+}
+
+/* Empty */
+.empty {
+  text-align:center; padding:80px 32px; max-width:600px; margin:30px auto;
+  background:var(--card); border:1px dashed var(--gold-border); border-radius:18px;
+}
+.empty h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--cream);margin-bottom:14px;}
+.empty p{color:var(--text-soft);margin-bottom:24px;line-height:1.7;}
+
+/* PRINT */
+@media print {
+  body{background:#fff !important;color:#000 !important;}
+  .nav, .nav-actions{display:none !important;}
+  .doc-wrap{margin:0;padding:0;max-width:none;}
+  .doc-header, .section{
+    background:#fff !important; border:1px solid #999 !important;
+    box-shadow:none !important; color:#000 !important;
+    page-break-inside:avoid;
+  }
+  .doc-header h1, .stat-val, .section-title, .order-block-title, .dept-name{color:#9d8237 !important;}
+  .doc-header h1 em{color:#0a1628 !important;}
+  .stat-card, .plano-wrap, .dept-card, .order-block{background:#f7f5ef !important;color:#000 !important;}
+  .dept-row-name, .order-table td, .stat-label, .plano-legend, .doc-meta{color:#444 !important;}
+  .dept-row-val, .order-table td:last-child{color:#000 !important;}
+  /* SVG plano */
+  .plano-svg rect.salon-bg{fill:#fff !important;}
+  .plano-svg text{fill:#0a1628 !important;}
+}
+
+@media(max-width:760px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .dept-grid, .order-grid{grid-template-columns:1fr;}
+  .doc-header{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../hotel/ficha-tecnica.html" class="nav-brand">
+    <div class="nav-mark">M</div>
+    <div>
+      <div class="nav-title">Miramar Dorado</div>
+      <div class="nav-sub">Orden de Servicio · Interno</div>
+    </div>
+  </a>
+  <div class="nav-actions">
+    <a href="presupuesto-evento.html" class="btn">← Volver al presupuesto</a>
+    <button class="btn btn-primary" onclick="window.print()">🖨 Imprimir</button>
+  </div>
+</nav>
+
+<div class="doc-wrap" id="docWrap"></div>
+
+<script>
+// ════════════════════════════════════════════════════════════════════════
+// Orden de Servicio — Generación automática desde sessionStorage
+// ════════════════════════════════════════════════════════════════════════
+const DATA_KEY = 'fnb_presupuesto_actual';
+
+/** BD de planos por espacio — cada salón con su forma + capacidad nominal */
+const PLANOS = {
+  'interior': {
+    nombre: 'Gran Salón Mediterráneo (Interior)',
+    ancho: 850, alto: 500, capacidadMax: 900,
+    accesos: [{ x: 425, y: 0, tipo: 'principal' }, { x: 0, y: 250, tipo: 'cocina' }],
+    notas: 'Salón principal · 850 m² · 9,2 m altura libre · Acceso de carga 4×3m',
+  },
+  'terraza': {
+    nombre: 'Terraza Real (Exterior, frente al mar)',
+    ancho: 850, alto: 450, capacidadMax: 600,
+    accesos: [{ x: 0, y: 225, tipo: 'principal' }, { x: 850, y: 225, tipo: 'jardines' }],
+    notas: 'Terraza con vistas al Mediterráneo · 600 m² · Toldo retráctil',
+  },
+  'jardines': {
+    nombre: 'Jardines y Piscina (Exterior)',
+    ancho: 900, alto: 550, capacidadMax: 700,
+    accesos: [{ x: 100, y: 0, tipo: 'principal' }, { x: 700, y: 550, tipo: 'beach' }],
+    notas: 'Jardines subtropicales · 1.200 m² · Iluminación canopy disponible',
+  },
+  'carpa': {
+    nombre: 'Carpa Climatizada',
+    ancho: 700, alto: 500, capacidadMax: 500,
+    accesos: [{ x: 350, y: 0, tipo: 'principal' }],
+    notas: 'Carpa modular climatizada · 400 m² · Suelo de tarima',
+  },
+  'playa': {
+    nombre: 'Chiringuito / Playa Privada',
+    ancho: 750, alto: 400, capacidadMax: 200,
+    accesos: [{ x: 375, y: 0, tipo: 'principal' }, { x: 375, y: 400, tipo: 'mar' }],
+    notas: 'Beach Club privado · 400 m de playa · Servicio en arena',
+  },
+  'otro': {
+    nombre: 'Espacio personalizado',
+    ancho: 800, alto: 500, capacidadMax: 500,
+    accesos: [{ x: 400, y: 0, tipo: 'principal' }],
+    notas: 'Configuración a definir con el equipo del hotel',
+  },
+};
+
+function getData() {
+  try { return JSON.parse(sessionStorage.getItem(DATA_KEY) || 'null'); }
+  catch(e) { return null; }
+}
+
+/** ───────── Cálculo de personal por departamento ───────── */
+function calcDepartments(data) {
+  const pt = data.pt || 0;
+  const tipo = data.sel?.menuPkg?.type || 'sentado';
+  const isCoctel = tipo === 'coctel';
+  const isLux = data.sel?.menuPkg?.badge === 'badge-lux';
+  const duracion = parseInt(data.duracion) || 5;
+
+  // SALA — ratios estándar hostelería 5★
+  const camareros    = isCoctel ? Math.ceil(pt/15) : Math.ceil(pt/10);
+  const ayudantes    = Math.ceil(pt/25);
+  const jefeSala     = 1;
+  const sumiller     = (data.sel?.bebPkg?.badge === 'badge-lux' || data.sel?.bebExtras?.some(b=>b.id==='sumiller')) ? 1 : 0;
+  const bartender    = (data.sel?.bebExtras?.some(b=>b.id==='coctelera') || isLux) ? 1 : 0;
+  const totalSala    = camareros + ayudantes + jefeSala + sumiller + bartender;
+
+  // COCINA — 1 jefe + 1 sub-jefe + cocineros / 30 + ayudantes / 50
+  const jefeCocina   = 1;
+  const subJefe      = 1;
+  const cocineros    = Math.max(2, Math.ceil(pt/30));
+  const ayudCocina   = Math.max(2, Math.ceil(pt/50));
+  const carving      = (data.sel?.menuPkg?.id === 'buf' || isCoctel) ? 1 : 0;
+  const totalCocina  = jefeCocina + subJefe + cocineros + ayudCocina + carving;
+
+  // PISOS — equipo pre + post + durante (gobernanta)
+  const limpPre      = Math.ceil(pt/100) + 1;
+  const limpPost     = Math.ceil(pt/80) + 1;
+  const gobernanta   = 1;
+  const totalPisos   = limpPre + limpPost + gobernanta;
+
+  // MANTENIMIENTO
+  const tecAV        = 1;
+  const montaje      = Math.ceil(pt/60) + 1;
+  const tecnico24    = 1;  // técnico de guardia
+  const totalMant    = tecAV + montaje + tecnico24;
+
+  return {
+    sala: {
+      total: totalSala,
+      detalle: [
+        { name:'Jefe de sala',           cant: jefeSala },
+        { name:'Camareros',              cant: camareros, ratio: '1/' + (isCoctel ? '15' : '10') + ' pax' },
+        { name:'Ayudantes camarero',     cant: ayudantes, ratio: '1/25 pax' },
+        ...(sumiller ? [{ name:'Sumiller',  cant: sumiller }] : []),
+        ...(bartender ? [{ name:'Bartender', cant: bartender, ratio:'barra de coctelería' }] : []),
+      ]
+    },
+    cocina: {
+      total: totalCocina,
+      detalle: [
+        { name:'Chef ejecutivo',         cant: jefeCocina },
+        { name:'Jefe de partida',        cant: subJefe },
+        { name:'Cocineros',              cant: cocineros, ratio: '1/30 pax' },
+        { name:'Ayudantes de cocina',    cant: ayudCocina, ratio: '1/50 pax' },
+        ...(carving ? [{ name:'Maestro cortador (carving)', cant: carving }] : []),
+      ]
+    },
+    pisos: {
+      total: totalPisos,
+      detalle: [
+        { name:'Gobernanta',                   cant: gobernanta },
+        { name:'Equipo limpieza previa',       cant: limpPre, ratio: '4 h antes del evento' },
+        { name:'Equipo limpieza posterior',    cant: limpPost, ratio: 'al finalizar' },
+      ]
+    },
+    mantenimiento: {
+      total: totalMant,
+      detalle: [
+        { name:'Técnico AV (sonido/luces)',    cant: tecAV, ratio: 'antes + durante' },
+        { name:'Equipo de montaje',            cant: montaje, ratio: '6 h antes' },
+        { name:'Técnico de guardia',           cant: tecnico24, ratio: 'durante el evento' },
+      ]
+    }
+  };
+}
+
+/** ───────── Cálculo de pedidos por departamento ───────── */
+function calcOrders(data) {
+  const pt   = data.pt || 0;
+  const pf   = data.pf || 0;
+  const isCoctel = data.sel?.menuPkg?.type === 'coctel';
+  const nMesas = isCoctel ? Math.ceil(pt/15) : Math.ceil(pt/8); // mesa redonda 8 pax o cóctel altas 15
+  const pasos = data.sel?.menuPkg?.id === 'lux' ? 7 : (data.sel?.menuPkg?.id === 'pre' ? 5 : 3);
+
+  return {
+    sala: [
+      { item:'Manteles', cant: nMesas + 4, unidad:'ud', notas:'reserva 4 extra' },
+      { item:'Cubre-manteles decorativos', cant: nMesas, unidad:'ud' },
+      { item:'Servilletas de tela', cant: pt + 30, unidad:'ud', notas:'reserva 30' },
+      { item:'Platos llanos', cant: pt * pasos, unidad:'ud', notas: pasos + ' pasos × pax' },
+      { item:'Platos hondos', cant: Math.ceil(pt * 0.3), unidad:'ud' },
+      { item:'Platos de postre', cant: pt, unidad:'ud' },
+      { item:'Cubertería completa', cant: pt * pasos, unidad:'set', notas: 'tenedor + cuchillo + cuchara' },
+      { item:'Copas de agua', cant: pt + 20, unidad:'ud' },
+      { item:'Copas de vino tinto', cant: pt + 20, unidad:'ud' },
+      { item:'Copas de vino blanco', cant: pt + 20, unidad:'ud' },
+      { item:'Flautas de cava', cant: pt + 20, unidad:'ud' },
+      { item:'Sillas', cant: pt + 5, unidad:'ud', notas: 'reserva 5' },
+      ...(data.bebes > 0 ? [{ item:'🍼 Sillas altas para bebés', cant: data.bebes, unidad:'ud', notas:'OBLIGATORIO' }] : []),
+      ...(isCoctel ? [
+        { item:'Mesas altas cocteleras', cant: nMesas, unidad:'ud' },
+        { item:'Vasos chupito presentación', cant: pt * 3, unidad:'ud' },
+      ] : [
+        { item:'Mesas redondas Ø180', cant: nMesas, unidad:'ud' },
+      ]),
+    ],
+    cocina: [
+      { item:'Producto fresco (carnes/pescados)', cant: '', unidad:'', notas:'según escandallo del menú · ver recetario' },
+      { item:'Producto seco (arroz, pasta, harinas)', cant: '', unidad:'', notas:'según escandallo' },
+      { item:'Frutas y verduras', cant: '', unidad:'', notas:'pedido a Mercamálaga · 48 h antes' },
+      { item:'Lácteos y huevos', cant: '', unidad:'', notas:'pedido Makro · 24 h antes' },
+      { item:'Pan artesano', cant: Math.ceil(pt * 1.2), unidad:'piezas', notas:'reserva 20%' },
+      { item:'AOVE Hojiblanca DO Málaga', cant: Math.ceil(pf * 0.020), unidad:'L', notas:'consumo medio 20 ml/pax' },
+      { item:'Aceite para fritura', cant: Math.ceil(pt * 0.050), unidad:'L', notas:'50 ml/pax' },
+      { item:'Bobinas papel cocina', cant: Math.ceil(pt/30), unidad:'ud' },
+      { item:'Film transparente + papel aluminio', cant: 2, unidad:'rollos' },
+      { item:'Bolsas vacío sellado', cant: Math.ceil(pt/20), unidad:'ud' },
+      { item:'Productos APPCC (etiquetas, termómetros)', cant: 1, unidad:'kit' },
+    ],
+    pisos: [
+      { item:'Detergente para mantelería', cant: Math.ceil(nMesas/4), unidad:'L' },
+      { item:'Suavizante', cant: Math.ceil(nMesas/4), unidad:'L' },
+      { item:'Detergente lavavajillas industrial', cant: 5, unidad:'L', notas:'reserva por evento' },
+      { item:'Limpia-cristales', cant: 2, unidad:'L' },
+      { item:'Productos baños (RT-5 desinfectante)', cant: 3, unidad:'L' },
+      { item:'Bolsas basura 100 L', cant: Math.ceil(pt/15), unidad:'ud' },
+      { item:'Bolsas basura reciclaje', cant: Math.ceil(pt/15), unidad:'ud' },
+      { item:'Papel higiénico + jabón manos', cant: 1, unidad:'kit' },
+    ],
+    mantenimiento: [
+      { item:'Cables alargadores', cant: 8, unidad:'ud' },
+      { item:'Ladrones múltiples', cant: 6, unidad:'ud' },
+      { item:'Focos LED suplementarios', cant: Math.ceil(nMesas/2), unidad:'ud' },
+      { item:'Equipo de sonido portátil', cant: 1, unidad:'kit' },
+      { item:'Micrófonos inalámbricos', cant: 2, unidad:'ud' },
+      { item:'Mesa de mezclas (si DJ)', cant: 1, unidad:'ud' },
+      { item:'Reserva fusibles + linternas', cant: 1, unidad:'kit', notas:'plan B' },
+      { item:'Climatización (ajustar 2 h antes)', cant: 0, unidad:'', notas:'objetivo 22°C' },
+    ],
+  };
+}
+
+/** ───────── SVG del plano dinámico ───────── */
+function renderPlano(data) {
+  const venueKey = data.espacio?.toLowerCase().includes('terraza') ? 'terraza'
+    : data.espacio?.toLowerCase().includes('jardin') ? 'jardines'
+    : data.espacio?.toLowerCase().includes('carpa') ? 'carpa'
+    : data.espacio?.toLowerCase().includes('playa') ? 'playa'
+    : data.espacio?.toLowerCase().includes('otro') ? 'otro'
+    : 'interior';
+  const p = PLANOS[venueKey];
+  const pt = data.pt || 0;
+  const isCoctel = data.sel?.menuPkg?.type === 'coctel';
+  const nMesas = isCoctel ? Math.ceil(pt/15) : Math.ceil(pt/8);
+
+  const W = p.ancho, H = p.alto;
+  const padX = 80, padY = 70;
+  const usableW = W - 2*padX, usableH = H - 2*padY;
+
+  // Distribuir mesas en grid
+  const cols = Math.ceil(Math.sqrt(nMesas * usableW / usableH));
+  const rows = Math.ceil(nMesas / cols);
+  const cellW = usableW / cols;
+  const cellH = usableH / rows;
+  const mesaR = Math.min(cellW, cellH) * 0.35;
+
+  let mesas = '';
+  let m = 0;
+  for (let r = 0; r < rows && m < nMesas; r++) {
+    for (let c = 0; c < cols && m < nMesas; c++) {
+      const cx = padX + cellW * (c + 0.5);
+      const cy = padY + cellH * (r + 0.5);
+      if (isCoctel) {
+        // mesa alta rectangular
+        mesas += `<rect x="${cx-25}" y="${cy-25}" width="50" height="50" rx="4" fill="rgba(201,168,76,0.20)" stroke="#c9a84c" stroke-width="2"/>`;
+        mesas += `<text x="${cx}" y="${cy+5}" text-anchor="middle" fill="#c9a84c" font-size="13" font-family="DM Sans">${m+1}</text>`;
+      } else {
+        // mesa redonda banquete
+        mesas += `<circle cx="${cx}" cy="${cy}" r="${mesaR}" fill="rgba(201,168,76,0.20)" stroke="#c9a84c" stroke-width="2"/>`;
+        mesas += `<text x="${cx}" y="${cy+5}" text-anchor="middle" fill="#c9a84c" font-size="14" font-family="DM Sans">${m+1}</text>`;
+        // 8 sillas alrededor
+        for (let s = 0; s < 8; s++) {
+          const angle = (s/8) * 2 * Math.PI;
+          const sx = cx + (mesaR + 14) * Math.cos(angle);
+          const sy = cy + (mesaR + 14) * Math.sin(angle);
+          mesas += `<rect x="${sx-5}" y="${sy-5}" width="10" height="10" fill="#e8eaf0" opacity="0.7"/>`;
+        }
+      }
+      m++;
+    }
+  }
+
+  // Accesos
+  let accesos = '';
+  (p.accesos || []).forEach(a => {
+    const r = 18;
+    accesos += `<circle cx="${a.x}" cy="${a.y}" r="${r}" fill="#0a1628" stroke="#c9a84c" stroke-width="3"/>`;
+    accesos += `<text x="${a.x}" y="${a.y+4}" text-anchor="middle" fill="#c9a84c" font-size="10" font-weight="700" font-family="DM Sans">${a.tipo[0].toUpperCase()}</text>`;
+  });
+
+  return `
+    <svg class="plano-svg" viewBox="0 0 ${W} ${H+40}" xmlns="http://www.w3.org/2000/svg">
+      <rect class="salon-bg" x="0" y="0" width="${W}" height="${H}" fill="rgba(15,32,64,0.6)" stroke="#c9a84c" stroke-width="3" rx="8"/>
+      <text x="20" y="25" fill="#e8eaf0" font-size="14" font-weight="600" font-family="Cormorant Garamond, serif">${p.nombre}</text>
+      <text x="20" y="44" fill="#7a8499" font-size="11" font-family="DM Sans">${nMesas} ${isCoctel ? 'mesas altas' : 'mesas redondas Ø180 — 8 pax'} · ${pt} comensales</text>
+      ${mesas}
+      ${accesos}
+      <text x="${W/2}" y="${H+25}" text-anchor="middle" fill="#7a8499" font-size="11" font-family="DM Sans">${p.notas}</text>
+    </svg>`;
+}
+
+function fmt(n) { return (n||0).toLocaleString('es-ES'); }
+
+function renderDoc() {
+  const data = getData();
+  const wrap = document.getElementById('docWrap');
+
+  if (!data) {
+    wrap.innerHTML = `
+      <div class="empty">
+        <h2>No hay datos del presupuesto</h2>
+        <p>Para generar la orden de servicio necesitas crear primero un presupuesto desde <strong>Diseña tu Evento</strong>. Cuando completes los 7 pasos, podrás generar este documento operativo automáticamente.</p>
+        <a href="presupuesto-evento.html" class="btn btn-primary">📋 Ir al presupuesto</a>
+      </div>`;
+    return;
+  }
+
+  const ref = (data.referencia || 'PRES-XXX').replace('PRES','ORD');
+  const hoy = new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  const depts = calcDepartments(data);
+  const orders = calcOrders(data);
+  const totalPersonal = depts.sala.total + depts.cocina.total + depts.pisos.total + depts.mantenimiento.total;
+
+  wrap.innerHTML = `
+    <!-- HEADER -->
+    <div class="doc-header">
+      <div>
+        <div class="doc-title-mini">Orden de servicio · Documento interno</div>
+        <h1>Operativa del <em>evento</em></h1>
+        <div class="doc-meta">${ref} · Marbella, ${hoy} · ${data.cliente?.nombre || 'cliente sin nombre'}</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-val">${data.pt||0}</div><div class="stat-label">Asistentes</div></div>
+        <div class="stat-card"><div class="stat-val">${data.duracion||'—'} h</div><div class="stat-label">Duración</div></div>
+        <div class="stat-card"><div class="stat-val">${totalPersonal}</div><div class="stat-label">Personal</div></div>
+        <div class="stat-card"><div class="stat-val">${data.sel?.eventType?.icon || '🎉'}</div><div class="stat-label">${data.sel?.eventType?.name || '—'}</div></div>
+      </div>
+    </div>
+
+    <!-- PLANO -->
+    <div class="section">
+      <div class="section-title">📐 Plano del espacio + montaje</div>
+      <div class="plano-wrap">${renderPlano(data)}</div>
+      <div class="plano-legend">
+        <div class="plano-legend-item">
+          <span class="plano-legend-dot ${data.sel?.menuPkg?.type === 'coctel' ? 'rect' : ''}"></span>
+          ${data.sel?.menuPkg?.type === 'coctel' ? 'Mesa alta coctelera' : 'Mesa redonda Ø180 cm (8 pax)'}
+        </div>
+        <div class="plano-legend-item"><span style="width:10px;height:10px;background:#e8eaf0;display:inline-block;opacity:.7;"></span> Silla de banquete</div>
+        <div class="plano-legend-item"><span style="width:14px;height:14px;border-radius:50%;background:#0a1628;border:2px solid #c9a84c;display:inline-block;"></span> Acceso (P=principal · C=cocina · J=jardines · M=mar)</div>
+      </div>
+    </div>
+
+    <!-- DEPARTAMENTOS -->
+    <div class="section">
+      <div class="section-title">👥 Relación de servicios por departamento</div>
+      <div class="dept-grid">
+        ${renderDeptCard('sala', '🍽️ Sala', depts.sala)}
+        ${renderDeptCard('cocina', '🔥 Cocina', depts.cocina)}
+        ${renderDeptCard('pisos', '🧺 Pisos', depts.pisos)}
+        ${renderDeptCard('mantenimiento', '🔧 Mantenimiento', depts.mantenimiento)}
+      </div>
+    </div>
+
+    <!-- PEDIDOS -->
+    <div class="section">
+      <div class="section-title">📦 Pedidos de artículos por departamento</div>
+      <div class="order-grid">
+        ${renderOrderBlock('🍽️ Sala', orders.sala)}
+        ${renderOrderBlock('🔥 Cocina', orders.cocina)}
+        ${renderOrderBlock('🧺 Pisos', orders.pisos)}
+        ${renderOrderBlock('🔧 Mantenimiento', orders.mantenimiento)}
+      </div>
+    </div>
+
+    ${data.notas ? `
+    <!-- NOTAS -->
+    <div class="section">
+      <div class="section-title">📝 Notas del cliente</div>
+      <p style="color:var(--text-soft);font-size:.92rem;line-height:1.7;">${data.notas}</p>
+    </div>` : ''}
+  `;
+}
+
+function renderDeptCard(cls, title, dept) {
+  return `
+    <div class="dept-card ${cls}">
+      <div class="dept-header">
+        <div class="dept-name">${title}</div>
+        <span class="dept-people">${dept.total} personas</span>
+      </div>
+      <div class="dept-rows">
+        ${dept.detalle.map(d => `
+          <div class="dept-row">
+            <span class="dept-row-name">${d.name}${d.ratio ? ` <em style="color:var(--muted);font-size:.7rem;">· ${d.ratio}</em>` : ''}</span>
+            <span class="dept-row-val">×${d.cant}</span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function renderOrderBlock(title, items) {
+  return `
+    <div class="order-block">
+      <div class="order-block-title">${title}</div>
+      <table class="order-table">
+        ${items.map(it => `
+          <tr>
+            <td>${it.item}${it.notas ? `<br><em style="color:var(--muted);font-size:.7rem;">${it.notas}</em>` : ''}</td>
+            <td>${it.cant !== '' ? `${fmt(it.cant)} ${it.unidad}` : '—'}</td>
+          </tr>`).join('')}
+      </table>
+    </div>`;
+}
+
+renderDoc();
+</script>
+
+</body>
+</html>
