@@ -560,6 +560,121 @@ main { padding: 36px 40px; }
 }
 
 /* Gradient palette for card thumbs */
+/* ══════════════ ALÉRGENOS — sistema 14 UE ══════════════ */
+.allerg-bar {
+  display:flex; flex-wrap:wrap; gap:4px;
+  margin-top:10px;
+}
+.allerg-bar.compact .allerg-dot {
+  width:18px; height:18px;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:.62rem;
+  border-radius:50%;
+  border:1px solid transparent;
+}
+.allerg-bar.compact .allerg-name { display:none; }
+.allerg-bar:not(.compact) {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:8px;
+}
+.allerg-bar:not(.compact) .allerg-dot {
+  padding:8px 12px;
+  border-radius:10px;
+  font-size:.78rem;
+  display:flex; align-items:center; gap:8px;
+  border:1px solid transparent;
+}
+.allerg-dot.has {
+  background:rgba(239,68,68,.15);
+  border-color:rgba(239,68,68,.45);
+  color:#f87171;
+}
+.allerg-dot.free {
+  background:rgba(34,197,94,.10);
+  border-color:rgba(34,197,94,.30);
+  color:#4ade80;
+  opacity:.45;
+}
+.allerg-dot.free .allerg-name { color:var(--muted); }
+.allerg-bar.compact .allerg-dot.free { opacity:.20; }
+.allerg-ico { line-height:1; }
+
+/* Sección de alérgenos en modal */
+.modal-allerg-section {
+  margin:14px 0 18px;
+  padding:14px 16px;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:12px;
+}
+.modal-allerg-title {
+  font-size:.78rem;
+  color:var(--gold);
+  font-weight:600;
+  letter-spacing:1px;
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+.modal-allerg-note {
+  margin-top:10px;
+  font-size:.74rem;
+  color:var(--muted);
+  font-style:italic;
+}
+
+/* Filtros de alérgenos en barra principal */
+.allerg-filters-wrap {
+  padding:14px 40px 18px;
+  background:var(--card);
+  border-bottom:1px solid var(--glass-border);
+  display:none;
+}
+.allerg-filters-wrap.open { display:block; }
+.allerg-filters-label {
+  font-size:.78rem; color:var(--muted); margin-bottom:10px;
+}
+.allerg-filters-label strong { color:var(--cream); }
+.allerg-filters-pills { display:flex; flex-wrap:wrap; gap:8px; }
+.allerg-filter-pill {
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  color:var(--text-soft);
+  padding:6px 12px;
+  border-radius:100px;
+  font-size:.75rem;
+  cursor:pointer;
+  transition:var(--transition);
+  display:inline-flex; align-items:center; gap:5px;
+  font-family:'DM Sans',sans-serif;
+}
+.allerg-filter-pill:hover {
+  border-color:var(--gold-border);
+  color:var(--cream);
+}
+.allerg-filter-pill.active {
+  background:rgba(34,197,94,.15);
+  border-color:#4ade80;
+  color:#4ade80;
+  font-weight:600;
+}
+.allerg-toggle-btn {
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  color:var(--text-muted);
+  padding:7px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:.78rem;
+  font-family:'DM Sans',sans-serif;
+  transition:var(--transition);
+}
+.allerg-toggle-btn:hover, .allerg-toggle-btn.active {
+  background:var(--gold-dim);
+  color:var(--gold);
+  border-color:var(--gold);
+}
+
 /* Gradient placeholders (visibles solo si la imagen tarda en cargar) — todos navy harmonizados */
 .g1, .g2, .g3, .g4, .g5, .g6, .g7, .g8, .g9, .g0 {
   background: linear-gradient(135deg, var(--card2), var(--card));
@@ -588,6 +703,7 @@ main { padding: 36px 40px; }
     </div>
   </div>
   <div class="header-right">
+    <button class="allerg-toggle-btn" id="allergToggleBtn" onclick="toggleAllergPanel()">🚨 Alérgenos</button>
     <button class="btn-ghost" onclick="window.print()">🖨 Imprimir</button>
   </div>
 </header>
@@ -615,6 +731,9 @@ main { padding: 36px 40px; }
   </div>
   <button class="btn-clear" onclick="clearSearch()">✕ Limpiar</button>
 </div>
+
+<!-- ALÉRGENOS — Panel desplegable de filtros -->
+<div class="allerg-filters-wrap" id="allergFilters"></div>
 
 <!-- TABS -->
 <nav id="tabsNav">
@@ -1067,6 +1186,102 @@ const IMG_MAP = {
   "Sorbete de Mango y Lima":          BASE_IMG + "postres/sorbete_mango_lima.jpg",
 };
 
+// ═══════════════════════════════════════════════
+// SISTEMA DE ALÉRGENOS (14 alérgenos UE — Reglamento 1169/2011)
+// ═══════════════════════════════════════════════
+var ALERGENOS_UE = [
+  { key:'gluten',     ico:'🌾', name:'Gluten',          aliases:['gluten','cereal','trigo','cebada','centeno','avena','pan','pasta','harina'] },
+  { key:'crustaceos', ico:'🦐', name:'Crustáceos',      aliases:['crustáceo','crustaceos','gamba','langostino','bogavante','cangrejo','centollo','quisquilla'] },
+  { key:'huevo',      ico:'🥚', name:'Huevo',           aliases:['huevo','clara','yema','mayonesa','tortilla'] },
+  { key:'pescado',    ico:'🐟', name:'Pescado',         aliases:['pescado','atún','salmón','bacalao','lubina','dorada','rape','merluza','sardina','boquerón','anchoa'] },
+  { key:'cacahuete',  ico:'🥜', name:'Cacahuete',       aliases:['cacahuete','maní','mani'] },
+  { key:'soja',       ico:'🫘', name:'Soja',            aliases:['soja','soya','tofu','edamame','ponzu','tamari'] },
+  { key:'lacteos',    ico:'🥛', name:'Lácteos',         aliases:['leche','lácteos','lacteos','nata','crema','mantequilla','queso','mascarpone','parmesano','manchego','mozzarella','ricotta'] },
+  { key:'frutosSec',  ico:'🌰', name:'Frutos secos',    aliases:['frutos secos','frutos de cáscara','almendra','nuez','avellana','pistacho','anacardo','marcona','praliné'] },
+  { key:'apio',       ico:'🥬', name:'Apio',            aliases:['apio'] },
+  { key:'mostaza',    ico:'🟡', name:'Mostaza',         aliases:['mostaza'] },
+  { key:'sesamo',     ico:'⚪', name:'Sésamo',          aliases:['sésamo','sesamo','tahini'] },
+  { key:'sulfitos',   ico:'🍷', name:'Sulfitos',        aliases:['sulfito','vino','vinagre','jerez','rioja','albariño','cava','champagne'] },
+  { key:'altramuces', ico:'🟤', name:'Altramuces',      aliases:['altramuces','altramuz','lupino'] },
+  { key:'moluscos',   ico:'🐙', name:'Moluscos',        aliases:['molusco','pulpo','calamar','sepia','mejillón','mejillon','almeja','ostras','navaja','berberecho','vieira','caracol'] },
+];
+
+function parseAlergenos(str) {
+  var set = new Set();
+  if (!str) return set;
+  var lower = str.toLowerCase();
+  ALERGENOS_UE.forEach(function(a) {
+    if (a.aliases.some(function(al){ return lower.indexOf(al) !== -1; })) set.add(a.key);
+  });
+  return set;
+}
+
+/** Detecta alérgenos por ingredientes + texto alergen explícito */
+function alergenosReceta(r) {
+  var set = parseAlergenos(r.alergen);
+  if (r.ing) {
+    var ingText = r.ing.map(function(x){ return (x[1]||'') + ' ' + (x[2]||''); }).join(' ');
+    parseAlergenos(ingText).forEach(function(k){ set.add(k); });
+  }
+  return set;
+}
+
+/** Renderiza la matriz compacta (mini-dots) de los 14 alérgenos */
+function renderAlergenosBar(set, compact) {
+  return '<div class="allerg-bar' + (compact ? ' compact' : '') + '">' +
+    ALERGENOS_UE.map(function(a) {
+      var has = set.has(a.key);
+      return '<span class="allerg-dot ' + (has ? 'has' : 'free') + '" title="' + a.name + (has ? ': contiene' : ': sin') + '">' +
+        '<span class="allerg-ico">' + a.ico + '</span>' +
+        (compact ? '' : '<span class="allerg-name">' + a.name + '</span>') +
+        '</span>';
+    }).join('') +
+  '</div>';
+}
+
+// Filtros activos: alérgenos a EXCLUIR (si está en la lista, ocultar la card)
+var ALLERG_FILTER = new Set();
+
+function toggleAllergFilter(key) {
+  if (ALLERG_FILTER.has(key)) ALLERG_FILTER.delete(key);
+  else ALLERG_FILTER.add(key);
+  // refresh pills visual state
+  document.querySelectorAll('.allerg-filter-pill').forEach(function(p){
+    var k = p.dataset.allerg;
+    if (ALLERG_FILTER.has(k)) p.classList.add('active'); else p.classList.remove('active');
+  });
+  applyAllergFilter();
+}
+
+function applyAllergFilter() {
+  document.querySelectorAll('.card').forEach(function(c){
+    var cat = c.dataset.cat;
+    var i = parseInt(c.dataset.idx);
+    var r = (R[cat] || [])[i];
+    if (!r) return;
+    var set = alergenosReceta(r);
+    // ocultar si tiene cualquiera de los filtrados
+    var blocked = false;
+    ALLERG_FILTER.forEach(function(k){ if (set.has(k)) blocked = true; });
+    if (blocked) c.style.display = 'none';
+    else if (c.style.display === 'none') c.style.display = '';
+  });
+}
+
+function renderAllergFilters() {
+  var wrap = document.getElementById('allergFilters');
+  if (!wrap) return;
+  wrap.innerHTML =
+    '<div class="allerg-filters-label">Mostrar solo platos <strong>sin</strong>:</div>' +
+    '<div class="allerg-filters-pills">' +
+    ALERGENOS_UE.map(function(a){
+      return '<button class="allerg-filter-pill" data-allerg="' + a.key + '" onclick="toggleAllergFilter(\'' + a.key + '\')" title="' + a.name + '">' +
+        '<span class="ico">' + a.ico + '</span> Sin ' + a.name.toLowerCase() +
+      '</button>';
+    }).join('') +
+    '</div>';
+}
+
 function renderRecipes(cat) {
   var grid = document.getElementById('grid-' + cat);
   if (!grid) return;
@@ -1074,6 +1289,7 @@ function renderRecipes(cat) {
   (R[cat] || []).forEach(function(r, i) {
     var pvpMin = (r.mp / 0.35).toFixed(2);
     var pvpMax = (r.mp / 0.28).toFixed(2);
+    var aSet = alergenosReceta(r);
     var c = document.createElement('div');
     c.className = 'card';
     c.dataset.idx = i;
@@ -1094,6 +1310,7 @@ function renderRecipes(cat) {
           (r.coc > 0  ? '<span class="chip">🔥 ' + r.coc + ' min</span>' : '') +
           '<span class="chip">👥 ' + r.rac + ' rac.</span>' +
         '</div>' +
+        renderAlergenosBar(aSet, true) +
       '</div>' +
       '<div class="card-footer">' +
         '<div class="card-cost">' +
@@ -1243,7 +1460,11 @@ function openModal(cat, idx) {
     '<div class="modal-body">' +
       '<div class="modal-title">' + r.n + '</div>' +
       '<div class="modal-subtitle">' + r.sub + '</div>' +
-      '<span class="modal-alergen">⚠ Alérgenos: ' + (r.alergen || 'Sin alérgenos principales') + '</span>' +
+      '<div class="modal-allerg-section">' +
+        '<div class="modal-allerg-title">🚨 Alérgenos (Reglamento UE 1169/2011)</div>' +
+        renderAlergenosBar(alergenosReceta(r), false) +
+        (r.alergen ? '<div class="modal-allerg-note">Declarado: ' + r.alergen + '</div>' : '') +
+      '</div>' +
       '<div class="modal-times">' +
         '<div class="time-box"><div class="tv">' + r.prep + '\'</div><div class="tl">Preparación</div></div>' +
         '<div class="time-box"><div class="tv">' + r.coc + '\'</div><div class="tl">Cocción</div></div>' +
@@ -1312,6 +1533,14 @@ function clearSearch() {
 renderAll();
 renderBebidas();
 calcCostes();
+renderAllergFilters();
+
+function toggleAllergPanel() {
+  var w = document.getElementById('allergFilters');
+  var b = document.getElementById('allergToggleBtn');
+  w.classList.toggle('open');
+  b.classList.toggle('active');
+}
 </script>
 </body>
 </html>
