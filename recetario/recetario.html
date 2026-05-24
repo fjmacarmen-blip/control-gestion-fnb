@@ -434,6 +434,69 @@ main { padding: 36px 40px; }
 }
 
 /* Escandallo box */
+/* ── Desplegable desglose materia prima ── */
+.desglose-mp {
+  margin: 8px 0 14px;
+  background: rgba(10,22,40,.55);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.desglose-mp summary {
+  list-style: none; cursor: pointer;
+  padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.82rem; color: var(--gold);
+  user-select: none;
+  transition: background 0.2s;
+}
+.desglose-mp summary::-webkit-details-marker { display: none; }
+.desglose-mp summary:hover { background: rgba(201,168,76,0.06); }
+.desglose-toggle-icon {
+  transition: transform 0.25s ease;
+  font-size: 0.9rem;
+}
+.desglose-mp[open] .desglose-toggle-icon { transform: rotate(180deg); }
+.desglose-toggle-label { letter-spacing: 0.3px; }
+
+.desglose-tbl-wrap { padding: 4px 14px 14px; }
+.desglose-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+.desglose-tbl th {
+  text-align: left; padding: 8px 10px;
+  font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 1px; text-transform: uppercase;
+  font-weight: 600;
+  border-bottom: 1px solid var(--glass-border);
+}
+.desglose-tbl th.num, .desglose-tbl td.num { text-align: right; }
+.desglose-tbl td {
+  padding: 7px 10px; color: var(--text-soft);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.desglose-tbl td em {
+  color: var(--muted); font-style: italic; font-size: 0.7rem;
+  margin-left: 4px;
+}
+.desglose-tbl tr.desglose-otros td {
+  color: var(--muted); font-size: 0.74rem;
+}
+.desglose-tbl tfoot td {
+  border-top: 1px solid var(--gold-line);
+  border-bottom: none;
+  padding-top: 11px;
+  color: var(--gold);
+}
+.desglose-tbl tfoot td strong { color: var(--gold); }
+.desglose-note {
+  margin-top: 10px;
+  font-size: 0.7rem; color: var(--muted);
+  font-style: italic; line-height: 1.5;
+}
+
 .escandallo-box {
   background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(181,52,28,0.05));
   border: 1px solid rgba(201,168,76,0.25); border-radius: 14px;
@@ -1285,6 +1348,232 @@ function renderAllergFilters() {
     '</div>';
 }
 
+// ═══════════════════════════════════════════════
+// CATÁLOGO DE PRECIOS UNITARIOS (sincronizado con seed_data.sql)
+// Precios de referencia Makro Málaga + Bedoya · Mayo 2026
+// ═══════════════════════════════════════════════
+// formato: nombre simplificado → { kg: €/kg } o { ud: €/unidad } o { l: €/litro }
+var PRECIOS_KG = {
+  // ── Carnes ──
+  'solomillo ternera':  { kg: 28.50 }, 'solomillo':          { kg: 28.50 },
+  'entrecot':           { kg: 19.80 }, 'lomo alto':          { kg: 22.40 },
+  'pollo':              { kg: 5.20  }, 'pechuga pollo':      { kg: 5.20 },
+  'muslo pollo':        { kg: 3.90  }, 'conejo':             { kg: 6.50 },
+  'secreto ibérico':    { kg: 14.50 }, 'presa ibérica':      { kg: 16.80 },
+  'pluma ibérica':      { kg: 15.20 }, 'costillas cerdo':    { kg: 5.80 },
+  'pato confit':        { kg: 12.30 }, 'pato':               { kg: 11.50 },
+  'carrillada':         { kg: 7.20  }, 'cordero':            { kg: 18.90 },
+  'rabo de toro':       { kg: 8.50  }, 'foie':               { kg: 38.50 },
+  'mi-cuit':            { kg: 38.50 },
+  // ── Pescados/Mariscos ──
+  'lubina':             { kg: 12.80 }, 'dorada':             { kg: 10.50 },
+  'salmón':             { kg: 11.20 }, 'atún rojo':          { kg: 45.00 },
+  'atún':               { kg: 45.00 }, 'bacalao desalado':   { kg: 18.60 },
+  'bacalao':            { kg: 18.60 }, 'gamba blanca':       { kg: 28.00 },
+  'gamba roja':         { kg: 65.00 }, 'gamba':              { kg: 32.00 },
+  'langostino':         { kg: 14.50 }, 'calamar':            { kg: 9.80 },
+  'pulpo':              { kg: 11.20 }, 'mejillón':           { kg: 2.80 },
+  'almeja':             { kg: 12.50 }, 'sepia':              { kg: 7.20 },
+  'boquerón':           { kg: 4.50  }, 'sardina':            { kg: 3.20 },
+  'merluza':            { kg: 13.80 }, 'rape':               { kg: 16.50 },
+  'bogavante':          { kg: 35.00 }, 'salmón ahumado':     { kg: 24.00 },
+  'puntillita':         { kg: 8.50  }, 'chopito':            { kg: 8.50 },
+  'anchoa':             { kg: 18.00 }, 'ventresca':          { kg: 32.00 },
+  'ostras':             { kg: 28.00 }, 'navaja':             { kg: 18.00 },
+  'berberecho':         { kg: 16.00 },
+  // ── Verduras/Frutas ──
+  'tomate':             { kg: 1.80  }, 'pepino':             { kg: 1.20 },
+  'lechuga':            { kg: 1.80  }, 'cebolla':            { kg: 0.85 },
+  'ajo':                { kg: 6.50  }, 'pimiento':           { kg: 1.80 },
+  'calabacín':          { kg: 1.10  }, 'berenjena':          { kg: 1.30 },
+  'zanahoria':          { kg: 0.75  }, 'patata':             { kg: 0.55 },
+  'champiñón':          { kg: 3.20  }, 'seta':               { kg: 8.50 },
+  'boletus':            { kg: 18.00 }, 'trufa':              { kg: 600.00 },
+  'espárragos':         { kg: 5.20  }, 'aguacate':           { kg: 4.50 },
+  'rúcula':             { kg: 18.00 }, 'escarola':           { kg: 2.50 },
+  'limón':              { kg: 0.85  }, 'naranja':            { kg: 0.65 },
+  'mango':              { kg: 3.50  }, 'lima':               { kg: 2.80 },
+  'fresa':              { kg: 4.50  }, 'frambuesa':          { kg: 22.40 },
+  'higo':               { kg: 6.00  }, 'frutos rojos':       { kg: 12.00 },
+  'calabaza':           { kg: 1.80  }, 'judía verde':        { kg: 2.20 },
+  'ferraura':           { kg: 2.50  }, 'garrofón':           { kg: 4.50 },
+  'lenteja':            { kg: 2.20  }, 'arroz':              { kg: 3.20 },
+  'arroz bomba':        { kg: 3.20  }, 'carnaroli':          { kg: 4.80 },
+  'pasta':              { kg: 2.40  }, 'espagueti':          { kg: 2.20 },
+  'fideos':             { kg: 2.40  }, 'fideo':              { kg: 2.40 },
+  // ── Lácteos / huevos ──
+  'leche':              { l: 0.78   }, 'nata':               { l: 2.90 },
+  'mantequilla':        { kg: 7.80  }, 'huevo':              { ud: 0.27 },
+  'codorniz':           { ud: 0.20  }, 'yema':               { ud: 0.27 },
+  'parmesano':          { kg: 14.50 }, 'mascarpone':         { kg: 14.00 },
+  'manchego':           { kg: 11.20 }, 'mozarella':          { kg: 9.60 },
+  'queso crema':        { kg: 8.50  }, 'queso':              { kg: 11.00 },
+  'crème fraîche':      { kg: 7.50  }, 'yogur':              { kg: 2.50 },
+  // ── Charcutería ──
+  'jamón ibérico':      { kg: 89.00 }, 'jamón bellota':      { kg: 89.00 },
+  'jamón serrano':      { kg: 14.50 }, 'chorizo':            { kg: 17.80 },
+  'morcilla':           { kg: 9.50  }, 'panceta':            { kg: 5.20 },
+  // ── Aceites / vinagres ──
+  'aceite oliva':       { l: 7.80   }, 'aove':               { l: 7.80 },
+  'aceite girasol':     { l: 1.90   }, 'aceite trufa':       { l: 89.00 },
+  'vinagre jerez':      { l: 4.80   }, 'vinagre':            { l: 3.20 },
+  // ── Vinos / licores ──
+  'vino tinto':         { l: 7.73   }, 'vino blanco':        { l: 7.33 },
+  'albariño':           { l: 10.93  }, 'rioja':              { l: 7.73 },
+  'oporto':             { l: 12.00  }, 'brandy':             { l: 15.00 },
+  'cava':               { l: 8.27   }, 'pedro ximénez':      { l: 12.67 },
+  'mirin':              { l: 8.50   }, 'cerveza':            { l: 2.50 },
+  // ── Salsas / condimentos ──
+  'soja':               { l: 3.80   }, 'salsa soja':         { l: 3.80 },
+  'tabasco':            { l: 46.67  }, 'mostaza':            { kg: 4.50 },
+  'pan':                { kg: 3.20  }, 'pan rallado':        { kg: 1.20 },
+  'panko':              { kg: 4.50  }, 'brioche':            { kg: 6.00 },
+  // ── Especias / cacao / azúcar ──
+  'azúcar':             { kg: 0.90  }, 'chocolate':          { kg: 9.80 },
+  'cacao':              { kg: 7.20  }, 'sésamo':             { kg: 18.00 },
+  'sal':                { kg: 0.48  }, 'sal maldon':         { kg: 25.60 },
+  'pimienta':           { kg: 18.50 }, 'pimentón':           { kg: 12.50 },
+  'azafrán':            { kg: 2800.00 }, 'tinta calamar':    { kg: 80.00 },
+  'guindilla':          { kg: 15.00 }, 'jengibre':           { kg: 7.50 },
+  'canela':             { kg: 18.00 }, 'vainilla':           { ud: 1.80 },
+  'wasabi':             { kg: 28.00 }, 'tobiko':             { kg: 32.00 },
+  'cebollino':          { kg: 12.00 }, 'perejil':            { kg: 4.00 },
+  'tomillo':            { kg: 8.00  }, 'eneldo':             { kg: 12.00 },
+  'menta':              { kg: 8.00  }, 'almendra':           { kg: 8.50 },
+  'nuez':               { kg: 14.00 }, 'alcaparra':          { kg: 15.00 },
+  'gelatina':           { kg: 18.00 }, 'maicena':            { kg: 2.80 },
+  'harina':             { kg: 0.80  }, 'levadura':           { kg: 2.50 },
+  'mermelada':          { kg: 6.00  }, 'miel':               { kg: 7.80 },
+  'coco':               { l: 4.50   }, 'leche coco':         { l: 4.50 },
+  'caldo':              { l: 2.50   }, 'fumet':              { l: 3.50 },
+  'alga nori':          { kg: 80.00 }, 'masa wonton':        { kg: 5.50 },
+  'masa gyoza':         { kg: 5.50  },
+};
+
+// Aliases extra (palabras compuestas) — busca el más específico primero
+function precioRefIngrediente(nombre) {
+  if (!nombre) return null;
+  var lower = nombre.toLowerCase();
+  // 1ª pasada: match completo
+  if (PRECIOS_KG[lower]) return PRECIOS_KG[lower];
+  // 2ª: match parcial (más largo primero para coger "gamba roja" antes que "gamba")
+  var keys = Object.keys(PRECIOS_KG).sort(function(a,b){return b.length-a.length;});
+  for (var i = 0; i < keys.length; i++) {
+    if (lower.indexOf(keys[i]) !== -1) return PRECIOS_KG[keys[i]];
+  }
+  return null;
+}
+
+// Parser de cantidad: "800g" → {qty: 0.8, unit: 'kg'}; "100ml" → {qty: 0.1, unit: 'l'}; "2ud" → {qty: 2, unit: 'ud'}
+function parseCantidad(str) {
+  if (!str) return null;
+  var s = str.toString().toLowerCase().replace(',', '.').trim();
+  // Match número (entero o decimal)
+  var m = s.match(/([\d.]+)\s*([a-zñáéíóú]*)/i);
+  if (!m) {
+    // Casos especiales: "1 diente", "Al gusto"
+    if (s.indexOf('diente') !== -1) return { qty: 0.005, unit: 'kg' };  // 1 diente ≈ 5g
+    if (s.indexOf('hoja') !== -1)   return { qty: 0.001, unit: 'kg' };
+    if (s.indexOf('sobre') !== -1)  return { qty: 0.001, unit: 'kg' };
+    if (s.indexOf('rama') !== -1)   return { qty: 0.005, unit: 'kg' };
+    if (s.indexOf('manojo') !== -1) return { qty: 0.05, unit: 'kg' };
+    if (s.indexOf('pellizco') !== -1 || s.indexOf('pizca') !== -1) return { qty: 0.001, unit: 'kg' };
+    return null;
+  }
+  var qty = parseFloat(m[1]);
+  var unit = m[2] || '';
+  // Normalizar unidades
+  if (unit === 'kg' || unit === 'kilo') return { qty: qty, unit: 'kg' };
+  if (unit === 'g' || unit === 'gr' || unit === 'gramo') return { qty: qty/1000, unit: 'kg' };
+  if (unit === 'l' || unit === 'litro') return { qty: qty, unit: 'l' };
+  if (unit === 'ml') return { qty: qty/1000, unit: 'l' };
+  if (unit === 'cl') return { qty: qty/100, unit: 'l' };
+  if (unit === 'ud' || unit === 'u' || unit === 'unidad') return { qty: qty, unit: 'ud' };
+  if (unit === 'cdta' || unit === 'cdita') return { qty: qty*0.005, unit: 'kg' };  // cucharadita ≈ 5g
+  if (unit === 'cda') return { qty: qty*0.015, unit: 'kg' };  // cucharada ≈ 15g
+  // Sin unidad reconocida: si el número es pequeño (<10) lo trato como uds; si grande como g
+  if (qty < 20) return { qty: qty, unit: 'ud' };
+  return { qty: qty/1000, unit: 'kg' };
+}
+
+/** Calcula desglose de costes a partir de r.ing[]. Devuelve {lineas:[], otros:n} */
+function calcDesgloseCostes(r) {
+  if (!r.ing || !r.ing.length) return null;
+  var lineas = [];
+  var sumaEstimada = 0;
+
+  r.ing.forEach(function(row) {
+    var qtyStr = row[0];
+    var nombre = row[1] || '';
+    if (!nombre || /al gusto/i.test(qtyStr)) return;  // saltar "sal al gusto"
+
+    var c = parseCantidad(qtyStr);
+    var p = precioRefIngrediente(nombre);
+    if (!c || !p) {
+      // no calculamos — irá a "otros"
+      return;
+    }
+
+    // Selección del precio según unidad
+    var precio_kg = null, subtotal = 0;
+    if (p.kg !== undefined && (c.unit === 'kg' || c.unit === 'ud')) {
+      precio_kg = p.kg;
+      // si la unit es 'ud' pero el ingrediente se vende por kg, asumir 200g/ud por defecto
+      var pesoEstUd = (c.unit === 'ud') ? c.qty * 0.2 : c.qty;
+      subtotal = pesoEstUd * p.kg;
+    } else if (p.l !== undefined && c.unit === 'l') {
+      precio_kg = p.l;
+      subtotal = c.qty * p.l;
+    } else if (p.ud !== undefined && c.unit === 'ud') {
+      precio_kg = p.ud;
+      subtotal = c.qty * p.ud;
+    } else if (p.kg !== undefined && c.unit === 'l') {
+      precio_kg = p.kg;
+      subtotal = c.qty * p.kg;  // densidad ≈ 1
+    } else {
+      return;
+    }
+
+    sumaEstimada += subtotal;
+    lineas.push({
+      nombre: nombre,
+      qty: qtyStr,
+      precio_kg: precio_kg,
+      subtotal: subtotal,
+      aprox: false
+    });
+  });
+
+  if (!lineas.length) return null;
+
+  // Ajustar proporcionalmente al r.mp registrado
+  // Si la suma estimada difiere mucho de r.mp, escalamos para que cuadre
+  var rRac = r.rac || 1;
+  var mpTotal = r.mp;  // €/ración
+  // Las cantidades del recipe son TOTAL para la receta, así que el subtotal es de TODA la receta
+  // dividimos entre rac para ver el coste por ración
+  // sumaEstimada = coste TOTAL receta; coste/ración = suma / rRac
+  var costePorRacionEstimado = sumaEstimada / rRac;
+  // Factor de ajuste para que cuadre con r.mp
+  var factor = mpTotal > 0 && costePorRacionEstimado > 0 ? (mpTotal / costePorRacionEstimado) : 1;
+
+  // Aplicar factor + dividir por rac
+  lineas.forEach(function(l) {
+    l.subtotal = (l.subtotal / rRac) * factor;
+  });
+
+  // Recalcular suma final y "otros" (= condimentos / merma no contabilizada)
+  var sumaFinal = lineas.reduce(function(a, l){ return a + l.subtotal; }, 0);
+  var otros = Math.max(0, mpTotal - sumaFinal);
+
+  // Si el factor fue muy distinto de 1, marcamos como "aprox"
+  if (Math.abs(factor - 1) > 0.25) {
+    lineas.forEach(function(l){ l.aprox = true; });
+  }
+
+  return { lineas: lineas, otros: otros };
+}
+
 function renderRecipes(cat) {
   var grid = document.getElementById('grid-' + cat);
   if (!grid) return;
@@ -1421,6 +1710,47 @@ function openModal(cat, idx) {
   }).join('');
   var steps = (r.pasos||[]).map(function(p) { return '<li>' + p + '</li>'; }).join('');
 
+  // ─── Desglose de costes por ingrediente ──────────────────────────────
+  var desglose = calcDesgloseCostes(r);
+  var desgloseHTML = '';
+  if (desglose && desglose.lineas.length) {
+    desgloseHTML =
+      '<details class="desglose-mp">' +
+        '<summary>' +
+          '<span class="desglose-toggle-label">Ver desglose de productos</span>' +
+          '<span class="desglose-toggle-icon">▾</span>' +
+        '</summary>' +
+        '<div class="desglose-tbl-wrap">' +
+          '<table class="desglose-tbl">' +
+            '<thead><tr>' +
+              '<th>Producto</th>' +
+              '<th class="num">Cantidad</th>' +
+              '<th class="num">€/kg-L</th>' +
+              '<th class="num">Subtotal</th>' +
+            '</tr></thead>' +
+            '<tbody>' +
+              desglose.lineas.map(function(l){
+                return '<tr>' +
+                  '<td>' + l.nombre + (l.aprox ? ' <em>estimado</em>' : '') + '</td>' +
+                  '<td class="num">' + l.qty + '</td>' +
+                  '<td class="num">' + (l.precio_kg != null ? l.precio_kg.toFixed(2) + ' €' : '—') + '</td>' +
+                  '<td class="num">' + l.subtotal.toFixed(2) + ' €</td>' +
+                  '</tr>';
+              }).join('') +
+              (desglose.otros > 0.01 ?
+                '<tr class="desglose-otros"><td colspan="3">Condimentos · sal · merma <em>(estimado)</em></td>' +
+                '<td class="num">' + desglose.otros.toFixed(2) + ' €</td></tr>' : '') +
+            '</tbody>' +
+            '<tfoot><tr>' +
+              '<td colspan="3"><strong>TOTAL materia prima / ración</strong></td>' +
+              '<td class="num"><strong>' + r.mp.toFixed(2) + ' €</strong></td>' +
+            '</tr></tfoot>' +
+          '</table>' +
+          '<div class="desglose-note">Precios de referencia: Makro Málaga + Bedoya Hostelería · Mayo 2026. La suma se ajusta proporcionalmente al coste de materia prima registrado en el escandallo.</div>' +
+        '</div>' +
+      '</details>';
+  }
+
   var escandalloHTML;
   if (isCoctel) {
     var pvpSugerido = ((r.mp * r.rac + 3.50) / 0.35).toFixed(2);
@@ -1430,6 +1760,7 @@ function openModal(cat, idx) {
       '<div class="esc-row" style="border-top:1px solid rgba(201,168,76,0.15);padding-top:8px;margin-top:4px">' +
         '<span class="label">Coste MP lote (' + r.rac + ' piezas)</span><span class="val">' + mpLote.toFixed(2) + ' €</span>' +
       '</div>' +
+      desgloseHTML +
       '<div class="esc-pvp-grid" style="margin-top:12px">' +
         '<div class="pvp-cell"><div class="fc">PVP lote · fc 35%</div><div class="price">' + pvpA + ' €</div></div>' +
         '<div class="pvp-cell highlight"><div class="fc">PVP lote · fc 30% ★</div><div class="price">' + pvpB + ' €</div></div>' +
@@ -1442,6 +1773,7 @@ function openModal(cat, idx) {
     var fcReal = ((r.mp / ((r.mp + 7.49) / 0.50)) * 100).toFixed(1);
     escandalloHTML =
       '<div class="esc-row"><span class="label">Coste materia prima / ración</span><span class="val">' + r.mp.toFixed(2) + ' €</span></div>' +
+      desgloseHTML +
       '<div class="esc-pvp-grid">' +
         '<div class="pvp-cell"><div class="fc">Food cost 35%</div><div class="price">' + pvpA + ' €</div></div>' +
         '<div class="pvp-cell highlight"><div class="fc">Food cost 30% ★</div><div class="price">' + pvpB + ' €</div></div>' +
