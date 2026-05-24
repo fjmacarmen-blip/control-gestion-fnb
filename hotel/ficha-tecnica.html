@@ -4,18 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gran Hotel Miramar Dorado — Ficha Técnica de Espacios</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --gold:#c9a84c; --gold-dim:rgba(201,168,76,.15); --gold-line:rgba(201,168,76,.35);
-  --dark:#0a0a0a; --dark2:#111; --dark3:#171717; --dark4:#1e1e1e;
-  --cream:#f5f0e8; --muted:#8a8070; --border:rgba(255,255,255,.07); --border2:rgba(201,168,76,.25);
-  --r:14px; --t:all .25s cubic-bezier(.4,0,.2,1);
-  --shadow:0 20px 60px rgba(0,0,0,.5);
+  /* ── Paleta Navy Boutique (heredada del CV personal) ── */
+  --bg:        #0a1628;
+  --card:      #0f2040;
+  --card2:     #122b54;
+  --card3:     #1a3666;
+  --gold:      #c9a84c;
+  --gold-light:#e8c96a;
+  --gold-deep: #9d8237;
+  --gold-dim:  rgba(201,168,76,.10);
+  --gold-line: rgba(201,168,76,.30);
+  --text:      #e8eaf0;
+  --text-soft: #c4cad6;
+  --muted:     #7a8499;
+  --green:     #22c55e;
+  --border:    rgba(255,255,255,.07);
+  --border2:   rgba(201,168,76,.25);
+  /* aliases retro-compat */
+  --cream:     #e8eaf0;
+  --dark:      #0a1628;
+  --dark2:     #0f2040;
+  --dark3:     #122b54;
+  --dark4:     #1a3666;
+  --r:         14px;
+  --t:         all .28s cubic-bezier(.4,0,.2,1);
+  --shadow:    0 20px 60px rgba(0,0,0,.55);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--dark);color:var(--cream);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;}
+img{display:block; max-width:100%;}
+body{
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(201,168,76,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 85% 100%, rgba(201,168,76,.03) 0%, transparent 55%);
+  background-attachment:fixed;
+  color:var(--text);
+  font-family:'DM Sans',system-ui,sans-serif;
+  font-size:15px;line-height:1.7;
+}
 
 /* ── HEADER ── */
 .hero{
@@ -44,7 +74,7 @@ body{background:var(--dark);color:var(--cream);font-family:'Inter',sans-serif;fo
 }
 .hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold-line);}
 .hero h1{
-  font-family:'Playfair Display',serif; font-size:clamp(2.8rem,6vw,5rem);
+  font-family:'Cormorant Garamond',serif; font-size:clamp(2.8rem,6vw,5rem);
   color:var(--cream); line-height:1.1; margin-bottom:12px;
 }
 .hero h1 em{color:var(--gold);font-style:italic;}
@@ -70,7 +100,7 @@ nav{
   display:flex;align-items:center;justify-content:space-between;
   padding:0 36px;height:58px;
 }
-.nav-brand{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);letter-spacing:1px;}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);letter-spacing:1px;}
 .nav-links{display:flex;gap:28px;}
 .nav-links a{
   font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;
@@ -87,7 +117,7 @@ nav{
 }
 .section-eyebrow::before{content:'';width:30px;height:1px;background:var(--gold);}
 .section-title{
-  font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);
+  font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);
   color:var(--cream);margin-bottom:16px;
 }
 .section-desc{color:var(--muted);max-width:680px;line-height:1.8;margin-bottom:48px;}
@@ -98,13 +128,13 @@ nav{
   background:var(--dark3);border:1px solid var(--border);border-radius:var(--r);
   padding:28px 24px;text-align:center;
 }
-.ov-num{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--gold);font-weight:700;}
+.ov-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:var(--gold);font-weight:700;}
 .ov-label{font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
 
 /* ── HOTEL INFO ── */
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px;}
 .info-block{background:var(--dark3);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
-.info-block h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:16px;}
+.info-block h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:16px;}
 .info-row{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);}
 .info-row:last-child{border-bottom:none;}
 .info-key{font-size:.78rem;color:var(--muted);min-width:140px;flex-shrink:0;}
@@ -128,13 +158,13 @@ nav{
 .tag-interior{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid var(--border2);}
 .tag-exterior{background:rgba(45,122,79,.12);color:#4ade80;border:1px solid rgba(74,222,128,.2);}
 .tag-mixto{background:rgba(59,130,246,.12);color:#60a5fa;border:1px solid rgba(96,165,250,.2);}
-.space-name{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--cream);margin-bottom:6px;}
+.space-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--cream);margin-bottom:6px;}
 .space-area{font-size:.82rem;color:var(--muted);}
 .space-badge{
   background:var(--dark4);border:1px solid var(--border2);border-radius:10px;
   padding:12px 18px;text-align:right;flex-shrink:0;
 }
-.space-badge .cap-num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);}
+.space-badge .cap-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);}
 .space-badge .cap-label{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
 
 .space-body{padding:0 32px 28px;}
@@ -189,10 +219,10 @@ nav{
   font-size:.62rem;letter-spacing:2px;text-transform:uppercase;
   color:var(--gold);margin-bottom:8px;display:block;
 }
-.pkg-head h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);}
+.pkg-head h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--cream);}
 .pkg-head .duration{font-size:.78rem;color:var(--muted);margin-top:4px;}
-.pkg-price{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);margin-top:12px;}
-.pkg-price span{font-size:.75rem;font-family:'Inter',sans-serif;color:var(--muted);}
+.pkg-price{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);margin-top:12px;}
+.pkg-price span{font-size:.75rem;font-family:'DM Sans',sans-serif;color:var(--muted);}
 .pkg-body{padding:20px 24px;}
 .pkg-item{
   display:flex;align-items:flex-start;gap:10px;
@@ -207,7 +237,7 @@ nav{
 .ff-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px;}
 .ff-block{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:24px;}
 .ff-block h4{
-  font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);
+  font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);
   margin-bottom:16px;display:flex;align-items:center;gap:10px;
 }
 .ff-block h4::after{content:'';flex:1;height:1px;background:var(--border2);}
@@ -231,7 +261,7 @@ nav{
   background:var(--dark3);border:1px solid var(--border);border-radius:18px;
   padding:32px;margin-top:40px;
 }
-.plano-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cream);margin-bottom:24px;text-align:center;}
+.plano-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--cream);margin-bottom:24px;text-align:center;}
 .plano-svg-wrap{position:relative;background:var(--dark4);border-radius:12px;padding:24px;overflow:auto;}
 
 /* ── CONTACT ── */
@@ -253,6 +283,102 @@ nav{
 }
 .gold-divider::before,.gold-divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
+/* ════════════ NUESTRA CARTA ════════════ */
+.carta-section{background:var(--bg);padding:60px 0 40px;}
+.carta-section .section-eyebrow{justify-content:flex-start;}
+.carta-filters{display:flex;gap:10px;margin:24px 0 36px;flex-wrap:wrap;}
+.carta-pill{
+  background:var(--card);border:1px solid var(--border);color:var(--text-soft);
+  padding:9px 18px;border-radius:100px;font-size:.85rem;font-family:'DM Sans',sans-serif;
+  white-space:nowrap;cursor:pointer;transition:var(--t);
+}
+.carta-pill:hover{border-color:var(--gold-line);color:var(--text);background:var(--card2);}
+.carta-pill.active{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:600;}
+.carta-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;
+}
+.carta-card{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  overflow:hidden;transition:var(--t);cursor:pointer;
+}
+.carta-card:hover{
+  transform:translateY(-4px);border-color:var(--gold-line);
+  box-shadow:0 8px 36px rgba(0,0,0,.45);background:var(--card2);
+}
+.carta-thumb{position:relative;aspect-ratio:5/4;overflow:hidden;background:var(--card2);}
+.carta-thumb img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .6s cubic-bezier(.22,1,.36,1);
+}
+.carta-card:hover .carta-thumb img{transform:scale(1.06);}
+.carta-tag{
+  position:absolute;top:14px;left:14px;
+  background:rgba(10,22,40,.88);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.13);
+  color:var(--cream);padding:5px 12px;border-radius:100px;
+  font-size:.7rem;font-weight:500;letter-spacing:.3px;
+}
+.carta-body{padding:18px 20px 20px;}
+.carta-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;color:var(--cream);font-weight:600;
+  line-height:1.25;margin-bottom:6px;
+}
+.carta-desc{font-size:.82rem;color:var(--text-soft);line-height:1.5;}
+
+.carta-foot{
+  margin-top:36px;text-align:center;
+  padding:24px;background:var(--card);
+  border:1px dashed var(--gold-line);border-radius:14px;
+}
+.carta-foot p{color:var(--muted);font-size:.95rem;margin-bottom:14px;}
+.carta-foot a{
+  color:var(--gold);text-decoration:none;font-weight:600;
+  display:inline-flex;align-items:center;gap:8px;transition:gap .3s;
+}
+.carta-foot a:hover{gap:14px;}
+
+/* ════════════ EVENTOS A MEDIDA — CTA BLOCK ════════════ */
+.eventos-cta{padding:80px 0;}
+.eventos-cta .section-eyebrow{justify-content:flex-start;}
+.eventos-cta-block{
+  background:var(--card);border-radius:18px;overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;align-items:stretch;
+  border:1px solid var(--gold-line);
+  box-shadow:0 12px 48px rgba(0,0,0,.45);
+  margin-top:36px;
+}
+.eventos-img-wrap{position:relative;min-height:420px;overflow:hidden;}
+.eventos-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.eventos-img-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,transparent 50%,var(--card) 100%);
+}
+.eventos-text{padding:48px 52px;display:flex;flex-direction:column;justify-content:center;}
+.eventos-text h3{
+  font-family:'Cormorant Garamond',serif;font-size:2.2rem;
+  color:var(--cream);font-weight:600;line-height:1.2;margin-bottom:18px;
+}
+.eventos-text h3 em{font-style:italic;color:var(--gold);}
+.eventos-text p{color:var(--text-soft);margin-bottom:26px;line-height:1.7;}
+.eventos-features{display:grid;gap:12px;margin-bottom:32px;}
+.eventos-feature{display:flex;align-items:center;gap:12px;font-size:.92rem;color:var(--text-soft);}
+.eventos-feature::before{content:'✦';color:var(--gold);font-size:.7rem;flex-shrink:0;}
+.btn-cta{
+  background:var(--gold);color:var(--bg);
+  padding:14px 32px;border-radius:100px;
+  font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:600;
+  text-decoration:none;letter-spacing:.2px;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:var(--t);
+  box-shadow:0 4px 16px rgba(201,168,76,.30);
+  width:fit-content;
+}
+.btn-cta:hover{
+  background:var(--gold-light);transform:translateY(-2px);
+  box-shadow:0 6px 22px rgba(201,168,76,.45);
+}
+
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
   .overview-grid{grid-template-columns:repeat(2,1fr);}
@@ -260,6 +386,10 @@ nav{
   .space-header{grid-template-columns:1fr;}
   nav{padding:0 16px;}
   .nav-links{gap:14px;}
+  .eventos-cta-block{grid-template-columns:1fr;}
+  .eventos-img-wrap{min-height:280px;}
+  .eventos-img-overlay{background:linear-gradient(180deg,transparent 50%,var(--card) 100%);}
+  .eventos-text{padding:36px 28px;}
 }
 </style>
 </head>
@@ -294,7 +424,8 @@ nav{
   <div class="nav-links">
     <a href="#hotel">El Hotel</a>
     <a href="#espacios">Espacios</a>
-    <a href="#coctel">Menú Cóctel</a>
+    <a href="#carta">Nuestra Carta</a>
+    <a href="#eventos">Eventos a Medida</a>
     <a href="#plano">Plano</a>
     <a href="#contacto">Contacto</a>
   </div>
@@ -761,8 +892,157 @@ nav{
   </div>
 </section>
 
-<!-- MENÚ CÓCTEL DE PIE -->
-<div class="coctel-section" id="coctel">
+<!-- NUESTRA CARTA -->
+<div class="carta-section" id="carta">
+  <div class="coctel-inner">
+    <div class="section-eyebrow" style="justify-content:flex-start;">Oferta gastronómica</div>
+    <h2 class="section-title">Nuestra <em style="font-style:italic;color:var(--gold);">Carta</em></h2>
+    <p class="section-desc">Una selección de los platos más representativos de nuestra cocina. Producto local, técnica de autor y temporada. La carta completa cuenta con 40 recetas que se ajustan a cada evento.</p>
+
+    <div class="carta-filters">
+      <button class="carta-pill active">Destacados</button>
+      <button class="carta-pill">Entrantes</button>
+      <button class="carta-pill">Arroces y pastas</button>
+      <button class="carta-pill">Pescados</button>
+      <button class="carta-pill">Carnes</button>
+      <button class="carta-pill">Postres</button>
+    </div>
+
+    <div class="carta-grid">
+
+      <article class="carta-card">
+        <div class="carta-thumb">
+          <img src="../imagenes/platos/entrantes/gazpacho_andaluz.jpg" alt="Gazpacho Andaluz">
+          <span class="carta-tag">Entrante</span>
+        </div>
+        <div class="carta-body">
+          <div class="carta-name">Gazpacho Andaluz</div>
+          <div class="carta-desc">Sopa fría de tomate con AOVE Hojiblanca y viruta de jamón ibérico</div>
+        </div>
+      </article>
+
+      <article class="carta-card">
+        <div class="carta-thumb">
+          <img src="../imagenes/platos/entrantes/croquetas_jamon.jpg" alt="Croquetas de Jamón Ibérico">
+          <span class="carta-tag">Entrante</span>
+        </div>
+        <div class="carta-body">
+          <div class="carta-name">Croquetas de Jamón Ibérico</div>
+          <div class="carta-desc">Bechamel densa con jamón de bellota, crujiente empanado</div>
+        </div>
+      </article>
+
+      <article class="carta-card">
+        <div class="carta-thumb">
+          <img src="../imagenes/platos/primeros/paella_valenciana.jpg" alt="Paella Valenciana">
+          <span class="carta-tag">Arroz</span>
+        </div>
+        <div class="carta-body">
+          <div class="carta-name">Paella Valenciana</div>
+          <div class="carta-desc">Arroz bomba con pollo, conejo, ferraura, garrofón y azafrán</div>
+        </div>
+      </article>
+
+      <article class="carta-card">
+        <div class="carta-thumb">
+          <img src="../imagenes/platos/primeros/arroz_bogavante.jpg" alt="Arroz con Bogavante">
+          <span class="carta-tag">Signature</span>
+        </div>
+        <div class="carta-body">
+          <div class="carta-name">Arroz con Bogavante</div>
+          <div class="carta-desc">Caldoso con sofrito malagueño, azafrán y flameado en sala con brandy</div>
+        </div>
+      </article>
+
+      <article class="carta-card">
+        <div class="carta-thumb">
+          <img src="../imagenes/platos/segundos/solomillo_rioja.jpg" alt="Solomillo con Reducción de Rioja">
+          <span class="carta-tag">Carne</span>
+        </div>
+        <div class="carta-body">
+          <div class="carta-name">Solomillo con Reducción de Rioja</div>
+          <div class="carta-desc">Medallones de ternera a la plancha, reducción de vino tinto y patata paja</div>
+        </div>
+      </article>
+
+      <article class="carta-card">
+        <div class="carta-thumb">
+          <img src="../imagenes/platos/segundos/pulpo_brasa_parmentier.jpg" alt="Pulpo a la Brasa con Parmentier">
+          <span class="carta-tag">Pescado</span>
+        </div>
+        <div class="carta-body">
+          <div class="carta-name">Pulpo a la Brasa con Parmentier</div>
+          <div class="carta-desc">Tentáculos sobre parmentier ahumado de patata y pimentón de la Vera</div>
+        </div>
+      </article>
+
+      <article class="carta-card">
+        <div class="carta-thumb">
+          <img src="../imagenes/platos/postres/tarta_queso_vina.jpg" alt="Tarta de Queso La Viña">
+          <span class="carta-tag">Postre</span>
+        </div>
+        <div class="carta-body">
+          <div class="carta-name">Tarta de Queso La Viña</div>
+          <div class="carta-desc">Cremosa por dentro, caramelizada por fuera. Estilo donostiarra</div>
+        </div>
+      </article>
+
+      <article class="carta-card">
+        <div class="carta-thumb">
+          <img src="../imagenes/platos/postres/coulant_chocolate.jpg" alt="Coulant de Chocolate">
+          <span class="carta-tag">Postre</span>
+        </div>
+        <div class="carta-body">
+          <div class="carta-name">Coulant de Chocolate</div>
+          <div class="carta-desc">Interior fundente de chocolate 70% con helado de vainilla Bourbon</div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="carta-foot">
+      <p>40 recetas seleccionadas, escandallos detallados y carta de bebidas con 8 secciones.</p>
+      <a href="../recetario/recetario.html">Ver carta completa →</a>
+    </div>
+  </div>
+</div>
+
+<!-- EVENTOS A MEDIDA -->
+<section class="section eventos-cta" id="eventos">
+  <div class="section-eyebrow">Eventos a medida</div>
+  <h2 class="section-title">Diseña tu día <em style="font-style:italic;color:var(--gold);">especial</em></h2>
+  <p class="section-desc">Bodas, comuniones, aniversarios, eventos corporativos y cócteles de pie. Te acompañamos en cada decisión, desde el menú hasta el último centro de mesa, con un coordinador dedicado durante toda la jornada.</p>
+
+  <div class="eventos-cta-block">
+    <div class="eventos-img-wrap">
+      <img class="eventos-img" src="../imagenes/eventos/eventos/boda.jpg" alt="Eventos Miramar Dorado">
+      <div class="eventos-img-overlay"></div>
+    </div>
+    <div class="eventos-text">
+      <h3>Tu evento, <em>a medida</em></h3>
+      <p>Configura tu evento paso a paso con nuestro presupuestador online: elige tipo de evento, número de invitados, menú (incluido el cóctel de pie con finger food, estaciones en vivo y mini postres), bebidas, decoración floral, música, fotografía y todos los servicios adicionales. Te damos un precio estimado al instante y nuestro equipo te contacta en menos de 24 h.</p>
+      <div class="eventos-features">
+        <div class="eventos-feature">Cócteles de pie desde 18 €/pax (Brisa, Costa del Sol, Miramar)</div>
+        <div class="eventos-feature">Menús degustación desde 28 €/pax hasta menú de autor 88 €/pax</div>
+        <div class="eventos-feature">Espacios desde 30 hasta 900 personas · 10 escenarios diferentes</div>
+        <div class="eventos-feature">Coordinador dedicado durante toda la jornada</div>
+      </div>
+      <a href="../cliente/presupuesto-evento.html" class="btn-cta">Empezar mi presupuesto →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     CÓCTEL DETALLADO MOVIDO A presupuesto-evento.html (próximo commit)
+     - 3 paquetes de cóctel (Brisa, Costa del Sol, Miramar)
+     - 10 pinchos fríos + 10 pinchos calientes
+     - 8 estaciones en vivo
+     - 12 mini postres
+     Toda la oferta se selecciona ahora desde el presupuestador interactivo.
+══════════════════════════════════════════════════════════════════════════ -->
+
+<!-- ZONA ANTIGUA — MENÚ CÓCTEL DE PIE (eliminada de ficha-tecnica)
+<div class="coctel-section" id="coctel-legacy" style="display:none">
   <div class="coctel-inner">
     <div class="section-eyebrow" style="justify-content:flex-start;">Oferta gastronómica</div>
     <h2 class="section-title">Menú Cóctel de Pie</h2>
@@ -855,7 +1135,7 @@ nav{
     </div>
 
     <!-- Estaciones en vivo -->
-    <h3 style="font-family:'Playfair Display',serif;color:var(--cream);font-size:1.4rem;margin:40px 0 16px;">
+    <h3 style="font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:1.4rem;margin:40px 0 16px;">
       🍳 Estaciones en Vivo — A elección según paquete
     </h3>
     <div class="stations-grid">
@@ -870,7 +1150,7 @@ nav{
     </div>
 
     <!-- Mini postres -->
-    <h3 style="font-family:'Playfair Display',serif;color:var(--cream);font-size:1.4rem;margin:40px 0 16px;">
+    <h3 style="font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:1.4rem;margin:40px 0 16px;">
       🍮 Mesa de Finger Desserts
     </h3>
     <div class="ff-grid">
@@ -895,6 +1175,7 @@ nav{
     </div>
   </div>
 </div>
+-->
 
 <!-- CONTACTO -->
 <section class="section" id="contacto">

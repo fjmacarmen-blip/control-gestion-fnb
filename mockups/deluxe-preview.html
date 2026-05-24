@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deluxe Editorial · Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:       #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-deep:  #8e6e22;
+  --gold-pale:  rgba(201,168,76,0.08);
+  --cream:      #f5f0e8;
+  --cream-soft: #e8e0d2;
+  --dark:       #08080a;
+  --dark2:      #101012;
+  --dark3:      #18181c;
+  --text:       #e8e2d4;
+  --muted:      #8a8170;
+  --line:       rgba(201,168,76,0.35);
+
+  --r-card: 4px;
+  --t: all .5s cubic-bezier(.22, 1, .36, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  background: var(--dark);
+  font-size: 15px; line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════════════════
+   TOP STRIP (delgado, dorado, premium feel)
+════════════════════════════════════════ */
+.top-strip {
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.10), transparent);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 8px 0; text-align: center;
+  font-size: 0.68rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ════════════════════════════════════════
+   NAV (minimalista, sin glass agresivo)
+════════════════════════════════════════ */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8, 8, 10, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+  padding: 22px 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  display: flex; flex-direction: column; align-items: flex-start;
+}
+.nav-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; color: var(--cream);
+  letter-spacing: 0.5px; font-weight: 600;
+}
+.nav-brand-sub {
+  font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); margin-top: 3px;
+}
+.nav-links { display: flex; gap: 40px; }
+.nav-links a {
+  font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--cream-soft); text-decoration: none;
+  transition: var(--t); position: relative;
+  padding: 6px 0;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--gold);
+  transition: width .3s ease;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ════════════════════════════════════════
+   HERO FULL BLEED
+════════════════════════════════════════ */
+.hero {
+  position: relative;
+  height: calc(100vh - 90px); min-height: 640px;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url('../imagenes/eventos/eventos/boda.jpg');
+  background-size: cover; background-position: center 30%;
+  filter: brightness(0.35) saturate(0.85);
+  transform: scale(1.05);
+}
+.hero-vignette {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(8,8,10,0.75) 75%, rgba(8,8,10,1) 100%),
+    linear-gradient(180deg, rgba(8,8,10,0.4) 0%, transparent 30%, transparent 70%, rgba(8,8,10,0.9) 100%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 900px; padding: 0 32px; }
+.hero-stars {
+  font-size: 1.1rem; letter-spacing: 12px;
+  color: var(--gold); margin-bottom: 36px;
+  text-shadow: 0 2px 12px rgba(201,168,76,0.4);
+}
+.hero-stars::before, .hero-stars::after {
+  content: '·'; padding: 0 14px; opacity: 0.5;
+}
+.hero-eyebrow {
+  font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: center; gap: 22px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; flex: 0 0 80px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.2rem, 7vw, 6.8rem);
+  font-weight: 700; line-height: 1; color: var(--cream);
+  margin-bottom: 28px; letter-spacing: -0.025em;
+}
+.hero h1 em {
+  font-style: italic; font-weight: 400;
+  color: var(--gold);
+  background: linear-gradient(180deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 300; font-style: italic;
+  color: var(--cream-soft); margin-bottom: 56px;
+  letter-spacing: 0.3px;
+}
+.hero-actions { display: inline-flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
+.btn-primary {
+  background: var(--gold);
+  color: var(--dark); padding: 16px 42px;
+  font-family: 'Inter', sans-serif; font-weight: 500;
+  font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--gold);
+  position: relative; overflow: hidden;
+  transition: var(--t);
+}
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform .8s;
+}
+.btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+.btn-primary:hover::before { transform: translateX(100%); }
+.btn-secondary {
+  background: transparent;
+  color: var(--cream); padding: 16px 42px;
+  font-weight: 500; font-size: 0.78rem;
+  letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(245,240,232,0.4);
+  transition: var(--t);
+}
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  color: var(--gold); font-size: 0.65rem;
+  letter-spacing: 4px; text-transform: uppercase;
+}
+.hero-scroll::after {
+  content: ''; width: 1px; height: 60px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+}
+
+/* ════════════════════════════════════════
+   SEPARADOR ORNAMENTAL
+════════════════════════════════════════ */
+.ornament {
+  display: flex; align-items: center; justify-content: center;
+  gap: 28px; padding: 80px 0;
+}
+.ornament-line {
+  flex: 0 0 120px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--line), transparent);
+}
+.ornament-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; color: var(--gold);
+  font-style: italic;
+}
+
+/* ════════════════════════════════════════
+   SECCIÓN EDITORIAL
+════════════════════════════════════════ */
+.section { max-width: 1280px; margin: 0 auto; padding: 60px 64px; }
+.section-head { text-align: center; margin-bottom: 72px; }
+.section-eyebrow {
+  font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 22px;
+  display: inline-flex; align-items: center; gap: 18px;
+}
+.section-eyebrow::before, .section-eyebrow::after {
+  content: ''; width: 50px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+.section-head h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 600; color: var(--cream);
+  line-height: 1.1; letter-spacing: -0.015em;
+  max-width: 720px; margin: 0 auto 22px;
+}
+.section-head h2 em {
+  font-style: italic; color: var(--gold);
+}
+.section-lead {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem; font-weight: 300; font-style: italic;
+  color: var(--muted); max-width: 620px; margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* ════════════════════════════════════════
+   GRID DE CARTA — STYLE EDITORIAL
+════════════════════════════════════════ */
+.dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 48px;
+}
+.dish {
+  position: relative; cursor: pointer;
+  transition: var(--t);
+}
+.dish-img-wrap {
+  position: relative; aspect-ratio: 4/5;
+  overflow: hidden;
+  border: 1px solid rgba(201,168,76,0.15);
+  background: var(--dark2);
+}
+.dish-img-wrap::before {
+  content: ''; position: absolute;
+  top: 14px; left: 14px; right: 14px; bottom: 14px;
+  border: 1px solid rgba(245,240,232,0.12);
+  z-index: 2; pointer-events: none;
+  transition: var(--t);
+}
+.dish:hover .dish-img-wrap::before {
+  top: 20px; left: 20px; right: 20px; bottom: 20px;
+  border-color: rgba(201,168,76,0.45);
+}
+.dish-img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: saturate(0.92);
+  transition: transform 1s cubic-bezier(.22,1,.36,1), filter .6s;
+}
+.dish:hover .dish-img {
+  transform: scale(1.08);
+  filter: saturate(1.05);
+}
+.dish-category {
+  position: absolute; top: 22px; right: 22px; z-index: 3;
+  background: var(--gold);
+  color: var(--dark);
+  padding: 6px 14px;
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+}
+.dish-body {
+  padding: 28px 4px 0; text-align: center;
+}
+.dish-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem; color: var(--gold);
+  font-style: italic; font-weight: 400;
+  letter-spacing: 1px; margin-bottom: 8px;
+}
+.dish-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; color: var(--cream);
+  font-weight: 500; line-height: 1.2;
+  margin-bottom: 12px;
+}
+.dish-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem; font-weight: 300; font-style: italic;
+  color: var(--muted); line-height: 1.6;
+  margin-bottom: 22px; padding: 0 12px;
+}
+.dish-price-row {
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(201,168,76,0.18);
+}
+.dish-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; color: var(--gold);
+  font-weight: 500;
+}
+.dish-separator {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--gold); opacity: 0.5;
+}
+.dish-detail-link {
+  font-size: 0.7rem; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--cream-soft);
+  transition: var(--t);
+}
+.dish:hover .dish-detail-link { color: var(--gold); letter-spacing: 3px; }
+
+/* ════════════════════════════════════════
+   EDITORIAL SPREAD (foto + texto)
+════════════════════════════════════════ */
+.spread {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 0;
+  background: var(--dark2);
+  margin: 60px 0;
+}
+.spread-img {
+  height: 600px;
+  background-image: url('../imagenes/platos/primeros/arroz_bogavante.jpg');
+  background-size: cover; background-position: center;
+  position: relative;
+}
+.spread-img::after {
+  content: ''; position: absolute; inset: 24px;
+  border: 1px solid rgba(245,240,232,0.18);
+}
+.spread-text {
+  padding: 80px 80px;
+}
+.spread-text .section-eyebrow {
+  justify-content: flex-start;
+  margin-bottom: 22px;
+}
+.spread-text .section-eyebrow::after { display: none; }
+.spread-text h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.6rem; line-height: 1.1; color: var(--cream);
+  font-weight: 600; margin-bottom: 24px;
+}
+.spread-text h3 em { font-style: italic; color: var(--gold); }
+.drop-cap::first-letter {
+  font-family: 'Playfair Display', serif;
+  float: left; font-size: 4.2rem; line-height: 0.9;
+  color: var(--gold); font-style: italic;
+  padding: 8px 12px 0 0; font-weight: 600;
+}
+.spread-text p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; font-weight: 300; line-height: 1.7;
+  color: var(--cream-soft); margin-bottom: 20px;
+}
+.spread-cta {
+  margin-top: 36px;
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); text-decoration: none;
+  padding-bottom: 6px; border-bottom: 1px solid var(--gold);
+  transition: var(--t);
+}
+.spread-cta:hover { gap: 20px; }
+
+/* ════════════════════════════════════════
+   CTA BLOCK GRANDE
+════════════════════════════════════════ */
+.cta-block {
+  text-align: center;
+  padding: 120px 64px;
+  background:
+    radial-gradient(ellipse 50% 80% at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    var(--dark);
+  border-top: 1px solid rgba(201,168,76,0.12);
+  border-bottom: 1px solid rgba(201,168,76,0.12);
+}
+.cta-block h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  color: var(--cream); margin-bottom: 24px;
+  line-height: 1.1;
+}
+.cta-block h2 em { font-style: italic; color: var(--gold); }
+.cta-block p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; font-style: italic; font-weight: 300;
+  color: var(--muted); margin-bottom: 56px;
+  max-width: 560px; margin-left: auto; margin-right: auto;
+}
+
+/* ════════════════════════════════════════
+   FOOTER MOCKUP NOTE
+════════════════════════════════════════ */
+.mockup-note {
+  text-align: center; padding: 60px 32px;
+  color: var(--muted); font-size: 0.78rem;
+  background: #050506;
+  border-top: 1px solid rgba(201,168,76,0.08);
+}
+.mockup-note strong { color: var(--gold); }
+
+@media (max-width: 880px) {
+  .nav { padding: 18px 28px; }
+  .nav-links { display: none; }
+  .section { padding: 50px 28px; }
+  .spread { grid-template-columns: 1fr; }
+  .spread-img { height: 380px; }
+  .spread-text { padding: 50px 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-strip">Gran Hotel Miramar Dorado · Costa del Sol</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-brand-name">Miramar Dorado</div>
+    <div class="nav-brand-sub">Gastronomía · 5 Estrellas Gran Lujo</div>
+  </div>
+  <div class="nav-links">
+    <a href="#">El Hotel</a>
+    <a href="#">Carta</a>
+    <a href="#">Eventos</a>
+    <a href="#">Reserva</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <div class="hero-stars">★ ★ ★ ★ ★</div>
+    <div class="hero-eyebrow">Marbella · Costa del Sol</div>
+    <h1>Una cocina que se<br><em>recuerda toda la vida</em></h1>
+    <p class="hero-tagline">Producto local, técnica de autor y el Mediterráneo en cada plato.<br>El destino donde celebrar los momentos que importan.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Diseña tu evento</a>
+      <a href="#" class="btn-secondary">Ver carta</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Descubrir</div>
+</section>
+
+<!-- ORNAMENT -->
+<div class="ornament">
+  <div class="ornament-line"></div>
+  <div class="ornament-mark">&#10038;</div>
+  <div class="ornament-line"></div>
+</div>
+
+<!-- CARTA -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-eyebrow">Nuestra Cocina</div>
+    <h2>La carta del <em>chef</em></h2>
+    <p class="section-lead">Cuarenta recetas seleccionadas, cada una un ejercicio de respeto al producto y a la tradición. De los entrantes a los postres, pasando por arroces, pescados y carnes con sello propio.</p>
+  </div>
+
+  <div class="dishes-grid">
+
+    <article class="dish">
+      <div class="dish-img-wrap">
+        <img src="../imagenes/platos/entrantes/gazpacho_andaluz.jpg" alt="Gazpacho Andaluz" class="dish-img" loading="lazy">
+        <span class="dish-category">Entrante</span>
+      </div>
+      <div class="dish-body">
+        <div class="dish-number">N° 01</div>
+        <h3 class="dish-name">Gazpacho Andaluz</h3>
+        <p class="dish-desc">"Sopa fría de tomate, viruta de jamón ibérico y AOVE Hojiblanca de la sierra"</p>
+        <div class="dish-price-row">
+          <span class="dish-price">4,00 €</span>
+          <span class="dish-separator"></span>
+          <span class="dish-detail-link">Ver receta</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="dish">
+      <div class="dish-img-wrap">
+        <img src="../imagenes/platos/primeros/paella_valenciana.jpg" alt="Paella Valenciana" class="dish-img" loading="lazy">
+        <span class="dish-category">Arroz</span>
+      </div>
+      <div class="dish-body">
+        <div class="dish-number">N° 02</div>
+        <h3 class="dish-name">Paella Valenciana</h3>
+        <p class="dish-desc">"Arroz bomba, pollo de corral, conejo, ferraura, garrofón y azafrán de la Mancha"</p>
+        <div class="dish-price-row">
+          <span class="dish-price">10,00 €</span>
+          <span class="dish-separator"></span>
+          <span class="dish-detail-link">Ver receta</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="dish">
+      <div class="dish-img-wrap">
+        <img src="../imagenes/platos/segundos/solomillo_rioja.jpg" alt="Solomillo con Reducción de Rioja" class="dish-img" loading="lazy">
+        <span class="dish-category">Segundo</span>
+      </div>
+      <div class="dish-body">
+        <div class="dish-number">N° 03</div>
+        <h3 class="dish-name">Solomillo con Reducción de Rioja</h3>
+        <p class="dish-desc">"Medallones de ternera a la plancha, reducción de vino tinto Crianza y patata paja"</p>
+        <div class="dish-price-row">
+          <span class="dish-price">22,00 €</span>
+          <span class="dish-separator"></span>
+          <span class="dish-detail-link">Ver receta</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="dish">
+      <div class="dish-img-wrap">
+        <img src="../imagenes/platos/postres/tarta_queso_vina.jpg" alt="Tarta de Queso La Viña" class="dish-img" loading="lazy">
+        <span class="dish-category">Postre</span>
+      </div>
+      <div class="dish-body">
+        <div class="dish-number">N° 04</div>
+        <h3 class="dish-name">Tarta de Queso La Viña</h3>
+        <p class="dish-desc">"Cremosa por dentro, caramelizada por fuera, en la mejor tradición donostiarra"</p>
+        <div class="dish-price-row">
+          <span class="dish-price">5,50 €</span>
+          <span class="dish-separator"></span>
+          <span class="dish-detail-link">Ver receta</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ORNAMENT -->
+<div class="ornament">
+  <div class="ornament-line"></div>
+  <div class="ornament-mark">&#10038;</div>
+  <div class="ornament-line"></div>
+</div>
+
+<!-- EDITORIAL SPREAD -->
+<div class="spread">
+  <div class="spread-img"></div>
+  <div class="spread-text">
+    <div class="section-eyebrow">Plato signature</div>
+    <h3>Arroz con bogavante,<br><em>nuestra firma</em></h3>
+    <p class="drop-cap">Es nuestro plato más pedido y el que mejor define al hotel: un arroz caldoso con bogavante vivo, sofrito malagueño paciente y un toque de azafrán que se enciende al final con brandy. El bogavante se parte en vivo y se flambea en sala — una pequeña ceremonia que es ya parte de la experiencia Miramar.</p>
+    <p>La receta lleva más de quince años en carta. Algunos comensales vuelven solo por él. Otros lo descubren la primera vez y entienden de qué hablamos cuando hablamos de cocina del Mediterráneo.</p>
+    <a href="#" class="spread-cta">Ver la receta →</a>
+  </div>
+</div>
+
+<!-- ORNAMENT -->
+<div class="ornament">
+  <div class="ornament-line"></div>
+  <div class="ornament-mark">&#10038;</div>
+  <div class="ornament-line"></div>
+</div>
+
+<!-- CTA BLOCK -->
+<section class="cta-block">
+  <h2>El evento de tus <em>sueños</em></h2>
+  <p>Bodas, comuniones, aniversarios y eventos corporativos. Te asesoramos en cada decisión, desde el menú hasta el último centro de mesa.</p>
+  <a href="#" class="btn-primary">Diseñar mi evento personalizado</a>
+</section>
+
+<!-- MOCKUP NOTE -->
+<div class="mockup-note">
+  <strong>Mockup · Deluxe Editorial</strong> · Tipografía Playfair + Cormorant Garamond · Filetes dorados decorativos · Foto a sangre · Drop cap editorial · Iteración 1
+</div>
+
+</body>
+</html>
