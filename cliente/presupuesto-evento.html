@@ -158,6 +158,49 @@ body{
 }
 .paxbk-summary strong { color:var(--gold); }
 
+/* ── Bloques de categoría de evento en paso 1 ── */
+.evt-cat-block {
+  border:1px solid var(--border);
+  border-left:4px solid var(--gold);
+  border-radius:14px;
+  padding:18px 20px;
+  background:var(--card);
+}
+.evt-cat-header {
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:16px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+}
+.evt-cat-icon {
+  font-size:1.8rem;
+  background:var(--gold-dim);
+  border:1px solid var(--gold-border);
+  width:48px; height:48px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.evt-cat-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem; color:var(--cream); font-weight:600;
+}
+.evt-cat-desc {
+  font-size:.8rem; color:var(--muted); margin-top:2px;
+}
+
+/* Indicador visual del filtro activo en step 2 */
+.menu-filter-notice {
+  margin-bottom:16px;
+  padding:10px 16px;
+  background:var(--gold-dim);
+  border:1px solid var(--gold-border);
+  border-radius:10px;
+  font-size:.82rem; color:var(--text-soft);
+  display:flex; align-items:center; gap:10px;
+}
+.menu-filter-notice strong { color:var(--gold); }
+
 /* ════════════ Botón "Ver composición" en pkg-card ════════════ */
 .btn-composition {
   margin-top:12px;
@@ -792,8 +835,34 @@ body{
         <p>Cuéntanos el tipo de evento y los detalles básicos para personalizar tu propuesta al máximo.</p>
       </div>
 
-      <div class="sub-title">🎊 Tipo de celebración</div>
-      <div class="sel-grid cols-3" id="eventTypeGrid"></div>
+      <div class="sub-title">🎊 ¿Qué tipo de evento estás organizando?</div>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px;line-height:1.6;">
+        Elige la categoría y después el subtipo concreto. Los menús y servicios disponibles se adaptarán automáticamente.
+      </p>
+
+      <!-- 🎉 Celebraciones privadas -->
+      <div class="evt-cat-block">
+        <div class="evt-cat-header">
+          <span class="evt-cat-icon">🎉</span>
+          <div>
+            <div class="evt-cat-name">Celebraciones privadas</div>
+            <div class="evt-cat-desc">Bodas, comuniones, bautizos, cumpleaños y aniversarios.</div>
+          </div>
+        </div>
+        <div class="sel-grid cols-3" id="eventTypeGrid-celebracion"></div>
+      </div>
+
+      <!-- 🏢 Empresa -->
+      <div class="evt-cat-block" style="margin-top:28px;">
+        <div class="evt-cat-header">
+          <span class="evt-cat-icon">🏢</span>
+          <div>
+            <div class="evt-cat-name">Empresa</div>
+            <div class="evt-cat-desc">Convenciones, team building, formaciones, cócteles corporativos y galas.</div>
+          </div>
+        </div>
+        <div class="sel-grid cols-3" id="eventTypeGrid-empresa"></div>
+      </div>
 
       <div class="sub-title" style="margin-top:28px;">📋 Detalles del evento</div>
       <div class="form-row">
@@ -1189,19 +1258,33 @@ const BASE_EVT = '../imagenes/eventos/eventos/';
 const BASE_PLT = '../imagenes/platos/';
 
 const eventTypes = [
-  { id:'boda',    icon:'💍', name:'Boda',               desc:'Banquete nupcial con todas sus secciones',   badge:'badge-hit', img: BASE_EVT+'boda.jpg' },
-  { id:'comuni',  icon:'🕊️', name:'Comunión',            desc:'Celebración íntima y emotiva en familia',    badge:'badge-est', img: BASE_EVT+'comunion.jpg' },
-  { id:'corp',    icon:'🏢', name:'Evento Corporativo',  desc:'Convenciones, team building y gala anual',   badge:'badge-est', img: BASE_EVT+'corporativo.jpg' },
-  { id:'cumple',  icon:'🎂', name:'Cumpleaños',          desc:'Desde los 18 hasta los 100 — ¡todos valen!', badge:'badge-eco', img: BASE_EVT+'cumpleanos.jpg' },
-  { id:'aniv',    icon:'🥂', name:'Aniversario',         desc:'Celebra los años que lleváis juntos',         badge:'badge-pre', img: BASE_EVT+'aniversario.jpg' },
-  { id:'coctel',  icon:'🍸', name:'Cóctel & Networking', desc:'Cóctel de pie, catering y fingerfood',        badge:'badge-est', img: BASE_EVT+'coctel.jpg' },
-  { id:'bautizo', icon:'👶', name:'Bautizo',             desc:'La bienvenida al mundo del nuevo miembro',   badge:'badge-eco', img: BASE_EVT+'bautizo.jpg' },
-  { id:'otro',    icon:'🎊', name:'Otra celebración',    desc:'Cuéntanos — lo hacemos posible',             badge:'badge-eco', img: BASE_EVT+'galeria.jpg' },
+  // ─── 🎉 Celebraciones privadas ──────────────────────────────────────
+  { id:'boda',     category:'celebracion', icon:'💍', name:'Boda',                desc:'Banquete nupcial con todas sus secciones',     badge:'badge-hit', img: BASE_EVT+'boda.jpg' },
+  { id:'comuni',   category:'celebracion', icon:'🕊️', name:'Comunión',             desc:'Celebración íntima y emotiva en familia',      badge:'badge-est', img: BASE_EVT+'comunion.jpg' },
+  { id:'bautizo',  category:'celebracion', icon:'👶', name:'Bautizo',              desc:'La bienvenida al mundo del nuevo miembro',    badge:'badge-eco', img: BASE_EVT+'bautizo.jpg' },
+  { id:'cumple',   category:'celebracion', icon:'🎂', name:'Cumpleaños',           desc:'Desde los 18 hasta los 100 — ¡todos valen!',  badge:'badge-eco', img: BASE_EVT+'cumpleanos.jpg' },
+  { id:'aniv',     category:'celebracion', icon:'🥂', name:'Aniversario',          desc:'Celebra los años que lleváis juntos',         badge:'badge-pre', img: BASE_EVT+'aniversario.jpg' },
+  { id:'otro',     category:'celebracion', icon:'🎊', name:'Otra celebración',     desc:'Cuéntanos — lo hacemos posible',              badge:'badge-eco', img: BASE_EVT+'galeria.jpg' },
+
+  // ─── 🏢 Empresa ─────────────────────────────────────────────────────
+  { id:'convenc',  category:'empresa',     icon:'🤝', name:'Convención',           desc:'Reunión anual, asamblea de socios, congreso', badge:'badge-pre', img: BASE_EVT+'corporativo.jpg' },
+  { id:'teambld',  category:'empresa',     icon:'🎯', name:'Team building',        desc:'Actividades en equipo + comida o cena',       badge:'badge-est', img: BASE_EVT+'galeria.jpg' },
+  { id:'directiv', category:'empresa',     icon:'📊', name:'Reunión directiva',    desc:'Junta o consejo · sala privada + catering',   badge:'badge-est', img: BASE_EVT+'corporativo.jpg' },
+  { id:'lanzami',  category:'empresa',     icon:'🎤', name:'Lanzamiento producto', desc:'Presentación con stage, AV y cóctel',         badge:'badge-pre', img: BASE_EVT+'aniversario.jpg' },
+  { id:'cocktail', category:'empresa',     icon:'🍸', name:'Cóctel & Networking',  desc:'De pie, dinámico · fingerfood + cócteles',    badge:'badge-est', img: BASE_EVT+'coctel.jpg' },
+  { id:'formaci',  category:'empresa',     icon:'🎓', name:'Formación / Workshop', desc:'Sala formato escuela + coffee breaks',        badge:'badge-eco', img: BASE_EVT+'galeria.jpg' },
+  { id:'galaCorp', category:'empresa',     icon:'🎁', name:'Cena de gala',         desc:'Cena anual de empresa + entrega de premios',  badge:'badge-lux', img: BASE_EVT+'boda.jpg' },
+];
+
+// Tarjeta categoría (cabecera de cada grupo)
+const EVENT_CATEGORIES = [
+  { id:'celebracion', icon:'🎉', name:'Celebraciones privadas', desc:'Bodas, comuniones, bautizos, cumpleaños y aniversarios.' },
+  { id:'empresa',     icon:'🏢', name:'Empresa',                desc:'Convenciones, team building, formaciones, cócteles corporativos y galas.' },
 ];
 
 const menuPkgs = [
   // ─── Menús sentado ───────────────────────────────────────────────────────
-  { id:'eco',    type:'sentado',  badge:'badge-eco', g:'g4',  icon:'🥗', name:'Menú Esencial',      ppax:28, desc:'Cóctel de bienvenida · 1 entrante · 1 primero · 1 segundo · postre · café', incl:'Pan artesano · Agua',                           img: BASE_PLT+'entrantes/gazpacho_andaluz.jpg',
+  { id:'eco',    type:'sentado', scope:'all',  badge:'badge-eco', g:'g4',  icon:'🥗', name:'Menú Esencial',      ppax:28, desc:'Cóctel de bienvenida · 1 entrante · 1 primero · 1 segundo · postre · café', incl:'Pan artesano · Agua',                           img: BASE_PLT+'entrantes/gazpacho_andaluz.jpg',
     composition: {
       'Cóctel de bienvenida': ['Vasito de Gazpacho Andaluz', 'Croqueta de jamón ibérico'],
       'Entrantes (1 a elegir)': ['Gazpacho Andaluz', 'Salmorejo Cordobés', 'Ensalada Gamba Roja y Aguacate'],
@@ -1212,7 +1295,7 @@ const menuPkgs = [
       'Servicios incluidos': ['Pan artesano de masa madre', 'Servicio de sala estándar', 'Servicio de mesa 5 horas']
     }
   },
-  { id:'est',    type:'sentado',  badge:'badge-est', g:'g6',  icon:'🍽️', name:'Menú Selecta',       ppax:42, desc:'Cóctel bienvenida · 2 entrantes · 1 primero · 1 segundo · 2 postres · café', incl:'Pan artesano · Agua · Petit fours',            img: BASE_PLT+'primeros/paella_valenciana.jpg',
+  { id:'est',    type:'sentado', scope:'all',  badge:'badge-est', g:'g6',  icon:'🍽️', name:'Menú Selecta',       ppax:42, desc:'Cóctel bienvenida · 2 entrantes · 1 primero · 1 segundo · 2 postres · café', incl:'Pan artesano · Agua · Petit fours',            img: BASE_PLT+'primeros/paella_valenciana.jpg',
     composition: {
       'Cóctel de bienvenida': ['Vasito de Gazpacho con jamón ibérico', 'Croqueta de jamón ibérico', 'Tartar de atún en cucurucho', 'Cucharilla de Salmorejo'],
       'Entrantes (2 a elegir)': ['Gambas al Ajillo', 'Croquetas de Jamón Ibérico', 'Tataki de Atún Rojo', 'Pimientos del Piquillo con Bacalao', 'Carpaccio de Ternera'],
@@ -1223,7 +1306,7 @@ const menuPkgs = [
       'Servicios incluidos': ['Pan artesano + AOVE Hojiblanca', 'Petit fours con café', 'Servicio de sala completo', 'Servicio de mesa 6 horas']
     }
   },
-  { id:'pre',    type:'sentado',  badge:'badge-pre', g:'g7',  icon:'🌟', name:'Menú Gourmet',       ppax:62, desc:'Cóctel premium · 3 entrantes · 1 primero · 2 segundos · 3 postres · café',  incl:'Pan artesano · Agua · Petit fours · Bienmesabe', img: BASE_PLT+'segundos/solomillo_rioja.jpg',
+  { id:'pre',    type:'sentado', scope:'all',  badge:'badge-pre', g:'g7',  icon:'🌟', name:'Menú Gourmet',       ppax:62, desc:'Cóctel premium · 3 entrantes · 1 primero · 2 segundos · 3 postres · café',  incl:'Pan artesano · Agua · Petit fours · Bienmesabe', img: BASE_PLT+'segundos/solomillo_rioja.jpg',
     composition: {
       'Cóctel premium de bienvenida': ['8 piezas finger food frío y caliente por pax', 'Gamba roja Málaga sobre tosta nori', 'Canapé de foie mi-cuit con higos', 'Cóctel de autor (1 por pax)'],
       'Entrantes (3 a elegir)': ['Tostas de Foie con Higos', 'Tataki de Atún Rojo', 'Ensalada Gamba Roja y Aguacate', 'Carpaccio de Ternera', 'Pimientos del Piquillo con Bacalao'],
@@ -1234,7 +1317,7 @@ const menuPkgs = [
       'Servicios incluidos': ['Pan artesano + AOVE DO Málaga', 'Petit fours + bienmesabe', 'Bombones artesanos con café', 'Jefe de sala dedicado', 'Servicio de mesa 7 horas']
     }
   },
-  { id:'lux',    type:'sentado',  badge:'badge-lux', g:'g8',  icon:'👑', name:'Menú de Autor',      ppax:88, desc:'Menú degustación 7 pasos con maridaje, presentación de autor y experiencia gastronómica completa', incl:'Todo incluido · Maridaje · Sumiller', img: BASE_PLT+'primeros/arroz_bogavante.jpg',
+  { id:'lux',    type:'sentado', scope:'all',  badge:'badge-lux', g:'g8',  icon:'👑', name:'Menú de Autor',      ppax:88, desc:'Menú degustación 7 pasos con maridaje, presentación de autor y experiencia gastronómica completa', incl:'Todo incluido · Maridaje · Sumiller', img: BASE_PLT+'primeros/arroz_bogavante.jpg',
     composition: {
       'Aperitivos (3 bocados sorpresa del chef)': ['Snack crujiente de la huerta', 'Esencia del mar', 'Bocado del momento'],
       'Paso 1 — Entrante frío': ['Tataki de Atún Rojo con sésamo y yuzu'],
@@ -1249,7 +1332,7 @@ const menuPkgs = [
       'Servicios incluidos': ['Sumiller exclusivo dedicado', 'Jefe de sala personal', 'Carving en mesa', 'Servicio de mesa 8 horas', 'Photocall gastronómico']
     }
   },
-  { id:'buf',    type:'sentado',  badge:'badge-est', g:'g3',  icon:'🍢', name:'Buffet Premium',     ppax:38, desc:'Estaciones de comida con live cooking, carving de jamón y tabla de quesos',  incl:'Agua · Pan · Café',                            img: BASE_PLT+'entrantes/pulpo_gallega.jpg',
+  { id:'buf',    type:'sentado', scope:'all',  badge:'badge-est', g:'g3',  icon:'🍢', name:'Buffet Premium',     ppax:38, desc:'Estaciones de comida con live cooking, carving de jamón y tabla de quesos',  incl:'Agua · Pan · Café',                            img: BASE_PLT+'entrantes/pulpo_gallega.jpg',
     composition: {
       'Estación de entrantes fríos': ['Salmorejo Cordobés', 'Carpaccio de Ternera', 'Ensalada Gamba Roja', 'Tabla de embutidos ibéricos', 'Pan rústico variado'],
       'Estación de quesos': ['Selección de 6 quesos nacionales e internacionales', 'Membrillo · Mermeladas · Frutos secos'],
@@ -1260,7 +1343,7 @@ const menuPkgs = [
       'Servicios incluidos': ['Pan artesano', 'Cubertería buffet', 'Servicio de sala', 'Servicio de mesa 5 horas']
     }
   },
-  { id:'custom', type:'sentado',  badge:'badge-est', g:'g9',  icon:'✏️', name:'A Medida',           ppax:0,  desc:'Elige tú cada plato del recetario. Precio calculado según selección',         incl:'Personalizable al 100%',                        img: BASE_PLT+'postres/tarta_queso_vina.jpg',
+  { id:'custom', type:'sentado', scope:'all',  badge:'badge-est', g:'g9',  icon:'✏️', name:'A Medida',           ppax:0,  desc:'Elige tú cada plato del recetario. Precio calculado según selección',         incl:'Personalizable al 100%',                        img: BASE_PLT+'postres/tarta_queso_vina.jpg',
     composition: {
       'Personalización completa': ['Eliges entrantes, primeros, segundos y postres uno a uno de la carta completa (40 platos)', 'El precio se calcula sumando el coste de cada plato por pax', 'Mínimo: 1 entrante + 1 primero + 1 segundo + 1 postre'],
       'Bodega': ['Configurable en el paso siguiente'],
@@ -1268,7 +1351,7 @@ const menuPkgs = [
     }
   },
   // ─── Menú celíacos (sin gluten) ────────────────────────────────────────
-  { id:'glut',  type:'sentado',  badge:'badge-pre', g:'g4',  icon:'🌾', name:'Menú Sin Gluten',     ppax:46, desc:'Menú completo apto celíacos · Cocina dedicada · Sin contaminación cruzada · 2 entrantes + 1 primero + 1 segundo + 2 postres', incl:'Pan sin gluten · Bebidas sin TACC · Postres sin gluten', img: BASE_PLT+'entrantes/gazpacho_andaluz.jpg',
+  { id:'glut',  type:'sentado', scope:'all',  badge:'badge-pre', g:'g4',  icon:'🌾', name:'Menú Sin Gluten',     ppax:46, desc:'Menú completo apto celíacos · Cocina dedicada · Sin contaminación cruzada · 2 entrantes + 1 primero + 1 segundo + 2 postres', incl:'Pan sin gluten · Bebidas sin TACC · Postres sin gluten', img: BASE_PLT+'entrantes/gazpacho_andaluz.jpg',
     composition: {
       'Cóctel de bienvenida (sin gluten)': ['Vasito de Gazpacho Andaluz', 'Tartar de Atún Rojo sobre maíz tostado (sin gluten)', 'Brocheta de queso manchego con uva moscatel'],
       'Entrantes sin gluten (2 a elegir)': ['Gazpacho Andaluz', 'Salmorejo Cordobés (sin pan)', 'Tataki de Atún Rojo (con tamari sin gluten)', 'Ensalada Gamba Roja y Aguacate', 'Carpaccio de Ternera (sin pan)'],
@@ -1280,7 +1363,7 @@ const menuPkgs = [
     }
   },
   // ─── Cóctel de Pie ───────────────────────────────────────────────────────
-  { id:'ck_brisa',  type:'coctel', badge:'badge-eco', g:'g6', icon:'🥂', name:'Cóctel Brisa',       ppax:18, desc:'2h · 6 pinchos fríos · 4 calientes · 2 mini postres · vinos y cava brindis', incl:'Agua · Refrescos · Vino · Cava brindis',         img: BASE_EVT+'coctel.jpg',
+  { id:'ck_brisa',  type:'coctel', scope:'all', badge:'badge-eco', g:'g6', icon:'🥂', name:'Cóctel Brisa',       ppax:18, desc:'2h · 6 pinchos fríos · 4 calientes · 2 mini postres · vinos y cava brindis', incl:'Agua · Refrescos · Vino · Cava brindis',         img: BASE_EVT+'coctel.jpg',
     composition: {
       'Duración y formato': ['2 horas de servicio', 'Sin asignación de mesa · de pie con mesas altas'],
       '6 pinchos fríos (selección del chef)': ['Tartar de atún rojo en cucurucho', 'Canapé de foie mi-cuit con higos', 'Gazpacho andaluz en vasito con jamón', 'Brocheta de manchego con uva moscatel', 'Cucharilla de salmorejo con codorniz', 'Jamón ibérico en cucurucho'],
@@ -1290,7 +1373,7 @@ const menuPkgs = [
       'Servicios incluidos': ['Personal de sala con bandejas', 'Mesas altas y cocteleras', 'Cubertería desechable premium']
     }
   },
-  { id:'ck_sol',    type:'coctel', badge:'badge-pre', g:'g7', icon:'🍾', name:'Cóctel Costa del Sol',ppax:26, desc:'3h · 8 fríos · 6 calientes · estación carving jamón ibérico · 3 mini postres · vino D.O. · cóctel bienvenida', incl:'Vino D.O. · Cava Gramona · Cóctel autor', img: BASE_EVT+'aniversario.jpg',
+  { id:'ck_sol',    type:'coctel', scope:'all', badge:'badge-pre', g:'g7', icon:'🍾', name:'Cóctel Costa del Sol',ppax:26, desc:'3h · 8 fríos · 6 calientes · estación carving jamón ibérico · 3 mini postres · vino D.O. · cóctel bienvenida', incl:'Vino D.O. · Cava Gramona · Cóctel autor', img: BASE_EVT+'aniversario.jpg',
     composition: {
       'Duración y formato': ['3 horas de servicio', 'Sin asignación de mesa · cócteleras + zona lounge'],
       'Cóctel de bienvenida': ['Cóctel de autor (1 por pax) elegido a la carta'],
@@ -1302,7 +1385,7 @@ const menuPkgs = [
       'Servicios incluidos': ['Jefe de sala dedicado', 'Servicio continuo de bandejas', 'Cristalería de cristal']
     }
   },
-  { id:'ck_autor',  type:'coctel', badge:'badge-lux', g:'g8', icon:'✨', name:'Cóctel Miramar',     ppax:38, desc:'4h · 10 fríos · 8 calientes · 2 estaciones en vivo · mesa finger desserts · open bar · bartender', incl:'Open bar completo · Sumiller · Barra cócteles', img: BASE_EVT+'boda.jpg',
+  { id:'ck_autor',  type:'coctel', scope:'all', badge:'badge-lux', g:'g8', icon:'✨', name:'Cóctel Miramar',     ppax:38, desc:'4h · 10 fríos · 8 calientes · 2 estaciones en vivo · mesa finger desserts · open bar · bartender', incl:'Open bar completo · Sumiller · Barra cócteles', img: BASE_EVT+'boda.jpg',
     composition: {
       'Duración y formato': ['4 horas de servicio premium', 'Open bar completo durante todo el evento'],
       '10 pinchos fríos de alta gastronomía': ['Tartar de atún rojo en cucurucho', 'Canapé foie mi-cuit con higos y Oporto', 'Gamba roja de Málaga sobre nori', 'Vasito de gazpacho con viruta ibérica', 'Blini de salmón ahumado y crème fraîche', 'Montadito de ventresca con cherry confitado', 'Brocheta queso manchego con miel romero', 'Jamón ibérico de bellota en cucurucho', 'Ostras de Galicia con granizado de pepino', 'Cucharilla de salmorejo con codorniz'],
@@ -1312,6 +1395,108 @@ const menuPkgs = [
       'Open Bar completo': ['Champagne brut', 'Vinos tintos y blancos premium', 'Cava Gramona III Lustros', 'Gin Bombay/Hendrick\'s', 'Whisky Macallan 12', 'Ron Diplomatico', 'Tequila premium', 'Vermut · Vinos generosos', 'Agua · Refrescos · Zumos naturales'],
       'Barra de cócteles de autor': ['Bartender con 6 cócteles signature', 'Brisa Mediterránea', 'Málaga Sour', 'Negroni', 'Espresso Martini', 'Aperol Spritz', 'Mojito Andaluz'],
       'Servicios incluidos': ['Sumiller exclusivo', 'Bartender dedicado', 'Jefe de sala', 'Servicio premium con cristalería de cristal']
+    }
+  },
+
+  // ─── 🍳 Desayunos (empresa) ──────────────────────────────────────────
+  { id:'brk_exp',  type:'desayuno', scope:'empresa', badge:'badge-eco', g:'g4', icon:'☕', name:'Desayuno Express',    ppax:6,  desc:'15 min · Café o té + zumo + bollería viennoise', incl:'Apto sala formación · Servicio buffet rápido', img: BASE_PLT+'postres/torrijas_caramelizadas.jpg',
+    composition: {
+      'Duración y formato': ['15 minutos · Buffet rápido', 'Ideal para reuniones cortas, mañana intensiva'],
+      'Bebidas': ['Café de origen · Descafeinado · Tés e infusiones', 'Zumo de naranja natural', 'Agua mineral'],
+      'Bollería viennoise': ['Croissant clásico de mantequilla', 'Pain au chocolat', 'Mini magdalena de limón'],
+      'Servicios incluidos': ['Self-service en mesa buffet', 'Vajilla y mantelería incluida']
+    }
+  },
+  { id:'brk_cont', type:'desayuno', scope:'empresa', badge:'badge-eco', g:'g7', icon:'🥐', name:'Desayuno Continental', ppax:12, desc:'30 min · Bollería + embutido + lácteos + zumos', incl:'Servicio en mesa o buffet', img: BASE_PLT+'postres/torrijas_caramelizadas.jpg',
+    composition: {
+      'Duración y formato': ['30 minutos · Buffet o servicio en mesa'],
+      'Bebidas': ['Café de origen · Descafeinado · Cápsulas Nespresso', 'Selección de tés Twinings', 'Zumo de naranja natural y de pomelo', 'Leche entera, desnatada y vegetal (avena/soja)', 'Agua mineral'],
+      'Bollería y panadería': ['Croissant · Pain au chocolat · Cinnamon roll', 'Mini magdalena · Tostadas de pan rústico'],
+      'Lácteos': ['Mantequilla artesana · Mermeladas (fresa, naranja, melocotón) · Miel'],
+      'Embutidos y queso': ['Lonchas de jamón serrano · Queso semicurado', 'Jamón cocido York'],
+      'Frutas': ['Fruta fresca de temporada (cuenco)'],
+      'Servicios incluidos': ['Camareros para reposición', 'Vajilla, mantelería y cristalería']
+    }
+  },
+  { id:'brk_buf',  type:'desayuno', scope:'empresa', badge:'badge-est', g:'g6', icon:'🍳', name:'Desayuno Buffet',      ppax:22, desc:'45 min · Caliente + frío + estación de huevos', incl:'Estación de huevos en vivo · Quesos · Salmón ahumado', img: BASE_PLT+'segundos/lubina_horno.jpg',
+    composition: {
+      'Duración y formato': ['45 minutos · Buffet completo con estación caliente'],
+      'Bebidas': ['Café de especialidad · Descafeinado · Cápsulas', 'Tés Twinings · Infusiones', 'Zumos naturales (naranja, pomelo, manzana, detox verde)', 'Smoothies de temporada', 'Leches y vegetales · Agua mineral'],
+      'Estación caliente en vivo': ['Tortilla francesa al momento · Huevos revueltos · Huevos benedict'],
+      'Buffet caliente': ['Bacon crujiente · Salchichas Frankfurt · Patata rösti'],
+      'Buffet frío': ['Tabla de embutidos ibéricos · Jamón serrano · Lomo curado', 'Selección de 5 quesos · Salmón ahumado'],
+      'Bollería y panadería': ['Croissants · Pain au chocolat · Brioches', 'Pan integral, multicereales, blanco', 'Tostadas y mermeladas artesanas'],
+      'Frutas y yogures': ['Fruta cortada de temporada · Macedonia natural', 'Yogures griegos · Granola casera · Compotas'],
+      'Servicios incluidos': ['Maître + camareros · Estación de huevos en vivo', 'Vajilla premium y mantelería']
+    }
+  },
+  { id:'brk_prm',  type:'desayuno', scope:'empresa', badge:'badge-lux', g:'g8', icon:'🥂', name:'Desayuno Premium',     ppax:35, desc:'Eggs Benedict, salmón ahumado, fruta exótica, cava brunch', incl:'Champagne · Salmón noruego · Fruta exótica', img: BASE_PLT+'entrantes/tataki_atun_rojo.jpg',
+    composition: {
+      'Duración y formato': ['60 minutos · Servicio premium en mesa + buffet'],
+      'Bebidas premium': ['Champagne brut (1 copa/pax)', 'Café de especialidad · Cápsulas Nespresso', 'Zumos premium prensados en frío', 'Smoothies detox · Agua con gas premium'],
+      'Estaciones en vivo': ['Eggs Benedict (huevos pochés con salsa holandesa sobre brioche)', 'Tortilla francesa de salmón ahumado · Huevos rotos con jamón ibérico', 'Tostada de pan brioche con foie mi-cuit'],
+      'Pescado ahumado': ['Salmón ahumado noruego · Bacalao ahumado', 'Caviar de salmón · Crème fraîche · Eneldo'],
+      'Embutidos premium': ['Jamón ibérico de bellota D.O.P. (cortado al momento)', 'Lomo de Bellota · Cecina de León'],
+      'Tabla de quesos premium': ['Manchego curado · Brie · Roncal · Cabra · Idiazábal ahumado'],
+      'Frutas exóticas': ['Mango · Maracuyá · Lichi · Pitahaya · Frutos rojos premium'],
+      'Servicios incluidos': ['Sumiller para champagne', 'Maître + camareros premium', 'Vajilla porcelana + cristalería de champagne']
+    }
+  },
+
+  // ─── ☕ Coffee breaks (empresa) ──────────────────────────────────────
+  { id:'cb_eco',   type:'coffee', scope:'empresa', badge:'badge-eco', g:'g4', icon:'☕', name:'Coffee Break Básico',   ppax:8,  desc:'30 min · Cafés + tés + mini bollería + agua',  incl:'Self-service en sala · Reposición incluida', img: BASE_PLT+'postres/coulant_chocolate.jpg',
+    composition: {
+      'Duración y formato': ['30 minutos · Self-service en sala de reunión'],
+      'Bebidas': ['Café de origen · Descafeinado · Cápsulas Nespresso', 'Selección de tés e infusiones Twinings', 'Agua mineral con y sin gas'],
+      'Acompañamiento dulce': ['Mini croissants · Mini magdalenas', 'Galletas artesanas surtidas'],
+      'Servicios incluidos': ['Reposición durante toda la pausa', 'Self-service · Vajilla incluida']
+    }
+  },
+  { id:'cb_mix',   type:'coffee', scope:'empresa', badge:'badge-est', g:'g6', icon:'🥯', name:'Coffee Break Mixto',    ppax:14, desc:'45 min · Café + mini bocadillos salados + dulces + zumos', incl:'Selección dulce/salada · Zumos naturales', img: BASE_PLT+'entrantes/croquetas_jamon.jpg',
+    composition: {
+      'Duración y formato': ['45 minutos · Self-service + camareros reposición'],
+      'Bebidas': ['Café · Descafeinado · Cápsulas Nespresso · Tés', 'Zumos naturales (naranja, manzana)', 'Refrescos · Agua mineral'],
+      'Selección salada (mini bocados)': ['Mini sándwich de jamón y queso · Mini sándwich de salmón', 'Mini quiche lorraine · Empanadilla gallega', 'Brocheta de tomate cherry y mozzarella'],
+      'Selección dulce': ['Mini magdalenas variadas · Mini croissants', 'Brownies de chocolate · Tartaletas de frutos rojos', 'Galletas artesanas'],
+      'Fruta fresca': ['Fruta cortada de temporada en vasitos'],
+      'Servicios incluidos': ['Reposición continua · Servicio en mesa o buffet']
+    }
+  },
+  { id:'cb_prm',   type:'coffee', scope:'empresa', badge:'badge-pre', g:'g7', icon:'🍓', name:'Coffee Break Premium',  ppax:22, desc:'60 min · Smoothies detox + frutos secos + mini sandwiches gourmet', incl:'Detox · Mini sandwiches gourmet · Frutos secos premium', img: BASE_PLT+'entrantes/tostas_foie_higos.jpg',
+    composition: {
+      'Duración y formato': ['60 minutos · Buffet servido con camareros'],
+      'Bebidas premium': ['Café de origen único · Cápsulas Nespresso premium', 'Tés selección (Twinings, Mariage Frères)', 'Smoothies detox (verde, frutos rojos, mango-cúrcuma)', 'Zumos prensados en frío · Agua mineral premium'],
+      'Mini sandwiches gourmet': ['Brioche de salmón ahumado y crème fraîche', 'Pan de molde con pollo trufado y rúcula', 'Wraps integrales de vegetales y hummus', 'Mini bocadillo de jamón ibérico y aceite'],
+      'Bowls saludables': ['Vasitos de yogur griego con granola y miel', 'Vasitos de quinoa con vegetales · Hummus con crudités'],
+      'Frutos secos premium': ['Anacardos · Pistachos de Bronte · Almendras Marcona', 'Frutos rojos frescos · Higos secos'],
+      'Mini dulces de autor': ['Macarons artesanos · Mini éclair de chocolate', 'Bombones premium'],
+      'Servicios incluidos': ['Camareros para reposición y servicio', 'Vajilla y cristalería premium']
+    }
+  },
+
+  // ─── 🥂 Brunches (ambas categorías) ────────────────────────────────
+  { id:'bru_cla',  type:'brunch', scope:'all', badge:'badge-est', g:'g6', icon:'🍳', name:'Brunch Clásico',         ppax:32, desc:'2 h · Eggs benedict + pancakes + salmón + frutas + cava', incl:'Huevos en vivo · Pancakes · Cava brunch', img: BASE_EVT+'aniversario.jpg',
+    composition: {
+      'Duración y formato': ['2 horas · Buffet completo + estaciones en vivo'],
+      'Bebidas': ['Cava brut (servicio continuo)', 'Café de especialidad · Tés selección', 'Zumos naturales y smoothies', 'Bloody Mary y Mimosa de naranja (a elegir)', 'Agua mineral · Refrescos'],
+      'Estaciones en vivo': ['Eggs Benedict con salsa holandesa', 'Pancakes con sirope de arce, frutos rojos y nata', 'Tortillas a elección (jamón, queso, vegetales)'],
+      'Buffet salado': ['Bacon crujiente · Salchichas premium · Patata rösti', 'Salmón ahumado · Tabla de embutidos', 'Tostadas con aguacate y huevo poché'],
+      'Buffet dulce': ['Croissants · Pain au chocolat · Donuts artesanos', 'Tartaletas de frutos rojos · Mini cheesecakes', 'Bowl de yogur, granola y miel'],
+      'Frutas': ['Macedonia de frutas de temporada · Frutos rojos · Mango'],
+      'Servicios incluidos': ['Maître + camareros · Sumiller para cava', 'Vajilla porcelana, mantelería premium']
+    }
+  },
+  { id:'bru_dlx',  type:'brunch', scope:'all', badge:'badge-lux', g:'g8', icon:'✨', name:'Brunch Deluxe',          ppax:48, desc:'2,5 h · Champagne + caviar + estaciones premium + ostras', incl:'Champagne · Caviar · Ostras · Carving en vivo', img: BASE_EVT+'boda.jpg',
+    composition: {
+      'Duración y formato': ['2,5 horas · Brunch premium con estaciones live'],
+      'Bebidas premium': ['Champagne brut (Moët, Veuve Clicquot) · Cava Gramona', 'Mimosa · Bellini · Bloody Mary signature', 'Café de origen · Tés premium', 'Zumos prensados en frío y smoothies detox', 'Agua mineral premium (Lanjarón, Mondariz)'],
+      'Estación caviar y ostras': ['Caviar Beluga sobre blinis · Crème fraîche', 'Ostras finas de Galicia con granizado de pepino'],
+      'Estaciones en vivo': ['Eggs Benedict con salmón noruego', 'Carving de jamón ibérico de bellota D.O.P. Guijuelo', 'Tortillas a la carta · Pancakes y waffles'],
+      'Buffet premium': ['Salmón ahumado noruego · Bacalao ahumado', 'Tabla de quesos premium (8 referencias)', 'Embutidos ibéricos · Foie mi-cuit'],
+      'Sushi y crudos': ['Niguiri de salmón y atún · Sashimi premium', 'Tartar de atún y carpaccio de gamba'],
+      'Repostería de autor': ['Croissant artisanal · Macarons · Mini tartas Saint Honoré', 'Tarta de queso La Viña · Bombones Valrhona'],
+      'Frutas exóticas': ['Mango · Pitahaya · Maracuyá · Frutos rojos premium', 'Frutas frescas de temporada'],
+      'Servicios incluidos': ['Sumiller dedicado para champagne', 'Jefe de sala + maître + camareros premium', 'Vajilla porcelana, cristalería Riedel, mantelería de lujo']
     }
   },
 ];
@@ -1704,10 +1889,56 @@ function dishCard(item, cat) {
 }
 
 // ══════════════════════════════════════════════════
+// Render del grid de menús (filtrado por categoría de evento)
+// Etiquetas por type → cabecera de sección
+// ══════════════════════════════════════════════════
+const TYPE_LABELS = {
+  sentado:  '🍽️ Menú sentado · con asignación de mesa',
+  coctel:   '🥂 Cóctel de Pie · sin asignación de mesa',
+  desayuno: '🍳 Desayunos',
+  coffee:   '☕ Coffee breaks',
+  brunch:   '🥂 Brunches'
+};
+
+function renderMenuPkgs() {
+  const grid = document.getElementById('menuPkgGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const cat = sel.eventType?.category;  // 'celebracion' | 'empresa' | undefined
+
+  // Notice si hay evento seleccionado
+  if (cat) {
+    const notice = document.createElement('div');
+    notice.className = 'menu-filter-notice';
+    notice.style.cssText = 'grid-column:1/-1;';
+    const catName = cat === 'celebracion' ? 'Celebraciones privadas' : 'Empresa';
+    notice.innerHTML = `<span>🎯</span> Mostrando menús para <strong>${catName}</strong> (${sel.eventType.name}).`;
+    grid.appendChild(notice);
+  }
+
+  // Filtrar paquetes según scope
+  const visibles = menuPkgs.filter(m => !m.scope || m.scope === 'all' || m.scope === cat);
+
+  // Render agrupado por type con separador
+  let lastType = null;
+  visibles.forEach(m => {
+    if (m.type !== lastType) {
+      const sep = document.createElement('div');
+      sep.style.cssText = 'grid-column:1/-1;display:flex;align-items:center;gap:14px;margin:8px 0 2px;';
+      sep.innerHTML = `<span style="font-size:.65rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);">${TYPE_LABELS[m.type] || m.type}</span><span style="flex:1;height:1px;background:var(--border);"></span>`;
+      grid.appendChild(sep);
+      lastType = m.type;
+    }
+    pkgCard(m, 'menuPkg', 'menuPkgGrid');
+  });
+}
+
+// ══════════════════════════════════════════════════
 // INIT GRIDS
 // ══════════════════════════════════════════════════
 function initGrids() {
-  // Step 1 — Event types
+  // Step 1 — Event types (separados por categoría)
   eventTypes.forEach(t => {
     const c = document.createElement('div');
     c.className = t.img ? 'sel-card evt-img' : 'sel-card';
@@ -1731,23 +1962,16 @@ function initGrids() {
     }
     c.onclick = () => {
       document.querySelectorAll('[id^="rc_eventType_"]').forEach(x=>x.classList.remove('selected'));
-      c.classList.add('selected'); sel.eventType = t; updateSide();
+      c.classList.add('selected'); sel.eventType = t;
+      renderMenuPkgs();   // re-render menús filtrados por categoría
+      updateSide();
     };
-    document.getElementById('eventTypeGrid').appendChild(c);
+    const grid = document.getElementById('eventTypeGrid-' + (t.category || 'celebracion'));
+    if (grid) grid.appendChild(c);
   });
 
-  // Step 2 — Menu pkgs (con separador entre sentado y cóctel)
-  let lastType = null;
-  menuPkgs.forEach(m => {
-    if (m.type !== lastType) {
-      const sep = document.createElement('div');
-      sep.style.cssText = 'grid-column:1/-1;display:flex;align-items:center;gap:14px;margin:4px 0;';
-      sep.innerHTML = `<span style="font-size:.65rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);">${m.type === 'coctel' ? '🥂 Cóctel de Pie · sin asignación de mesa' : '🍽️ Menú sentado · con asignación de mesa'}</span><span style="flex:1;height:1px;background:var(--border);"></span>`;
-      document.getElementById('menuPkgGrid').appendChild(sep);
-      lastType = m.type;
-    }
-    pkgCard(m,'menuPkg','menuPkgGrid');
-  });
+  // Step 2 — Menu pkgs (render delegado a renderMenuPkgs para poder filtrar)
+  renderMenuPkgs();
   // Dish panels
   const dp = document.getElementById('dishPanels');
   ['entrantes','primeros','segundos','postres'].forEach((cat,i) => {
