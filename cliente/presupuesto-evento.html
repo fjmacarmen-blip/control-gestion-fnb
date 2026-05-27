@@ -1476,8 +1476,10 @@ const menuPkgs = [
       '6 pinchos fríos (selección del chef)': ['Tartar de atún rojo en cucurucho', 'Canapé de foie mi-cuit con higos', 'Gazpacho andaluz en vasito con jamón', 'Brocheta de manchego con uva moscatel', 'Cucharilla de salmorejo con codorniz', 'Jamón ibérico en cucurucho'],
       '4 pinchos calientes (servicio continuo)': ['Croqueta líquida de jamón ibérico', 'Mini brioche de pulled pork', 'Buñuelo de bacalao', 'Gyoza de gambas y jengibre'],
       '2 mini postres por pax': ['Coulant de chocolate en vasito', 'Crema catalana flameada en cucharilla'],
-      'Bodega': ['Vino tinto y blanco de la casa', 'Cava brut para el brindis', 'Agua · Refrescos'],
-      'Servicios incluidos': ['Personal de sala con bandejas', 'Mesas altas y cocteleras', 'Cubertería desechable premium']
+      'Bodega · Vinos': ['Vino tinto Rioja Crianza · Ribera del Duero crianza', 'Vino blanco Rueda · Verdejo · Albariño DO Rías Baixas'],
+      'Bodega · Espumosos': ['Cava brut nature para brindis (servicio continuo)', 'Freixenet Cordon Negro disponible'],
+      'Sin alcohol': ['Refrescos Coca-Cola, Fanta, Sprite, Aquarius', 'Aguas con y sin gas Mondariz', 'Zumos naturales (naranja, melocotón)'],
+      'Servicios incluidos': ['Personal de sala con bandejas continuas', 'Mesas altas y cocteleras', 'Cubertería desechable premium (caña de azúcar)']
     }
   },
   { id:'ck_sol',    type:'coctel', scope:'all', badge:'badge-pre', g:'g7', icon:'🍾', name:'Cóctel Costa del Sol',ppax:26, desc:'3h · 8 fríos · 6 calientes · estación carving jamón ibérico · 3 mini postres · vino D.O. · cóctel bienvenida', incl:'Vino D.O. · Cava Gramona · Cóctel autor', img: BASE_EVT+'aniversario.jpg',
@@ -1488,8 +1490,12 @@ const menuPkgs = [
       '6 pinchos calientes (3 rondas)': ['Croqueta jamón ibérico', 'Croqueta boletus y trufa', 'Mini brioche pulled pork', 'Langostino tempura wasabi', 'Niguiri atún marcado a la llama', 'Buñuelo bacalao con alioli negro'],
       'Estación en vivo': ['Carving de jamón ibérico de bellota D.O.P. Guijuelo', 'Maestro cortador en sala'],
       '3 mini postres de autor': ['Coulant chocolate', 'Crema catalana flameada', 'Bienmesabe malagueño'],
-      'Bodega': ['Vino tinto Ribera del Duero D.O.', 'Albariño D.O.', 'Cava Gramona III Lustros', 'Agua · Refrescos premium'],
-      'Servicios incluidos': ['Jefe de sala dedicado', 'Servicio continuo de bandejas', 'Cristalería de cristal']
+      'Bodega · Vinos blancos': ['Albariño Pazo San Mauro DO Rías Baixas', 'Verdejo Martinsancho DO Rueda', 'Bentomiz Ariyanas (Moscatel seco DO Málaga)'],
+      'Bodega · Vinos tintos': ['Ribera del Duero Protos Crianza', 'Rioja Reserva La Rioja Alta', 'Sierra de Cártama Rojo DO Málaga'],
+      'Bodega · Espumosos': ['Cava Gramona III Lustros Brut Nature', 'Cava brut para servicio continuo'],
+      'Cóctel de bienvenida (1 por pax)': ['Brisa Mediterránea (signature)', 'Mojito Andaluz', 'Aperol Spritz', 'A elegir uno de los tres'],
+      'Sin alcohol premium': ['Agua mineral Lanjarón con y sin gas', 'Refrescos premium · Tónicas Schweppes', 'Zumos naturales prensados al momento'],
+      'Servicios incluidos': ['Jefe de sala dedicado', 'Servicio continuo de bandejas', 'Cristalería de cristal premium', 'Sumiller en sala bajo demanda']
     }
   },
   { id:'ck_autor',  type:'coctel', scope:'all', badge:'badge-lux', g:'g8', icon:'✨', name:'Cóctel Miramar',     ppax:38, desc:'4h · 10 fríos · 8 calientes · 2 estaciones en vivo · mesa finger desserts · open bar · bartender', incl:'Open bar completo · Sumiller · Barra cócteles', img: BASE_EVT+'boda.jpg',
@@ -1499,8 +1505,13 @@ const menuPkgs = [
       '8 pinchos calientes (servicio continuo)': ['Croqueta líquida de jamón ibérico', 'Croqueta de boletus y trufa negra', 'Montadito de solomillo con foie caliente y PX', 'Mini brioche de pulled pork ibérico', 'Langostino en tempura con mayo wasabi', 'Niguiri de atún rojo marcado a la llama', 'Buñuelo de bacalao con alioli negro de tinta', 'Gyoza de gambas y jengibre con ponzu'],
       '2 estaciones en vivo (a elegir)': ['Carving de jamón ibérico D.O.P.', 'Barra de sushi con maestro sushiman', 'Pasta fresca al momento', 'Wok asiático', 'Barra de ostras y mariscos', 'Pizzas al horno de leña', 'Ceviche bar'],
       'Mesa de finger desserts completa': ['Coulant de chocolate negro', 'Crema catalana flameada', 'Bienmesabe en tartaleta', 'Mini tarta de queso La Viña', 'Macarón de frambuesa y lichi', 'Panna cotta de coco', 'Brocheta de fresa con chocolate', 'Mini pavlova', 'Sorbete de limón', 'Trufa de chocolate belga', 'Mini éclair de praliné', 'Piruleta de caramelo'],
-      'Open Bar completo': ['Champagne brut', 'Vinos tintos y blancos premium', 'Cava Gramona III Lustros', 'Gin Bombay/Hendrick\'s', 'Whisky Macallan 12', 'Ron Diplomatico', 'Tequila premium', 'Vermut · Vinos generosos', 'Agua · Refrescos · Zumos naturales'],
-      'Barra de cócteles de autor': ['Bartender con 6 cócteles signature', 'Brisa Mediterránea', 'Málaga Sour', 'Negroni', 'Espresso Martini', 'Aperol Spritz', 'Mojito Andaluz'],
+      'Bodega · Champagne y espumosos': ['Champagne Moët & Chandon Brut Impérial', 'Champagne Veuve Clicquot Yellow Label (bajo demanda)', 'Cava Gramona III Lustros Brut Nature', 'Cava Recaredo Brut Nature Reserva'],
+      'Bodega · 3 vinos blancos premium': ['Albariño Pazo San Mauro DO Rías Baixas', 'Bentomiz Ariyanas DO Málaga (Moscatel seco)', 'Hugel Gewurztraminer Classic (Alsacia)'],
+      'Bodega · 3 vinos tintos premium': ['Rioja Gran Reserva 890 La Rioja Alta', 'Ribera del Duero Flor de Pingus', 'Sierra de Cártama Rojo DO Málaga'],
+      'Bodega · Vinos generosos y dulces': ['Fino Tío Pepe en Rama', 'Palo Cortado González Byass Leonor', 'Pedro Ximénez Toro Albalá Don PX'],
+      'Open Bar destilados premium': ['Gin Bombay Sapphire · Hendrick\'s · Monkey 47', 'Whisky Macallan 12 · J&B · Glenfiddich', 'Ron Diplomatico Reserva · Bacardi · Havana 7', 'Vodka Grey Goose · Absolut', 'Tequila Don Julio Reposado', 'Vermut Yzaguirre Reserva · Brandy Torres 10'],
+      'Barra de cócteles de autor (6 signature)': ['Bartender dedicado en sala', 'Brisa Mediterránea', 'Málaga Sour', 'Negroni', 'Espresso Martini', 'Aperol Spritz', 'Mojito Andaluz'],
+      'Sin alcohol premium': ['Aguas premium Lanjarón, Mondariz, Vichy Catalan', 'Zumos prensados en frío · Smoothies detox', 'Mocktails de autor · Café de origen único'],
       'Servicios incluidos': ['Sumiller exclusivo', 'Bartender dedicado', 'Jefe de sala', 'Servicio premium con cristalería de cristal']
     }
   },
@@ -1604,6 +1615,73 @@ const menuPkgs = [
       'Repostería de autor': ['Croissant artisanal · Macarons · Mini tartas Saint Honoré', 'Tarta de queso La Viña · Bombones Valrhona'],
       'Frutas exóticas': ['Mango · Pitahaya · Maracuyá · Frutos rojos premium', 'Frutas frescas de temporada'],
       'Servicios incluidos': ['Sumiller dedicado para champagne', 'Jefe de sala + maître + camareros premium', 'Vajilla porcelana, cristalería Riedel, mantelería de lujo']
+    }
+  },
+
+  // ─── 🪩 Barra libre / Fiesta (todos eventos) ──────────────────────────
+  { id:'bl_eco',  type:'barra_libre', scope:'all', badge:'badge-eco', g:'g6', icon:'🍺', name:'Barra Esencial',     ppax:25, desc:'4 h · Cerveza, vino de la casa, refrescos, agua y café', incl:'Camarero de barra · Vasos cristal', img: BASE_EVT+'coctel.jpg',
+    composition: {
+      'Duración y formato': ['4 horas de barra continua', 'Sin asignación de mesa · circulación libre'],
+      'Bebidas alcohólicas': ['Cerveza de barril (Mahou, Cruzcampo, Victoria)', 'Vino tinto y blanco de la casa', 'Vermut (rojo y blanco)', 'Cava brut de bienvenida'],
+      'Sin alcohol': ['Refrescos Coca-Cola, Fanta, Sprite, Aquarius', 'Aguas con y sin gas', 'Zumos de naranja, melocotón'],
+      'Café y digestivos': ['Café espresso · Descafeinado · Té', 'Carajillo · Orujo de hierbas'],
+      'Servicios incluidos': ['1 camarero de barra cada 80 pax', 'Cubitera con hielo · Vasos cristal premium', 'Cierre a 4 horas o cuando termine la última copa']
+    }
+  },
+  { id:'bl_est',  type:'barra_libre', scope:'all', badge:'badge-est', g:'g7', icon:'🍸', name:'Barra Selecta',      ppax:35, desc:'4 h · Esencial + gin tonic clásico, ron, whisky, vodka', incl:'2 bartenders · Cócteles básicos', img: BASE_EVT+'aniversario.jpg',
+    composition: {
+      'Duración y formato': ['4 horas de barra premium', 'Incluye TODO lo del paquete Esencial +'],
+      'Destilados básicos premium': ['Gin Beefeater · Tanqueray', 'Ron Bacardi · Cacique', 'Vodka Smirnoff · Absolut', 'Whisky Ballantines · J&B', 'Brandy Soberano'],
+      'Mixers premium': ['Tónicas Schweppes · Nordic Mist', 'Refrescos premium · Hielo en cubo y picado', 'Limones y limas frescos · Pepino · Hierbas'],
+      'Cócteles básicos preparados': ['Gin Tonic clásico · Cuba Libre · Mojito · Daiquiri'],
+      'Vinos DO mejorados': ['Tinto Rioja Crianza', 'Albariño DO Rías Baixas', 'Cava Gramona brut'],
+      'Servicios incluidos': ['2 bartenders dedicados (uno cada 60 pax)', 'Cristalería específica por cóctel', 'Carta visible de combinados en la barra']
+    }
+  },
+  { id:'bl_pre',  type:'barra_libre', scope:'all', badge:'badge-pre', g:'g8', icon:'🥃', name:'Barra Premium',      ppax:50, desc:'5 h · Selecta + premium gins, single malt, cócteles de autor', incl:'Bartender autor · 8 cócteles signature', img: BASE_EVT+'aniversario.jpg',
+    composition: {
+      'Duración y formato': ['5 horas continuas de barra premium', 'Incluye TODO lo del paquete Selecta +'],
+      'Destilados premium': ['Gin Hendrick\'s · Bombay Sapphire · Monkey 47', 'Ron Diplomatico · Havana 7 · Zacapa', 'Vodka Grey Goose · Belvedere', 'Whisky Macallan 12 · Glenfiddich · Chivas 18', 'Tequila Don Julio · Mezcal Vida'],
+      'Cócteles de autor (8 signature)': ['Brisa Mediterránea (ron blanco, lima, menta, ginger beer)', 'Málaga Sour (moscatel, bourbon, clara huevo)', 'Aperol Spritz', 'Negroni · Negroni Sbagliato', 'Espresso Martini', 'Mojito Andaluz · Mojito de Jerez', 'Old Fashioned'],
+      'Champagne y vinos premium': ['Champagne Moët & Chandon brut', 'Vino tinto Gran Reserva · Ribera del Duero', 'Albariño selección sommelier', 'Pedro Ximénez para postre'],
+      'Servicios incluidos': ['Bartender de autor + 1 camarero/40 pax', 'Carta de cócteles impresa en mesa', 'Cristalería Riedel específica por bebida', 'Hielo claro tallado para destilados']
+    }
+  },
+  { id:'bl_open', type:'barra_libre', scope:'all', badge:'badge-lux', g:'g8', icon:'🎉', name:'Open Bar Total',     ppax:70, desc:'6 h · Todo ilimitado + bartender + DJ booth opcional', incl:'Bartender top · Champagne premium · 12 cócteles', img: BASE_EVT+'boda.jpg',
+    composition: {
+      'Duración y formato': ['6 horas de open bar TOTAL', 'Todo ilimitado durante todo el evento'],
+      'Champagne y espumosos top': ['Veuve Clicquot Yellow Label · Moët Impérial', 'Cava Gramona III Lustros · Recaredo', 'Prosecco Riondo Bonita'],
+      'Vinos top de carta': ['Vega Sicilia Único · La Rioja Alta Gran Reserva 890', 'Albariño Pazo Señorans · Bentomiz Ariyanas', 'Pingus · Flor de Pingus', 'Pedro Ximénez Don PX'],
+      'Destilados ultra premium': ['Gin: Hendrick\'s · Monkey 47 · Tanqueray N°10 · The Botanist', 'Whisky: Macallan 18 · Lagavulin 16 · Hibiki Harmony', 'Ron: Diplomatico Single Vintage · Zacapa XO', 'Vodka: Grey Goose · Belvedere', 'Tequila Don Julio 1942 · Clase Azul', 'Coñac Hennessy XO · Rémy Martin XO'],
+      '12 Cócteles signature de autor': ['Brisa Mediterránea · Málaga Sour · Costa del Sol Sunset', 'Old Fashioned con bitter de naranja', 'Negroni · Boulevardier', 'Espresso Martini · Pornstar Martini', 'Mojito Andaluz · Caipirinha Premium', 'Margarita Tradicional · Whisky Sour'],
+      'Sin alcohol premium': ['Mocktails de autor (5 referencias)', 'Zumos naturales prensados en frío', 'Aguas premium (Lanjarón, Vichy Catalan)', 'Café de origen único · Selección de tés Mariage'],
+      'Extras incluidos': ['Bartender top + 1 camarero cada 30 pax', 'DJ booth con consola (DJ opcional separado)', 'Iluminación específica de barra · Estación de hielo claro tallado', 'Cristalería Riedel · Decantadores · Coupettes vintage']
+    }
+  },
+
+  // ─── ✏️ Customs en todas las categorías ───────────────────────────────
+  { id:'brk_cus', type:'desayuno', scope:'empresa', badge:'badge-est', g:'g9', icon:'✏️', name:'Desayuno a Medida',  ppax:0, desc:'Configura tu desayuno: elige bollería, café, embutidos, fruta…', incl:'Personalizable según necesidades', img: BASE_PLT+'postres/torrijas_caramelizadas.jpg',
+    composition: {
+      'Personalización completa': ['Elige el formato (express, buffet, premium)', 'Elige bebidas (selección de cafés y zumos)', 'Elige acompañamientos (bollería, frutas, embutidos)', 'Sin límite de variedad ni cantidad'],
+      'Cómo se calcula el precio': ['Precio base 6 €/pax + extras según elementos elegidos', 'El equipo te confirma el presupuesto en visita técnica']
+    }
+  },
+  { id:'cb_cus',  type:'coffee', scope:'empresa', badge:'badge-est', g:'g9', icon:'✏️', name:'Coffee Break a Medida', ppax:0, desc:'Diseña tu coffee break: bebidas + selección dulce/salada', incl:'Personalizable al 100%', img: BASE_PLT+'postres/coulant_chocolate.jpg',
+    composition: {
+      'Personalización completa': ['Elige bebidas (café especialidad, tés, zumos, smoothies)', 'Elige selección salada (mini sándwiches, quiches, bowls)', 'Elige dulces (mini bollería, macarons, tartaletas, frutas)', 'Duración configurable: 30 min, 45 min o 60 min'],
+      'Cómo se calcula el precio': ['Precio base 8 €/pax + extras', 'Adaptado a corporativos con dietas múltiples']
+    }
+  },
+  { id:'bru_cus', type:'brunch', scope:'all', badge:'badge-est', g:'g9', icon:'✏️', name:'Brunch a Medida', ppax:0, desc:'Define tu brunch ideal: huevos, salmón, cava, bowls…', incl:'Estaciones a elegir', img: BASE_EVT+'aniversario.jpg',
+    composition: {
+      'Personalización completa': ['Elige estaciones en vivo (eggs benedict, pancakes, tortillas)', 'Elige buffet salado (embutidos, quesos, salmón ahumado)', 'Elige buffet dulce (croissants, frutas, macarons)', 'Elige bebidas (champagne, mimosas, smoothies)'],
+      'Cómo se calcula el precio': ['Precio base 32 €/pax + extras', 'Recomendado para grupos con mix de preferencias']
+    }
+  },
+  { id:'ck_cus',  type:'coctel', scope:'all', badge:'badge-est', g:'g9', icon:'✏️', name:'Cóctel de Pie a Medida', ppax:0, desc:'Configura tus piezas: fríos, calientes, estaciones, mini postres', incl:'Sin límite de piezas', img: BASE_EVT+'coctel.jpg',
+    composition: {
+      'Personalización completa': ['Elige número de piezas frías (mínimo 4, sin máximo)', 'Elige número de piezas calientes', 'Elige estaciones en vivo (carving, sushi, pasta, wok, ostras…)', 'Elige mini postres y dulces de autor', 'Define el formato de bebida (Brisa, Selecta, Premium, Open Bar)'],
+      'Cómo se calcula el precio': ['Tarifa por pieza: frío 1,80 €/pax · caliente 2,40 €/pax · mini postre 1,20 €/pax', 'Estaciones en vivo: 4-8 €/pax según tipo']
     }
   },
 ];
@@ -2000,11 +2078,12 @@ function dishCard(item, cat) {
 // Etiquetas por type → cabecera de sección
 // ══════════════════════════════════════════════════
 const TYPE_LABELS = {
-  sentado:  '🍽️ Menú sentado · con asignación de mesa',
-  coctel:   '🥂 Cóctel de Pie · sin asignación de mesa',
-  desayuno: '🍳 Desayunos',
-  coffee:   '☕ Coffee breaks',
-  brunch:   '🥂 Brunches'
+  sentado:     '🍽️ Menú sentado · con asignación de mesa',
+  coctel:      '🥂 Cóctel de Pie · sin asignación de mesa',
+  desayuno:    '🍳 Desayunos',
+  coffee:      '☕ Coffee breaks',
+  brunch:      '🥂 Brunches',
+  barra_libre: '🪩 Barra libre / Fiesta · servicio continuo de bebidas'
 };
 
 function renderMenuPkgs() {
