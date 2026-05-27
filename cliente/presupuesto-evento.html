@@ -368,11 +368,106 @@ body{
   position:absolute; left:0; top:5px;
   color:var(--gold); font-size:.7rem;
 }
+
+/* ── Bloque C v3.7 · Secciones interactivas (radios/checks) ── */
+.comp-section-interactive .comp-section-title {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; flex-wrap:wrap;
+}
+.comp-section-counter {
+  font-family:'DM Sans',sans-serif;
+  font-size:.72rem; font-weight:600;
+  letter-spacing:.5px; text-transform:uppercase;
+  color:var(--gold);
+  background:rgba(201,168,76,.12);
+  border:1px solid rgba(201,168,76,.4);
+  padding:4px 10px; border-radius:999px;
+}
+.comp-section-counter .counter-current {
+  color:var(--text); font-weight:700;
+}
+.comp-options {
+  display:grid; gap:8px;
+}
+.comp-option {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:11px 14px; cursor:pointer;
+  background:var(--dark2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  transition:var(--t);
+  font-size:.88rem; color:var(--text-soft);
+  line-height:1.5;
+}
+.comp-option:hover {
+  border-color:rgba(201,168,76,.5);
+  background:rgba(201,168,76,.05);
+  color:var(--text);
+}
+.comp-option input[type="radio"],
+.comp-option input[type="checkbox"] {
+  margin:3px 0 0 0; cursor:pointer; flex-shrink:0;
+  accent-color:var(--gold);
+  width:16px; height:16px;
+}
+.comp-option:has(input:checked) {
+  border-color:var(--gold);
+  background:rgba(201,168,76,.1);
+  color:var(--text);
+  box-shadow:inset 0 0 0 1px rgba(201,168,76,.35);
+}
+.comp-option-text { flex:1; }
+.comp-recipe-link {
+  color:var(--gold); text-decoration:none;
+  border-bottom:1px dashed rgba(201,168,76,.5);
+  font-weight:500;
+  transition:var(--t);
+}
+.comp-recipe-link:hover {
+  border-bottom-color:var(--gold);
+  background:rgba(201,168,76,.08);
+}
+.link-arrow {
+  display:inline-block; font-size:.7rem; opacity:.7;
+  margin-left:2px;
+}
+
+/* Footer del modal de composición */
+.comp-modal-footer {
+  position:sticky; bottom:0;
+  background:linear-gradient(to top, var(--card) 70%, rgba(15,32,64,0));
+  padding:18px 36px 26px;
+  border-top:1px solid var(--border);
+  text-align:center;
+}
+.btn-comp-confirm {
+  background:linear-gradient(135deg,var(--gold),#b89339);
+  color:#1a1a1a;
+  font-family:'DM Sans',sans-serif;
+  font-weight:700; font-size:.92rem;
+  letter-spacing:.4px;
+  padding:13px 32px;
+  border:none; border-radius:8px; cursor:pointer;
+  transition:var(--t);
+  box-shadow:0 6px 18px rgba(201,168,76,.3);
+}
+.btn-comp-confirm:hover {
+  transform:translateY(-1px);
+  box-shadow:0 10px 24px rgba(201,168,76,.45);
+}
+.comp-modal-foot-note {
+  margin-top:10px;
+  font-size:.74rem; color:var(--muted);
+  font-style:italic;
+}
+
 @media(max-width:640px) {
   .comp-modal-hero { height:200px; }
   .comp-modal-hero-content { padding:22px 24px 20px; }
   .comp-modal-hero h2 { font-size:1.5rem; }
   .comp-modal-body-inner { padding:24px 24px 28px; }
+  .comp-modal-footer { padding:14px 20px 20px; }
+  .btn-comp-confirm { padding:11px 22px; font-size:.86rem; width:100%; }
 }
 
 /* ══════════════════════════════════════════════════
@@ -1909,20 +2004,101 @@ function pkgCard(item, selKey, grid) {
 }
 
 // ══════════════════════════════════════════════════
-// MODAL: Composición detallada del menú
+// MODAL: Composición detallada del menú · INTERACTIVO
+//   · Las secciones cuyo título contenga "(N a elegir)" se renderizan
+//     con radios (si N=1) o checks (si N>1).
+//   · Las elecciones se guardan en sel.menuPkgChoices[pkgId][sectionTitle]
+//   · Los platos cuyo nombre coincida con una receta del recetario
+//     son enlaces clickables que abren la ficha en otra pestaña.
 // ══════════════════════════════════════════════════
+
+// Catálogo de recetas conocidas del recetario (para detectar links)
+// Sincronizado con R en recetario.html (78 recetas)
+const RECETAS_CATALOG = new Set([
+  // Entremeses
+  'Tabla de Ibéricos Bellota','Tabla de Quesos Artesanos','Aceitunas Aliñadas Premium','Almendras Marcona Tostadas','Boquerones en Vinagre con AOVE','Anchoas del Cantábrico','Coca de Cristal con Tomate y Jamón','Mini-Montadito de Bonito con Piparra','Bombón de Foie con Frutos Rojos','Empanadilla Gallega Casera','Pan Tumaca con Jamón Serrano','Mini Quiche Lorraine',
+  // Entrantes
+  'Gazpacho Andaluz','Salmorejo Cordobés','Pulpo a la Gallega','Gambas al Ajillo','Croquetas de Jamón Ibérico','Ensalada Gamba Roja y Aguacate','Tataki de Atún Rojo','Carpaccio de Ternera','Tostas de Foie con Higos','Pimientos del Piquillo con Bacalao','Ensalada César con Pollo Crujiente','Crema de Espárragos Blancos','Vichyssoise con Caviar','Tartar de Salmón con Aguacate',
+  // Primeros
+  'Paella Valenciana','Arroz Negro con Sepia','Risotto de Setas y Trufa','Espaguetis con Almejas','Fideuà de Marisco','Gazpachuelo Malagueño','Lentejas con Chorizo','Arroz con Bogavante','Crema de Calabaza y Coco','Sopa de Pescado Malagueña','Sopa Castellana','Lentejas con Foie y Castañas','Arroz Cremoso de Carabineros',
+  // Segundos
+  'Solomillo con Reducción de Rioja','Lubina al Horno','Dorada a la Sal','Secreto Ibérico con Patatas Bravas','Carrillada en Vino Tinto','Gamba Roja a la Plancha','Pulpo a la Brasa con Parmentier','Bacalao al Pil-Pil','Pato Confit con Naranja','Fritura Malagueña','Rabo de Toro al Vino Tinto','Lubina al Limón con Champagne','Cordero Lechal al Romero','Cochinillo Asado al Horno de Leña',
+  // Postres
+  'Crema Catalana','Tiramisú Clásico','Coulant de Chocolate','Tarta de Queso La Viña','Panna Cotta con Frutos Rojos','Torrijas Caramelizadas','Bienmesabe Malagueño','Mousse de Chocolate Blanco','Flan de Huevo Casero','Sorbete de Mango y Lima','Soufflé Grand Marnier','Profiteroles con Chocolate Caliente','Tarta Sacher',
+]);
+
+/** Detecta si un texto contiene "(N a elegir)" y devuelve el N (o null) */
+function parseElegirN(title) {
+  const m = title.match(/\((\d+|todos?)\s+a\s+elegir\)/i);
+  if (!m) return null;
+  const v = m[1].toLowerCase();
+  if (v === 'todo' || v === 'todos') return 999;
+  return parseInt(v);
+}
+
+/** Convierte un item de composición en HTML — si coincide con una receta, enlace al recetario */
+function renderCompItem(text, asLabel) {
+  // Detectar nombre de plato conocido. Buscamos coincidencias en el texto.
+  let html = text;
+  RECETAS_CATALOG.forEach(name => {
+    if (text.indexOf(name) !== -1) {
+      const url = `../recetario/recetario.html#${encodeURIComponent(name)}`;
+      const linked = `<a class="comp-recipe-link" href="${url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Ver ficha y escandallo de ${name}">${name} <span class="link-arrow">↗</span></a>`;
+      html = html.split(name).join(linked);
+    }
+  });
+  return html;
+}
+
 function showComposition(pkgId) {
   const pkg = menuPkgs.find(p => p.id === pkgId);
   if (!pkg || !pkg.composition) return;
 
-  const sections = Object.entries(pkg.composition).map(([title, items]) => `
-    <div class="comp-section">
-      <div class="comp-section-title">${title}</div>
-      <ul class="comp-list">
-        ${items.map(i => `<li>${i}</li>`).join('')}
-      </ul>
-    </div>
-  `).join('');
+  // Inicializar el estado de elecciones para este pkg si no existe
+  sel.menuPkgChoices = sel.menuPkgChoices || {};
+  if (!sel.menuPkgChoices[pkgId]) sel.menuPkgChoices[pkgId] = {};
+
+  const sections = Object.entries(pkg.composition).map(([title, items]) => {
+    const N = parseElegirN(title);
+    if (!N) {
+      // Sección informativa simple
+      return `
+        <div class="comp-section">
+          <div class="comp-section-title">${title}</div>
+          <ul class="comp-list">
+            ${items.map(i => `<li>${renderCompItem(i, false)}</li>`).join('')}
+          </ul>
+        </div>`;
+    }
+
+    // Sección interactiva (radios o checks)
+    const inputType = N === 1 ? 'radio' : 'checkbox';
+    const inputName = `choice_${pkgId}_${title.replace(/\W+/g,'_')}`;
+    const chosen = sel.menuPkgChoices[pkgId][title] || [];
+    const maxNote = N === 1 ? 'Elige 1' : (N >= 999 ? 'Sin límite' : `Elige hasta ${N}`);
+    return `
+      <div class="comp-section comp-section-interactive">
+        <div class="comp-section-title">
+          ${title}
+          <span class="comp-section-counter" data-max="${N}" data-name="${inputName}">
+            <span class="counter-current">${chosen.length}</span> / ${N >= 999 ? '∞' : N}
+          </span>
+        </div>
+        <div class="comp-options">
+          ${items.map((item, i) => {
+            const itemId = `${inputName}_${i}`;
+            const isChecked = chosen.includes(item) ? 'checked' : '';
+            return `
+              <label class="comp-option" for="${itemId}">
+                <input type="${inputType}" id="${itemId}" name="${inputName}"
+                       value="${item.replace(/"/g,'&quot;')}" ${isChecked}
+                       onchange="onCompChoice('${pkgId}', ${JSON.stringify(title).replace(/'/g,"\\'")}, ${N}, this)">
+                <span class="comp-option-text">${renderCompItem(item, true)}</span>
+              </label>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }).join('');
 
   const body = document.getElementById('compModalBody');
   body.innerHTML = `
@@ -1939,10 +2115,59 @@ function showComposition(pkgId) {
     <div class="comp-modal-body-inner">
       ${sections}
     </div>
+    <div class="comp-modal-footer">
+      <button class="btn-comp-confirm" onclick="confirmCompChoices('${pkgId}')">
+        ✓ Confirmar selección y elegir este menú
+      </button>
+      <div class="comp-modal-foot-note">Tus elecciones quedan registradas y aparecen en el contrato y la orden de servicio.</div>
+    </div>
   `;
   document.getElementById('compModalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
+
+function onCompChoice(pkgId, title, max, inputEl) {
+  sel.menuPkgChoices = sel.menuPkgChoices || {};
+  sel.menuPkgChoices[pkgId] = sel.menuPkgChoices[pkgId] || {};
+
+  if (inputEl.type === 'radio') {
+    sel.menuPkgChoices[pkgId][title] = [inputEl.value];
+  } else {
+    // checkbox — limitar al máximo
+    const current = sel.menuPkgChoices[pkgId][title] || [];
+    if (inputEl.checked) {
+      if (current.length >= max) {
+        inputEl.checked = false;
+        return; // bloqueado, no añadir más
+      }
+      sel.menuPkgChoices[pkgId][title] = [...current, inputEl.value];
+    } else {
+      sel.menuPkgChoices[pkgId][title] = current.filter(v => v !== inputEl.value);
+    }
+  }
+  // Refrescar el contador visual
+  const counterEl = document.querySelector(`.comp-section-counter[data-name="${inputEl.name}"] .counter-current`);
+  if (counterEl) counterEl.textContent = sel.menuPkgChoices[pkgId][title].length;
+}
+
+function confirmCompChoices(pkgId) {
+  const pkg = menuPkgs.find(p => p.id === pkgId);
+  // Seleccionar este pkg como menú elegido
+  document.querySelectorAll('[id^="rc_menuPkg_"]').forEach(c=>c.classList.remove('selected'));
+  const card = document.getElementById(`rc_menuPkg_${pkgId}`);
+  if (card) card.classList.add('selected');
+  sel.menuPkgGroup = pkg.type;
+  sel.menuPkg = pkg;
+  if (pkg.id === 'custom') {
+    const w = document.getElementById('customMenuWrap'); if (w) w.style.display = 'block';
+  }
+  if (pkg.type === 'coctel') {
+    const cb = document.getElementById('coctelInfoBox'); if (cb) cb.style.display = 'block';
+  }
+  closeComposition();
+  updateSide();
+}
+
 function closeComposition() {
   document.getElementById('compModalOverlay').classList.remove('open');
   document.body.style.overflow = '';

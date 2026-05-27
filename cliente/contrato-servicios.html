@@ -150,6 +150,22 @@ body{
 .svc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:.85rem;}
 .svc-row-name{color:var(--text-soft);}
 .svc-row-val{color:var(--cream); font-weight:500;}
+/* Detalle de elecciones del cliente dentro del menú (v3.7) */
+.svc-row-detail{
+  margin:6px 0 14px; padding:10px 14px;
+  background:rgba(201,168,76,.06);
+  border-left:3px solid var(--gold);
+  border-radius:0 6px 6px 0;
+  font-size:.8rem; line-height:1.55;
+}
+.svc-choices-title{
+  font-weight:600; color:var(--gold);
+  font-size:.74rem; letter-spacing:.5px;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.svc-choice-group{color:var(--text-soft); margin-bottom:3px;}
+.svc-choice-label{color:var(--cream); font-weight:500;}
 
 /* Importes */
 .amounts {
@@ -318,8 +334,19 @@ function renderDoc() {
   const pf = data.pf || 0;
   const pt = data.pt || 0;
 
+  // Elecciones del cliente dentro del menú (v3.7)
+  const menuChoices = (sel.menuPkgChoices && sel.menuPkg) ? (sel.menuPkgChoices[sel.menuPkg.id] || {}) : {};
+  const menuChoicesHtml = Object.keys(menuChoices).length
+    ? `<div class="svc-row-detail"><div class="svc-choices-title">Composición elegida por el cliente:</div>${
+        Object.entries(menuChoices).map(([titulo, items]) =>
+          items && items.length
+            ? `<div class="svc-choice-group"><span class="svc-choice-label">${titulo}:</span> ${items.join(' · ')}</div>`
+            : ''
+        ).join('')
+      }</div>`
+    : '';
   const svcMenu = sel.menuPkg
-    ? `<div class="svc-row"><span class="svc-row-name">${sel.menuPkg.name}</span><span class="svc-row-val">${sel.menuPkg.ppax > 0 ? fmtEur(sel.menuPkg.ppax*pf) : 'A calcular'}</span></div>`
+    ? `<div class="svc-row"><span class="svc-row-name">${sel.menuPkg.name}</span><span class="svc-row-val">${sel.menuPkg.ppax > 0 ? fmtEur(sel.menuPkg.ppax*pf) : 'A calcular'}</span></div>${menuChoicesHtml}`
     : '';
   const svcBeb = sel.bebPkg
     ? `<div class="svc-row"><span class="svc-row-name">Bebidas: ${sel.bebPkg.name}</span><span class="svc-row-val">${fmtEur(sel.bebPkg.ppax*pf)}</span></div>`

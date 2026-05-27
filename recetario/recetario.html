@@ -2013,6 +2013,38 @@ renderBebidas();
 calcCostes();
 renderAllergFilters();
 
+// ═══════════════════════════════════════════════
+// Auto-abrir receta desde anchor URL (v3.7)
+// p.ej. recetario.html#Gazpacho Andaluz → abre modal
+// ═══════════════════════════════════════════════
+function openRecipeByName(name) {
+  if (!name) return false;
+  var decoded = decodeURIComponent(name).trim();
+  var cats = Object.keys(R);
+  for (var c = 0; c < cats.length; c++) {
+    var arr = R[cats[c]] || [];
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].n === decoded) {
+        // scroll a la categoría primero
+        var anchor = document.getElementById('sec-' + cats[c]);
+        if (anchor && anchor.scrollIntoView) anchor.scrollIntoView({behavior:'smooth', block:'start'});
+        setTimeout(function(){ openModal(cats[c], i); }, 300);
+        return true;
+      }
+    }
+  }
+  return false;
+}
+if (location.hash && location.hash.length > 1) {
+  // Esperar a que el DOM esté completamente renderizado
+  setTimeout(function() {
+    openRecipeByName(location.hash.substring(1));
+  }, 100);
+}
+window.addEventListener('hashchange', function() {
+  if (location.hash.length > 1) openRecipeByName(location.hash.substring(1));
+});
+
 function toggleAllergPanel() {
   var w = document.getElementById('allergFilters');
   var b = document.getElementById('allergToggleBtn');

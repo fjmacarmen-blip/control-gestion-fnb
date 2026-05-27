@@ -106,6 +106,61 @@ body{
   background:linear-gradient(to right, var(--gold-border), transparent);
 }
 
+/* ── MENÚ CONFIRMADO (v3.7) ── */
+.menu-choices-section {
+  border:1px solid rgba(201,168,76,.35);
+  background:linear-gradient(135deg, rgba(201,168,76,.04), var(--card));
+}
+.menu-choices-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+  gap:14px;
+}
+.menu-section {
+  background:rgba(255,255,255,.02);
+  border:1px solid var(--border);
+  border-left:3px solid var(--gold);
+  border-radius:8px;
+  padding:14px 18px;
+}
+.menu-section-confirmed {
+  border-left-color:#22c55e;
+  background:rgba(34,197,94,.04);
+}
+.menu-section-pending {
+  border-left-color:#fbbf24;
+  background:rgba(251,191,36,.06);
+}
+.menu-section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem; color:var(--gold);
+  font-weight:600; margin-bottom:8px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:8px; flex-wrap:wrap;
+}
+.menu-section-tag {
+  font-family:'DM Sans',sans-serif;
+  font-size:.65rem; font-weight:600;
+  letter-spacing:.5px; text-transform:uppercase;
+  background:rgba(34,197,94,.15); color:#22c55e;
+  padding:3px 8px; border-radius:999px;
+}
+.menu-section-list {
+  list-style:none; padding:0; margin:0;
+}
+.menu-section-list li {
+  position:relative; padding:4px 0 4px 18px;
+  font-size:.84rem; color:var(--text-soft);
+  line-height:1.5;
+}
+.menu-section-list li::before {
+  content:'•'; position:absolute; left:4px;
+  color:var(--gold); font-weight:700;
+}
+.menu-section-pending-msg {
+  font-size:.82rem; color:#fbbf24; font-style:italic;
+  padding:4px 0;
+}
+
 /* ── ALERTA DIETAS ESPECIALES ── */
 .dietas-alert {
   border:2px solid #fbbf24;
@@ -646,6 +701,59 @@ function renderDietasAlert(data) {
     </div>`;
 }
 
+// ══════════════════════════════════════════════════
+// MENÚ ELEGIDO + COMPOSICIÓN INTERACTIVA (v3.7)
+// Muestra cocina QUÉ platos confirmó el cliente
+// ══════════════════════════════════════════════════
+function renderMenuChoices(data) {
+  const sel = data.sel || {};
+  if (!sel.menuPkg) return '';
+  const choices = (sel.menuPkgChoices && sel.menuPkg.id)
+    ? (sel.menuPkgChoices[sel.menuPkg.id] || {})
+    : {};
+  const fullComposition = sel.menuPkg.composition || {};
+  const hasContent = Object.keys(choices).length > 0 || Object.keys(fullComposition).length > 0;
+  if (!hasContent) return '';
+
+  const blocks = Object.entries(fullComposition).map(([titulo, items]) => {
+    const elegidos = choices[titulo] || [];
+    const esInteractivo = /\(\d+\s+a\s+elegir\)|\(todos?\s+a\s+elegir\)/i.test(titulo);
+    if (esInteractivo) {
+      // mostrar lo confirmado (o aviso si no hay elección)
+      if (elegidos.length === 0) {
+        return `
+          <div class="menu-section menu-section-pending">
+            <div class="menu-section-title">${titulo}</div>
+            <div class="menu-section-pending-msg">⚠️ Pendiente de elección por el cliente — confirmar 72 h antes</div>
+          </div>`;
+      }
+      return `
+        <div class="menu-section menu-section-confirmed">
+          <div class="menu-section-title">${titulo} <span class="menu-section-tag">✓ elegido</span></div>
+          <ul class="menu-section-list">
+            ${elegidos.map(it => `<li>${it}</li>`).join('')}
+          </ul>
+        </div>`;
+    }
+    // sección informativa estándar
+    return `
+      <div class="menu-section">
+        <div class="menu-section-title">${titulo}</div>
+        <ul class="menu-section-list">
+          ${items.map(it => `<li>${it}</li>`).join('')}
+        </ul>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="section menu-choices-section">
+      <div class="section-title">🍽️ Menú confirmado · ${sel.menuPkg.name}</div>
+      <div class="menu-choices-grid">
+        ${blocks}
+      </div>
+    </div>`;
+}
+
 function renderDoc() {
   const data = getData();
   const wrap = document.getElementById('docWrap');
@@ -683,6 +791,8 @@ function renderDoc() {
     </div>
 
     ${renderDietasAlert(data)}
+
+    ${renderMenuChoices(data)}
 
     <!-- PLANO -->
     <div class="section">
