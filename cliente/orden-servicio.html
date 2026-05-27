@@ -106,6 +106,59 @@ body{
   background:linear-gradient(to right, var(--gold-border), transparent);
 }
 
+/* ── ALERTA DIETAS ESPECIALES ── */
+.dietas-alert {
+  border:2px solid #fbbf24;
+  background:linear-gradient(135deg, rgba(251,191,36,0.08), var(--card));
+  box-shadow:0 0 0 1px rgba(251,191,36,0.15);
+}
+.dietas-alert-head {
+  display:flex; align-items:center; gap:18px;
+  padding-bottom:14px; margin-bottom:18px;
+  border-bottom:1px solid rgba(251,191,36,0.30);
+}
+.dietas-alert-icon {
+  font-size:2rem;
+  background:rgba(251,191,36,0.15);
+  border:2px solid #fbbf24;
+  width:52px; height:52px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.dietas-alert-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem; color:#fbbf24; font-weight:700; letter-spacing:1px;
+}
+.dietas-alert-sub { font-size:.88rem; color:var(--text-soft); margin-top:4px; }
+.dieta-block {
+  background:var(--bg); border:1px solid var(--border);
+  border-left:4px solid var(--gold);
+  border-radius:10px; padding:14px 18px; margin-bottom:10px;
+}
+.dieta-block-head {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:10px; padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+.dieta-block-label { font-weight:700; font-size:.92rem; letter-spacing:.5px; }
+.dieta-block-count {
+  background:var(--card2); padding:3px 10px; border-radius:100px;
+  font-size:.72rem; color:var(--gold); font-weight:600;
+}
+.dieta-block-rows { display:grid; gap:6px; }
+.dieta-block-row {
+  display:grid; grid-template-columns:90px 1fr; gap:10px;
+  font-size:.82rem; padding:4px 0;
+}
+.dieta-block-row .lbl { color:var(--muted); font-size:.75rem; }
+.dieta-block-row .val { color:var(--text-soft); line-height:1.5; }
+.dietas-alert-foot {
+  margin-top:14px; padding-top:12px;
+  border-top:1px dashed rgba(251,191,36,0.30);
+  font-size:.78rem; color:var(--muted); text-align:center;
+}
+.dietas-alert-foot strong { color:#fbbf24; }
+
 /* PLANO SVG */
 .plano-wrap {
   background:var(--bg); border:1px solid var(--border);
@@ -490,6 +543,109 @@ function renderPlano(data) {
 
 function fmt(n) { return (n||0).toLocaleString('es-ES'); }
 
+/** Alerta destacada de dietas especiales con instrucciones por departamento */
+const DIETA_INSTRUCCIONES = {
+  vegano: {
+    label:'🌱 VEGANOS', color:'#22c55e',
+    cocina:'Menú vegano completo: sin productos animales (carne, pescado, lácteos, huevo, miel). Sustitutos: leche de soja/avena, margarina vegetal, mantequilla de nueces.',
+    sala:'Pulseras verdes · mesas identificadas · presentar menú vegano específico al comensal.',
+    bebidas:'Confirmar vinos sin filtración con caseína/clara de huevo (consultar bodega).',
+    pedido:'Bebida vegetal · queso vegano · pan sin productos lácteos.'
+  },
+  vegetariano: {
+    label:'🥗 VEGETARIANOS', color:'#84cc16',
+    cocina:'Sin carne ni pescado. Permitidos: lácteos, huevo, miel. Sustituir proteína animal por legumbres, tofu, seitán, quinoa.',
+    sala:'Pulseras verde claro · servicio normal pero con menú adaptado.',
+    bebidas:'Cualquier opción del menú general aplica.',
+    pedido:'Verificar caldo de verduras puro · queso curado vegetariano (sin cuajo animal).'
+  },
+  celiaco: {
+    label:'🌾 CELÍACOS · CRÍTICO', color:'#ef4444',
+    cocina:'⚠️ ZONA DEDICADA · cero contaminación cruzada · utensilios y tablas separadas · aceite de fritura exclusivo · APPCC riguroso.',
+    sala:'Pulseras amarillas · vajilla separada · pan sin gluten artesano (encargo 48 h antes) · comunicación obligatoria cocina↔sala antes de cada plato.',
+    bebidas:'Cervezas sin gluten (Mahou 0,0 sin gluten o Daura) · vinos OK · destilados de cereal: NO (whisky/vodka cereal).',
+    pedido:'Pan sin gluten · cerveza sin gluten · galletas/postres específicos certificados FACE.'
+  },
+  sinLactosa: {
+    label:'🥛 SIN LACTOSA', color:'#3b82f6',
+    cocina:'Sustituir mantequilla por margarina vegetal · nata por nata de coco/soja · leche por leche vegetal · evitar queso/yogur tradicional.',
+    sala:'Pulseras azules · informar de cualquier salsa/postre con lácteos oculto.',
+    bebidas:'Café con leche vegetal disponible (avena/soja) en barra y mesa.',
+    pedido:'Leche vegetal (1 L/dieta) · margarina sin lactosa · queso sin lactosa si aplica.'
+  },
+  sinFrutos: {
+    label:'🌰 SIN FRUTOS SECOS', color:'#f97316',
+    cocina:'Eliminar TODO contacto con frutos secos · cuidado especial con cacahuetes · revisar bases de salsa romesco, pesto, picada catalana.',
+    sala:'Pulseras naranjas · informar al comensal antes de cada plato (riesgo anafiláctico).',
+    bebidas:'Evitar licores con almendra (Amaretto, Disaronno).',
+    pedido:'Adrenalina autoinyectable disponible en sala (botiquín actualizado).'
+  },
+  halal: {
+    label:'🕌 HALAL', color:'#8b5cf6',
+    cocina:'Carne de proveedor halal certificado · sin cerdo · sin alcohol en cocción · utensilios separados.',
+    sala:'Pulseras moradas · servicio normal · evitar alcohol en mesa por defecto.',
+    bebidas:'Sin alcohol · zumos, refrescos, té, café, mocktails.',
+    pedido:'Carne halal pre-encargada (cordero/pollo) · pan sin manteca de cerdo.'
+  },
+  kosher: {
+    label:'✡️ KOSHER', color:'#a78bfa',
+    cocina:'Producto certificado kosher · separación estricta carne/lácteos · cocina y utensilios separados · supervisión rabínica si aplica.',
+    sala:'Pulseras lila · vajilla específica.',
+    bebidas:'Vino kosher · evitar mezclar carne con lácteos en mismo servicio.',
+    pedido:'Producto kosher con sello rabínico · vino kosher mevushal.'
+  },
+};
+
+function renderDietasAlert(data) {
+  const d = data.dietas;
+  if (!d) return '';
+  const total = ['vegano','vegetariano','celiaco','sinLactosa','sinFrutos','halal','kosher']
+    .reduce((a,k) => a + (d[k]||0), 0);
+  if (total === 0 && !d.otros) return '';
+
+  const tipos = Object.keys(DIETA_INSTRUCCIONES).filter(k => d[k] > 0);
+  const pct = data.pt > 0 ? Math.round((total/data.pt)*100) : 0;
+
+  return `
+    <div class="section dietas-alert">
+      <div class="dietas-alert-head">
+        <div class="dietas-alert-icon">🚨</div>
+        <div>
+          <div class="dietas-alert-title">ALERTA · MENÚS ESPECIALES PARA ESTE EVENTO</div>
+          <div class="dietas-alert-sub">Total: <strong>${total} menú(s) especial(es)</strong> sobre ${data.pt} comensales (${pct} %)</div>
+        </div>
+      </div>
+      ${tipos.map(k => {
+        const ins = DIETA_INSTRUCCIONES[k];
+        return `
+        <div class="dieta-block" style="border-left-color:${ins.color};">
+          <div class="dieta-block-head">
+            <span class="dieta-block-label" style="color:${ins.color};">${ins.label}</span>
+            <span class="dieta-block-count">${d[k]} comensal(es)</span>
+          </div>
+          <div class="dieta-block-rows">
+            <div class="dieta-block-row"><span class="lbl">🔥 Cocina</span><span class="val">${ins.cocina}</span></div>
+            <div class="dieta-block-row"><span class="lbl">🍽️ Sala</span><span class="val">${ins.sala}</span></div>
+            <div class="dieta-block-row"><span class="lbl">🍷 Bebidas</span><span class="val">${ins.bebidas}</span></div>
+            <div class="dieta-block-row"><span class="lbl">📦 Pedido</span><span class="val">${ins.pedido}</span></div>
+          </div>
+        </div>`;
+      }).join('')}
+      ${d.otros ? `
+        <div class="dieta-block" style="border-left-color:#fbbf24;">
+          <div class="dieta-block-head">
+            <span class="dieta-block-label" style="color:#fbbf24;">📝 OTRAS RESTRICCIONES / NOTAS</span>
+          </div>
+          <div class="dieta-block-rows">
+            <div class="dieta-block-row" style="font-style:italic;">${d.otros}</div>
+          </div>
+        </div>` : ''}
+      <div class="dietas-alert-foot">
+        <strong>Confirmación obligatoria 72 h antes del evento</strong> · Listado nominal por mesa · Pulseras identificativas en check-in
+      </div>
+    </div>`;
+}
+
 function renderDoc() {
   const data = getData();
   const wrap = document.getElementById('docWrap');
@@ -525,6 +681,8 @@ function renderDoc() {
         <div class="stat-card"><div class="stat-val">${data.sel?.eventType?.icon || '🎉'}</div><div class="stat-label">${data.sel?.eventType?.name || '—'}</div></div>
       </div>
     </div>
+
+    ${renderDietasAlert(data)}
 
     <!-- PLANO -->
     <div class="section">

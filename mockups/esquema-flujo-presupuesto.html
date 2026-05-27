@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Esquema · Arquitectura del Cotizador v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a1628; --card:#0f2040; --card2:#122b54; --card3:#1a3666;
+  --gold:#c9a84c; --gold-light:#e8c96a; --gold-deep:#9d8237;
+  --gold-dim:rgba(201,168,76,.10); --gold-border:rgba(201,168,76,.30);
+  --text:#e8eaf0; --text-soft:#c4cad6; --muted:#7a8499;
+  --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.13);
+  --green:#22c55e; --red:#ef4444; --blue:#60a5fa; --purple:#a78bfa;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+img{display:block;max-width:100%;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(201,168,76,.06) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 85% 100%, rgba(201,168,76,.04) 0%, transparent 55%);
+  background-attachment:fixed;
+  color:var(--text); line-height:1.55; padding:30px 24px 80px;
+}
+.wrap{max-width:1280px;margin:0 auto;}
+
+/* HEADER */
+.doc-head{text-align:center; margin-bottom:48px;}
+.doc-head .tag{
+  display:inline-block; padding:6px 14px;
+  background:var(--gold-dim); border:1px solid var(--gold-border);
+  border-radius:100px; font-size:.7rem; color:var(--gold);
+  letter-spacing:2px; text-transform:uppercase; margin-bottom:18px;
+}
+.doc-head h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,5vw,3.6rem); color:var(--cream,#e8eaf0);
+  font-weight:600; line-height:1.1; margin-bottom:14px;
+}
+.doc-head h1 em{font-style:italic;color:var(--gold);}
+.doc-head p{color:var(--text-soft); max-width:700px; margin:0 auto;}
+
+/* SECCIONES */
+.section{
+  background:var(--card); border:1px solid var(--border);
+  border-radius:18px; padding:36px 40px; margin-bottom:24px;
+}
+.section.hi{ border:1px solid var(--gold-border); }
+h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem; color:var(--gold); font-weight:600;
+  margin-bottom:8px;
+}
+.subtitle{color:var(--muted); margin-bottom:24px; font-size:.92rem;}
+
+/* CATÁLOGO MENÚS por momento del día */
+.day-grid{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+}
+.day-block{
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:12px; padding:18px 16px;
+  border-top:3px solid var(--gold);
+}
+.day-block-title{
+  font-family:'Cormorant Garamond',serif;
+  color:var(--gold); font-weight:600; font-size:1.05rem;
+  margin-bottom:12px; display:flex; align-items:center; gap:8px;
+}
+.day-menu{
+  font-size:.78rem; color:var(--text-soft);
+  padding:6px 0; border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between;
+}
+.day-menu:last-child{border-bottom:none;}
+.day-menu .price{color:var(--gold); font-weight:600;}
+
+/* MATRIZ */
+.matrix{
+  width:100%; border-collapse:collapse; font-size:.82rem;
+  margin-top:8px;
+}
+.matrix th, .matrix td{
+  padding:9px 10px; text-align:center; border:1px solid var(--border);
+  color:var(--text-soft);
+}
+.matrix th{
+  background:var(--card2); color:var(--gold); font-weight:600;
+  font-size:.72rem; letter-spacing:.5px;
+}
+.matrix th.evt{ text-align:left; padding-left:14px; }
+.matrix td.evt{
+  text-align:left; padding-left:14px;
+  background:var(--card2); color:var(--cream,#e8eaf0);
+  font-weight:500;
+}
+.matrix .yes{color:var(--green); font-size:1.1rem;}
+.matrix .rec{color:var(--gold); font-size:1.1rem; font-weight:700;}
+.matrix .opt{color:var(--muted); font-size:.85rem;}
+.matrix .no{color:rgba(122,132,153,.3);}
+
+/* FLOW */
+.flow{display:flex; flex-direction:column; gap:14px;}
+.flow-step{
+  background:var(--bg); border:1px solid var(--border);
+  border-left:4px solid var(--gold);
+  border-radius:12px; padding:20px 24px;
+  display:grid; grid-template-columns:60px 1fr; gap:18px; align-items:flex-start;
+}
+.flow-num{
+  width:42px; height:42px; border-radius:50%;
+  background:var(--gold); color:var(--bg);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem; font-weight:700;
+  margin-top:4px;
+}
+.flow-content h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem; color:var(--cream,#e8eaf0); font-weight:600;
+  margin-bottom:6px;
+}
+.flow-content p{color:var(--text-soft); font-size:.88rem; margin-bottom:12px;}
+.flow-arrow{
+  text-align:center; color:var(--gold); font-size:1.3rem; margin:-2px 0;
+}
+
+/* 2 RUTAS (sugerencias vs a la carta) */
+.routes-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:6px;
+}
+.route{
+  background:var(--card); border:1px solid var(--border);
+  border-radius:12px; padding:18px 20px;
+}
+.route.suggest{ border-top:3px solid var(--gold); }
+.route.libre{ border-top:3px solid var(--blue); }
+.route h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem; color:var(--cream,#e8eaf0); margin-bottom:10px;
+}
+.route h4 .badge{
+  display:inline-block; padding:2px 8px; border-radius:8px;
+  font-size:.65rem; letter-spacing:1px; text-transform:uppercase;
+  margin-left:8px; vertical-align:middle;
+  font-family:'DM Sans',sans-serif;
+}
+.route.suggest h4 .badge{ background:var(--gold-dim); color:var(--gold); }
+.route.libre h4 .badge{ background:rgba(96,165,250,.15); color:var(--blue); }
+.route ul{list-style:none; padding:0;}
+.route li{
+  position:relative; padding:5px 0 5px 22px;
+  font-size:.85rem; color:var(--text-soft);
+}
+.route li::before{
+  content:'✦'; position:absolute; left:0; top:5px;
+  color:var(--gold); font-size:.7rem;
+}
+.route.libre li::before{color:var(--blue);}
+
+/* DECISIÓN BOX */
+.decision-box{
+  margin-top:18px; padding:18px 22px;
+  background:var(--gold-dim); border:1px solid var(--gold-border);
+  border-radius:12px;
+}
+.decision-box strong{color:var(--gold);}
+.decision-box em{color:var(--text-soft); font-style:italic;}
+
+/* LEGEND */
+.legend{
+  display:flex; gap:18px; flex-wrap:wrap; margin-top:14px;
+  font-size:.78rem; color:var(--muted);
+}
+.legend-dot{display:inline-flex; align-items:center; gap:5px;}
+.legend-dot .rec{color:var(--gold);}
+.legend-dot .yes{color:var(--green);}
+.legend-dot .opt{color:var(--muted);}
+
+@media(max-width:880px){
+  .day-grid{grid-template-columns:repeat(2,1fr);}
+  .routes-grid{grid-template-columns:1fr;}
+  .matrix{font-size:.7rem;}
+  .matrix th,.matrix td{padding:6px 4px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="doc-head">
+  <div class="tag">Esquema · Arquitectura v3</div>
+  <h1>Cómo organizar <em>eventos + menús</em></h1>
+  <p>Antes de tocar más código: mapa de qué menús aparecen en qué evento y cómo el cliente elige entre <strong>nuestras sugerencias</strong> y <strong>libre elección</strong>.</p>
+</div>
+
+<!-- ─────────────────────────────────────────────────── -->
+<!-- 1. CATÁLOGO DE MENÚS POR MOMENTO DEL DÍA -->
+<!-- ─────────────────────────────────────────────────── -->
+<section class="section">
+  <h2>1 · Catálogo de menús organizado por momento del día</h2>
+  <p class="subtitle">Sale de tu inventario actual. 21 paquetes en total. La distribución por momento ayuda a entender qué encaja en qué evento.</p>
+
+  <div class="day-grid">
+    <div class="day-block">
+      <div class="day-block-title">🌅 Mañana</div>
+      <div class="day-menu"><span>Desayuno Express</span><span class="price">6 €</span></div>
+      <div class="day-menu"><span>Desayuno Continental</span><span class="price">12 €</span></div>
+      <div class="day-menu"><span>Desayuno Buffet</span><span class="price">22 €</span></div>
+      <div class="day-menu"><span>Desayuno Premium</span><span class="price">35 €</span></div>
+      <div class="day-menu"><span>Brunch Clásico</span><span class="price">32 €</span></div>
+      <div class="day-menu"><span>Brunch Deluxe</span><span class="price">48 €</span></div>
+    </div>
+    <div class="day-block">
+      <div class="day-block-title">☕ Pausa</div>
+      <div class="day-menu"><span>Coffee Básico</span><span class="price">8 €</span></div>
+      <div class="day-menu"><span>Coffee Mixto</span><span class="price">14 €</span></div>
+      <div class="day-menu"><span>Coffee Premium</span><span class="price">22 €</span></div>
+    </div>
+    <div class="day-block">
+      <div class="day-block-title">🍽️ Comida / Cena</div>
+      <div class="day-menu"><span>Menú Esencial</span><span class="price">28 €</span></div>
+      <div class="day-menu"><span>Menú Selecta</span><span class="price">42 €</span></div>
+      <div class="day-menu"><span>Menú Gourmet</span><span class="price">62 €</span></div>
+      <div class="day-menu"><span>Menú Autor</span><span class="price">88 €</span></div>
+      <div class="day-menu"><span>Buffet Premium</span><span class="price">38 €</span></div>
+      <div class="day-menu"><span>Sin Gluten</span><span class="price">46 €</span></div>
+      <div class="day-menu"><span>A Medida</span><span class="price">variable</span></div>
+    </div>
+    <div class="day-block">
+      <div class="day-block-title">🥂 Cóctel</div>
+      <div class="day-menu"><span>Cóctel Brisa (2 h)</span><span class="price">18 €</span></div>
+      <div class="day-menu"><span>Cóctel Costa del Sol (3 h)</span><span class="price">26 €</span></div>
+      <div class="day-menu"><span>Cóctel Miramar (4 h)</span><span class="price">38 €</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────── -->
+<!-- 2. MATRIZ EVENTO × MENÚ -->
+<!-- ─────────────────────────────────────────────────── -->
+<section class="section">
+  <h2>2 · Matriz evento × menú</h2>
+  <p class="subtitle">Qué menús ofrecemos en cada evento y cuáles son nuestra <strong style="color:var(--gold);">recomendación principal ★</strong>. Lo demás está disponible pero NO se muestra de entrada.</p>
+
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th class="evt">Evento</th>
+        <th>Desayuno</th><th>Coffee</th><th>Brunch</th>
+        <th>Esencial</th><th>Selecta</th><th>Gourmet</th><th>Autor</th>
+        <th>Buffet</th><th>S/Gluten</th><th>Custom</th>
+        <th>Brisa</th><th>C.Sol</th><th>Miramar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="evt">💍 Boda</td>
+        <td></td><td></td><td></td>
+        <td class="yes">✓</td><td class="rec">★</td><td class="yes">✓</td><td class="yes">✓</td>
+        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+        <td></td><td class="yes">✓</td><td class="yes">✓</td>
+      </tr>
+      <tr><td class="evt">🕊️ Comunión</td>
+        <td></td><td></td><td class="yes">✓</td>
+        <td class="rec">★</td><td class="yes">✓</td><td class="yes">✓</td><td></td>
+        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+        <td class="yes">✓</td><td></td><td></td>
+      </tr>
+      <tr><td class="evt">👶 Bautizo</td>
+        <td></td><td></td><td class="rec">★</td>
+        <td class="yes">✓</td><td></td><td></td><td></td>
+        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+        <td class="yes">✓</td><td></td><td></td>
+      </tr>
+      <tr><td class="evt">🎂 Cumpleaños</td>
+        <td></td><td></td><td class="yes">✓</td>
+        <td class="yes">✓</td><td class="rec">★</td><td class="yes">✓</td><td></td>
+        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+        <td class="yes">✓</td><td class="yes">✓</td><td></td>
+      </tr>
+      <tr><td class="evt">🥂 Aniversario</td>
+        <td></td><td></td><td class="yes">✓</td>
+        <td></td><td class="yes">✓</td><td class="rec">★</td><td class="yes">✓</td>
+        <td></td><td class="yes">✓</td><td class="yes">✓</td>
+        <td></td><td class="yes">✓</td><td></td>
+      </tr>
+      <tr><td class="evt">🎊 Otra celebración</td>
+        <td></td><td></td><td class="yes">✓</td>
+        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+      </tr>
+
+      <tr><td colspan="14" style="background:var(--card3);text-align:left;padding-left:14px;color:var(--gold);font-weight:600;font-size:.78rem;letter-spacing:1px;">━━━━ Empresa ━━━━</td></tr>
+
+      <tr><td class="evt">🤝 Convención (día completo)</td>
+        <td class="rec">★</td><td class="rec">★</td><td></td>
+        <td class="yes">✓</td><td class="rec">★</td><td class="yes">✓</td><td></td>
+        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+        <td></td><td class="yes">✓</td><td class="yes">✓</td>
+      </tr>
+      <tr><td class="evt">🎯 Team building</td>
+        <td></td><td class="yes">✓</td><td class="rec">★</td>
+        <td class="yes">✓</td><td class="yes">✓</td><td></td><td></td>
+        <td class="rec">★</td><td class="yes">✓</td><td class="yes">✓</td>
+        <td class="yes">✓</td><td></td><td></td>
+      </tr>
+      <tr><td class="evt">📊 Reunión directiva</td>
+        <td class="yes">✓</td><td class="yes">✓</td><td></td>
+        <td></td><td class="yes">✓</td><td class="rec">★</td><td class="yes">✓</td>
+        <td></td><td class="yes">✓</td><td class="yes">✓</td>
+        <td></td><td></td><td></td>
+      </tr>
+      <tr><td class="evt">🎤 Lanzamiento producto</td>
+        <td></td><td class="yes">✓</td><td></td>
+        <td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td>
+        <td></td><td class="rec">★</td><td class="yes">✓</td>
+      </tr>
+      <tr><td class="evt">🍸 Cóctel & Networking</td>
+        <td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td>
+        <td class="yes">✓</td><td class="rec">★</td><td class="yes">✓</td>
+      </tr>
+      <tr><td class="evt">🎓 Formación / Workshop</td>
+        <td class="rec">★</td><td class="rec">★</td><td></td>
+        <td class="rec">★</td><td class="yes">✓</td><td></td><td></td>
+        <td class="yes">✓</td><td class="yes">✓</td><td></td>
+        <td></td><td></td><td></td>
+      </tr>
+      <tr><td class="evt">🎁 Cena de gala</td>
+        <td></td><td></td><td></td>
+        <td></td><td></td><td class="yes">✓</td><td class="rec">★</td>
+        <td></td><td class="yes">✓</td><td class="yes">✓</td>
+        <td></td><td class="yes">✓</td><td class="yes">✓</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="legend">
+    <span class="legend-dot"><span class="rec">★</span> Recomendado (aparece destacado)</span>
+    <span class="legend-dot"><span class="yes">✓</span> Disponible (1 click para verlo)</span>
+    <span class="legend-dot"><span class="opt">·</span> No aplica</span>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────── -->
+<!-- 3. FLUJO DEL COTIZADOR PROPUESTO -->
+<!-- ─────────────────────────────────────────────────── -->
+<section class="section hi">
+  <h2>3 · Flujo propuesto del cotizador</h2>
+  <p class="subtitle">Mismos 7 pasos que ahora — solo cambia el paso 2 ("Menú") para que el cliente vea primero las sugerencias y solo se interna en el catálogo completo si quiere.</p>
+
+  <div class="flow">
+
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-content">
+        <h3>Tipo de evento</h3>
+        <p>El cliente elige <strong>Celebración / Empresa</strong> y subtipo. <em>Igual que ahora.</em></p>
+      </div>
+    </div>
+
+    <div class="flow-arrow">↓</div>
+
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-content">
+        <h3>Servicios gastronómicos del evento</h3>
+        <p>Checkboxes con los momentos del día que el evento necesita. <strong>Pre-marcados según matriz</strong> arriba.</p>
+        <p style="background:var(--card3);padding:10px 14px;border-radius:8px;font-size:.82rem;">
+          Ejemplo · Convención: ☑ Desayuno · ☑ Coffee break · ☑ Comida · ☐ Cóctel<br>
+          Ejemplo · Boda:      ☐ Desayuno · ☐ Coffee break · ☑ Comida · ☑ Cóctel bienvenida<br>
+          Ejemplo · Bautizo:   ☐ Desayuno · ☐ Coffee break · ☑ Brunch  · ☐ Cóctel
+        </p>
+      </div>
+    </div>
+
+    <div class="flow-arrow">↓</div>
+
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-content">
+        <h3>Configurar cada servicio activo (uno a uno)</h3>
+        <p>Para cada momento marcado en paso 2, el cliente elige entre dos rutas:</p>
+
+        <div class="routes-grid">
+          <div class="route suggest">
+            <h4>🎯 Nuestras sugerencias <span class="badge">recomendado</span></h4>
+            <ul>
+              <li>3-4 paquetes preconfigurados etiquetados con la recomendación principal ★</li>
+              <li>Composición fija y precio cerrado</li>
+              <li>Dentro del modal "Ver composición": <strong>radios para elegir 1 de 3 primeros, 1 de 3 segundos, etc.</strong></li>
+              <li>Las elecciones del cliente quedan registradas y aparecen en contrato + orden de servicio</li>
+              <li>Ruta más rápida — la mayoría de clientes la usa</li>
+            </ul>
+          </div>
+          <div class="route libre">
+            <h4>✏️ A la carta <span class="badge">avanzado</span></h4>
+            <ul>
+              <li>El cliente entra al <strong>catálogo completo</strong> (40 platos del recetario)</li>
+              <li><strong>Sin limitaciones</strong> de número de platos (mínimo 0)</li>
+              <li>Filtros: por categoría (entrantes/primeros/segundos/postres) y por alérgeno (sin gluten, sin lactosa…)</li>
+              <li>Cada plato click → se añade · precio se calcula sumando</li>
+              <li>Sumiller propone bodega para los platos elegidos (texto libre)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="decision-box">
+          <strong>Clave UX:</strong> <em>los dos botones aparecen siempre en cada servicio. Por defecto se muestran las sugerencias para no abrumar. La libre elección está a un click.</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow">↓</div>
+
+    <div class="flow-step">
+      <div class="flow-num">4-7</div>
+      <div class="flow-content">
+        <h3>Bebidas · Montaje · Flores · Animación · Resumen</h3>
+        <p>Pasos sin cambios. El resumen final agrega los servicios gastronómicos en un solo bloque "Catering del evento" con desglose por momento.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────── -->
+<!-- 4. CAMBIOS CONCRETOS A IMPLEMENTAR -->
+<!-- ─────────────────────────────────────────────────── -->
+<section class="section">
+  <h2>4 · Cambios concretos a implementar</h2>
+  <p class="subtitle">Si te encaja el esquema, esto es lo que tocaríamos en el código.</p>
+
+  <table class="matrix">
+    <tr>
+      <th class="evt">#</th>
+      <th class="evt">Cambio</th>
+      <th class="evt">Dónde</th>
+      <th class="evt">Esfuerzo</th>
+    </tr>
+    <tr>
+      <td class="evt">A</td>
+      <td class="evt">Añadir paso "Servicios gastronómicos" con 4 checkboxes (desayuno/coffee/comida/cóctel)</td>
+      <td class="evt">presupuesto-evento.html · entre paso 1 y paso 2</td>
+      <td class="evt">Medio</td>
+    </tr>
+    <tr>
+      <td class="evt">B</td>
+      <td class="evt">Pre-marcado automático según matriz evento×menú (estructura de datos en JS)</td>
+      <td class="evt">Tabla DEFAULT_SERVICES por eventType.id</td>
+      <td class="evt">Bajo</td>
+    </tr>
+    <tr>
+      <td class="evt">C</td>
+      <td class="evt">Marcar paquetes "recomendados" para el evento activo con badge ★</td>
+      <td class="evt">renderMenuPkgs() · filtrar/ordenar por recomendación</td>
+      <td class="evt">Bajo</td>
+    </tr>
+    <tr>
+      <td class="evt">D</td>
+      <td class="evt">Modal "Ver composición" con radios interactivos para elegir 1 de 3</td>
+      <td class="evt">showComposition() · estado en sel.menuPkgChoices[]</td>
+      <td class="evt">Alto</td>
+    </tr>
+    <tr>
+      <td class="evt">E</td>
+      <td class="evt">Quitar mínimo en menú "A medida" (sin limitaciones)</td>
+      <td class="evt">step-2 dishPanels · ya casi listo</td>
+      <td class="evt">Bajo</td>
+    </tr>
+    <tr>
+      <td class="evt">F</td>
+      <td class="evt">Bodega del cóctel ampliada (3 blancos, 3 tintos, 2 espumosos, signature, sin alcohol)</td>
+      <td class="evt">composition.Bodega de los 3 cócteles</td>
+      <td class="evt">Bajo</td>
+    </tr>
+    <tr>
+      <td class="evt">G</td>
+      <td class="evt">Resumen final agrupa servicios gastronómicos por momento (no en una lista plana)</td>
+      <td class="evt">buildFinalSummary() y updateSide()</td>
+      <td class="evt">Medio</td>
+    </tr>
+  </table>
+
+  <div class="decision-box" style="margin-top:24px;">
+    <strong>Plan sugerido:</strong>
+    <ul style="list-style:none;padding:0;margin-top:10px;">
+      <li style="padding:4px 0;color:var(--text-soft);">• <strong style="color:var(--gold);">PR #6:</strong> A + B + C (esquema base · 1 sesión)</li>
+      <li style="padding:4px 0;color:var(--text-soft);">• <strong style="color:var(--gold);">PR #7:</strong> D + E + F (interactividad · 1 sesión)</li>
+      <li style="padding:4px 0;color:var(--text-soft);">• <strong style="color:var(--gold);">PR #8:</strong> G (resumen consolidado · corto)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section class="section" style="text-align:center;padding:32px;border-style:dashed;">
+  <h2 style="font-size:1.3rem;margin-bottom:10px;">¿Te encaja este esquema?</h2>
+  <p style="color:var(--text-soft);">Dime qué quieres ajustar (matriz, flujo, recomendaciones) o si lo apruebas tal cual y arrancamos con el PR #6.</p>
+</section>
+
+</div>
+</body>
+</html>

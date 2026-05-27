@@ -49,6 +49,46 @@ VAJILLA_BASE = ('white ceramic plate with thin gold rim, silver cutlery, '
 
 # ─── Catálogo de 40 platos con prompts específicos ────────────────────────────
 PLATOS = [
+    # ── ENTREMESES (v3.3) ──
+    ('entremeses/tabla_ibericos.jpg',
+     'Iberian ham platter — slices of jamón ibérico de bellota, lomo, chorizo and salchichón '
+     'arranged in a fan on a dark wooden tabla, with rustic toasted bread slices and a small bowl '
+     'of grated tomato.'),
+    ('entremeses/tabla_quesos.jpg',
+     'Artisan cheese board — six Spanish cheeses (Manchego, Brie, goat cheese rulo, Roncal, '
+     'smoked Idiazábal, Cabrales blue) arranged on slate, with quince paste, honey drizzle, '
+     'walnuts and dried apricots.'),
+    ('entremeses/aceitunas_aliñadas.jpg',
+     'Premium marinated Spanish olives — mix of green manzanilla, gordal and kalamata olives '
+     'in small ceramic bowls, garnished with lemon and orange peel strips, fresh thyme sprigs '
+     'and a drizzle of olive oil.'),
+    ('entremeses/almendras_marcona.jpg',
+     'Toasted Marcona almonds — pile of golden Spanish marcona almonds in a small ceramic bowl, '
+     'sprinkled with sea salt flakes and a tiny dusting of smoked paprika.'),
+    ('entremeses/boquerones_vinagre.jpg',
+     'Boquerones en vinagre — white marinated Spanish anchovies arranged in concentric circles '
+     'on a white plate, with chopped garlic and fresh parsley, drizzled with golden olive oil.'),
+    ('entremeses/anchoas_cantabrico.jpg',
+     'Cantabrian anchovies on toast — dark salt-cured anchovy fillets on toasted rustic bread '
+     'with creamy artisan butter and a sprig of chive, on a white plate with gold rim.'),
+    ('entremeses/coca_cristal.jpg',
+     'Spanish coca de cristal — crispy thin flatbread rectangle topped with fresh grated tomato, '
+     'olive oil and a slice of Iberian ham draped on top, served on a white plate with gold rim.'),
+    ('entremeses/montadito_bonito.jpg',
+     'Mini tuna canapé — small toast topped with flaked white tuna in olive oil, half a green '
+     'piparra pepper and half a cherry tomato, secured with a wooden pick.'),
+    ('entremeses/bombon_foie.jpg',
+     'Foie gras truffle — small ball of mi-cuit foie gras coated in red freeze-dried berries '
+     'and pistachio, served on a degustation spoon with a sea salt flake.'),
+    ('entremeses/empanadilla_gallega.jpg',
+     'Golden Spanish tuna empanadilla — half-moon shaped fried pastry with a flaky golden crust, '
+     'tuna and tomato filling visible at the broken edge, lemon wedge garnish.'),
+    ('entremeses/pan_tumaca.jpg',
+     'Catalan pan tumaca with serrano ham — rustic toasted bread slices rubbed with ripe tomato, '
+     'drizzled with olive oil and topped with thin slices of serrano ham, sea salt flakes.'),
+    ('entremeses/mini_quiche.jpg',
+     'Mini quiche Lorraine — three individual round mini quiches with golden tops, visible '
+     'bacon bits and melted cheese, on a white plate with gold rim.'),
     # ── ENTRANTES ──
     ('entrantes/gazpacho_andaluz.jpg',
      'Andalusian gazpacho — chilled raw tomato cream soup, vibrant red color, '
@@ -90,6 +130,21 @@ PLATOS = [
      'Two stuffed piquillo red peppers filled with creamy white cod brandada, '
      'glazed with their own red velouté sauce, topped with a few chive sprigs. '
      'White plate with gold rim, dark wood table.'),
+    ('entrantes/ensalada_cesar.jpg',
+     'Caesar salad with crispy chicken — romaine lettuce, breaded golden chicken strips, '
+     'Parmesan shavings, croutons, halved boiled egg and creamy Caesar dressing drizzle. '
+     'White plate with gold rim.'),
+    ('entrantes/crema_esparragos.jpg',
+     'Spanish white asparagus cream soup — pale ivory velvety soup in a white bowl with gold rim, '
+     'topped with two crispy white asparagus tips, crumbled Iberian ham flakes and olive oil drops.'),
+    ('entrantes/vichyssoise.jpg',
+     'Cold vichyssoise with salmon caviar — chilled potato-leek cream in a small white bowl, '
+     'topped with a glistening spoonful of orange salmon caviar and finely chopped chives. '
+     'Elegant minimalist plating.'),
+    ('entrantes/tartar_salmon.jpg',
+     'Salmon tartare with avocado — bright orange diced fresh salmon mixed with soy and sesame, '
+     'served on a ring mold over diced avocado base, topped with lime zest and chives, '
+     'tobiko caviar dots on the side. White plate with gold rim.'),
 
     # ── PRIMEROS ──
     ('primeros/paella_valenciana.jpg',
@@ -133,6 +188,16 @@ PLATOS = [
      'Malaga fish soup — orange-red broth with thin fideos noodles, monkfish chunks, '
      'mussel in half-shell, saffron threads. Served in deep white bowl with gold rim. '
      'Lemon wedge on the side.'),
+    ('primeros/sopa_castellana.jpg',
+     'Castilian garlic soup — rustic terracotta cazuela with reddish-brown bread soup, '
+     'a poached egg breaking on top, slices of serrano ham, a dusting of paprika and parsley.'),
+    ('primeros/lentejas_foie.jpg',
+     'Brown lentil stew with foie gras — dark earthy lentils with roasted chestnuts in a deep '
+     'white plate, topped with a seared golden foie gras escalope and a red wine reduction drizzle.'),
+    ('primeros/arroz_carabineros.jpg',
+     'Creamy carabineros rice — bright red rice studded with two whole grilled red carabinero '
+     'prawns on top, glistening saffron sauce, microgreens, served in a white deep plate with '
+     'gold rim. Premium presentation.'),
 
     # ── SEGUNDOS ──
     ('segundos/solomillo_rioja.jpg',
@@ -173,6 +238,22 @@ PLATOS = [
      'Malaga-style fried seafood — assortment of crispy golden battered anchovies, '
      'calamari rings, small whole prawns and baby squid (puntillitas), '
      'served on parchment-lined plate with lemon wedge. White plate with gold rim.'),
+    ('segundos/rabo_toro.jpg',
+     'Oxtail stew in red wine — dark, fork-tender braised oxtail pieces in a glossy deep red '
+     'Ribera del Duero wine sauce, served alongside a swirl of creamy potato purée with truffle. '
+     'White plate with gold rim. Dramatic dark mood.'),
+    ('segundos/lubina_limon.jpg',
+     'Sea bass with lemon champagne sauce — golden-skinned roasted sea bass fillet on a pool '
+     'of creamy ivory champagne sauce with lemon supremes around it, dill and chive garnish. '
+     'White plate with gold rim.'),
+    ('segundos/cordero_lechal.jpg',
+     'Roasted lamb shoulder — tender Spanish lechal lamb shoulder with golden crispy skin, '
+     'served on a bed of roasted baby potatoes with whole garlic cloves and fresh rosemary sprigs. '
+     'White serving plate with gold rim.'),
+    ('segundos/cochinillo_asado.jpg',
+     'Segovian-style roasted suckling pig — quarter of golden roasted cochinillo with crackling '
+     'skin, traditionally served on a white ceramic plate with gold rim, with roasted apple '
+     'and a sprig of thyme.'),
 
     # ── POSTRES ──
     ('postres/crema_catalana.jpg',
@@ -214,6 +295,18 @@ PLATOS = [
      'Mango lime sorbet — vibrant orange-yellow sorbet scoop in a small glass coupe, '
      'lime zest grated on top, fresh mint leaves, slice of fresh mango on the side. '
      'White plate with gold rim. Refreshing.'),
+    ('postres/souffle_grand_marnier.jpg',
+     'Grand Marnier soufflé — tall golden risen soufflé in a small white ramekin, '
+     'dusted with icing sugar, served immediately with candied orange peel garnish and '
+     'a small ramekin of orange sauce on the side. White plate with gold rim.'),
+    ('postres/profiteroles.jpg',
+     'Profiteroles with hot chocolate — three golden choux pastry profiteroles filled with '
+     'whipped cream, drizzled generously with hot dark melted chocolate sauce. Served in a '
+     'shallow glass cup or white plate with gold rim.'),
+    ('postres/tarta_sacher.jpg',
+     'Sacher cake slice — dark chocolate Austrian cake slice showing visible apricot jam layer '
+     'in the middle, glossy chocolate ganache top with "Sacher" written in white chocolate, '
+     'served on a white plate with gold rim with a small dollop of whipped cream.'),
 ]
 
 
