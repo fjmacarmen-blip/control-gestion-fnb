@@ -781,7 +781,7 @@ main { padding: 36px 40px; }
     <h2>Recetario & <em>Carta Completa</em></h2>
     <p>Recetas de autor con escandallos detallados, carta de bebidas y análisis de costes fijos para restaurante gama media-alta.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="val">40</div><div class="lbl">Recetas</div></div>
+      <div class="hero-stat"><div class="val">78</div><div class="lbl">Recetas</div></div>
       <div class="hero-stat"><div class="val">8</div><div class="lbl">Secciones bebida</div></div>
       <div class="hero-stat"><div class="val">18</div><div class="lbl">Conceptos coste</div></div>
       <div class="hero-stat"><div class="val">7,49€</div><div class="lbl">Coste fijo/plato</div></div>
@@ -803,10 +803,11 @@ main { padding: 36px 40px; }
 
 <!-- TABS -->
 <nav id="tabsNav">
-  <button class="tab active" data-sec="entrantes">🥗 Entrantes <span class="tab-pill">10</span></button>
-  <button class="tab" data-sec="primeros">🥘 Primeros <span class="tab-pill">10</span></button>
-  <button class="tab" data-sec="segundos">🥩 Segundos <span class="tab-pill">10</span></button>
-  <button class="tab" data-sec="postres">🍮 Postres <span class="tab-pill">10</span></button>
+  <button class="tab active" data-sec="entremeses">🍢 Entremeses <span class="tab-pill">12</span></button>
+  <button class="tab" data-sec="entrantes">🥗 Entrantes <span class="tab-pill">14</span></button>
+  <button class="tab" data-sec="primeros">🥘 Primeros <span class="tab-pill">13</span></button>
+  <button class="tab" data-sec="segundos">🥩 Segundos <span class="tab-pill">14</span></button>
+  <button class="tab" data-sec="postres">🍮 Postres <span class="tab-pill">13</span></button>
   <button class="tab" data-sec="coctel">🥂 Cóctel de Pie <span class="tab-pill">12</span></button>
   <button class="tab" data-sec="bebidas">🍷 Bebidas & Carta</button>
   <button class="tab" data-sec="costes">📊 Costes Fijos</button>
@@ -814,7 +815,11 @@ main { padding: 36px 40px; }
 
 <!-- MAIN -->
 <main>
-  <div class="section active" id="sec-entrantes">
+  <div class="section active" id="sec-entremeses">
+    <div class="section-head"><h2>🍢 Entremeses</h2><p>Bocados de bienvenida, picoteo de mesa y aperitivos para abrir boca</p></div>
+    <div class="cards-grid" id="grid-entremeses"></div>
+  </div>
+  <div class="section" id="sec-entrantes">
     <div class="section-head"><h2>🥗 Entrantes</h2><p>Tapas, apertivos y presentaciones de temporada</p></div>
     <div class="cards-grid" id="grid-entrantes"></div>
   </div>
@@ -872,6 +877,60 @@ main { padding: 36px 40px; }
 // DATA — RECETAS
 // ═══════════════════════════════════════════════
 const R = {
+  // ═══════════════════════════════════════════════
+  // ENTREMESES — bocados de bienvenida y mesa
+  // ═══════════════════════════════════════════════
+  entremeses: [
+    { n:"Tabla de Ibéricos Bellota", e:"🥩", g:"g7", sub:"Jamón, lomo, chorizo y salchichón ibérico bellota",
+      prep:10, coc:0, rac:4, dif:"Baja", mp:6.20, alergen:"Sulfitos",
+      ing:[["80g","Jamón ibérico de bellota","loncheado fino"],["60g","Lomo ibérico","en lonchas"],["60g","Chorizo ibérico curado","en rodajas"],["50g","Salchichón ibérico",""],["80g","Pan de cristal","tostado"],["1ud","Tomate maduro","para untar"],["AOVE","DO Málaga",""]],
+      pasos:["Sacar los embutidos de nevera 30 min antes de servir. Cortar al momento con cuchillo afilado.","Tostar las rebanadas de pan de cristal en plancha 30 seg por lado.","Disponer los embutidos en tabla de madera de olivo formando abanico.","Ofrecer aparte pan tostado con AOVE y tomate rallado.","Servir a temperatura ambiente para que se aprecien los matices del bellota."]},
+    { n:"Tabla de Quesos Artesanos", e:"🧀", g:"g7", sub:"6 quesos con membrillo, miel y frutos secos",
+      prep:12, coc:0, rac:4, dif:"Baja", mp:5.40, alergen:"Lácteos, Frutos secos",
+      ing:[["50g","Manchego curado D.O.",""],["50g","Brie de Meaux",""],["40g","Cabra rulo cenizo",""],["50g","Roncal D.O.",""],["40g","Idiazábal ahumado",""],["50g","Queso azul Cabrales",""],["40g","Membrillo casero",""],["30g","Miel de romero",""],["30g","Nueces y orejones",""]],
+      pasos:["Sacar todos los quesos de nevera 1 h antes. Es clave para apreciar texturas y aromas.","Disponer los quesos en tabla de pizarra, separados, ordenados de suaves a fuertes.","Colocar tacos de membrillo, miel en cuenquito y mix de frutos secos.","Acompañar con pan rústico tostado y crackers integrales.","Servir con cuchillo individual para cada queso para no mezclar sabores."]},
+    { n:"Aceitunas Aliñadas Premium", e:"🫒", g:"g4", sub:"Manzanilla, gordal y kalamata con cítricos",
+      prep:8, coc:0, rac:6, dif:"Baja", mp:0.95, alergen:"Sulfitos",
+      ing:[["100g","Aceituna manzanilla deshuesada",""],["80g","Aceituna gordal",""],["60g","Aceituna kalamata",""],["1ud","Piel de limón","en juliana"],["1ud","Piel de naranja",""],["1 diente","Ajo","laminado"],["2g","Tomillo fresco",""],["30ml","AOVE",""]],
+      pasos:["Mezclar las tres variedades de aceituna en un cuenco grande.","Añadir las pieles cítricas, el ajo laminado y las hojas de tomillo.","Regar con AOVE y remover suavemente.","Macerar mínimo 2 h en nevera (mejor de un día para otro).","Servir en cuencos pequeños con palillos de madera."]},
+    { n:"Almendras Marcona Tostadas", e:"🥜", g:"g7", sub:"Tostadas en sartén con sal en flor de Trapani",
+      prep:5, coc:5, rac:6, dif:"Baja", mp:1.15, alergen:"Frutos secos",
+      ing:[["150g","Almendras Marcona crudas","peladas"],["10ml","AOVE",""],["3g","Sal en flor de Trapani",""],["2g","Pimentón dulce de la Vera","opcional"]],
+      pasos:["Calentar sartén grande a fuego medio. Verter las almendras secas.","Tostar removiendo continuamente 4-5 min hasta que doren ligeramente.","Apagar el fuego, añadir el AOVE y remover para impregnar.","Espolvorear inmediatamente la sal en flor (y pimentón si se quiere).","Servir tibias en cuencos pequeños — el calor potencia su aroma."]},
+    { n:"Boquerones en Vinagre con AOVE", e:"🐟", g:"g3", sub:"Limpios, marinados, con AOVE y ajo picado",
+      prep:30, coc:0, rac:4, dif:"Media", mp:2.40, alergen:"Pescado",
+      ing:[["240g","Boquerones frescos","limpios y desespinados"],["200ml","Vinagre de Jerez",""],["10g","Sal gorda",""],["3 dientes","Ajo","picado muy fino"],["20g","Perejil","picado"],["50ml","AOVE",""]],
+      pasos:["Limpiar bien los boquerones: quitar cabeza, espina y vísceras. Abrir como libro.","Lavar bajo agua fría, secar con papel.","Disponer en bandeja con piel hacia abajo. Cubrir con vinagre y sal. Macerar 2 h.","Escurrir bien. Disponer en plato hondo.","Cubrir con AOVE generoso, ajo picado y perejil. Servir frío con palillos."]},
+    { n:"Anchoas del Cantábrico", e:"🐠", g:"g3", sub:"Filetes en AOVE sobre tosta con mantequilla artesana",
+      prep:10, coc:5, rac:3, dif:"Baja", mp:4.80, alergen:"Pescado, Gluten, Lácteos",
+      ing:[["80g","Anchoas del Cantábrico","en aceite"],["6 rebanadas","Pan rústico",""],["40g","Mantequilla artesana sin sal",""],["1ud","Cebollino","picado"],["AOVE","para regar",""]],
+      pasos:["Tostar las rebanadas de pan ligeramente en parrilla o sartén seca.","Untar generosamente con mantequilla artesana a temperatura ambiente.","Disponer 2-3 filetes de anchoa por tosta, alineadas.","Espolvorear cebollino picado y un toque de AOVE.","Servir inmediatamente — el contraste de mantequilla fría y anchoa salada es la clave."]},
+    { n:"Coca de Cristal con Tomate y Jamón", e:"🍞", g:"g7", sub:"Coca crujiente con tomate rallado, AOVE y jamón ibérico",
+      prep:10, coc:8, rac:4, dif:"Baja", mp:2.80, alergen:"Gluten, Sulfitos",
+      ing:[["1ud","Coca de cristal","grande"],["2ud","Tomate maduro","rallado"],["80g","Jamón ibérico","loncheado fino"],["40ml","AOVE",""],["Sal en escamas",""]],
+      pasos:["Calentar el horno a 200°C. Hornear la coca 5-6 min hasta que esté muy crujiente.","Cortar en rectángulos generosos de 8×4 cm.","Rallar el tomate maduro sobre cada porción.","Regar con AOVE y sal en escamas.","Coronar cada porción con una loncha de jamón ibérico. Servir caliente."]},
+    { n:"Mini-Montadito de Bonito con Piparra", e:"🥒", g:"g4", sub:"Bonito del norte en AOVE con piparra y tomate cherry",
+      prep:15, coc:0, rac:6, dif:"Baja", mp:1.85, alergen:"Pescado, Gluten, Sulfitos",
+      ing:[["120g","Bonito del norte","en aceite, escurrido"],["6ud","Piparras",""],["6ud","Tomate cherry",""],["6ud","Pan tipo regaña",""],["AOVE","para regar",""],["Cebollino picado",""]],
+      pasos:["Cortar la regaña en rectángulos de 4×3 cm.","Disponer una porción generosa de bonito desmenuzado sobre cada base.","Coronar con media piparra y medio cherry.","Pinchar con palillo de madera.","Regar con AOVE y cebollino picado. Servir frío en bandeja."]},
+    { n:"Bombón de Foie con Frutos Rojos", e:"🍓", g:"g1", sub:"Bola de mi-cuit empanada en frutos rojos liofilizados",
+      prep:25, coc:0, rac:8, dif:"Media", mp:3.20, alergen:"Frutos secos",
+      ing:[["120g","Mi-cuit de pato",""],["40g","Frutos rojos liofilizados","triturados"],["20g","Pistacho molido",""],["Sal en escamas",""]],
+      pasos:["Sacar el mi-cuit de nevera 5 min antes — debe estar firme pero modelable.","Formar bolas pequeñas (10 g) con cucharas o con las manos enguantadas.","Mezclar los frutos liofilizados con el pistacho molido.","Pasar cada bola por la mezcla hasta cubrir completamente.","Disponer en cucharas de degustación con un cristal de sal en escamas encima."]},
+    { n:"Empanadilla Gallega Casera", e:"🥟", g:"g7", sub:"De atún con sofrito, masa hojaldrada y dorada",
+      prep:25, coc:18, rac:8, dif:"Media", mp:1.45, alergen:"Gluten, Huevo, Pescado, Sulfitos",
+      ing:[["8 obleas","Empanadillas",""],["100g","Atún en aceite","escurrido"],["1/2 ud","Cebolla","picada fina"],["1/2 ud","Pimiento rojo","picado"],["80g","Tomate frito casero",""],["1ud","Huevo","para pintar"],["1 sobre","Pimentón dulce",""]],
+      pasos:["Sofreír la cebolla y el pimiento en AOVE hasta pochados, 8 min.","Añadir el tomate frito y el pimentón. Cocer 3 min. Apartar.","Mezclar con el atún desmenuzado. Dejar enfriar.","Rellenar las obleas con una cucharada, cerrar y sellar con tenedor.","Pintar con huevo batido. Hornear 18 min a 200°C hasta doradas."]},
+    { n:"Pan Tumaca con Jamón Serrano", e:"🍞", g:"g2", sub:"Pan rústico con tomate rallado, AOVE y jamón serrano",
+      prep:10, coc:3, rac:4, dif:"Baja", mp:1.95, alergen:"Gluten, Sulfitos",
+      ing:[["8 rebanadas","Pan rústico",""],["3ud","Tomate maduro","cortado por la mitad"],["1 diente","Ajo",""],["100g","Jamón serrano","loncheado"],["30ml","AOVE",""],["Sal en escamas",""]],
+      pasos:["Tostar el pan en plancha o parrilla 1 min por cara.","Restregar con ajo abierto (opcional pero recomendado).","Restregar generosamente con el tomate cortado, presionando la pulpa sobre el pan.","Regar con AOVE de calidad y sal en escamas.","Coronar con una loncha de jamón serrano. Servir inmediatamente."]},
+    { n:"Mini Quiche Lorraine", e:"🥧", g:"g7", sub:"Tartaletas individuales con bacon, queso y crema de huevo",
+      prep:25, coc:18, rac:6, dif:"Media", mp:1.65, alergen:"Gluten, Huevo, Lácteos",
+      ing:[["6ud","Tartaletas mini","ya horneadas"],["80g","Bacon ahumado","en dados"],["60g","Queso gruyère","rallado"],["2ud","Huevo",""],["80ml","Nata 35%",""],["Nuez moscada","y pimienta blanca",""]],
+      pasos:["Saltear el bacon en sartén seca hasta crujiente. Reservar sobre papel.","Batir los huevos con la nata, nuez moscada y pimienta. Salpimentar al gusto.","Rellenar las tartaletas con bacon y queso rallado.","Verter la mezcla de huevo y nata hasta casi cubrir.","Hornear 15-18 min a 180°C hasta dorado. Servir tibias."]},
+  ],
+
   entrantes: [
     { n:"Gazpacho Andaluz", e:"🥣", g:"g1", sub:"Sopa fría de tomate tradicional andaluza",
       prep:15, coc:0, rac:1, dif:"Baja", mp:1.20, alergen:"Gluten, Sulfitos",
@@ -913,6 +972,22 @@ const R = {
       prep:20, coc:15, rac:1, dif:"Media", mp:3.80, alergen:"Pescado, Leche",
       ing:[["4ud","Pimientos del piquillo","escurridos"],["160g","Bacalao desalado","desmigado"],["80ml","Nata 35%",""],["2 dientes","Ajo",""],["50ml","AOVE",""],["150ml","Caldo de piquillos","para la salsa"]],
       pasos:["Desalar el bacalao 24-48h cambiando el agua. Escurrir y desmigar.","Confitar el bacalao con ajo en AOVE a 60°C durante 15 min.","Triturar con la nata caliente hasta brandada cremosa. Salpimentar.","Rellenar los piquillos con la brandada. Cerrar la abertura.","Marcar en plancha 2 min por lado. Servir sobre velouté de piquillos."]},
+    { n:"Ensalada César con Pollo Crujiente", e:"🥗", g:"g4", sub:"Lechuga romana, pollo empanado, parmesano y salsa César",
+      prep:18, coc:8, rac:1, dif:"Baja", mp:4.60, alergen:"Gluten, Huevo, Lácteos, Pescado",
+      ing:[["1ud","Pechuga pollo","fileteada"],["100g","Pan rallado panko",""],["1 cogollo","Lechuga romana",""],["30g","Parmesano","en lascas"],["20g","Crutones",""],["40ml","Salsa César",""],["1ud","Huevo cocido",""]],
+      pasos:["Empanar el pollo en panko y freír 3 min por lado hasta dorado. Reservar.","Lavar y trocear la lechuga romana en hojas grandes.","Disponer la lechuga en plato hondo, regar con salsa César.","Cortar el pollo en tiras y colocar sobre la ensalada.","Coronar con parmesano en lascas, crutones, huevo en cuartos y un toque más de salsa."]},
+    { n:"Crema de Espárragos Blancos", e:"🥬", g:"g4", sub:"Crema de espárragos navarra con virutas de jamón ibérico",
+      prep:10, coc:25, rac:1, dif:"Baja", mp:3.40, alergen:"Lácteos",
+      ing:[["400g","Espárragos blancos","en conserva premium"],["1/2 ud","Cebolla","picada"],["1ud","Patata pequeña",""],["100ml","Nata 35%",""],["200ml","Caldo de verduras",""],["20g","Jamón ibérico","virutas"]],
+      pasos:["Sofreír la cebolla picada en mantequilla hasta transparente.","Añadir la patata troceada y los espárragos escurridos (reservar 2 puntas).","Cubrir con caldo y cocer 15 min hasta que la patata esté tierna.","Triturar con la nata hasta crema fina. Pasar por chino.","Servir en plato hondo con las puntas de espárrago, virutas de jamón y AOVE."]},
+    { n:"Vichyssoise con Caviar", e:"🥄", g:"g3", sub:"Crema fría de puerro y patata con caviar de salmón",
+      prep:15, coc:30, rac:1, dif:"Media", mp:5.20, alergen:"Lácteos, Pescado",
+      ing:[["2ud","Puerro","parte blanca"],["1ud","Patata mediana",""],["50g","Mantequilla",""],["200ml","Caldo pollo",""],["120ml","Nata 35%",""],["10g","Caviar de salmón",""],["Cebollino picado",""]],
+      pasos:["Pochar el puerro picado en mantequilla 8 min, sin que dore.","Añadir la patata troceada y el caldo. Cocer 20 min.","Triturar muy fino con la nata. Salpimentar. Pasar por colador chino.","Enfriar mínimo 4 h en nevera.","Servir muy frío con cucharadita de caviar de salmón y cebollino."]},
+    { n:"Tartar de Salmón con Aguacate", e:"🐟", g:"g3", sub:"Salmón fresco picado a cuchillo con aguacate y wasabi",
+      prep:20, coc:0, rac:1, dif:"Media", mp:6.40, alergen:"Pescado, Soja, Sésamo",
+      ing:[["140g","Salmón fresco","sin piel ni espinas"],["1/2 ud","Aguacate maduro",""],["20ml","Salsa de soja",""],["5g","Wasabi","en pasta"],["10ml","Aceite sésamo",""],["1ud","Lima","zumo y ralladura"],["Cebollino",""]],
+      pasos:["Cortar el salmón en daditos de 5 mm con cuchillo afilado.","Aliñar con soja, sésamo, wasabi y zumo de lima. Macerar 5 min en frío.","Cortar el aguacate en daditos similar y aliñar con sal y lima.","Disponer en aro de emplatado: aguacate abajo, tartar encima.","Desmoldar con cuidado. Ralladura de lima y cebollino picado por encima."]},
   ],
 
   primeros: [
@@ -956,6 +1031,18 @@ const R = {
       prep:20, coc:30, rac:1, dif:"Media", mp:3.20, alergen:"Pescado, Moluscos, Gluten",
       ing:[["150g","Rape en tacos",""],["100g","Mejillón cocido",""],["40g","Fideos cabello de ángel",""],["1ud","Cebolla",""],["600ml","Fumet de pescado",""],["2g","Pimentón dulce",""],["Azafrán","al gusto",""]],
       pasos:["Sofreír ajo y cebolla. Añadir tomate y pimentón. Reducir 8 min.","Verter el fumet y el azafrán. Hervir 10 min. Triturar el sofrito con túrmix.","Colar el caldo resultante. Llevar a ebullición.","Añadir los fideos y cocer 4 min.","Incorporar el rape y los mejillones. Cocinar 2 min más. Rectificar. Servir muy caliente."]},
+    { n:"Sopa Castellana", e:"🍲", g:"g7", sub:"Pan, ajo, pimentón, jamón y huevo escalfado",
+      prep:10, coc:25, rac:1, dif:"Baja", mp:1.40, alergen:"Gluten, Huevo, Sulfitos",
+      ing:[["80g","Pan duro",""],["4 dientes","Ajo",""],["50g","Jamón serrano","picado"],["1 cda","Pimentón dulce",""],["1ud","Huevo",""],["600ml","Caldo de pollo",""],["50ml","AOVE",""]],
+      pasos:["Trocear el pan en cubos pequeños. Reservar.","Sofreír el ajo en AOVE hasta dorado. Retirar del aceite.","Añadir el pimentón fuera del fuego (no debe quemarse).","Volver al fuego, añadir el jamón picado y el pan. Cubrir con caldo. Cocer 20 min.","Antes de servir, escalfar el huevo dentro de la sopa 3 min. Servir en cazuela individual."]},
+    { n:"Lentejas con Foie y Castañas", e:"🫘", g:"g7", sub:"Lentejas pardinas con escalopa de foie y castañas asadas",
+      prep:15, coc:50, rac:1, dif:"Media", mp:4.20, alergen:"Frutos secos, Sulfitos",
+      ing:[["180g","Lentejas pardinas",""],["80g","Foie fresco","en escalopa"],["50g","Castañas asadas","peladas"],["1ud","Zanahoria",""],["1ud","Cebolla",""],["100ml","Vino tinto",""],["1 hoja","Laurel",""]],
+      pasos:["Sofreír cebolla y zanahoria picadas en AOVE.","Añadir las lentejas lavadas, laurel y agua hasta cubrir 2 dedos.","Cocer 40 min a fuego suave. Añadir las castañas en los últimos 5 min.","Marcar la escalopa de foie en sartén muy caliente, 30 seg por lado.","Servir las lentejas en plato hondo con la escalopa de foie encima y reducción de vino tinto."]},
+    { n:"Arroz Cremoso de Carabineros", e:"🦞", g:"g1", sub:"Arroz bomba con carabineros y reducción de su coral",
+      prep:25, coc:30, rac:2, dif:"Alta", mp:18.00, alergen:"Crustáceos, Lácteos",
+      ing:[["360g","Arroz bomba",""],["4ud","Carabineros grandes",""],["1L","Fumet de marisco",""],["1ud","Cebolla","picada"],["40g","Mantequilla",""],["80ml","Vino blanco",""],["2g","Azafrán",""]],
+      pasos:["Separar las cabezas y colas de los carabineros. Reservar.","Sofreír las cabezas en AOVE, machacar y añadir al fumet hirviendo. Colar.","Sofreír la cebolla, añadir el arroz, nacarar 1 min, verter el vino y reducir.","Incorporar el fumet caliente con azafrán. Cocer 18 min removiendo.","Mantecar con mantequilla fría. Marcar las colas en plancha y disponer encima."]},
   ],
 
   segundos: [
@@ -999,6 +1086,22 @@ const R = {
       prep:15, coc:10, rac:1, dif:"Baja", mp:5.80, alergen:"Gluten, Crustáceos, Moluscos, Pescado",
       ing:[["80g","Boquerones frescos","limpios"],["80g","Anillas de calamar",""],["80g","Gambas medianas","con cáscara"],["60g","Puntillitas (chopitos)",""],["150g","Harina de fritura",""],["Limón","para servir",""]],
       pasos:["Secar bien el pescado con papel de cocina. Salar levemente.","Pasar por harina de fritura sacudiendo el exceso.","Freír en abundante aceite de girasol a 180-190°C en pequeñas tandas.","Boquerones: 2 min. Calamares: 2-3 min. Gambas: 2 min. Puntillitas: 90 seg.","Escurrir en papel. Sal al gusto. Servir inmediatamente en papel de estraza con limón."]},
+    { n:"Rabo de Toro al Vino Tinto", e:"🐂", g:"g1", sub:"Estofado tradicional con verduras y reducción de Ribera",
+      prep:25, coc:180, rac:1, dif:"Alta", mp:6.80, alergen:"Sulfitos",
+      ing:[["350g","Rabo de toro","en piezas"],["500ml","Vino tinto Ribera del Duero",""],["1ud","Cebolla",""],["2ud","Zanahoria",""],["1 puerro",""],["2 dientes","Ajo",""],["1 cda","Tomate concentrado",""],["Laurel y tomillo",""]],
+      pasos:["Salar el rabo y sellar en cocotte con AOVE por todos los lados hasta dorado.","Retirar la carne. Sofreír verduras picadas hasta caramelizadas.","Añadir tomate concentrado. Verter el vino y reducir 5 min.","Devolver la carne, cubrir con agua, añadir hierbas. Estofar 3 h a fuego mínimo.","Retirar el rabo. Colar y reducir la salsa. Servir con puré de patata trufado."]},
+    { n:"Lubina al Limón con Champagne", e:"🍋", g:"g3", sub:"Lubina con salsa de champagne y supremas de limón",
+      prep:15, coc:18, rac:1, dif:"Media", mp:8.20, alergen:"Pescado, Lácteos, Sulfitos",
+      ing:[["180g","Lubina","filete con piel"],["100ml","Champagne",""],["80ml","Nata 35%",""],["30g","Mantequilla","fría"],["1ud","Limón","supremas"],["Cebollino y eneldo",""]],
+      pasos:["Marcar la lubina en sartén con piel hacia abajo 4 min hasta crujiente.","Voltear, cocinar 2 min más. Reservar caliente.","En la misma sartén, reducir el champagne a la mitad.","Añadir nata, reducir 2 min. Montar con mantequilla fría fuera del fuego.","Servir la lubina sobre la salsa con supremas de limón y hierbas frescas."]},
+    { n:"Cordero Lechal al Romero", e:"🐑", g:"g7", sub:"Paletilla de lechal al horno con patatas y romero",
+      prep:20, coc:90, rac:1, dif:"Media", mp:7.40, alergen:"Sulfitos",
+      ing:[["300g","Paletilla de cordero lechal",""],["300g","Patatas pequeñas",""],["3 dientes","Ajo","sin pelar"],["3 ramas","Romero fresco",""],["100ml","Vino blanco",""],["AOVE",""],["Sal gruesa",""]],
+      pasos:["Precalentar horno a 180°C. Salpimentar la paletilla.","Disponer en fuente con las patatas peloteras, ajos enteros y romero.","Regar con vino blanco y AOVE. Hornear 60 min.","Subir a 220°C los últimos 15 min para dorar.","Reposar 10 min antes de servir con su jugo natural."]},
+    { n:"Cochinillo Asado al Horno de Leña", e:"🐷", g:"g7", sub:"Cochinillo segoviano con piel crujiente",
+      prep:30, coc:150, rac:1, dif:"Alta", mp:9.20, alergen:"",
+      ing:[["350g","Cochinillo segoviano","cuarto"],["Manteca","para untar"],["Sal gruesa",""],["Hierbas aromáticas","tomillo, laurel"],["100ml","Vino blanco","seco"]],
+      pasos:["Untar el cochinillo con manteca y sal. Disponer en bandeja con vino y hierbas.","Hornear a 160°C durante 90 min con la piel hacia arriba.","Subir a 220°C los últimos 30 min sin abrir el horno — la piel se infla y queda crujiente.","Comprobar con la prueba del plato: la piel debe romperse con un toque.","Servir con ensalada de hojas frescas, manzana asada o pisto castellano."]},
   ],
 
   postres: [
@@ -1042,6 +1145,18 @@ const R = {
       prep:20, coc:10, rac:2, dif:"Media", mp:1.60, alergen:"Sulfitos",
       ing:[["400g","Mango alphonso","muy maduro"],["100g","Azúcar",""],["100ml","Agua",""],["2ud","Lima","zumo y ralladura"],["20ml","Ron blanco","opcional"],["Menta fresca","para decorar",""]],
       pasos:["Preparar almíbar: hervir agua y azúcar 3 min. Enfriar.","Triturar la pulpa de mango con el zumo y ralladura de lima.","Mezclar con el almíbar frío y el ron.","Congelar en heladera o en recipiente plano removiendo cada 30 min durante 3h.","Servir en copa con ralladura de lima y menta fresca."]},
+    { n:"Soufflé Grand Marnier", e:"🍊", g:"g7", sub:"Soufflé caliente de Grand Marnier con naranjas confitadas",
+      prep:25, coc:12, rac:1, dif:"Alta", mp:2.40, alergen:"Lácteos, Huevo, Gluten, Sulfitos",
+      ing:[["3 claras","Huevo","a punto de nieve"],["2 yemas","Huevo",""],["60g","Azúcar",""],["30g","Mantequilla",""],["25g","Harina",""],["150ml","Leche",""],["30ml","Grand Marnier",""],["Ralladura de naranja",""]],
+      pasos:["Engrasar moldes individuales con mantequilla y espolvorear con azúcar.","Preparar bechamel ligera con mantequilla, harina y leche. Cocer 3 min.","Añadir yemas, ralladura de naranja y Grand Marnier. Mezclar bien.","Incorporar las claras montadas con cuidado para no bajarlas.","Verter en moldes hasta 2/3. Hornear a 200°C durante 10-12 min. Servir INMEDIATAMENTE con azúcar glas."]},
+    { n:"Profiteroles con Chocolate Caliente", e:"🍫", g:"g5", sub:"Pasta choux rellena de nata con salsa de chocolate fundido",
+      prep:30, coc:25, rac:2, dif:"Alta", mp:2.10, alergen:"Lácteos, Huevo, Gluten",
+      ing:[["6ud","Profiteroles","ya horneados"],["200ml","Nata para montar 35%",""],["20g","Azúcar glas",""],["150g","Chocolate negro 70%",""],["80ml","Nata líquida","para salsa"],["20g","Mantequilla",""]],
+      pasos:["Montar la nata con el azúcar hasta firme. Reservar en frío.","Cortar los profiteroles por la mitad y rellenar con la nata montada.","Fundir el chocolate al baño maría con la nata líquida y la mantequilla.","Disponer los profiteroles en copa, 3 por ración.","Verter la salsa de chocolate caliente justo antes de servir."]},
+    { n:"Tarta Sacher", e:"🎂", g:"g5", sub:"Bizcocho de chocolate con mermelada de albaricoque y ganache",
+      prep:40, coc:35, rac:8, dif:"Alta", mp:1.95, alergen:"Lácteos, Huevo, Gluten, Frutos secos",
+      ing:[["140g","Chocolate negro 70%",""],["140g","Mantequilla",""],["140g","Azúcar",""],["6ud","Huevos","separados"],["140g","Harina","tamizada"],["100g","Mermelada de albaricoque",""],["100g","Chocolate","para cobertura"],["50ml","Nata",""]],
+      pasos:["Fundir 140g chocolate con mantequilla. Añadir azúcar y yemas batidas.","Incorporar harina tamizada. Montar las claras y añadirlas con cuidado.","Hornear en molde de 22 cm a 170°C durante 35 min. Enfriar.","Partir el bizcocho en 2 capas, rellenar con mermelada caliente.","Cubrir con ganache (chocolate fundido con nata). Decorar con la palabra Sacher en chocolate blanco."]},
   ],
 
   coctel: [
@@ -1193,6 +1308,19 @@ function diffClass(d) {
 // ═══════════════════════════════════════════════
 const BASE_IMG = '../imagenes/platos/';
 const IMG_MAP = {
+  // Entremeses (NUEVO)
+  "Tabla de Ibéricos Bellota":              BASE_IMG + "entremeses/tabla_ibericos.jpg",
+  "Tabla de Quesos Artesanos":              BASE_IMG + "entremeses/tabla_quesos.jpg",
+  "Aceitunas Aliñadas Premium":             BASE_IMG + "entremeses/aceitunas_aliñadas.jpg",
+  "Almendras Marcona Tostadas":             BASE_IMG + "entremeses/almendras_marcona.jpg",
+  "Boquerones en Vinagre con AOVE":         BASE_IMG + "entremeses/boquerones_vinagre.jpg",
+  "Anchoas del Cantábrico":                 BASE_IMG + "entremeses/anchoas_cantabrico.jpg",
+  "Coca de Cristal con Tomate y Jamón":     BASE_IMG + "entremeses/coca_cristal.jpg",
+  "Mini-Montadito de Bonito con Piparra":   BASE_IMG + "entremeses/montadito_bonito.jpg",
+  "Bombón de Foie con Frutos Rojos":        BASE_IMG + "entremeses/bombon_foie.jpg",
+  "Empanadilla Gallega Casera":             BASE_IMG + "entremeses/empanadilla_gallega.jpg",
+  "Pan Tumaca con Jamón Serrano":           BASE_IMG + "entremeses/pan_tumaca.jpg",
+  "Mini Quiche Lorraine":                   BASE_IMG + "entremeses/mini_quiche.jpg",
   // Entrantes
   "Gazpacho Andaluz":                 BASE_IMG + "entrantes/gazpacho_andaluz.jpg",
   "Salmorejo Cordobés":               BASE_IMG + "entrantes/salmorejo_cordobes.jpg",
@@ -1204,6 +1332,10 @@ const IMG_MAP = {
   "Carpaccio de Ternera":             BASE_IMG + "entrantes/carpaccio_ternera.jpg",
   "Tostas de Foie con Higos":         BASE_IMG + "entrantes/tostas_foie_higos.jpg",
   "Pimientos del Piquillo con Bacalao": BASE_IMG + "entrantes/piquillos_bacalao.jpg",
+  "Ensalada César con Pollo Crujiente": BASE_IMG + "entrantes/ensalada_cesar.jpg",
+  "Crema de Espárragos Blancos":      BASE_IMG + "entrantes/crema_esparragos.jpg",
+  "Vichyssoise con Caviar":           BASE_IMG + "entrantes/vichyssoise.jpg",
+  "Tartar de Salmón con Aguacate":    BASE_IMG + "entrantes/tartar_salmon.jpg",
   // Primeros
   "Paella Valenciana":                BASE_IMG + "primeros/paella_valenciana.jpg",
   "Arroz Negro con Sepia":            BASE_IMG + "primeros/arroz_negro_sepia.jpg",
@@ -1215,6 +1347,10 @@ const IMG_MAP = {
   "Arroz con Bogavante":              BASE_IMG + "primeros/arroz_bogavante.jpg",
   "Crema de Calabaza y Coco":         BASE_IMG + "primeros/crema_calabaza_coco.jpg",
   "Sopa de Pescado Malagueña":        BASE_IMG + "primeros/sopa_pescado.jpg",
+  "Sopa Castellana":                  BASE_IMG + "primeros/sopa_castellana.jpg",
+  "Lentejas con Foie y Castañas":     BASE_IMG + "primeros/lentejas_foie.jpg",
+  "Arroz Cremoso de Carabineros":     BASE_IMG + "primeros/arroz_carabineros.jpg",
+  "Tartar de Salmón con Aguacate":    BASE_IMG + "entrantes/tartar_salmon.jpg",
   // Segundos
   "Solomillo con Reducción de Rioja": BASE_IMG + "segundos/solomillo_rioja.jpg",
   "Lubina al Horno":                  BASE_IMG + "segundos/lubina_horno.jpg",
@@ -1226,6 +1362,10 @@ const IMG_MAP = {
   "Bacalao al Pil-Pil":               BASE_IMG + "segundos/bacalao_pilpil.jpg",
   "Pato Confit con Naranja":          BASE_IMG + "segundos/pato_confit_naranja.jpg",
   "Fritura Malagueña":                BASE_IMG + "segundos/fritura_malaguena.jpg",
+  "Rabo de Toro al Vino Tinto":       BASE_IMG + "segundos/rabo_toro.jpg",
+  "Lubina al Limón con Champagne":    BASE_IMG + "segundos/lubina_limon.jpg",
+  "Cordero Lechal al Romero":         BASE_IMG + "segundos/cordero_lechal.jpg",
+  "Cochinillo Asado al Horno de Leña":BASE_IMG + "segundos/cochinillo_asado.jpg",
   // Cóctel de Pie (reutilizamos imágenes de las categorías afines)
   "Croqueta Líquida de Jamón Ibérico":      BASE_IMG + "entrantes/croquetas_jamon.jpg",
   "Tartar de Atún Rojo en Cucurucho":       BASE_IMG + "entrantes/tataki_atun_rojo.jpg",
@@ -1250,6 +1390,9 @@ const IMG_MAP = {
   "Mousse de Chocolate Blanco":       BASE_IMG + "postres/mousse_choco_blanco.jpg",
   "Flan de Huevo Casero":             BASE_IMG + "postres/flan_huevo_casero.jpg",
   "Sorbete de Mango y Lima":          BASE_IMG + "postres/sorbete_mango_lima.jpg",
+  "Soufflé Grand Marnier":            BASE_IMG + "postres/souffle_grand_marnier.jpg",
+  "Profiteroles con Chocolate Caliente":BASE_IMG + "postres/profiteroles.jpg",
+  "Tarta Sacher":                     BASE_IMG + "postres/tarta_sacher.jpg",
 };
 
 // ═══════════════════════════════════════════════
@@ -1617,7 +1760,7 @@ function renderRecipes(cat) {
 }
 
 function renderAll() {
-  ['entrantes','primeros','segundos','postres','coctel'].forEach(renderRecipes);
+  ['entremeses','entrantes','primeros','segundos','postres','coctel'].forEach(renderRecipes);
 }
 
 // ═══════════════════════════════════════════════
@@ -1850,7 +1993,7 @@ function doSearch(term) {
   if (!t) { clearSearch(); return; }
   document.querySelectorAll('.tab').forEach(function(b) { b.classList.remove('active'); });
   document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
-  ['entrantes','primeros','segundos','postres','coctel'].forEach(function(cat) {
+  ['entremeses','entrantes','primeros','segundos','postres','coctel'].forEach(function(cat) {
     document.getElementById('sec-' + cat).classList.add('active');
   });
   document.querySelectorAll('.card').forEach(function(c) {
