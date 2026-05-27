@@ -1695,24 +1695,29 @@ function openRecipeByName(name) {
   }
   return false;
 }
-window.addEventListener('hashchange', function() {
-  if (location.hash.length > 1) openRecipeByName(location.hash.substring(1));
-});
 
 // ═══════════════════════════════════════════════
 // INIT (carga proyecto y renderiza)
 // ═══════════════════════════════════════════════
 (async () => {
+  window.showLoadingBanner('Cargando recetario…');
   try {
-    const proj = await window.loadProject();
-    R = proj.recetas.categorias || {};
+    const proj = await window.loadProject(undefined, { keys: ['recetas'] });
+    R = (proj.recetas && proj.recetas.categorias) || {};
+    window.hideLoadingBanner();
   } catch (e) {
     console.error('Error cargando proyecto:', e);
+    window.showErrorBanner('No se pudo cargar el recetario.');
   }
   renderAll();
   renderBebidas();
   calcCostes();
   renderAllergFilters();
+  // hashchange listener se registra después del primer render para evitar
+  // race condition con R aún vacío.
+  window.addEventListener('hashchange', function() {
+    if (location.hash.length > 1) openRecipeByName(location.hash.substring(1));
+  });
   if (location.hash && location.hash.length > 1) {
     setTimeout(function() { openRecipeByName(location.hash.substring(1)); }, 100);
   }

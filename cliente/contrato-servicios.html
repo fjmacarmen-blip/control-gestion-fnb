@@ -525,11 +525,14 @@ function renderDoc() {
 }
 
 (async () => {
+  window.showLoadingBanner('Cargando datos del establecimiento…');
   try {
-    const proj = await window.loadProject();
-    DATOS_HOTEL = proj.establecimiento.datos_legacy || {};
+    const proj = await window.loadProject(undefined, { keys: ['establecimiento'] });
+    DATOS_HOTEL = (proj.establecimiento && proj.establecimiento.datos_legacy) || {};
+    window.hideLoadingBanner();
   } catch (e) {
     console.error('Error cargando proyecto:', e);
+    window.showErrorBanner('No se pudieron cargar los datos del establecimiento.');
   }
   renderDoc();
 })();

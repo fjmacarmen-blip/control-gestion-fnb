@@ -823,11 +823,14 @@ function renderOrderBlock(title, items) {
 }
 
 (async () => {
+  window.showLoadingBanner('Cargando dietas especiales…');
   try {
-    const proj = await window.loadProject();
-    DIETA_INSTRUCCIONES = proj.dietas.instrucciones || {};
+    const proj = await window.loadProject(undefined, { keys: ['dietas'] });
+    DIETA_INSTRUCCIONES = (proj.dietas && proj.dietas.instrucciones) || {};
+    window.hideLoadingBanner();
   } catch (e) {
     console.error('Error cargando proyecto:', e);
+    window.showErrorBanner('No se pudieron cargar las instrucciones de dietas.');
   }
   renderDoc();
 })();

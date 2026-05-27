@@ -2543,18 +2543,21 @@ function resolveMenuImg(img) {
 }
 
 (async () => {
+  window.showLoadingBanner('Cargando catálogo de eventos y menús…');
   try {
-    const proj = await window.loadProject();
-    eventTypes = (proj.eventos.tipos || []).map(t => ({
+    const proj = await window.loadProject(undefined, { keys: ['eventos', 'menus'] });
+    eventTypes = ((proj.eventos && proj.eventos.tipos) || []).map(t => ({
       ...t,
       img: t.img ? BASE_EVT + t.img : undefined
     }));
-    menuPkgs = (proj.menus.paquetes || []).map(m => ({
+    menuPkgs = ((proj.menus && proj.menus.paquetes) || []).map(m => ({
       ...m,
       img: resolveMenuImg(m.img)
     }));
+    window.hideLoadingBanner();
   } catch (e) {
     console.error('Error cargando proyecto:', e);
+    window.showErrorBanner('No se pudo cargar el catálogo del proyecto.');
   }
   initGrids();
   renderProgress();
