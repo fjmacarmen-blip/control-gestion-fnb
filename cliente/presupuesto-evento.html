@@ -2088,11 +2088,13 @@ function showComposition(pkgId) {
           ${items.map((item, i) => {
             const itemId = `${inputName}_${i}`;
             const isChecked = chosen.includes(item) ? 'checked' : '';
+            // Escapar comillas para que no rompan el atributo onchange="..."
+            const titleEsc = title.replace(/'/g,"\\'");
             return `
               <label class="comp-option" for="${itemId}">
                 <input type="${inputType}" id="${itemId}" name="${inputName}"
                        value="${item.replace(/"/g,'&quot;')}" ${isChecked}
-                       onchange="onCompChoice('${pkgId}', ${JSON.stringify(title).replace(/'/g,"\\'")}, ${N}, this)">
+                       onchange="onCompChoice('${pkgId}','${titleEsc}',${N},this)">
                 <span class="comp-option-text">${renderCompItem(item, true)}</span>
               </label>`;
           }).join('')}
