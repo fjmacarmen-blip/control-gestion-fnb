@@ -201,6 +201,49 @@ body{
 }
 .menu-filter-notice strong { color:var(--gold); }
 
+/* ── Dietas especiales ── */
+.dietas-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:12px;
+  background:var(--card); border:1px solid var(--border); border-radius:14px;
+  padding:18px; margin-top:6px;
+}
+.dieta-cell label {
+  display:block; font-size:.72rem; color:var(--text-soft);
+  margin-bottom:6px; text-align:center;
+}
+.dieta-input-wrap {
+  display:flex; align-items:center; justify-content:center;
+  background:var(--bg); border:1px solid var(--border2); border-radius:10px;
+  overflow:hidden; max-width:120px; margin:0 auto;
+}
+.dieta-input-wrap button {
+  width:28px; height:32px; background:none; border:none; color:var(--text);
+  cursor:pointer; font-size:.9rem; transition:var(--t);
+}
+.dieta-input-wrap button:hover { background:var(--gold-dim); color:var(--gold); }
+.dieta-input-wrap input {
+  width:48px; height:32px; background:transparent; border:none;
+  border-left:1px solid var(--border); border-right:1px solid var(--border);
+  color:var(--cream); font-size:.95rem; font-weight:600; text-align:center;
+  font-family:'Cormorant Garamond',serif;
+}
+.dieta-input-wrap input:focus { outline:none; }
+.dietas-summary {
+  margin-top:12px; padding:11px 16px;
+  background:var(--gold-dim); border:1px solid var(--gold-border);
+  border-radius:10px;
+  font-size:.85rem; color:var(--text-soft);
+}
+.dietas-summary strong { color:var(--gold); }
+.dietas-summary em { color:var(--muted); font-style:italic; }
+.dietas-summary .dieta-chip {
+  display:inline-block; padding:2px 9px; border-radius:100px;
+  background:var(--card); border:1px solid var(--gold-border);
+  margin-right:6px; margin-bottom:4px; font-size:.78rem;
+  color:var(--gold);
+}
+@media(max-width:760px){ .dietas-grid{grid-template-columns:repeat(2,1fr);} }
+
 /* ════════════ Botón "Ver composición" en pkg-card ════════════ */
 .btn-composition {
   margin-top:12px;
@@ -933,6 +976,70 @@ body{
       <div class="paxbk-summary">
         <span>Total asistentes: <strong id="paxTotalLabel">100</strong></span>
         <span>Pax facturable: <strong id="paxFacturableLabel">100</strong> <span style="color:var(--muted);font-size:.7rem;font-weight:400;">(adultos + niños × 0,5)</span></span>
+      </div>
+
+      <!-- Dietas especiales / Menús con adaptación -->
+      <div class="sub-title" style="margin-top:28px;">🌿 ¿Hay asistentes con dietas especiales o alergias?</div>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px;line-height:1.6;">
+        Indica cuántos invitados tienen restricciones alimentarias. Las adaptaciones <strong style="color:var(--gold);">se incluyen sin coste extra</strong> (cocina dedicada para celíacos · protocolo cero contaminación cruzada · pulseras de identificación). Confirma el listado definitivo 72 h antes del evento.
+      </p>
+      <div class="dietas-grid">
+        <div class="dieta-cell"><label>🌱 Veganos</label>
+          <div class="dieta-input-wrap">
+            <button onclick="changeDieta('vegano',-1)">−</button>
+            <input type="number" id="dietaVegano" value="0" min="0" max="500" oninput="dietaChanged('vegano')">
+            <button onclick="changeDieta('vegano',+1)">+</button>
+          </div>
+        </div>
+        <div class="dieta-cell"><label>🥗 Vegetarianos</label>
+          <div class="dieta-input-wrap">
+            <button onclick="changeDieta('vegetariano',-1)">−</button>
+            <input type="number" id="dietaVegetariano" value="0" min="0" max="500" oninput="dietaChanged('vegetariano')">
+            <button onclick="changeDieta('vegetariano',+1)">+</button>
+          </div>
+        </div>
+        <div class="dieta-cell"><label>🌾 Celíacos</label>
+          <div class="dieta-input-wrap">
+            <button onclick="changeDieta('celiaco',-1)">−</button>
+            <input type="number" id="dietaCeliaco" value="0" min="0" max="500" oninput="dietaChanged('celiaco')">
+            <button onclick="changeDieta('celiaco',+1)">+</button>
+          </div>
+        </div>
+        <div class="dieta-cell"><label>🥛 Sin lactosa</label>
+          <div class="dieta-input-wrap">
+            <button onclick="changeDieta('sinLactosa',-1)">−</button>
+            <input type="number" id="dietaSinLactosa" value="0" min="0" max="500" oninput="dietaChanged('sinLactosa')">
+            <button onclick="changeDieta('sinLactosa',+1)">+</button>
+          </div>
+        </div>
+        <div class="dieta-cell"><label>🌰 Sin frutos secos</label>
+          <div class="dieta-input-wrap">
+            <button onclick="changeDieta('sinFrutos',-1)">−</button>
+            <input type="number" id="dietaSinFrutos" value="0" min="0" max="500" oninput="dietaChanged('sinFrutos')">
+            <button onclick="changeDieta('sinFrutos',+1)">+</button>
+          </div>
+        </div>
+        <div class="dieta-cell"><label>🕌 Halal</label>
+          <div class="dieta-input-wrap">
+            <button onclick="changeDieta('halal',-1)">−</button>
+            <input type="number" id="dietaHalal" value="0" min="0" max="500" oninput="dietaChanged('halal')">
+            <button onclick="changeDieta('halal',+1)">+</button>
+          </div>
+        </div>
+        <div class="dieta-cell"><label>✡️ Kosher</label>
+          <div class="dieta-input-wrap">
+            <button onclick="changeDieta('kosher',-1)">−</button>
+            <input type="number" id="dietaKosher" value="0" min="0" max="500" oninput="dietaChanged('kosher')">
+            <button onclick="changeDieta('kosher',+1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:14px;">
+        <label>Otras alergias o restricciones (formato libre)</label>
+        <textarea id="dietaOtros" placeholder="Ej: '1 invitado con alergia al marisco · 2 diabéticos · 1 alérgico al huevo'" oninput="dietaOtrosChanged()" style="min-height:60px;"></textarea>
+      </div>
+      <div class="dietas-summary" id="dietasSummary">
+        <span>Sin dietas especiales registradas <em>(podrás añadirlas más tarde si surgen)</em></span>
       </div>
 
       <div class="step-nav">
@@ -2055,6 +2162,68 @@ function goStep(n) {
 }
 
 // ══════════════════════════════════════════════════
+// DIETAS ESPECIALES — incluidas sin cargo extra
+// 7 tipos estándar + textarea para casos sueltos
+// ══════════════════════════════════════════════════
+const DIETAS_LABELS = {
+  vegano:'🌱 Vegano', vegetariano:'🥗 Vegetariano', celiaco:'🌾 Celíaco',
+  sinLactosa:'🥛 Sin lactosa', sinFrutos:'🌰 Sin frutos secos',
+  halal:'🕌 Halal', kosher:'✡️ Kosher'
+};
+let dietas = { vegano:0, vegetariano:0, celiaco:0, sinLactosa:0, sinFrutos:0, halal:0, kosher:0, otros:'' };
+
+function dietasTotal() {
+  return dietas.vegano + dietas.vegetariano + dietas.celiaco +
+         dietas.sinLactosa + dietas.sinFrutos + dietas.halal + dietas.kosher;
+}
+function dietasResumen() {
+  const bits = [];
+  Object.keys(DIETAS_LABELS).forEach(k => {
+    if (dietas[k] > 0) bits.push(`${dietas[k]} ${DIETAS_LABELS[k].replace(/^.\s*/,'').toLowerCase()}`);
+  });
+  return bits;
+}
+function changeDieta(kind, delta) {
+  dietas[kind] = Math.max(0, Math.min(500, dietas[kind] + delta));
+  document.getElementById('dieta' + kind[0].toUpperCase()+kind.slice(1)).value = dietas[kind];
+  refreshDietasSummary();
+  updateSide();
+}
+function dietaChanged(kind) {
+  const el = document.getElementById('dieta' + kind[0].toUpperCase()+kind.slice(1));
+  dietas[kind] = Math.max(0, parseInt(el.value)||0);
+  refreshDietasSummary();
+  updateSide();
+}
+function dietaOtrosChanged() {
+  dietas.otros = document.getElementById('dietaOtros').value.trim();
+  refreshDietasSummary();
+  updateSide();
+}
+function refreshDietasSummary() {
+  const sum = document.getElementById('dietasSummary');
+  if (!sum) return;
+  const total = dietasTotal();
+  const otros = dietas.otros.length > 0;
+  if (!total && !otros) {
+    sum.innerHTML = '<span>Sin dietas especiales registradas <em>(podrás añadirlas más tarde si surgen)</em></span>';
+    return;
+  }
+  let html = '<strong>' + total + ' menú(s) especial(es) registrado(s)</strong><br>';
+  const bits = [];
+  Object.keys(DIETAS_LABELS).forEach(k => {
+    if (dietas[k] > 0) bits.push(`<span class="dieta-chip">${DIETAS_LABELS[k]}: ${dietas[k]}</span>`);
+  });
+  html += bits.join(' ');
+  if (otros) html += '<br><em>Notas:</em> ' + dietas.otros;
+  // Validación: total dietas > pax total
+  if (total > paxTotal()) {
+    html += '<br><span style="color:#f87171;">⚠️ Atención: hay más dietas (' + total + ') que asistentes totales (' + paxTotal() + '). Revisa los conteos.</span>';
+  }
+  sum.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════
 // PAX — desglose adultos / niños / bebés
 //   · adultos:  precio completo
 //   · niños:    -50 % sobre el precio/pax (≤12 años)
@@ -2180,7 +2349,9 @@ function updateSide() {
   if (adultos) sideInfoBits.push(adultos+'A');
   if (ninos)   sideInfoBits.push(ninos+'N');
   if (bebes)   sideInfoBits.push(bebes+'B');
-  document.getElementById('sidePaxInfo').textContent = `${pt} pax · ${sideInfoBits.join('+')}`;
+  const dt = dietasTotal();
+  const dietasStr = dt > 0 ? ` · 🌿 ${dt} dieta(s) especial(es)` : '';
+  document.getElementById('sidePaxInfo').textContent = `${pt} pax · ${sideInfoBits.join('+')}${dietasStr}`;
 
   // Sections in sidebar
   const sections = [
@@ -2262,6 +2433,8 @@ function buildFinalSummary() {
       ['Duración', document.getElementById('eventDuration')?.value + ' horas' || '—'],
       ['Asistentes', `${pt} (${adultos} adultos · ${ninos} niños · ${bebes} bebés)`],
       ['Pax facturable', `${pf} (niños al 50%, bebés gratis)`],
+      ...(dietasTotal() > 0 || dietas.otros ? [['🌿 Dietas especiales',
+        (dietasResumen().join(' · ') || 'ver notas') + (dietas.otros ? ' · ' + dietas.otros : '')]] : []),
     ]},
     { t:'🍽️ Gastronomía', rows: [
       ['Menú', sel.menuPkg?.name || '—'],
@@ -2333,6 +2506,7 @@ function exportPresupuestoData() {
     adultos, ninos, bebes,
     pt:       paxTotal(),
     pf:       paxFacturable(),
+    dietas:   JSON.parse(JSON.stringify(dietas)),  // 🌿 dietas especiales
     sel:      JSON.parse(JSON.stringify(sel)), // copia profunda
     total
   };

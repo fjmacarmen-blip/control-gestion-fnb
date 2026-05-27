@@ -419,10 +419,12 @@ function renderDoc() {
             <div class="svc-block-title">✨ Servicios adicionales</div>
             ${otrosExtras}
           </div>` : ''}
-        ${data.bebes > 0 ? `
-          <div class="svc-block">
-            <div class="svc-block-title">🍼 Necesidades especiales</div>
-            <div class="svc-row"><span class="svc-row-name">${data.bebes} silla(s) alta(s) para bebés</span><span class="svc-row-val">Incluida</span></div>
+        ${(data.bebes > 0 || (data.dietas && (Object.values(data.dietas).some(v => typeof v === 'number' && v > 0) || data.dietas.otros))) ? `
+          <div class="svc-block" style="border-color:var(--gold-border);">
+            <div class="svc-block-title">🍼 Necesidades especiales · Adaptaciones</div>
+            ${data.bebes > 0 ? `<div class="svc-row"><span class="svc-row-name">${data.bebes} silla(s) alta(s) para bebés</span><span class="svc-row-val">Incluida</span></div>` : ''}
+            ${data.dietas ? Object.entries({vegano:'🌱 Veganos',vegetariano:'🥗 Vegetarianos',celiaco:'🌾 Celíacos',sinLactosa:'🥛 Sin lactosa',sinFrutos:'🌰 Sin frutos secos',halal:'🕌 Halal',kosher:'✡️ Kosher'}).map(([k,lbl]) => data.dietas[k] > 0 ? `<div class="svc-row"><span class="svc-row-name">${lbl}</span><span class="svc-row-val">${data.dietas[k]} menú(s) · Adaptado sin coste</span></div>` : '').join('') : ''}
+            ${data.dietas && data.dietas.otros ? `<div class="svc-row" style="border-top:1px dashed var(--border);padding-top:8px;margin-top:6px;"><span class="svc-row-name" style="font-style:italic;">Otras alergias / restricciones:</span><span class="svc-row-val" style="text-align:right;max-width:55%;">${data.dietas.otros}</span></div>` : ''}
           </div>` : ''}
       </div>
 
@@ -463,8 +465,8 @@ function renderDoc() {
             <div class="clause-body">El prestador dispone de seguro de responsabilidad civil para eventos por importe mínimo de 1.500.000 €. Quedan excluidos los daños causados por los invitados a las instalaciones o terceros, que serán responsabilidad del cliente.</div>
           </div>
           <div class="clause">
-            <div class="clause-title">Alergias e intolerancias</div>
-            <div class="clause-body">El cliente facilitará el listado definitivo de alergias e intolerancias 72 h antes del evento. El prestador cumple con el Reglamento UE 1169/2011 sobre información alimentaria. La carta detalla los 14 alérgenos principales por plato.</div>
+            <div class="clause-title">Alergias, intolerancias y dietas especiales</div>
+            <div class="clause-body">El cliente declara las dietas especiales reflejadas en el apartado "Necesidades especiales" de este contrato. Se incluyen sin coste extra las adaptaciones para veganos, vegetarianos, celíacos, intolerantes a la lactosa o frutos secos, halal y kosher. <strong>El cliente facilitará el listado definitivo de alergias e intolerancias 72 h antes del evento</strong>, indicando nombre del comensal cuando proceda. El prestador cumple con el Reglamento UE 1169/2011 sobre información alimentaria y dispone de protocolo APPCC con cocina dedicada para evitar contaminación cruzada en celíacos y alérgicos severos.</div>
           </div>
           <div class="clause">
             <div class="clause-title">Protección de datos (RGPD)</div>
