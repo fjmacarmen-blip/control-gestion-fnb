@@ -1,0 +1,61 @@
+{
+  "claves_orden": ["vegano", "vegetariano", "celiaco", "sinLactosa", "sinFrutos", "halal", "kosher"],
+  "instrucciones": {
+    "vegano": {
+      "label": "🌱 VEGANOS",
+      "color": "#22c55e",
+      "cocina": "Menú vegano completo: sin productos animales (carne, pescado, lácteos, huevo, miel). Sustitutos: leche de soja/avena, margarina vegetal, mantequilla de nueces.",
+      "sala": "Pulseras verdes · mesas identificadas · presentar menú vegano específico al comensal.",
+      "bebidas": "Confirmar vinos sin filtración con caseína/clara de huevo (consultar bodega).",
+      "pedido": "Bebida vegetal · queso vegano · pan sin productos lácteos."
+    },
+    "vegetariano": {
+      "label": "🥗 VEGETARIANOS",
+      "color": "#84cc16",
+      "cocina": "Sin carne ni pescado. Permitidos: lácteos, huevo, miel. Sustituir proteína animal por legumbres, tofu, seitán, quinoa.",
+      "sala": "Pulseras verde claro · servicio normal pero con menú adaptado.",
+      "bebidas": "Cualquier opción del menú general aplica.",
+      "pedido": "Verificar caldo de verduras puro · queso curado vegetariano (sin cuajo animal)."
+    },
+    "celiaco": {
+      "label": "🌾 CELÍACOS · CRÍTICO",
+      "color": "#ef4444",
+      "cocina": "⚠️ ZONA DEDICADA · cero contaminación cruzada · utensilios y tablas separadas · aceite de fritura exclusivo · APPCC riguroso.",
+      "sala": "Pulseras amarillas · vajilla separada · pan sin gluten artesano (encargo 48 h antes) · comunicación obligatoria cocina↔sala antes de cada plato.",
+      "bebidas": "Cervezas sin gluten (Mahou 0,0 sin gluten o Daura) · vinos OK · destilados de cereal: NO (whisky/vodka cereal).",
+      "pedido": "Pan sin gluten · cerveza sin gluten · galletas/postres específicos certificados FACE."
+    },
+    "sinLactosa": {
+      "label": "🥛 SIN LACTOSA",
+      "color": "#3b82f6",
+      "cocina": "Sustituir mantequilla por margarina vegetal · nata por nata de coco/soja · leche por leche vegetal · evitar queso/yogur tradicional.",
+      "sala": "Pulseras azules · informar de cualquier salsa/postre con lácteos oculto.",
+      "bebidas": "Café con leche vegetal disponible (avena/soja) en barra y mesa.",
+      "pedido": "Leche vegetal (1 L/dieta) · margarina sin lactosa · queso sin lactosa si aplica."
+    },
+    "sinFrutos": {
+      "label": "🌰 SIN FRUTOS SECOS",
+      "color": "#f97316",
+      "cocina": "Eliminar TODO contacto con frutos secos · cuidado especial con cacahuetes · revisar bases de salsa romesco, pesto, picada catalana.",
+      "sala": "Pulseras naranjas · informar al comensal antes de cada plato (riesgo anafiláctico).",
+      "bebidas": "Evitar licores con almendra (Amaretto, Disaronno).",
+      "pedido": "Adrenalina autoinyectable disponible en sala (botiquín actualizado)."
+    },
+    "halal": {
+      "label": "🕌 HALAL",
+      "color": "#8b5cf6",
+      "cocina": "Carne de proveedor halal certificado · sin cerdo · sin alcohol en cocción · utensilios separados.",
+      "sala": "Pulseras moradas · servicio normal · evitar alcohol en mesa por defecto.",
+      "bebidas": "Sin alcohol · zumos, refrescos, té, café, mocktails.",
+      "pedido": "Carne halal pre-encargada (cordero/pollo) · pan sin manteca de cerdo."
+    },
+    "kosher": {
+      "label": "✡️ KOSHER",
+      "color": "#a78bfa",
+      "cocina": "Producto certificado kosher · separación estricta carne/lácteos · cocina y utensilios separados · supervisión rabínica si aplica.",
+      "sala": "Pulseras lila · vajilla específica.",
+      "bebidas": "Vino kosher · evitar mezclar carne con lácteos en mismo servicio.",
+      "pedido": "Producto kosher con sello rabínico · vino kosher mevushal."
+    }
+  }
+}

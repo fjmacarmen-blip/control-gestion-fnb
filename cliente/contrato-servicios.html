@@ -280,6 +280,7 @@ body{
 
 <div class="doc-wrap" id="docWrap"></div>
 
+<script src="../core/js/loader.js"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════
 // Lee datos del presupuesto desde sessionStorage y rellena el contrato
@@ -294,14 +295,8 @@ function getEventData() {
   } catch(e) { return null; }
 }
 
-const DATOS_HOTEL = {
-  razon:    'Gran Hotel Miramar Dorado, S.L.',
-  nif:      'B-29123456',
-  direccion:'Bulevar del Mediterráneo s/n, 29602 Marbella (Málaga)',
-  registro: 'Registro Turismo Andalucía: H/MA/01234',
-  telefono: '+34 952 830 711',
-  email:    'eventos@miramardorado.com',
-};
+// DATOS_HOTEL se carga del proyecto vía loader.js (Fase 1 v4.1).
+let DATOS_HOTEL = {};
 
 function fmtEur(n) { return (n||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
 function fmtFecha(iso) {
@@ -529,7 +524,15 @@ function renderDoc() {
   `;
 }
 
-renderDoc();
+(async () => {
+  try {
+    const proj = await window.loadProject();
+    DATOS_HOTEL = proj.establecimiento.datos_legacy || {};
+  } catch (e) {
+    console.error('Error cargando proyecto:', e);
+  }
+  renderDoc();
+})();
 </script>
 
 </body>

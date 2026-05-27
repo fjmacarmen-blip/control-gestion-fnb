@@ -1,0 +1,4194 @@
+{
+  "categorias": {
+    "entremeses": [
+      {
+        "n": "Tabla de Ibéricos Bellota",
+        "e": "🥩",
+        "g": "g7",
+        "sub": "Jamón, lomo, chorizo y salchichón ibérico bellota",
+        "prep": 10,
+        "coc": 0,
+        "rac": 4,
+        "dif": "Baja",
+        "mp": 6.2,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "80g",
+            "Jamón ibérico de bellota",
+            "loncheado fino"
+          ],
+          [
+            "60g",
+            "Lomo ibérico",
+            "en lonchas"
+          ],
+          [
+            "60g",
+            "Chorizo ibérico curado",
+            "en rodajas"
+          ],
+          [
+            "50g",
+            "Salchichón ibérico",
+            ""
+          ],
+          [
+            "80g",
+            "Pan de cristal",
+            "tostado"
+          ],
+          [
+            "1ud",
+            "Tomate maduro",
+            "para untar"
+          ],
+          [
+            "AOVE",
+            "DO Málaga",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sacar los embutidos de nevera 30 min antes de servir. Cortar al momento con cuchillo afilado.",
+          "Tostar las rebanadas de pan de cristal en plancha 30 seg por lado.",
+          "Disponer los embutidos en tabla de madera de olivo formando abanico.",
+          "Ofrecer aparte pan tostado con AOVE y tomate rallado.",
+          "Servir a temperatura ambiente para que se aprecien los matices del bellota."
+        ]
+      },
+      {
+        "n": "Tabla de Quesos Artesanos",
+        "e": "🧀",
+        "g": "g7",
+        "sub": "6 quesos con membrillo, miel y frutos secos",
+        "prep": 12,
+        "coc": 0,
+        "rac": 4,
+        "dif": "Baja",
+        "mp": 5.4,
+        "alergen": "Lácteos, Frutos secos",
+        "ing": [
+          [
+            "50g",
+            "Manchego curado D.O.",
+            ""
+          ],
+          [
+            "50g",
+            "Brie de Meaux",
+            ""
+          ],
+          [
+            "40g",
+            "Cabra rulo cenizo",
+            ""
+          ],
+          [
+            "50g",
+            "Roncal D.O.",
+            ""
+          ],
+          [
+            "40g",
+            "Idiazábal ahumado",
+            ""
+          ],
+          [
+            "50g",
+            "Queso azul Cabrales",
+            ""
+          ],
+          [
+            "40g",
+            "Membrillo casero",
+            ""
+          ],
+          [
+            "30g",
+            "Miel de romero",
+            ""
+          ],
+          [
+            "30g",
+            "Nueces y orejones",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sacar todos los quesos de nevera 1 h antes. Es clave para apreciar texturas y aromas.",
+          "Disponer los quesos en tabla de pizarra, separados, ordenados de suaves a fuertes.",
+          "Colocar tacos de membrillo, miel en cuenquito y mix de frutos secos.",
+          "Acompañar con pan rústico tostado y crackers integrales.",
+          "Servir con cuchillo individual para cada queso para no mezclar sabores."
+        ]
+      },
+      {
+        "n": "Aceitunas Aliñadas Premium",
+        "e": "🫒",
+        "g": "g4",
+        "sub": "Manzanilla, gordal y kalamata con cítricos",
+        "prep": 8,
+        "coc": 0,
+        "rac": 6,
+        "dif": "Baja",
+        "mp": 0.95,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "100g",
+            "Aceituna manzanilla deshuesada",
+            ""
+          ],
+          [
+            "80g",
+            "Aceituna gordal",
+            ""
+          ],
+          [
+            "60g",
+            "Aceituna kalamata",
+            ""
+          ],
+          [
+            "1ud",
+            "Piel de limón",
+            "en juliana"
+          ],
+          [
+            "1ud",
+            "Piel de naranja",
+            ""
+          ],
+          [
+            "1 diente",
+            "Ajo",
+            "laminado"
+          ],
+          [
+            "2g",
+            "Tomillo fresco",
+            ""
+          ],
+          [
+            "30ml",
+            "AOVE",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Mezclar las tres variedades de aceituna en un cuenco grande.",
+          "Añadir las pieles cítricas, el ajo laminado y las hojas de tomillo.",
+          "Regar con AOVE y remover suavemente.",
+          "Macerar mínimo 2 h en nevera (mejor de un día para otro).",
+          "Servir en cuencos pequeños con palillos de madera."
+        ]
+      },
+      {
+        "n": "Almendras Marcona Tostadas",
+        "e": "🥜",
+        "g": "g7",
+        "sub": "Tostadas en sartén con sal en flor de Trapani",
+        "prep": 5,
+        "coc": 5,
+        "rac": 6,
+        "dif": "Baja",
+        "mp": 1.15,
+        "alergen": "Frutos secos",
+        "ing": [
+          [
+            "150g",
+            "Almendras Marcona crudas",
+            "peladas"
+          ],
+          [
+            "10ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "3g",
+            "Sal en flor de Trapani",
+            ""
+          ],
+          [
+            "2g",
+            "Pimentón dulce de la Vera",
+            "opcional"
+          ]
+        ],
+        "pasos": [
+          "Calentar sartén grande a fuego medio. Verter las almendras secas.",
+          "Tostar removiendo continuamente 4-5 min hasta que doren ligeramente.",
+          "Apagar el fuego, añadir el AOVE y remover para impregnar.",
+          "Espolvorear inmediatamente la sal en flor (y pimentón si se quiere).",
+          "Servir tibias en cuencos pequeños — el calor potencia su aroma."
+        ]
+      },
+      {
+        "n": "Boquerones en Vinagre con AOVE",
+        "e": "🐟",
+        "g": "g3",
+        "sub": "Limpios, marinados, con AOVE y ajo picado",
+        "prep": 30,
+        "coc": 0,
+        "rac": 4,
+        "dif": "Media",
+        "mp": 2.4,
+        "alergen": "Pescado",
+        "ing": [
+          [
+            "240g",
+            "Boquerones frescos",
+            "limpios y desespinados"
+          ],
+          [
+            "200ml",
+            "Vinagre de Jerez",
+            ""
+          ],
+          [
+            "10g",
+            "Sal gorda",
+            ""
+          ],
+          [
+            "3 dientes",
+            "Ajo",
+            "picado muy fino"
+          ],
+          [
+            "20g",
+            "Perejil",
+            "picado"
+          ],
+          [
+            "50ml",
+            "AOVE",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Limpiar bien los boquerones: quitar cabeza, espina y vísceras. Abrir como libro.",
+          "Lavar bajo agua fría, secar con papel.",
+          "Disponer en bandeja con piel hacia abajo. Cubrir con vinagre y sal. Macerar 2 h.",
+          "Escurrir bien. Disponer en plato hondo.",
+          "Cubrir con AOVE generoso, ajo picado y perejil. Servir frío con palillos."
+        ]
+      },
+      {
+        "n": "Anchoas del Cantábrico",
+        "e": "🐠",
+        "g": "g3",
+        "sub": "Filetes en AOVE sobre tosta con mantequilla artesana",
+        "prep": 10,
+        "coc": 5,
+        "rac": 3,
+        "dif": "Baja",
+        "mp": 4.8,
+        "alergen": "Pescado, Gluten, Lácteos",
+        "ing": [
+          [
+            "80g",
+            "Anchoas del Cantábrico",
+            "en aceite"
+          ],
+          [
+            "6 rebanadas",
+            "Pan rústico",
+            ""
+          ],
+          [
+            "40g",
+            "Mantequilla artesana sin sal",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebollino",
+            "picado"
+          ],
+          [
+            "AOVE",
+            "para regar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Tostar las rebanadas de pan ligeramente en parrilla o sartén seca.",
+          "Untar generosamente con mantequilla artesana a temperatura ambiente.",
+          "Disponer 2-3 filetes de anchoa por tosta, alineadas.",
+          "Espolvorear cebollino picado y un toque de AOVE.",
+          "Servir inmediatamente — el contraste de mantequilla fría y anchoa salada es la clave."
+        ]
+      },
+      {
+        "n": "Coca de Cristal con Tomate y Jamón",
+        "e": "🍞",
+        "g": "g7",
+        "sub": "Coca crujiente con tomate rallado, AOVE y jamón ibérico",
+        "prep": 10,
+        "coc": 8,
+        "rac": 4,
+        "dif": "Baja",
+        "mp": 2.8,
+        "alergen": "Gluten, Sulfitos",
+        "ing": [
+          [
+            "1ud",
+            "Coca de cristal",
+            "grande"
+          ],
+          [
+            "2ud",
+            "Tomate maduro",
+            "rallado"
+          ],
+          [
+            "80g",
+            "Jamón ibérico",
+            "loncheado fino"
+          ],
+          [
+            "40ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "Sal en escamas",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Calentar el horno a 200°C. Hornear la coca 5-6 min hasta que esté muy crujiente.",
+          "Cortar en rectángulos generosos de 8×4 cm.",
+          "Rallar el tomate maduro sobre cada porción.",
+          "Regar con AOVE y sal en escamas.",
+          "Coronar cada porción con una loncha de jamón ibérico. Servir caliente."
+        ]
+      },
+      {
+        "n": "Mini-Montadito de Bonito con Piparra",
+        "e": "🥒",
+        "g": "g4",
+        "sub": "Bonito del norte en AOVE con piparra y tomate cherry",
+        "prep": 15,
+        "coc": 0,
+        "rac": 6,
+        "dif": "Baja",
+        "mp": 1.85,
+        "alergen": "Pescado, Gluten, Sulfitos",
+        "ing": [
+          [
+            "120g",
+            "Bonito del norte",
+            "en aceite, escurrido"
+          ],
+          [
+            "6ud",
+            "Piparras",
+            ""
+          ],
+          [
+            "6ud",
+            "Tomate cherry",
+            ""
+          ],
+          [
+            "6ud",
+            "Pan tipo regaña",
+            ""
+          ],
+          [
+            "AOVE",
+            "para regar",
+            ""
+          ],
+          [
+            "Cebollino picado",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Cortar la regaña en rectángulos de 4×3 cm.",
+          "Disponer una porción generosa de bonito desmenuzado sobre cada base.",
+          "Coronar con media piparra y medio cherry.",
+          "Pinchar con palillo de madera.",
+          "Regar con AOVE y cebollino picado. Servir frío en bandeja."
+        ]
+      },
+      {
+        "n": "Bombón de Foie con Frutos Rojos",
+        "e": "🍓",
+        "g": "g1",
+        "sub": "Bola de mi-cuit empanada en frutos rojos liofilizados",
+        "prep": 25,
+        "coc": 0,
+        "rac": 8,
+        "dif": "Media",
+        "mp": 3.2,
+        "alergen": "Frutos secos",
+        "ing": [
+          [
+            "120g",
+            "Mi-cuit de pato",
+            ""
+          ],
+          [
+            "40g",
+            "Frutos rojos liofilizados",
+            "triturados"
+          ],
+          [
+            "20g",
+            "Pistacho molido",
+            ""
+          ],
+          [
+            "Sal en escamas",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sacar el mi-cuit de nevera 5 min antes — debe estar firme pero modelable.",
+          "Formar bolas pequeñas (10 g) con cucharas o con las manos enguantadas.",
+          "Mezclar los frutos liofilizados con el pistacho molido.",
+          "Pasar cada bola por la mezcla hasta cubrir completamente.",
+          "Disponer en cucharas de degustación con un cristal de sal en escamas encima."
+        ]
+      },
+      {
+        "n": "Empanadilla Gallega Casera",
+        "e": "🥟",
+        "g": "g7",
+        "sub": "De atún con sofrito, masa hojaldrada y dorada",
+        "prep": 25,
+        "coc": 18,
+        "rac": 8,
+        "dif": "Media",
+        "mp": 1.45,
+        "alergen": "Gluten, Huevo, Pescado, Sulfitos",
+        "ing": [
+          [
+            "8 obleas",
+            "Empanadillas",
+            ""
+          ],
+          [
+            "100g",
+            "Atún en aceite",
+            "escurrido"
+          ],
+          [
+            "1/2 ud",
+            "Cebolla",
+            "picada fina"
+          ],
+          [
+            "1/2 ud",
+            "Pimiento rojo",
+            "picado"
+          ],
+          [
+            "80g",
+            "Tomate frito casero",
+            ""
+          ],
+          [
+            "1ud",
+            "Huevo",
+            "para pintar"
+          ],
+          [
+            "1 sobre",
+            "Pimentón dulce",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sofreír la cebolla y el pimiento en AOVE hasta pochados, 8 min.",
+          "Añadir el tomate frito y el pimentón. Cocer 3 min. Apartar.",
+          "Mezclar con el atún desmenuzado. Dejar enfriar.",
+          "Rellenar las obleas con una cucharada, cerrar y sellar con tenedor.",
+          "Pintar con huevo batido. Hornear 18 min a 200°C hasta doradas."
+        ]
+      },
+      {
+        "n": "Pan Tumaca con Jamón Serrano",
+        "e": "🍞",
+        "g": "g2",
+        "sub": "Pan rústico con tomate rallado, AOVE y jamón serrano",
+        "prep": 10,
+        "coc": 3,
+        "rac": 4,
+        "dif": "Baja",
+        "mp": 1.95,
+        "alergen": "Gluten, Sulfitos",
+        "ing": [
+          [
+            "8 rebanadas",
+            "Pan rústico",
+            ""
+          ],
+          [
+            "3ud",
+            "Tomate maduro",
+            "cortado por la mitad"
+          ],
+          [
+            "1 diente",
+            "Ajo",
+            ""
+          ],
+          [
+            "100g",
+            "Jamón serrano",
+            "loncheado"
+          ],
+          [
+            "30ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "Sal en escamas",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Tostar el pan en plancha o parrilla 1 min por cara.",
+          "Restregar con ajo abierto (opcional pero recomendado).",
+          "Restregar generosamente con el tomate cortado, presionando la pulpa sobre el pan.",
+          "Regar con AOVE de calidad y sal en escamas.",
+          "Coronar con una loncha de jamón serrano. Servir inmediatamente."
+        ]
+      },
+      {
+        "n": "Mini Quiche Lorraine",
+        "e": "🥧",
+        "g": "g7",
+        "sub": "Tartaletas individuales con bacon, queso y crema de huevo",
+        "prep": 25,
+        "coc": 18,
+        "rac": 6,
+        "dif": "Media",
+        "mp": 1.65,
+        "alergen": "Gluten, Huevo, Lácteos",
+        "ing": [
+          [
+            "6ud",
+            "Tartaletas mini",
+            "ya horneadas"
+          ],
+          [
+            "80g",
+            "Bacon ahumado",
+            "en dados"
+          ],
+          [
+            "60g",
+            "Queso gruyère",
+            "rallado"
+          ],
+          [
+            "2ud",
+            "Huevo",
+            ""
+          ],
+          [
+            "80ml",
+            "Nata 35%",
+            ""
+          ],
+          [
+            "Nuez moscada",
+            "y pimienta blanca",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Saltear el bacon en sartén seca hasta crujiente. Reservar sobre papel.",
+          "Batir los huevos con la nata, nuez moscada y pimienta. Salpimentar al gusto.",
+          "Rellenar las tartaletas con bacon y queso rallado.",
+          "Verter la mezcla de huevo y nata hasta casi cubrir.",
+          "Hornear 15-18 min a 180°C hasta dorado. Servir tibias."
+        ]
+      }
+    ],
+    "entrantes": [
+      {
+        "n": "Gazpacho Andaluz",
+        "e": "🥣",
+        "g": "g1",
+        "sub": "Sopa fría de tomate tradicional andaluza",
+        "prep": 15,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 1.2,
+        "alergen": "Gluten, Sulfitos",
+        "ing": [
+          [
+            "800g",
+            "Tomate pera maduro",
+            "troceado"
+          ],
+          [
+            "100g",
+            "Pepino",
+            "pelado"
+          ],
+          [
+            "60g",
+            "Pimiento verde",
+            "sin semillas"
+          ],
+          [
+            "1 diente",
+            "Ajo",
+            "sin germen"
+          ],
+          [
+            "80ml",
+            "AOVE",
+            "virgen extra"
+          ],
+          [
+            "30ml",
+            "Vinagre de Jerez",
+            ""
+          ],
+          [
+            "50g",
+            "Pan del día anterior",
+            "remojado"
+          ],
+          [
+            "Sal",
+            "al gusto",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Remojar el pan en agua fría 5 min. Escurrir.",
+          "Triturar todos los vegetales con el pan, ajo, sal y vinagre en batidora de vaso.",
+          "Incorporar el AOVE en hilo fino sin dejar de batir para emulsionar.",
+          "Pasar por colador chino. Rectificar acidez y sal.",
+          "Refrigerar mínimo 2 h. Servir muy frío con guarnición de pepino, tomate y pan frito en daditos."
+        ]
+      },
+      {
+        "n": "Salmorejo Cordobés",
+        "e": "🍅",
+        "g": "g2",
+        "sub": "Crema espesa de tomate con jamón ibérico y huevo",
+        "prep": 10,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 1.8,
+        "alergen": "Gluten, Huevo",
+        "ing": [
+          [
+            "600g",
+            "Tomate pera",
+            "muy maduro"
+          ],
+          [
+            "150g",
+            "Pan de telera",
+            "sin corteza"
+          ],
+          [
+            "1 diente",
+            "Ajo",
+            ""
+          ],
+          [
+            "100ml",
+            "AOVE Hojiblanca",
+            ""
+          ],
+          [
+            "15ml",
+            "Vinagre de Jerez",
+            ""
+          ],
+          [
+            "30g",
+            "Jamón ibérico",
+            "virutas para servir"
+          ],
+          [
+            "1ud",
+            "Huevo cocido",
+            "para servir"
+          ]
+        ],
+        "pasos": [
+          "Remojar el pan en agua fría 10 min. Escurrir.",
+          "Triturar el tomate con el ajo hasta obtener puré fino.",
+          "Añadir el pan y triturar hasta textura muy cremosa y homogénea.",
+          "Emulsionar con AOVE en hilo fino. Añadir vinagre y sal.",
+          "Refrigerar ≥ 2 h. Servir con huevo duro rallado y virutas de jamón ibérico."
+        ]
+      },
+      {
+        "n": "Pulpo a la Gallega",
+        "e": "🐙",
+        "g": "g3",
+        "sub": "Pulpo cocido con pimentón de la Vera, sal y AOVE",
+        "prep": 10,
+        "coc": 50,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 5.8,
+        "alergen": "Moluscos",
+        "ing": [
+          [
+            "250g",
+            "Pulpo cocido",
+            "o crudo"
+          ],
+          [
+            "200g",
+            "Patata cachelo",
+            "en rodajas"
+          ],
+          [
+            "50ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "5g",
+            "Pimentón dulce de la Vera",
+            ""
+          ],
+          [
+            "2g",
+            "Pimentón picante",
+            ""
+          ],
+          [
+            "8g",
+            "Sal gruesa",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Si el pulpo es crudo: congelar 48h, descongelar y cocer en agua sin sal 40-50 min. Dejar enfriar en el agua.",
+          "Cocer las patatas en agua con sal hasta tiernas. Escurrir.",
+          "Cortar el pulpo en rodajas de 1 cm con tijera.",
+          "Disponer patatas en tabla de madera. Colocar el pulpo encima.",
+          "Regar con AOVE generoso. Espolvorear pimentón dulce y picante. Terminar con sal gruesa."
+        ]
+      },
+      {
+        "n": "Gambas al Ajillo",
+        "e": "🦐",
+        "g": "g2",
+        "sub": "Gambas salteadas en aceite con ajo y guindilla cayena",
+        "prep": 8,
+        "coc": 5,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 4.2,
+        "alergen": "Crustáceos, Sulfitos",
+        "ing": [
+          [
+            "200g",
+            "Gamba mediana",
+            "pelada"
+          ],
+          [
+            "4 dientes",
+            "Ajo",
+            "laminados"
+          ],
+          [
+            "1ud",
+            "Guindilla cayena",
+            "sin semillas"
+          ],
+          [
+            "80ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "30ml",
+            "Vino blanco Verdejo",
+            ""
+          ],
+          [
+            "Perejil picado",
+            "y sal",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Calentar el AOVE con el ajo laminado y la guindilla a fuego medio hasta que dore ligeramente.",
+          "Subir el fuego al máximo. Añadir las gambas salpimentadas.",
+          "Saltear 90 segundos. Desglasar con vino blanco.",
+          "Terminar 30 seg más hasta evaporar el alcohol.",
+          "Servir en cazuela de barro muy caliente con perejil picado. Acompañar pan rústico."
+        ]
+      },
+      {
+        "n": "Croquetas de Jamón Ibérico",
+        "e": "🧆",
+        "g": "g7",
+        "sub": "Bechamel densa con jamón de bellota, crujiente empanado",
+        "prep": 30,
+        "coc": 20,
+        "rac": 3,
+        "dif": "Alta",
+        "mp": 2.6,
+        "alergen": "Gluten, Leche, Huevo",
+        "ing": [
+          [
+            "120g",
+            "Jamón ibérico de bellota",
+            "picado fino"
+          ],
+          [
+            "60g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "80g",
+            "Harina",
+            ""
+          ],
+          [
+            "600ml",
+            "Leche entera",
+            "caliente"
+          ],
+          [
+            "5g",
+            "Nuez moscada",
+            ""
+          ],
+          [
+            "2ud",
+            "Huevo",
+            "para rebozar"
+          ],
+          [
+            "100g",
+            "Pan rallado fino",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Fundir mantequilla, añadir harina y tostar 2 min (roux rubio).",
+          "Incorporar la leche caliente poco a poco sin dejar de remover hasta bechamel muy espesa.",
+          "Añadir el jamón picado. Salpimentar con nuez moscada. Cocer 5 min removiendo.",
+          "Extender en bandeja. Cubrir con film a piel. Refrigerar ≥ 4 h.",
+          "Formar croquetas 30g/ud, pasar por harina, huevo y pan rallado. Freír en aceite 180°C, 2-3 min hasta doradas."
+        ]
+      },
+      {
+        "n": "Ensalada Gamba Roja y Aguacate",
+        "e": "🥗",
+        "g": "g4",
+        "sub": "Gamba roja de Málaga con aguacate y vinagreta cítrica",
+        "prep": 12,
+        "coc": 3,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 6.8,
+        "alergen": "Crustáceos",
+        "ing": [
+          [
+            "120g",
+            "Gamba roja de Málaga",
+            "cocida y pelada"
+          ],
+          [
+            "1ud",
+            "Aguacate",
+            "en dados"
+          ],
+          [
+            "60g",
+            "Escarola",
+            ""
+          ],
+          [
+            "50g",
+            "Cherry multicolor",
+            "cortados"
+          ],
+          [
+            "30ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "20ml",
+            "Zumo de limón",
+            ""
+          ],
+          [
+            "5g",
+            "Ralladura de lima",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Cocer las gambas 2 min en agua salada hirviendo. Enfriar en agua con hielo. Pelar.",
+          "Emulsionar AOVE con zumo de limón, ralladura de lima, sal y pimienta.",
+          "Disponer la escarola en el centro del plato.",
+          "Colocar los dados de aguacate y los cherrys. Coronar con las gambas.",
+          "Aliñar con la vinagreta cítrica en el momento de servir."
+        ]
+      },
+      {
+        "n": "Tataki de Atún Rojo",
+        "e": "🐟",
+        "g": "g3",
+        "sub": "Lomo de atún rojo marcado con sésamo, soja y jengibre",
+        "prep": 15,
+        "coc": 2,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 7.5,
+        "alergen": "Pescado, Soja, Sésamo",
+        "ing": [
+          [
+            "160g",
+            "Atún rojo fresco",
+            "lomo limpio"
+          ],
+          [
+            "30g",
+            "Sésamo tostado",
+            "negro y blanco"
+          ],
+          [
+            "40ml",
+            "Salsa de soja",
+            ""
+          ],
+          [
+            "20ml",
+            "Mirin",
+            ""
+          ],
+          [
+            "10g",
+            "Jengibre fresco",
+            "rallado"
+          ],
+          [
+            "30g",
+            "Wakame",
+            "hidratado"
+          ],
+          [
+            "10g",
+            "Cebollino",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Marinar el lomo en soja, mirin y jengibre 10 min. Escurrir y secar.",
+          "Envolver el lomo en sésamo mezclado presionando para adherir.",
+          "Calentar sartén al máximo. Marcar el atún 20 seg por cada cara (interior crudo).",
+          "Reposar 2 min. Cortar en láminas de 5 mm con cuchillo húmedo.",
+          "Servir sobre wakame. Salsear con reducción de soja. Decorar con cebollino."
+        ]
+      },
+      {
+        "n": "Carpaccio de Ternera",
+        "e": "🥩",
+        "g": "g5",
+        "sub": "Láminas de solomillo, rúcula, parmesano y AOVE",
+        "prep": 20,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 5.2,
+        "alergen": "Leche",
+        "ing": [
+          [
+            "150g",
+            "Solomillo de ternera",
+            "parcialmente congelado"
+          ],
+          [
+            "40g",
+            "Rúcula fresca",
+            ""
+          ],
+          [
+            "30g",
+            "Parmesano",
+            "en lascas, 24 meses"
+          ],
+          [
+            "40ml",
+            "AOVE suave",
+            ""
+          ],
+          [
+            "20ml",
+            "Zumo de limón",
+            ""
+          ],
+          [
+            "10g",
+            "Alcaparras",
+            "escurridas"
+          ],
+          [
+            "Sal en escamas",
+            "y pimienta",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Congelar el solomillo 1 h para facilitar el corte. Retirar 10 min antes.",
+          "Laminar a 1-2 mm con cuchillo afilado o fiambreadora.",
+          "Extender las láminas en plato frío, sin solapar.",
+          "Aliñar con AOVE, zumo de limón, sal en escamas y pimienta.",
+          "Colocar la rúcula en el centro, las alcaparras y terminar con lascas de parmesano."
+        ]
+      },
+      {
+        "n": "Tostas de Foie con Higos",
+        "e": "🍞",
+        "g": "g7",
+        "sub": "Mi-cuit de pato sobre brioche, mermelada de higos y Oporto",
+        "prep": 10,
+        "coc": 5,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 5.8,
+        "alergen": "Gluten, Leche, Frutos secos",
+        "ing": [
+          [
+            "80g",
+            "Mi-cuit de pato",
+            "en escalopas"
+          ],
+          [
+            "2ud",
+            "Pan brioche",
+            "rodajas tostadas"
+          ],
+          [
+            "40g",
+            "Mermelada de higos",
+            "artesana"
+          ],
+          [
+            "30ml",
+            "Reducción de Oporto",
+            ""
+          ],
+          [
+            "Flor de sal",
+            "y cebollino",
+            ""
+          ],
+          [
+            "20g",
+            "Nueces picadas",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Tostar el pan brioche en tostadora o plancha hasta dorado.",
+          "Extender una capa de mermelada de higos sobre el pan caliente.",
+          "Colocar las escalopas de mi-cuit a temperatura ambiente.",
+          "Regar con reducción de Oporto. Espolvorear flor de sal.",
+          "Terminar con nueces picadas y cebollino. Servir inmediatamente."
+        ]
+      },
+      {
+        "n": "Pimientos del Piquillo con Bacalao",
+        "e": "🫑",
+        "g": "g1",
+        "sub": "Brandada de bacalao en piquillos con velouté",
+        "prep": 20,
+        "coc": 15,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 3.8,
+        "alergen": "Pescado, Leche",
+        "ing": [
+          [
+            "4ud",
+            "Pimientos del piquillo",
+            "escurridos"
+          ],
+          [
+            "160g",
+            "Bacalao desalado",
+            "desmigado"
+          ],
+          [
+            "80ml",
+            "Nata 35%",
+            ""
+          ],
+          [
+            "2 dientes",
+            "Ajo",
+            ""
+          ],
+          [
+            "50ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "150ml",
+            "Caldo de piquillos",
+            "para la salsa"
+          ]
+        ],
+        "pasos": [
+          "Desalar el bacalao 24-48h cambiando el agua. Escurrir y desmigar.",
+          "Confitar el bacalao con ajo en AOVE a 60°C durante 15 min.",
+          "Triturar con la nata caliente hasta brandada cremosa. Salpimentar.",
+          "Rellenar los piquillos con la brandada. Cerrar la abertura.",
+          "Marcar en plancha 2 min por lado. Servir sobre velouté de piquillos."
+        ]
+      },
+      {
+        "n": "Ensalada César con Pollo Crujiente",
+        "e": "🥗",
+        "g": "g4",
+        "sub": "Lechuga romana, pollo empanado, parmesano y salsa César",
+        "prep": 18,
+        "coc": 8,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 4.6,
+        "alergen": "Gluten, Huevo, Lácteos, Pescado",
+        "ing": [
+          [
+            "1ud",
+            "Pechuga pollo",
+            "fileteada"
+          ],
+          [
+            "100g",
+            "Pan rallado panko",
+            ""
+          ],
+          [
+            "1 cogollo",
+            "Lechuga romana",
+            ""
+          ],
+          [
+            "30g",
+            "Parmesano",
+            "en lascas"
+          ],
+          [
+            "20g",
+            "Crutones",
+            ""
+          ],
+          [
+            "40ml",
+            "Salsa César",
+            ""
+          ],
+          [
+            "1ud",
+            "Huevo cocido",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Empanar el pollo en panko y freír 3 min por lado hasta dorado. Reservar.",
+          "Lavar y trocear la lechuga romana en hojas grandes.",
+          "Disponer la lechuga en plato hondo, regar con salsa César.",
+          "Cortar el pollo en tiras y colocar sobre la ensalada.",
+          "Coronar con parmesano en lascas, crutones, huevo en cuartos y un toque más de salsa."
+        ]
+      },
+      {
+        "n": "Crema de Espárragos Blancos",
+        "e": "🥬",
+        "g": "g4",
+        "sub": "Crema de espárragos navarra con virutas de jamón ibérico",
+        "prep": 10,
+        "coc": 25,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 3.4,
+        "alergen": "Lácteos",
+        "ing": [
+          [
+            "400g",
+            "Espárragos blancos",
+            "en conserva premium"
+          ],
+          [
+            "1/2 ud",
+            "Cebolla",
+            "picada"
+          ],
+          [
+            "1ud",
+            "Patata pequeña",
+            ""
+          ],
+          [
+            "100ml",
+            "Nata 35%",
+            ""
+          ],
+          [
+            "200ml",
+            "Caldo de verduras",
+            ""
+          ],
+          [
+            "20g",
+            "Jamón ibérico",
+            "virutas"
+          ]
+        ],
+        "pasos": [
+          "Sofreír la cebolla picada en mantequilla hasta transparente.",
+          "Añadir la patata troceada y los espárragos escurridos (reservar 2 puntas).",
+          "Cubrir con caldo y cocer 15 min hasta que la patata esté tierna.",
+          "Triturar con la nata hasta crema fina. Pasar por chino.",
+          "Servir en plato hondo con las puntas de espárrago, virutas de jamón y AOVE."
+        ]
+      },
+      {
+        "n": "Vichyssoise con Caviar",
+        "e": "🥄",
+        "g": "g3",
+        "sub": "Crema fría de puerro y patata con caviar de salmón",
+        "prep": 15,
+        "coc": 30,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 5.2,
+        "alergen": "Lácteos, Pescado",
+        "ing": [
+          [
+            "2ud",
+            "Puerro",
+            "parte blanca"
+          ],
+          [
+            "1ud",
+            "Patata mediana",
+            ""
+          ],
+          [
+            "50g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "200ml",
+            "Caldo pollo",
+            ""
+          ],
+          [
+            "120ml",
+            "Nata 35%",
+            ""
+          ],
+          [
+            "10g",
+            "Caviar de salmón",
+            ""
+          ],
+          [
+            "Cebollino picado",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Pochar el puerro picado en mantequilla 8 min, sin que dore.",
+          "Añadir la patata troceada y el caldo. Cocer 20 min.",
+          "Triturar muy fino con la nata. Salpimentar. Pasar por colador chino.",
+          "Enfriar mínimo 4 h en nevera.",
+          "Servir muy frío con cucharadita de caviar de salmón y cebollino."
+        ]
+      },
+      {
+        "n": "Tartar de Salmón con Aguacate",
+        "e": "🐟",
+        "g": "g3",
+        "sub": "Salmón fresco picado a cuchillo con aguacate y wasabi",
+        "prep": 20,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 6.4,
+        "alergen": "Pescado, Soja, Sésamo",
+        "ing": [
+          [
+            "140g",
+            "Salmón fresco",
+            "sin piel ni espinas"
+          ],
+          [
+            "1/2 ud",
+            "Aguacate maduro",
+            ""
+          ],
+          [
+            "20ml",
+            "Salsa de soja",
+            ""
+          ],
+          [
+            "5g",
+            "Wasabi",
+            "en pasta"
+          ],
+          [
+            "10ml",
+            "Aceite sésamo",
+            ""
+          ],
+          [
+            "1ud",
+            "Lima",
+            "zumo y ralladura"
+          ],
+          [
+            "Cebollino",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Cortar el salmón en daditos de 5 mm con cuchillo afilado.",
+          "Aliñar con soja, sésamo, wasabi y zumo de lima. Macerar 5 min en frío.",
+          "Cortar el aguacate en daditos similar y aliñar con sal y lima.",
+          "Disponer en aro de emplatado: aguacate abajo, tartar encima.",
+          "Desmoldar con cuidado. Ralladura de lima y cebollino picado por encima."
+        ]
+      }
+    ],
+    "primeros": [
+      {
+        "n": "Paella Valenciana",
+        "e": "🥘",
+        "g": "g7",
+        "sub": "Arroz seco con pollo, conejo, ferraura y garrofón",
+        "prep": 20,
+        "coc": 40,
+        "rac": 2,
+        "dif": "Alta",
+        "mp": 3.8,
+        "alergen": "Ninguno",
+        "ing": [
+          [
+            "400g",
+            "Arroz bomba",
+            ""
+          ],
+          [
+            "400g",
+            "Pollo troceado",
+            "muslos"
+          ],
+          [
+            "300g",
+            "Conejo troceado",
+            ""
+          ],
+          [
+            "150g",
+            "Judía verde ferraura",
+            ""
+          ],
+          [
+            "100g",
+            "Garrofón",
+            ""
+          ],
+          [
+            "200g",
+            "Tomate maduro rallado",
+            ""
+          ],
+          [
+            "2g",
+            "Azafrán",
+            ""
+          ],
+          [
+            "1,2L",
+            "Caldo de pollo",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Calentar AOVE en paella. Dorar el pollo y conejo con sal hasta caramelizar.",
+          "Añadir judía verde, sofreír 3 min. Incorporar tomate rallado y reducir 5 min.",
+          "Añadir pimentón. Verter el caldo caliente con azafrán disuelto.",
+          "Hervir 5 min. Añadir el arroz en cruz y el garrofón. Distribuir bien.",
+          "Cocer a fuego vivo 10 min y medio 8 min. No remover. Reposar tapado 5 min."
+        ]
+      },
+      {
+        "n": "Arroz Negro con Sepia",
+        "e": "🦑",
+        "g": "g9",
+        "sub": "Arroz meloso con tinta de calamar, sepia y alioli",
+        "prep": 20,
+        "coc": 35,
+        "rac": 2,
+        "dif": "Media",
+        "mp": 4.2,
+        "alergen": "Moluscos, Sulfitos",
+        "ing": [
+          [
+            "360g",
+            "Arroz bomba",
+            ""
+          ],
+          [
+            "400g",
+            "Sepia limpia",
+            "en trozos"
+          ],
+          [
+            "4 sobres",
+            "Tinta de calamar",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            "picada"
+          ],
+          [
+            "3 dientes",
+            "Ajo",
+            ""
+          ],
+          [
+            "80ml",
+            "Vino blanco",
+            ""
+          ],
+          [
+            "1,1L",
+            "Fumet de pescado",
+            ""
+          ],
+          [
+            "Alioli",
+            "para acompañar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sofreír ajo y cebolla en AOVE hasta pochados. Añadir la sepia.",
+          "Incorporar el tomate y reducir. Añadir vino blanco y evaporar.",
+          "Añadir la tinta disuelta en un poco de fumet.",
+          "Incorporar el arroz. Cubrir con el fumet caliente. Cocinar 18 min.",
+          "Terminar con AOVE en hilo. Servir con alioli en cuenco aparte."
+        ]
+      },
+      {
+        "n": "Risotto de Setas y Trufa",
+        "e": "🍄",
+        "g": "g6",
+        "sub": "Arroz carnaroli cremoso con setas de temporada y trufa",
+        "prep": 15,
+        "coc": 25,
+        "rac": 2,
+        "dif": "Alta",
+        "mp": 5.8,
+        "alergen": "Leche, Sulfitos",
+        "ing": [
+          [
+            "360g",
+            "Arroz carnaroli",
+            ""
+          ],
+          [
+            "300g",
+            "Setas variadas",
+            "boletus, shiitake"
+          ],
+          [
+            "10g",
+            "Trufa negra rallada",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            "picada fina"
+          ],
+          [
+            "80ml",
+            "Vino blanco seco",
+            ""
+          ],
+          [
+            "60g",
+            "Mantequilla fría",
+            "en dados"
+          ],
+          [
+            "60g",
+            "Parmesano",
+            "rallado"
+          ],
+          [
+            "1,2L",
+            "Caldo de verduras",
+            "caliente"
+          ]
+        ],
+        "pasos": [
+          "Sofreír la cebolla en AOVE a fuego suave hasta transparente.",
+          "Añadir el arroz y nacarar 2 min sin dejar de remover.",
+          "Desglasar con vino blanco. Evaporar.",
+          "Incorporar el caldo caliente cazo a cazo, removiendo 18 min continuamente.",
+          "Añadir las setas salteadas. Mantecar fuera del fuego con mantequilla y parmesano. Terminar con trufa."
+        ]
+      },
+      {
+        "n": "Espaguetis con Almejas",
+        "e": "🍝",
+        "g": "g2",
+        "sub": "Pasta al dente con almejas gallegas, ajo y vino blanco",
+        "prep": 10,
+        "coc": 15,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 4.5,
+        "alergen": "Gluten, Moluscos, Sulfitos",
+        "ing": [
+          [
+            "180g",
+            "Espaguetis",
+            ""
+          ],
+          [
+            "300g",
+            "Almejas gallegas",
+            "bien lavadas"
+          ],
+          [
+            "4 dientes",
+            "Ajo",
+            "laminados"
+          ],
+          [
+            "100ml",
+            "Vino blanco Albariño",
+            ""
+          ],
+          [
+            "60ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "20g",
+            "Perejil",
+            "picado"
+          ]
+        ],
+        "pasos": [
+          "Cocer la pasta en agua salada abundante al dente. Reservar agua de cocción.",
+          "Sofreír ajo y guindilla en AOVE. Añadir almejas y vino. Tapar hasta que abran.",
+          "Retirar las que no abran.",
+          "Añadir la pasta escurrida a la sartén. Saltear 1 min añadiendo agua de cocción para ligar la salsa.",
+          "Terminar con perejil picado y AOVE en crudo. Servir inmediatamente."
+        ]
+      },
+      {
+        "n": "Fideuà de Marisco",
+        "e": "🦞",
+        "g": "g2",
+        "sub": "Fideos nº 4 con gambas, mejillones y fumet concentrado",
+        "prep": 20,
+        "coc": 30,
+        "rac": 2,
+        "dif": "Media",
+        "mp": 5.2,
+        "alergen": "Gluten, Crustáceos, Moluscos",
+        "ing": [
+          [
+            "360g",
+            "Fideos nº 4",
+            ""
+          ],
+          [
+            "200g",
+            "Gamba arrocera",
+            ""
+          ],
+          [
+            "200g",
+            "Mejillón cocido",
+            ""
+          ],
+          [
+            "150g",
+            "Sepia",
+            "en tiras"
+          ],
+          [
+            "150g",
+            "Tomate triturado",
+            ""
+          ],
+          [
+            "1L",
+            "Fumet de pescado",
+            ""
+          ],
+          [
+            "2g",
+            "Azafrán",
+            ""
+          ],
+          [
+            "Alioli",
+            "para acompañar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sofreír la sepia en AOVE hasta dorada. Añadir tomate y reducir bien.",
+          "Añadir los fideos en seco, tostar 2 min removiendo.",
+          "Verter el fumet caliente con azafrán. Distribuir gambas y mejillones.",
+          "Cocinar a fuego vivo 8-10 min hasta que los fideos absorban el caldo.",
+          "Gratinar en horno 2 min para que los fideos queden erguidos. Servir con alioli."
+        ]
+      },
+      {
+        "n": "Gazpachuelo Malagueño",
+        "e": "🍲",
+        "g": "g6",
+        "sub": "Caldo emulsionado con mayonesa, patata y colas de gamba",
+        "prep": 15,
+        "coc": 20,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 3.4,
+        "alergen": "Pescado, Crustáceos, Huevo",
+        "ing": [
+          [
+            "150g",
+            "Patata",
+            "en dados"
+          ],
+          [
+            "100g",
+            "Cola de gamba",
+            ""
+          ],
+          [
+            "80g",
+            "Mayonesa casera",
+            ""
+          ],
+          [
+            "600ml",
+            "Fumet de merluza",
+            ""
+          ],
+          [
+            "50g",
+            "Pan tostado",
+            "para servir"
+          ],
+          [
+            "Perejil",
+            "picado",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Cocer las patatas en el fumet a fuego suave hasta tiernas.",
+          "Retirar del fuego y enfriar ligeramente (80°C aprox).",
+          "Añadir las colas de gamba y dejar que se hagan con el calor residual.",
+          "Incorporar la mayonesa a cucharadas batiendo suavemente para emulsionar sin que corte.",
+          "Rectificar de sal. Servir caliente con pan tostado y perejil picado."
+        ]
+      },
+      {
+        "n": "Lentejas con Chorizo",
+        "e": "🫘",
+        "g": "g2",
+        "sub": "Guiso tradicional de lentejas pardinas con verduras y embutido",
+        "prep": 15,
+        "coc": 50,
+        "rac": 2,
+        "dif": "Baja",
+        "mp": 1.8,
+        "alergen": "Gluten",
+        "ing": [
+          [
+            "350g",
+            "Lentejas pardinas",
+            "sin remojar"
+          ],
+          [
+            "120g",
+            "Chorizo fresco",
+            "en rodajas"
+          ],
+          [
+            "80g",
+            "Morcilla de cebolla",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            ""
+          ],
+          [
+            "2ud",
+            "Zanahoria",
+            "en dados"
+          ],
+          [
+            "1 hoja",
+            "Laurel",
+            ""
+          ],
+          [
+            "1 cdta",
+            "Pimentón dulce",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sofreír en AOVE la cebolla, ajo y zanahoria hasta pochados.",
+          "Añadir el pimentón rápido. Incorporar chorizo y morcilla. Sofreír 3 min.",
+          "Añadir las lentejas lavadas, el laurel y cubrir con agua fría.",
+          "Cocer a fuego medio 40-50 min hasta que las lentejas estén tiernas.",
+          "Rectificar sal. Reposar 5 min antes de servir. Acompañar con pan de pueblo."
+        ]
+      },
+      {
+        "n": "Arroz con Bogavante",
+        "e": "🦞",
+        "g": "g1",
+        "sub": "Arroz meloso con bogavante, sofrito y azafrán",
+        "prep": 25,
+        "coc": 35,
+        "rac": 2,
+        "dif": "Alta",
+        "mp": 14.5,
+        "alergen": "Crustáceos, Sulfitos",
+        "ing": [
+          [
+            "1ud",
+            "Bogavante vivo",
+            "600g aprox"
+          ],
+          [
+            "360g",
+            "Arroz bomba",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            "picada"
+          ],
+          [
+            "200g",
+            "Tomate rallado",
+            ""
+          ],
+          [
+            "80ml",
+            "Brandy",
+            "para flambear"
+          ],
+          [
+            "1,1L",
+            "Fumet concentrado",
+            ""
+          ],
+          [
+            "2g",
+            "Azafrán",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Partir el bogavante en vivo: cabeza, pinzas, cola en medallones.",
+          "Marcar en AOVE muy caliente por ambas caras. Flamear con brandy. Retirar.",
+          "En el mismo aceite, sofreír ajo y cebolla. Añadir tomate y reducir.",
+          "Incorporar el arroz, nacarar 1 min. Verter el fumet con azafrán.",
+          "Cocinar 12 min, incorporar el bogavante los últimos 5 min. Reposar 3 min. Servir caldoso."
+        ]
+      },
+      {
+        "n": "Crema de Calabaza y Coco",
+        "e": "🎃",
+        "g": "g2",
+        "sub": "Crema aterciopelada de calabaza asada, coco y jengibre",
+        "prep": 10,
+        "coc": 40,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 1.6,
+        "alergen": "Leche",
+        "ing": [
+          [
+            "400g",
+            "Calabaza butternut",
+            "asada al horno"
+          ],
+          [
+            "100ml",
+            "Leche de coco",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            ""
+          ],
+          [
+            "10g",
+            "Jengibre fresco",
+            ""
+          ],
+          [
+            "500ml",
+            "Caldo de verduras",
+            ""
+          ],
+          [
+            "Pipas de calabaza",
+            "tostadas para decorar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Asar la calabaza cortada en cuartos a 200°C, 35 min hasta caramelizar.",
+          "Sofreír cebolla y jengibre en AOVE hasta pochados.",
+          "Añadir la pulpa de calabaza asada y el caldo. Hervir 5 min.",
+          "Incorporar la leche de coco. Triturar hasta crema muy fina. Pasar por colador.",
+          "Rectificar. Servir con hilo de nata, pipas tostadas y AOVE."
+        ]
+      },
+      {
+        "n": "Sopa de Pescado Malagueña",
+        "e": "🍵",
+        "g": "g6",
+        "sub": "Caldo de rape y mejillón con fideos cabello de ángel",
+        "prep": 20,
+        "coc": 30,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 3.2,
+        "alergen": "Pescado, Moluscos, Gluten",
+        "ing": [
+          [
+            "150g",
+            "Rape en tacos",
+            ""
+          ],
+          [
+            "100g",
+            "Mejillón cocido",
+            ""
+          ],
+          [
+            "40g",
+            "Fideos cabello de ángel",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            ""
+          ],
+          [
+            "600ml",
+            "Fumet de pescado",
+            ""
+          ],
+          [
+            "2g",
+            "Pimentón dulce",
+            ""
+          ],
+          [
+            "Azafrán",
+            "al gusto",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sofreír ajo y cebolla. Añadir tomate y pimentón. Reducir 8 min.",
+          "Verter el fumet y el azafrán. Hervir 10 min. Triturar el sofrito con túrmix.",
+          "Colar el caldo resultante. Llevar a ebullición.",
+          "Añadir los fideos y cocer 4 min.",
+          "Incorporar el rape y los mejillones. Cocinar 2 min más. Rectificar. Servir muy caliente."
+        ]
+      },
+      {
+        "n": "Sopa Castellana",
+        "e": "🍲",
+        "g": "g7",
+        "sub": "Pan, ajo, pimentón, jamón y huevo escalfado",
+        "prep": 10,
+        "coc": 25,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 1.4,
+        "alergen": "Gluten, Huevo, Sulfitos",
+        "ing": [
+          [
+            "80g",
+            "Pan duro",
+            ""
+          ],
+          [
+            "4 dientes",
+            "Ajo",
+            ""
+          ],
+          [
+            "50g",
+            "Jamón serrano",
+            "picado"
+          ],
+          [
+            "1 cda",
+            "Pimentón dulce",
+            ""
+          ],
+          [
+            "1ud",
+            "Huevo",
+            ""
+          ],
+          [
+            "600ml",
+            "Caldo de pollo",
+            ""
+          ],
+          [
+            "50ml",
+            "AOVE",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Trocear el pan en cubos pequeños. Reservar.",
+          "Sofreír el ajo en AOVE hasta dorado. Retirar del aceite.",
+          "Añadir el pimentón fuera del fuego (no debe quemarse).",
+          "Volver al fuego, añadir el jamón picado y el pan. Cubrir con caldo. Cocer 20 min.",
+          "Antes de servir, escalfar el huevo dentro de la sopa 3 min. Servir en cazuela individual."
+        ]
+      },
+      {
+        "n": "Lentejas con Foie y Castañas",
+        "e": "🫘",
+        "g": "g7",
+        "sub": "Lentejas pardinas con escalopa de foie y castañas asadas",
+        "prep": 15,
+        "coc": 50,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 4.2,
+        "alergen": "Frutos secos, Sulfitos",
+        "ing": [
+          [
+            "180g",
+            "Lentejas pardinas",
+            ""
+          ],
+          [
+            "80g",
+            "Foie fresco",
+            "en escalopa"
+          ],
+          [
+            "50g",
+            "Castañas asadas",
+            "peladas"
+          ],
+          [
+            "1ud",
+            "Zanahoria",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            ""
+          ],
+          [
+            "100ml",
+            "Vino tinto",
+            ""
+          ],
+          [
+            "1 hoja",
+            "Laurel",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sofreír cebolla y zanahoria picadas en AOVE.",
+          "Añadir las lentejas lavadas, laurel y agua hasta cubrir 2 dedos.",
+          "Cocer 40 min a fuego suave. Añadir las castañas en los últimos 5 min.",
+          "Marcar la escalopa de foie en sartén muy caliente, 30 seg por lado.",
+          "Servir las lentejas en plato hondo con la escalopa de foie encima y reducción de vino tinto."
+        ]
+      },
+      {
+        "n": "Arroz Cremoso de Carabineros",
+        "e": "🦞",
+        "g": "g1",
+        "sub": "Arroz bomba con carabineros y reducción de su coral",
+        "prep": 25,
+        "coc": 30,
+        "rac": 2,
+        "dif": "Alta",
+        "mp": 18,
+        "alergen": "Crustáceos, Lácteos",
+        "ing": [
+          [
+            "360g",
+            "Arroz bomba",
+            ""
+          ],
+          [
+            "4ud",
+            "Carabineros grandes",
+            ""
+          ],
+          [
+            "1L",
+            "Fumet de marisco",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            "picada"
+          ],
+          [
+            "40g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "80ml",
+            "Vino blanco",
+            ""
+          ],
+          [
+            "2g",
+            "Azafrán",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Separar las cabezas y colas de los carabineros. Reservar.",
+          "Sofreír las cabezas en AOVE, machacar y añadir al fumet hirviendo. Colar.",
+          "Sofreír la cebolla, añadir el arroz, nacarar 1 min, verter el vino y reducir.",
+          "Incorporar el fumet caliente con azafrán. Cocer 18 min removiendo.",
+          "Mantecar con mantequilla fría. Marcar las colas en plancha y disponer encima."
+        ]
+      }
+    ],
+    "segundos": [
+      {
+        "n": "Solomillo con Reducción de Rioja",
+        "e": "🥩",
+        "g": "g1",
+        "sub": "Medallones de ternera, reducción de vino tinto y patata paja",
+        "prep": 15,
+        "coc": 15,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 9.8,
+        "alergen": "Leche, Sulfitos",
+        "ing": [
+          [
+            "220g",
+            "Solomillo de ternera",
+            "medallones de 2 cm"
+          ],
+          [
+            "200ml",
+            "Vino tinto Rioja",
+            ""
+          ],
+          [
+            "100ml",
+            "Fondo oscuro de ternera",
+            ""
+          ],
+          [
+            "15g",
+            "Mantequilla",
+            "fría"
+          ],
+          [
+            "150g",
+            "Patata",
+            "para paja"
+          ],
+          [
+            "Sal y pimienta",
+            "al gusto",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Reducir el vino tinto a la mitad. Añadir el fondo y reducir hasta glaseado. Montar con mantequilla fría.",
+          "Secar los medallones con papel. Salpimentar en el momento.",
+          "Plancha muy caliente con AOVE. Marcar 2 min por cara para punto medio.",
+          "Reposar 3 min sobre rejilla.",
+          "Freír la patata en juliana muy fina a 180°C hasta crujiente. Servir el solomillo con salsa y patata paja."
+        ]
+      },
+      {
+        "n": "Lubina al Horno",
+        "e": "🐟",
+        "g": "g3",
+        "sub": "Lubina entera al horno con patatas panadera y hierbas",
+        "prep": 15,
+        "coc": 30,
+        "rac": 2,
+        "dif": "Baja",
+        "mp": 7.2,
+        "alergen": "Pescado, Sulfitos",
+        "ing": [
+          [
+            "1ud",
+            "Lubina fresca 600g",
+            "limpia y escamada"
+          ],
+          [
+            "300g",
+            "Patata",
+            "en rodajas finas"
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            "en aros"
+          ],
+          [
+            "1ud",
+            "Limón",
+            "en rodajas"
+          ],
+          [
+            "80ml",
+            "Vino blanco Albariño",
+            ""
+          ],
+          [
+            "80ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "Laurel, tomillo, perejil",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Precalentar horno a 200°C. Untar la fuente con AOVE.",
+          "Disponer las patatas en rodajas y la cebolla. Salpimentar. Hornear 15 min.",
+          "Hacer 3 cortes en la lubina. Rellenar con limón y hierbas. Salpimentar.",
+          "Colocar la lubina sobre las patatas. Regar con vino y AOVE.",
+          "Hornear 20-25 min. Servir en la misma fuente con las patatas."
+        ]
+      },
+      {
+        "n": "Dorada a la Sal",
+        "e": "🐠",
+        "g": "g3",
+        "sub": "Dorada entera en costra de sal gruesa, ritual en mesa",
+        "prep": 10,
+        "coc": 25,
+        "rac": 2,
+        "dif": "Baja",
+        "mp": 6.5,
+        "alergen": "Pescado, Huevo",
+        "ing": [
+          [
+            "1ud",
+            "Dorada fresca 600g",
+            "sin escamar"
+          ],
+          [
+            "2kg",
+            "Sal gruesa",
+            ""
+          ],
+          [
+            "2 claras",
+            "Huevo",
+            "para ligar la sal"
+          ],
+          [
+            "1ud",
+            "Limón",
+            "para el interior"
+          ],
+          [
+            "Hierbas aromáticas",
+            ""
+          ],
+          [
+            "40ml",
+            "AOVE",
+            "para servir"
+          ]
+        ],
+        "pasos": [
+          "Precalentar horno a 220°C. Mezclar la sal gruesa con las claras de huevo.",
+          "Rellenar el interior de la dorada con rodajas de limón y hierbas.",
+          "Cubrir la base de la fuente con 1 cm de sal. Colocar la dorada. Cubrir completamente.",
+          "Hornear 20-25 min (10 min por 500g de pescado).",
+          "En sala: romper la costra con golpe seco. Retirar la piel. Servir los lomos con AOVE y vinagre de Jerez."
+        ]
+      },
+      {
+        "n": "Secreto Ibérico con Patatas Bravas",
+        "e": "🐷",
+        "g": "g7",
+        "sub": "Secreto de cerdo ibérico a la brasa con salsa brava y alioli",
+        "prep": 10,
+        "coc": 12,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 5.6,
+        "alergen": "Huevo",
+        "ing": [
+          [
+            "250g",
+            "Secreto ibérico",
+            "a temperatura ambiente"
+          ],
+          [
+            "200g",
+            "Patata",
+            "en dados"
+          ],
+          [
+            "60ml",
+            "Salsa brava casera",
+            ""
+          ],
+          [
+            "30ml",
+            "Alioli casero",
+            ""
+          ],
+          [
+            "Sal gruesa y romero",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sacar el secreto de nevera 30 min antes. Salpimentar en el momento.",
+          "Plancha o parrilla a fuego muy alto. Cocinar el secreto 4-5 min por cara.",
+          "Reposar la carne 3 min. Cortar en diagonal.",
+          "Freír las patatas en dados a 180°C hasta doradas. Escurrir.",
+          "Servir el secreto con las patatas, napar con salsa brava y alioli en línea."
+        ]
+      },
+      {
+        "n": "Carrillada en Vino Tinto",
+        "e": "🍷",
+        "g": "g5",
+        "sub": "Carrillada ibérica estofada lentamente con puré de patata",
+        "prep": 20,
+        "coc": 180,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 4.8,
+        "alergen": "Leche, Sulfitos",
+        "ing": [
+          [
+            "250g",
+            "Carrillada de cerdo ibérico",
+            ""
+          ],
+          [
+            "400ml",
+            "Vino tinto Ribera",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            ""
+          ],
+          [
+            "2ud",
+            "Zanahoria",
+            ""
+          ],
+          [
+            "Laurel, tomillo, pimienta en grano",
+            ""
+          ],
+          [
+            "300g",
+            "Patata",
+            "para puré"
+          ],
+          [
+            "60g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "100ml",
+            "Nata",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sellar las carrilladas salpimentadas en AOVE por todos los lados hasta doradas.",
+          "En la misma cazuela, sofreír las verduras. Añadir el vino y las hierbas. Incorporar la carne.",
+          "Estofar a fuego muy lento 2,5-3 h hasta que la carne ceda a la presión.",
+          "Retirar la carne. Colar la salsa y reducir hasta ligerosa consistencia.",
+          "Servir la carrillada con el jugo y puré de patata (patata + mantequilla + nata)."
+        ]
+      },
+      {
+        "n": "Gamba Roja a la Plancha",
+        "e": "🦐",
+        "g": "g1",
+        "sub": "Gamba roja de Málaga a la plancha, pura esencia del mediterráneo",
+        "prep": 5,
+        "coc": 3,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 12.5,
+        "alergen": "Crustáceos",
+        "ing": [
+          [
+            "300g",
+            "Gamba roja de Málaga",
+            "fresca, 8-10 unidades"
+          ],
+          [
+            "30ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "8g",
+            "Sal gruesa",
+            ""
+          ],
+          [
+            "Limón",
+            "para acompañar",
+            ""
+          ],
+          [
+            "Pan con tomate",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Dejar las gambas a temperatura ambiente 15 min. No lavar.",
+          "Plancha de hierro fundido muy caliente. Pincelar con AOVE.",
+          "Colocar las gambas en plancha. Sal gruesa por encima.",
+          "Cocinar 60-90 segundos por cara. El interior debe quedar jugoso.",
+          "Servir inmediatamente con limón y pan con tomate. El jugo de la cabeza es el premio."
+        ]
+      },
+      {
+        "n": "Pulpo a la Brasa con Parmentier",
+        "e": "🐙",
+        "g": "g2",
+        "sub": "Tentáculos de pulpo sobre parmentier ahumado de patata",
+        "prep": 20,
+        "coc": 60,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 8.2,
+        "alergen": "Moluscos, Leche",
+        "ing": [
+          [
+            "280g",
+            "Pulpo cocido",
+            "tentáculos"
+          ],
+          [
+            "200g",
+            "Patata",
+            "para parmentier"
+          ],
+          [
+            "80g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "80ml",
+            "Nata",
+            ""
+          ],
+          [
+            "5g",
+            "Pimentón ahumado",
+            ""
+          ],
+          [
+            "Microgreens",
+            "para decorar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Cocer el pulpo si es crudo (45-50 min). Enfriar y separar tentáculos.",
+          "Hacer el parmentier: cocer las patatas, triturar con mantequilla y nata calientes hasta crema sedosa.",
+          "Marcar los tentáculos en brasa o plancha muy caliente hasta tostados por fuera.",
+          "Disponer el parmentier en el plato con cuchara o manga.",
+          "Colocar los tentáculos. Regar con AOVE. Espolvorear pimentón. Terminar con microgreens."
+        ]
+      },
+      {
+        "n": "Bacalao al Pil-Pil",
+        "e": "🐟",
+        "g": "g6",
+        "sub": "Bacalao confitado en aceite de ajo con emulsión de su gelatina",
+        "prep": 30,
+        "coc": 25,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 6.8,
+        "alergen": "Pescado",
+        "ing": [
+          [
+            "250g",
+            "Lomo de bacalao desalado",
+            "con piel"
+          ],
+          [
+            "200ml",
+            "AOVE suave",
+            ""
+          ],
+          [
+            "4 dientes",
+            "Ajo",
+            "laminados"
+          ],
+          [
+            "1ud",
+            "Guindilla cayena",
+            ""
+          ],
+          [
+            "Perejil",
+            "picado",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Desalar el bacalao 48h en nevera cambiando el agua cada 8h.",
+          "Confitar el ajo en el AOVE a 60°C, 10 min. Retirar el ajo.",
+          "Confitar el bacalao (piel arriba) en el mismo aceite a 65°C, 12-15 min.",
+          "Retirar el bacalao. Con el aceite templado, mover la cazuela en círculos para emulsionar la gelatina.",
+          "Montar la salsa pil-pil añadiendo el bacalao. Servir con ajo frito y perejil."
+        ]
+      },
+      {
+        "n": "Pato Confit con Naranja",
+        "e": "🦆",
+        "g": "g7",
+        "sub": "Muslo de pato confitado con salsa bigarade de naranja",
+        "prep": 20,
+        "coc": 150,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 7.2,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "1ud",
+            "Muslo de pato",
+            "confitado o fresco"
+          ],
+          [
+            "300ml",
+            "Grasa de pato",
+            "para confitar"
+          ],
+          [
+            "2ud",
+            "Naranja ecológica",
+            "zumo y ralladura"
+          ],
+          [
+            "50ml",
+            "Vinagre de vino",
+            ""
+          ],
+          [
+            "100ml",
+            "Fondo de ave",
+            ""
+          ],
+          [
+            "30g",
+            "Azúcar",
+            "para caramelizar"
+          ]
+        ],
+        "pasos": [
+          "Si es fresco: curar el muslo con sal, hierbas y ajo 12h. Confitar a 80°C en grasa de pato 2h.",
+          "Caramelizar el azúcar. Desglasar con vinagre de naranja. Añadir zumo y fondo.",
+          "Reducir la salsa bigarade hasta consistencia de jarabe.",
+          "Dorar el muslo confitado en sartén 5 min por la piel hasta crujiente.",
+          "Servir el muslo crujiente con la salsa y guarnición de endibias o puré."
+        ]
+      },
+      {
+        "n": "Fritura Malagueña",
+        "e": "🍤",
+        "g": "g7",
+        "sub": "Surtido de pescaíto frito: boquerones, calamares y puntillitas",
+        "prep": 15,
+        "coc": 10,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 5.8,
+        "alergen": "Gluten, Crustáceos, Moluscos, Pescado",
+        "ing": [
+          [
+            "80g",
+            "Boquerones frescos",
+            "limpios"
+          ],
+          [
+            "80g",
+            "Anillas de calamar",
+            ""
+          ],
+          [
+            "80g",
+            "Gambas medianas",
+            "con cáscara"
+          ],
+          [
+            "60g",
+            "Puntillitas (chopitos)",
+            ""
+          ],
+          [
+            "150g",
+            "Harina de fritura",
+            ""
+          ],
+          [
+            "Limón",
+            "para servir",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Secar bien el pescado con papel de cocina. Salar levemente.",
+          "Pasar por harina de fritura sacudiendo el exceso.",
+          "Freír en abundante aceite de girasol a 180-190°C en pequeñas tandas.",
+          "Boquerones: 2 min. Calamares: 2-3 min. Gambas: 2 min. Puntillitas: 90 seg.",
+          "Escurrir en papel. Sal al gusto. Servir inmediatamente en papel de estraza con limón."
+        ]
+      },
+      {
+        "n": "Rabo de Toro al Vino Tinto",
+        "e": "🐂",
+        "g": "g1",
+        "sub": "Estofado tradicional con verduras y reducción de Ribera",
+        "prep": 25,
+        "coc": 180,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 6.8,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "350g",
+            "Rabo de toro",
+            "en piezas"
+          ],
+          [
+            "500ml",
+            "Vino tinto Ribera del Duero",
+            ""
+          ],
+          [
+            "1ud",
+            "Cebolla",
+            ""
+          ],
+          [
+            "2ud",
+            "Zanahoria",
+            ""
+          ],
+          [
+            "1 puerro",
+            ""
+          ],
+          [
+            "2 dientes",
+            "Ajo",
+            ""
+          ],
+          [
+            "1 cda",
+            "Tomate concentrado",
+            ""
+          ],
+          [
+            "Laurel y tomillo",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Salar el rabo y sellar en cocotte con AOVE por todos los lados hasta dorado.",
+          "Retirar la carne. Sofreír verduras picadas hasta caramelizadas.",
+          "Añadir tomate concentrado. Verter el vino y reducir 5 min.",
+          "Devolver la carne, cubrir con agua, añadir hierbas. Estofar 3 h a fuego mínimo.",
+          "Retirar el rabo. Colar y reducir la salsa. Servir con puré de patata trufado."
+        ]
+      },
+      {
+        "n": "Lubina al Limón con Champagne",
+        "e": "🍋",
+        "g": "g3",
+        "sub": "Lubina con salsa de champagne y supremas de limón",
+        "prep": 15,
+        "coc": 18,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 8.2,
+        "alergen": "Pescado, Lácteos, Sulfitos",
+        "ing": [
+          [
+            "180g",
+            "Lubina",
+            "filete con piel"
+          ],
+          [
+            "100ml",
+            "Champagne",
+            ""
+          ],
+          [
+            "80ml",
+            "Nata 35%",
+            ""
+          ],
+          [
+            "30g",
+            "Mantequilla",
+            "fría"
+          ],
+          [
+            "1ud",
+            "Limón",
+            "supremas"
+          ],
+          [
+            "Cebollino y eneldo",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Marcar la lubina en sartén con piel hacia abajo 4 min hasta crujiente.",
+          "Voltear, cocinar 2 min más. Reservar caliente.",
+          "En la misma sartén, reducir el champagne a la mitad.",
+          "Añadir nata, reducir 2 min. Montar con mantequilla fría fuera del fuego.",
+          "Servir la lubina sobre la salsa con supremas de limón y hierbas frescas."
+        ]
+      },
+      {
+        "n": "Cordero Lechal al Romero",
+        "e": "🐑",
+        "g": "g7",
+        "sub": "Paletilla de lechal al horno con patatas y romero",
+        "prep": 20,
+        "coc": 90,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 7.4,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "300g",
+            "Paletilla de cordero lechal",
+            ""
+          ],
+          [
+            "300g",
+            "Patatas pequeñas",
+            ""
+          ],
+          [
+            "3 dientes",
+            "Ajo",
+            "sin pelar"
+          ],
+          [
+            "3 ramas",
+            "Romero fresco",
+            ""
+          ],
+          [
+            "100ml",
+            "Vino blanco",
+            ""
+          ],
+          [
+            "AOVE",
+            ""
+          ],
+          [
+            "Sal gruesa",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Precalentar horno a 180°C. Salpimentar la paletilla.",
+          "Disponer en fuente con las patatas peloteras, ajos enteros y romero.",
+          "Regar con vino blanco y AOVE. Hornear 60 min.",
+          "Subir a 220°C los últimos 15 min para dorar.",
+          "Reposar 10 min antes de servir con su jugo natural."
+        ]
+      },
+      {
+        "n": "Cochinillo Asado al Horno de Leña",
+        "e": "🐷",
+        "g": "g7",
+        "sub": "Cochinillo segoviano con piel crujiente",
+        "prep": 30,
+        "coc": 150,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 9.2,
+        "alergen": "",
+        "ing": [
+          [
+            "350g",
+            "Cochinillo segoviano",
+            "cuarto"
+          ],
+          [
+            "Manteca",
+            "para untar"
+          ],
+          [
+            "Sal gruesa",
+            ""
+          ],
+          [
+            "Hierbas aromáticas",
+            "tomillo, laurel"
+          ],
+          [
+            "100ml",
+            "Vino blanco",
+            "seco"
+          ]
+        ],
+        "pasos": [
+          "Untar el cochinillo con manteca y sal. Disponer en bandeja con vino y hierbas.",
+          "Hornear a 160°C durante 90 min con la piel hacia arriba.",
+          "Subir a 220°C los últimos 30 min sin abrir el horno — la piel se infla y queda crujiente.",
+          "Comprobar con la prueba del plato: la piel debe romperse con un toque.",
+          "Servir con ensalada de hojas frescas, manzana asada o pisto castellano."
+        ]
+      }
+    ],
+    "postres": [
+      {
+        "n": "Crema Catalana",
+        "e": "🍮",
+        "g": "g7",
+        "sub": "Natilla de vainilla y canela con costra de azúcar quemado",
+        "prep": 15,
+        "coc": 15,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 1.2,
+        "alergen": "Leche, Huevo, Gluten",
+        "ing": [
+          [
+            "4 yemas",
+            "Huevo",
+            ""
+          ],
+          [
+            "100g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "30g",
+            "Maicena",
+            ""
+          ],
+          [
+            "600ml",
+            "Leche entera",
+            ""
+          ],
+          [
+            "1ud",
+            "Rama de canela",
+            ""
+          ],
+          [
+            "1ud",
+            "Piel de limón",
+            ""
+          ],
+          [
+            "30g",
+            "Azúcar moreno",
+            "para quemar"
+          ]
+        ],
+        "pasos": [
+          "Infusionar la leche con canela y piel de limón. Llevar a ebullición suave.",
+          "Batir las yemas con azúcar y maicena hasta blanquear.",
+          "Verter la leche caliente colada sobre las yemas en hilo, removiendo.",
+          "Devolver al cazo. Cocer a fuego medio removiendo hasta espesar (no hervir).",
+          "Distribuir en cazuelitas. Enfriar. Cubrir con azúcar moreno y quemar con soplete antes de servir."
+        ]
+      },
+      {
+        "n": "Tiramisú Clásico",
+        "e": "☕",
+        "g": "g6",
+        "sub": "Bizcochos en espresso, mascarpone batido y cacao",
+        "prep": 30,
+        "coc": 0,
+        "rac": 2,
+        "dif": "Media",
+        "mp": 2.2,
+        "alergen": "Gluten, Huevo, Leche, Sulfitos",
+        "ing": [
+          [
+            "200g",
+            "Bizcochos de soletilla",
+            ""
+          ],
+          [
+            "250g",
+            "Mascarpone",
+            ""
+          ],
+          [
+            "3ud",
+            "Huevo",
+            "separados"
+          ],
+          [
+            "80g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "200ml",
+            "Café espresso",
+            "frío"
+          ],
+          [
+            "30ml",
+            "Amaretto",
+            ""
+          ],
+          [
+            "30g",
+            "Cacao en polvo",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Batir yemas con azúcar hasta blanquear. Incorporar el mascarpone con movimientos envolventes.",
+          "Montar las claras a punto de nieve firme. Mezclar con la crema de mascarpone suavemente.",
+          "Mezclar el café frío con el amaretto.",
+          "Empapar los bizcochos rápidamente en el café. Disponer en capas alternando bizcocho y crema.",
+          "Refrigerar mínimo 4h. Espolvorear abundante cacao antes de servir."
+        ]
+      },
+      {
+        "n": "Coulant de Chocolate",
+        "e": "🍫",
+        "g": "g5",
+        "sub": "Bizcocho caliente con interior fundente de chocolate 70%",
+        "prep": 20,
+        "coc": 12,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 1.8,
+        "alergen": "Leche, Huevo, Gluten",
+        "ing": [
+          [
+            "100g",
+            "Chocolate negro 70%",
+            ""
+          ],
+          [
+            "80g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "2ud",
+            "Huevo entero",
+            ""
+          ],
+          [
+            "2ud",
+            "Yema",
+            ""
+          ],
+          [
+            "60g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "25g",
+            "Harina",
+            ""
+          ],
+          [
+            "Helado de vainilla",
+            "para acompañar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Fundir el chocolate con la mantequilla al baño maría. Enfriar ligeramente.",
+          "Batir huevos enteros, yemas y azúcar hasta mezcla espumosa.",
+          "Incorporar el chocolate fundido. Añadir la harina tamizada con movimientos envolventes.",
+          "Verter en moldes individuales engrasados con cacao. Refrigerar 30 min.",
+          "Hornear a 200°C exactamente 10-12 min. Desmoldar y servir con helado."
+        ]
+      },
+      {
+        "n": "Tarta de Queso La Viña",
+        "e": "🧀",
+        "g": "g2",
+        "sub": "Cremosa, dorada por fuera y fundente por dentro",
+        "prep": 15,
+        "coc": 45,
+        "rac": 6,
+        "dif": "Baja",
+        "mp": 1.6,
+        "alergen": "Leche, Huevo, Gluten",
+        "ing": [
+          [
+            "600g",
+            "Queso crema",
+            "tipo Philadelphia"
+          ],
+          [
+            "200ml",
+            "Nata 35%",
+            ""
+          ],
+          [
+            "4ud",
+            "Huevo",
+            ""
+          ],
+          [
+            "180g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "25g",
+            "Harina",
+            ""
+          ],
+          [
+            "Mermelada de frutos rojos",
+            "para acompañar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Precalentar horno a 220°C.",
+          "Batir todos los ingredientes en orden hasta masa homogénea.",
+          "Forrar molde de 20cm con papel de horno mojado. Verter la masa.",
+          "Hornear 40-45 min hasta que esté dorada y temblorosa en el centro.",
+          "Enfriar a temperatura ambiente. Refrigerar 4h. Servir a temperatura ambiente con mermelada."
+        ]
+      },
+      {
+        "n": "Panna Cotta con Frutos Rojos",
+        "e": "🍓",
+        "g": "g8",
+        "sub": "Crema italiana de nata con coulis de frutos del bosque",
+        "prep": 15,
+        "coc": 10,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 1.4,
+        "alergen": "Leche, Pescado",
+        "ing": [
+          [
+            "300ml",
+            "Nata 35%",
+            ""
+          ],
+          [
+            "50ml",
+            "Leche entera",
+            ""
+          ],
+          [
+            "50g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "3 hojas",
+            "Gelatina",
+            ""
+          ],
+          [
+            "1 vaina",
+            "Vainilla",
+            ""
+          ],
+          [
+            "100g",
+            "Frutos rojos",
+            "frescos"
+          ],
+          [
+            "30g",
+            "Azúcar",
+            "para el coulis"
+          ]
+        ],
+        "pasos": [
+          "Hidratar la gelatina en agua fría 5 min.",
+          "Calentar la nata, leche, azúcar y vainilla hasta casi hervir.",
+          "Escurrir la gelatina e incorporar a la mezcla caliente. Remover.",
+          "Verter en moldes de silicona. Refrigerar mínimo 4h.",
+          "Preparar coulis: cocer los frutos rojos con azúcar y limón 5 min. Triturar y colar. Desmoldar y servir con el coulis."
+        ]
+      },
+      {
+        "n": "Torrijas Caramelizadas",
+        "e": "🍞",
+        "g": "g7",
+        "sub": "Pan brioche en leche de canela, frito y caramelizado con soplete",
+        "prep": 20,
+        "coc": 10,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 1.3,
+        "alergen": "Gluten, Leche, Huevo",
+        "ing": [
+          [
+            "2 rodajas",
+            "Pan brioche",
+            "2 cm grosor"
+          ],
+          [
+            "200ml",
+            "Leche entera",
+            ""
+          ],
+          [
+            "1ud",
+            "Rama de canela",
+            ""
+          ],
+          [
+            "1ud",
+            "Piel de naranja",
+            ""
+          ],
+          [
+            "2ud",
+            "Huevo",
+            "para rebozar"
+          ],
+          [
+            "50g",
+            "Azúcar moreno",
+            "para caramelizar"
+          ],
+          [
+            "Helado de canela",
+            "para acompañar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Infusionar la leche con canela y piel de naranja 10 min. Enfriar.",
+          "Empapar el pan en la leche aromatizada 5 min por lado.",
+          "Rebozar en huevo batido.",
+          "Freír en aceite a 170°C 2 min por lado hasta doradas.",
+          "Escurrir. Espolvorear azúcar moreno. Quemar con soplete para caramelizar. Servir con helado."
+        ]
+      },
+      {
+        "n": "Bienmesabe Malagueño",
+        "e": "🍯",
+        "g": "g7",
+        "sub": "Crema almendrada tradicional de Málaga con helado de mantecado",
+        "prep": 10,
+        "coc": 15,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 1.5,
+        "alergen": "Frutos secos, Huevo",
+        "ing": [
+          [
+            "100g",
+            "Almendra marcona",
+            "pelada y tostada"
+          ],
+          [
+            "80g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "4 yemas",
+            "Huevo",
+            ""
+          ],
+          [
+            "200ml",
+            "Agua",
+            ""
+          ],
+          [
+            "Canela molida",
+            ""
+          ],
+          [
+            "Ralladura de limón",
+            ""
+          ],
+          [
+            "Helado de mantecado",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Triturar las almendras tostadas hasta harina fina.",
+          "Hervir el agua con el azúcar 5 min (almíbar ligero).",
+          "Batir las yemas. Incorporar el almíbar caliente en hilo sin dejar de batir.",
+          "Añadir la almendra molida, canela y ralladura. Cocer a fuego suave removiendo hasta espesar.",
+          "Servir tibio en cuenco con bola de helado de mantecado y almendra laminada tostada."
+        ]
+      },
+      {
+        "n": "Mousse de Chocolate Blanco",
+        "e": "🤍",
+        "g": "g5",
+        "sub": "Mousse etérea de chocolate blanco con frambuesas",
+        "prep": 20,
+        "coc": 5,
+        "rac": 2,
+        "dif": "Media",
+        "mp": 1.8,
+        "alergen": "Leche, Huevo",
+        "ing": [
+          [
+            "200g",
+            "Chocolate blanco",
+            "de calidad"
+          ],
+          [
+            "300ml",
+            "Nata 35%",
+            "muy fría"
+          ],
+          [
+            "2 claras",
+            "Huevo",
+            ""
+          ],
+          [
+            "30g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "80g",
+            "Frambuesas frescas",
+            ""
+          ],
+          [
+            "30ml",
+            "Coulis de frambuesa",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Fundir el chocolate blanco al baño maría. Enfriar a 35°C.",
+          "Semi montar la nata. Montar las claras con el azúcar a pico firme.",
+          "Mezclar el chocolate con la nata montada con movimientos envolventes.",
+          "Incorporar las claras en dos tiempos.",
+          "Refrigerar 3h en copas. Servir con frambuesas frescas y coulis."
+        ]
+      },
+      {
+        "n": "Flan de Huevo Casero",
+        "e": "🥚",
+        "g": "g2",
+        "sub": "Flan clásico al baño maría con caramelo oscuro profundo",
+        "prep": 15,
+        "coc": 45,
+        "rac": 4,
+        "dif": "Media",
+        "mp": 0.9,
+        "alergen": "Leche, Huevo",
+        "ing": [
+          [
+            "5ud",
+            "Huevo entero",
+            ""
+          ],
+          [
+            "2ud",
+            "Yema",
+            ""
+          ],
+          [
+            "100g",
+            "Azúcar",
+            "para el flan"
+          ],
+          [
+            "500ml",
+            "Leche entera",
+            ""
+          ],
+          [
+            "1 vaina",
+            "Vainilla",
+            ""
+          ],
+          [
+            "100g",
+            "Azúcar",
+            "para caramelo"
+          ]
+        ],
+        "pasos": [
+          "Caramelizar 100g azúcar con agua en el molde directamente hasta color ámbar oscuro.",
+          "Infusionar la leche con la vainilla. Batir huevos con azúcar hasta combinar.",
+          "Añadir la leche caliente colada sobre los huevos en hilo. Mezclar suavemente.",
+          "Colar y verter en el molde caramelizado. Cocer al baño maría en horno 165°C, 40-45 min.",
+          "Refrigerar mínimo 4h. Desmoldar en el momento del servicio sobre el plato."
+        ]
+      },
+      {
+        "n": "Sorbete de Mango y Lima",
+        "e": "🥭",
+        "g": "g0",
+        "sub": "Sorbete artesanal de mango alphonso con zest de lima",
+        "prep": 20,
+        "coc": 10,
+        "rac": 2,
+        "dif": "Media",
+        "mp": 1.6,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "400g",
+            "Mango alphonso",
+            "muy maduro"
+          ],
+          [
+            "100g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "100ml",
+            "Agua",
+            ""
+          ],
+          [
+            "2ud",
+            "Lima",
+            "zumo y ralladura"
+          ],
+          [
+            "20ml",
+            "Ron blanco",
+            "opcional"
+          ],
+          [
+            "Menta fresca",
+            "para decorar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Preparar almíbar: hervir agua y azúcar 3 min. Enfriar.",
+          "Triturar la pulpa de mango con el zumo y ralladura de lima.",
+          "Mezclar con el almíbar frío y el ron.",
+          "Congelar en heladera o en recipiente plano removiendo cada 30 min durante 3h.",
+          "Servir en copa con ralladura de lima y menta fresca."
+        ]
+      },
+      {
+        "n": "Soufflé Grand Marnier",
+        "e": "🍊",
+        "g": "g7",
+        "sub": "Soufflé caliente de Grand Marnier con naranjas confitadas",
+        "prep": 25,
+        "coc": 12,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 2.4,
+        "alergen": "Lácteos, Huevo, Gluten, Sulfitos",
+        "ing": [
+          [
+            "3 claras",
+            "Huevo",
+            "a punto de nieve"
+          ],
+          [
+            "2 yemas",
+            "Huevo",
+            ""
+          ],
+          [
+            "60g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "30g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "25g",
+            "Harina",
+            ""
+          ],
+          [
+            "150ml",
+            "Leche",
+            ""
+          ],
+          [
+            "30ml",
+            "Grand Marnier",
+            ""
+          ],
+          [
+            "Ralladura de naranja",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Engrasar moldes individuales con mantequilla y espolvorear con azúcar.",
+          "Preparar bechamel ligera con mantequilla, harina y leche. Cocer 3 min.",
+          "Añadir yemas, ralladura de naranja y Grand Marnier. Mezclar bien.",
+          "Incorporar las claras montadas con cuidado para no bajarlas.",
+          "Verter en moldes hasta 2/3. Hornear a 200°C durante 10-12 min. Servir INMEDIATAMENTE con azúcar glas."
+        ]
+      },
+      {
+        "n": "Profiteroles con Chocolate Caliente",
+        "e": "🍫",
+        "g": "g5",
+        "sub": "Pasta choux rellena de nata con salsa de chocolate fundido",
+        "prep": 30,
+        "coc": 25,
+        "rac": 2,
+        "dif": "Alta",
+        "mp": 2.1,
+        "alergen": "Lácteos, Huevo, Gluten",
+        "ing": [
+          [
+            "6ud",
+            "Profiteroles",
+            "ya horneados"
+          ],
+          [
+            "200ml",
+            "Nata para montar 35%",
+            ""
+          ],
+          [
+            "20g",
+            "Azúcar glas",
+            ""
+          ],
+          [
+            "150g",
+            "Chocolate negro 70%",
+            ""
+          ],
+          [
+            "80ml",
+            "Nata líquida",
+            "para salsa"
+          ],
+          [
+            "20g",
+            "Mantequilla",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Montar la nata con el azúcar hasta firme. Reservar en frío.",
+          "Cortar los profiteroles por la mitad y rellenar con la nata montada.",
+          "Fundir el chocolate al baño maría con la nata líquida y la mantequilla.",
+          "Disponer los profiteroles en copa, 3 por ración.",
+          "Verter la salsa de chocolate caliente justo antes de servir."
+        ]
+      },
+      {
+        "n": "Tarta Sacher",
+        "e": "🎂",
+        "g": "g5",
+        "sub": "Bizcocho de chocolate con mermelada de albaricoque y ganache",
+        "prep": 40,
+        "coc": 35,
+        "rac": 8,
+        "dif": "Alta",
+        "mp": 1.95,
+        "alergen": "Lácteos, Huevo, Gluten, Frutos secos",
+        "ing": [
+          [
+            "140g",
+            "Chocolate negro 70%",
+            ""
+          ],
+          [
+            "140g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "140g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "6ud",
+            "Huevos",
+            "separados"
+          ],
+          [
+            "140g",
+            "Harina",
+            "tamizada"
+          ],
+          [
+            "100g",
+            "Mermelada de albaricoque",
+            ""
+          ],
+          [
+            "100g",
+            "Chocolate",
+            "para cobertura"
+          ],
+          [
+            "50ml",
+            "Nata",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Fundir 140g chocolate con mantequilla. Añadir azúcar y yemas batidas.",
+          "Incorporar harina tamizada. Montar las claras y añadirlas con cuidado.",
+          "Hornear en molde de 22 cm a 170°C durante 35 min. Enfriar.",
+          "Partir el bizcocho en 2 capas, rellenar con mermelada caliente.",
+          "Cubrir con ganache (chocolate fundido con nata). Decorar con la palabra Sacher en chocolate blanco."
+        ]
+      }
+    ],
+    "coctel": [
+      {
+        "n": "Croqueta Líquida de Jamón Ibérico",
+        "e": "🧆",
+        "g": "g7",
+        "sub": "Bechamel ultraespesa con jamón bellota · pieza de cóctel",
+        "prep": 35,
+        "coc": 20,
+        "rac": 20,
+        "dif": "Alta",
+        "mp": 0.28,
+        "alergen": "Gluten, Leche, Huevo",
+        "ing": [
+          [
+            "140g",
+            "Jamón ibérico bellota",
+            "picado muy fino"
+          ],
+          [
+            "70g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "90g",
+            "Harina",
+            ""
+          ],
+          [
+            "700ml",
+            "Leche entera",
+            "caliente"
+          ],
+          [
+            "2 claras",
+            "Huevo",
+            "para rebozar"
+          ],
+          [
+            "120g",
+            "Pan rallado fino",
+            ""
+          ],
+          [
+            "Aceite de oliva",
+            "para freír",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Fundir mantequilla. Tostar la harina 2 min (roux). Incorporar la leche caliente en 3 veces sin dejar de batir.",
+          "Cocer la bechamel a fuego lento 8 min hasta muy espesa. Añadir el jamón. Salpimentar.",
+          "Extender en bandeja, cubrir a piel con film. Refrigerar mínimo 5h.",
+          "Porcionar en 10g/pieza. Formar bolitas perfectas con las manos mojadas.",
+          "Pasar por harina · huevo batido · pan rallado fino. Freír en aceite 185°C exactamente 90 segundos. Servir caliente."
+        ]
+      },
+      {
+        "n": "Tartar de Atún Rojo en Cucurucho",
+        "e": "🐟",
+        "g": "g3",
+        "sub": "Tartar de atún rojo sobre cucurucho crujiente de alga nori",
+        "prep": 20,
+        "coc": 0,
+        "rac": 20,
+        "dif": "Alta",
+        "mp": 0.75,
+        "alergen": "Pescado, Soja, Sésamo",
+        "ing": [
+          [
+            "200g",
+            "Atún rojo fresco",
+            "lomo limpio"
+          ],
+          [
+            "20ml",
+            "Salsa de soja",
+            ""
+          ],
+          [
+            "10ml",
+            "Aceite de sésamo",
+            ""
+          ],
+          [
+            "5g",
+            "Jengibre",
+            "rallado"
+          ],
+          [
+            "10g",
+            "Tobiko naranja",
+            ""
+          ],
+          [
+            "20ud",
+            "Cucuruchos de alga nori",
+            "5cm"
+          ],
+          [
+            "Aguacate",
+            "para base",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Cortar el atún en daditos de 4mm. No triturar — textura es clave.",
+          "Marinar con soja, sésamo y jengibre. Reposar 5 min en frío.",
+          "Preparar los cucuruchos: hojas de nori cortadas en cuadrados, formar conos y sellar con grano de arroz.",
+          "Poner media cucharadita de aguacate en crema en la base del cucurucho.",
+          "Colocar el tartar encima. Coronar con tobiko naranja. Servir inmediatamente."
+        ]
+      },
+      {
+        "n": "Canapé de Foie Mi-cuit con Higos y Oporto",
+        "e": "🍞",
+        "g": "g7",
+        "sub": "Escalopa de foie sobre brioche tostado con chutney de higo",
+        "prep": 12,
+        "coc": 3,
+        "rac": 20,
+        "dif": "Baja",
+        "mp": 0.6,
+        "alergen": "Gluten, Leche, Frutos secos",
+        "ing": [
+          [
+            "200g",
+            "Foie mi-cuit de pato",
+            "en escalopas 10g"
+          ],
+          [
+            "20 rebanadas",
+            "Pan brioche",
+            "mini 3x3cm"
+          ],
+          [
+            "60g",
+            "Chutney de higos",
+            ""
+          ],
+          [
+            "40ml",
+            "Reducción de Oporto",
+            ""
+          ],
+          [
+            "Flor de sal",
+            "y cebollino",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Cortar el brioche en cuadrados de 3x3cm. Tostar en plancha 1 min por lado hasta dorado.",
+          "Extender una punta de chutney de higos sobre el pan caliente.",
+          "Colocar la escalopa de foie a temperatura ambiente encima.",
+          "Añadir 3 gotas de reducción de Oporto por pieza.",
+          "Terminar con flor de sal y un trocito de cebollino. Servir a temperatura ambiente."
+        ]
+      },
+      {
+        "n": "Gamba Roja Málaga sobre Tosta de Nori",
+        "e": "🦐",
+        "g": "g1",
+        "sub": "Gamba roja cruda · guacamole de jalapeño · flor de sal",
+        "prep": 15,
+        "coc": 0,
+        "rac": 20,
+        "dif": "Media",
+        "mp": 1.25,
+        "alergen": "Crustáceos, Algas",
+        "ing": [
+          [
+            "20ud",
+            "Gamba roja de Málaga",
+            "pelada cruda"
+          ],
+          [
+            "1ud",
+            "Aguacate",
+            "maduro"
+          ],
+          [
+            "5g",
+            "Jalapeño",
+            "sin semillas"
+          ],
+          [
+            "20ml",
+            "Zumo de lima",
+            ""
+          ],
+          [
+            "20 trozos",
+            "Tostada de alga nori",
+            "3x5cm"
+          ],
+          [
+            "Flor de sal al gusto",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Machacar el aguacate con jalapeño picado, zumo de lima y sal hasta guacamole rústico.",
+          "Marcar levemente las gambas (20 seg solo por una cara) en plancha muy caliente con sal gorda.",
+          "Colocar una cucharadita de guacamole sobre cada tosta de nori.",
+          "Colocar la gamba encima con la cara marcada visible.",
+          "Terminar con flor de sal y microgreens. Servir inmediatamente."
+        ]
+      },
+      {
+        "n": "Vasito de Gazpacho Andaluz con Viruta de Jamón",
+        "e": "🥣",
+        "g": "g1",
+        "sub": "Gazpacho espeso en vasito chupito · viruta ibérica · AOVE",
+        "prep": 10,
+        "coc": 0,
+        "rac": 20,
+        "dif": "Baja",
+        "mp": 0.22,
+        "alergen": "Gluten, Sulfitos",
+        "ing": [
+          [
+            "500g",
+            "Tomate pera",
+            "muy maduro"
+          ],
+          [
+            "50g",
+            "Pepino",
+            "pelado"
+          ],
+          [
+            "30g",
+            "Pimiento verde",
+            ""
+          ],
+          [
+            "1 diente",
+            "Ajo",
+            ""
+          ],
+          [
+            "50ml",
+            "AOVE Hojiblanca",
+            ""
+          ],
+          [
+            "15ml",
+            "Vinagre de Jerez",
+            ""
+          ],
+          [
+            "40g",
+            "Viruta de jamón ibérico",
+            ""
+          ],
+          [
+            "20 vasitos",
+            "Chupito transparente",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Triturar todos los vegetales con sal y vinagre hasta puré homogéneo.",
+          "Emulsionar con el AOVE en hilo fino sin dejar de batir.",
+          "Pasar por colador fino. Ajustar sal y acidez. Refrigerar mínimo 2h.",
+          "Verter en vasitos de chupito de 40ml con boquilla o cuchara.",
+          "Coronar con media viruta de jamón ibérico y 3 gotas de AOVE. Servir muy frío."
+        ]
+      },
+      {
+        "n": "Blini de Salmón Ahumado y Crème Fraîche",
+        "e": "🐠",
+        "g": "g3",
+        "sub": "Blini de trigo sarraceno · salmón ahumado en frío · alcaparras",
+        "prep": 20,
+        "coc": 15,
+        "rac": 20,
+        "dif": "Media",
+        "mp": 0.45,
+        "alergen": "Gluten, Pescado, Leche",
+        "ing": [
+          [
+            "150g",
+            "Harina de trigo sarraceno",
+            ""
+          ],
+          [
+            "200ml",
+            "Leche",
+            ""
+          ],
+          [
+            "1ud",
+            "Huevo",
+            ""
+          ],
+          [
+            "5g",
+            "Levadura seca",
+            ""
+          ],
+          [
+            "200g",
+            "Salmón ahumado en frío",
+            "en lonchas"
+          ],
+          [
+            "80g",
+            "Crème fraîche",
+            ""
+          ],
+          [
+            "20g",
+            "Alcaparras pequeñas",
+            ""
+          ],
+          [
+            "Eneldo fresco",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Mezclar la harina con la levadura, el huevo y la leche tibia. Reposar 20 min.",
+          "Cocinar en plancha antiadherente con mantequilla: discos de 5cm, 1 min por cara. Reservar.",
+          "Poner media cucharadita de crème fraîche sobre cada blini frío.",
+          "Colocar media loncha de salmón ahumado encima formando una rosa.",
+          "Añadir 1 alcaparra encima y tallo de eneldo. Servir a temperatura ambiente."
+        ]
+      },
+      {
+        "n": "Mini Brioche de Solomillo al Foie Caliente",
+        "e": "🥩",
+        "g": "g5",
+        "sub": "Solomillo rosado · escalopa de foie · reducción Pedro Ximénez",
+        "prep": 15,
+        "coc": 8,
+        "rac": 20,
+        "dif": "Alta",
+        "mp": 1.1,
+        "alergen": "Gluten, Leche, Sulfitos",
+        "ing": [
+          [
+            "400g",
+            "Solomillo de ternera",
+            "medallones de 15g"
+          ],
+          [
+            "100g",
+            "Foie fresco de pato",
+            "escalopas"
+          ],
+          [
+            "20ud",
+            "Mini brioches",
+            "4cm cortados en 2"
+          ],
+          [
+            "60ml",
+            "Reducción Pedro Ximénez",
+            ""
+          ],
+          [
+            "Sal en escamas",
+            "y pimienta",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Tostar el interior de los brioches en plancha seca 30 seg. Reservar.",
+          "Salpimentar los medallones de solomillo. Plancha muy caliente 45 seg por cara. Reposar.",
+          "En la misma plancha, marcar el foie 20 seg por cara. Sazonar.",
+          "Montar: base brioche → medallón → escalopa de foie caliente.",
+          "Añadir 3 gotas de PX. Flor de sal encima. Servir inmediatamente."
+        ]
+      },
+      {
+        "n": "Langostino en Tempura con Mayo de Wasabi",
+        "e": "🦐",
+        "g": "g2",
+        "sub": "Langostino XXL en tempura ligera de cerveza · mayonesa wasabi",
+        "prep": 15,
+        "coc": 3,
+        "rac": 20,
+        "dif": "Media",
+        "mp": 0.85,
+        "alergen": "Gluten, Crustáceos, Huevo",
+        "ing": [
+          [
+            "20ud",
+            "Langostino XXL",
+            "pelado cola entera"
+          ],
+          [
+            "150g",
+            "Harina de tempura",
+            ""
+          ],
+          [
+            "200ml",
+            "Cerveza muy fría",
+            ""
+          ],
+          [
+            "80g",
+            "Mayonesa",
+            ""
+          ],
+          [
+            "10g",
+            "Pasta de wasabi",
+            ""
+          ],
+          [
+            "Aceite de oliva suave",
+            "para freír",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Mezclar la harina de tempura con la cerveza fría sin batir en exceso — grumos ligeros son correctos.",
+          "Preparar la mayo de wasabi: mezclar la mayonesa con el wasabi. Reservar en manga.",
+          "Sujetar el langostino por la cola. Sumergir en la tempura fría dejando la cola libre.",
+          "Freír en aceite a 180°C durante 90 segundos hasta crujiente y dorado.",
+          "Servir en cuchara de degustación con punto de mayo wasabi y tobiko."
+        ]
+      },
+      {
+        "n": "Cucharilla de Salmorejo con Huevo de Codorniz",
+        "e": "🍅",
+        "g": "g2",
+        "sub": "Salmorejo espeso · polvo de pimentón · yema de codorniz curada",
+        "prep": 12,
+        "coc": 5,
+        "rac": 20,
+        "dif": "Baja",
+        "mp": 0.18,
+        "alergen": "Gluten, Huevo",
+        "ing": [
+          [
+            "400g",
+            "Tomate pera",
+            "muy maduro"
+          ],
+          [
+            "100g",
+            "Pan telera",
+            "sin corteza"
+          ],
+          [
+            "60ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "10ml",
+            "Vinagre de Jerez",
+            ""
+          ],
+          [
+            "10ud",
+            "Huevo de codorniz",
+            ""
+          ],
+          [
+            "5g",
+            "Pimentón de la Vera",
+            ""
+          ],
+          [
+            "20 cucharillas",
+            "de degustación",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Cocer los huevos de codorniz 4 min. Enfriar en agua-hielo. Pelar y cortar por la mitad.",
+          "Triturar el tomate con el pan remojado, AOVE y vinagre hasta crema densa.",
+          "Rectificar sal. Refrigerar mínimo 1h.",
+          "Cargar las cucharillas de degustación con salmorejo con manga pastelera.",
+          "Colocar medio huevo de codorniz encima. Espolvorear pimentón con tamiz fino. Servir muy frío."
+        ]
+      },
+      {
+        "n": "Gyoza de Gamba y Jengibre con Ponzu",
+        "e": "🥟",
+        "g": "g6",
+        "sub": "Gyoza japonesa artesanal rellena de gamba roja y jengibre fresco",
+        "prep": 30,
+        "coc": 5,
+        "rac": 20,
+        "dif": "Alta",
+        "mp": 0.55,
+        "alergen": "Gluten, Crustáceos, Soja",
+        "ing": [
+          [
+            "20 obleas",
+            "Masa de gyoza",
+            ""
+          ],
+          [
+            "200g",
+            "Gamba roja pelada",
+            "picada"
+          ],
+          [
+            "10g",
+            "Jengibre fresco",
+            "rallado"
+          ],
+          [
+            "2 dientes",
+            "Ajo",
+            "picado fino"
+          ],
+          [
+            "20ml",
+            "Salsa de soja",
+            ""
+          ],
+          [
+            "10ml",
+            "Aceite de sésamo",
+            ""
+          ],
+          [
+            "60ml",
+            "Salsa ponzu",
+            "para mojar"
+          ]
+        ],
+        "pasos": [
+          "Picar la gamba en daditos pequeños. Mezclar con jengibre, ajo, soja y sésamo.",
+          "Colocar media cucharadita de relleno en el centro de cada oblea.",
+          "Humedecer el borde. Plegar formando 5-6 pliegues en acordeón.",
+          "Calentar sartén con aceite. Dorar la base de las gyozas 2 min. Añadir 50ml agua y tapar 3 min.",
+          "Servir con ponzu para mojar. La base debe quedar crujiente y la parte superior tierna."
+        ]
+      },
+      {
+        "n": "Mini Pavlova de Frutos del Bosque",
+        "e": "🍓",
+        "g": "g8",
+        "sub": "Merengue crujiente · chantilly · frutos rojos frescos · coulis",
+        "prep": 20,
+        "coc": 90,
+        "rac": 20,
+        "dif": "Media",
+        "mp": 0.3,
+        "alergen": "Huevo, Leche",
+        "ing": [
+          [
+            "3 claras",
+            "Huevo",
+            "a temperatura ambiente"
+          ],
+          [
+            "180g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "5g",
+            "Maizena",
+            ""
+          ],
+          [
+            "5ml",
+            "Vinagre de vino blanco",
+            ""
+          ],
+          [
+            "200ml",
+            "Nata 35%",
+            "para montar"
+          ],
+          [
+            "100g",
+            "Frutos del bosque",
+            "frescos"
+          ],
+          [
+            "30ml",
+            "Coulis de frambuesa",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Montar las claras a punto de nieve. Incorporar el azúcar en 3 veces batiendo hasta merengue brillante.",
+          "Añadir la maizena y el vinagre. Mezclar suave.",
+          "Formar discos de 5cm sobre papel de horno. Horno 100°C, 90 min. Enfriar dentro del horno.",
+          "Montar la nata fría con una pizca de azúcar.",
+          "Colocar una cucharadita de nata en cada merengue. Añadir frutos rojos y terminar con coulis."
+        ]
+      },
+      {
+        "n": "Coulant de Chocolate Negro en Vasito",
+        "e": "🍫",
+        "g": "g5",
+        "sub": "Interior fundente 70% cacao · formato vasito individual · helado vainilla",
+        "prep": 15,
+        "coc": 8,
+        "rac": 20,
+        "dif": "Media",
+        "mp": 0.38,
+        "alergen": "Gluten, Leche, Huevo",
+        "ing": [
+          [
+            "200g",
+            "Chocolate negro 70%",
+            "Valrhona"
+          ],
+          [
+            "120g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "4ud",
+            "Huevo entero",
+            ""
+          ],
+          [
+            "4ud",
+            "Yema",
+            ""
+          ],
+          [
+            "80g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "40g",
+            "Harina",
+            ""
+          ],
+          [
+            "20 vasitos",
+            "mini aptos horno",
+            "50ml"
+          ]
+        ],
+        "pasos": [
+          "Fundir chocolate con mantequilla al baño maría. Enfriar a 40°C.",
+          "Batir huevos, yemas y azúcar hasta blanquear. Añadir el chocolate fundido.",
+          "Incorporar la harina tamizada con movimientos suaves.",
+          "Verter en vasitos engrasados y enharinados hasta 2/3 de capacidad. Refrigerar hasta servicio.",
+          "Hornear a 200°C durante 7-8 minutos exactos. El centro debe quedar líquido. Servir en el vasito con una lámina de helado de vainilla."
+        ]
+      }
+    ]
+  }
+}

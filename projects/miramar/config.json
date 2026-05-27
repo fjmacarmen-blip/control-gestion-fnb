@@ -1,0 +1,13 @@
+{
+  "id": "miramar",
+  "slug": "miramar",
+  "nombre": "Gran Hotel Miramar Dorado",
+  "categoria_establecimiento": "hotel",
+  "es_piloto": true,
+  "es_template": true,
+  "locale": "es-ES",
+  "moneda": "EUR",
+  "tema": "navy-boutique",
+  "version_schema": "1.0.0",
+  "creado": "2026-05-27"
+}

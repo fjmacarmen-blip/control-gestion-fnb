@@ -1,0 +1,21 @@
+{
+  "categorias": [
+    { "id": "celebracion", "icon": "🎉", "name": "Celebraciones privadas", "desc": "Bodas, comuniones, bautizos, cumpleaños y aniversarios." },
+    { "id": "empresa",     "icon": "🏢", "name": "Empresa",                "desc": "Convenciones, team building, formaciones, cócteles corporativos y galas." }
+  ],
+  "tipos": [
+    { "id": "boda",     "category": "celebracion", "icon": "💍",  "name": "Boda",                "desc": "Banquete nupcial con todas sus secciones",     "badge": "badge-hit", "img": "boda.jpg" },
+    { "id": "comuni",   "category": "celebracion", "icon": "🕊️", "name": "Comunión",            "desc": "Celebración íntima y emotiva en familia",      "badge": "badge-est", "img": "comunion.jpg" },
+    { "id": "bautizo",  "category": "celebracion", "icon": "👶",  "name": "Bautizo",             "desc": "La bienvenida al mundo del nuevo miembro",    "badge": "badge-eco", "img": "bautizo.jpg" },
+    { "id": "cumple",   "category": "celebracion", "icon": "🎂",  "name": "Cumpleaños",          "desc": "Desde los 18 hasta los 100 — ¡todos valen!",  "badge": "badge-eco", "img": "cumpleanos.jpg" },
+    { "id": "aniv",     "category": "celebracion", "icon": "🥂",  "name": "Aniversario",         "desc": "Celebra los años que lleváis juntos",         "badge": "badge-pre", "img": "aniversario.jpg" },
+    { "id": "otro",     "category": "celebracion", "icon": "🎊",  "name": "Otra celebración",    "desc": "Cuéntanos — lo hacemos posible",              "badge": "badge-eco", "img": "galeria.jpg" },
+    { "id": "convenc",  "category": "empresa",     "icon": "🤝",  "name": "Convención",          "desc": "Reunión anual, asamblea de socios, congreso", "badge": "badge-pre", "img": "convencion.jpg" },
+    { "id": "teambld",  "category": "empresa",     "icon": "🎯",  "name": "Team building",       "desc": "Actividades en equipo + comida o cena",       "badge": "badge-est", "img": "team_building.jpg" },
+    { "id": "directiv", "category": "empresa",     "icon": "📊",  "name": "Reunión directiva",   "desc": "Junta o consejo · sala privada + catering",   "badge": "badge-est", "img": "reunion_directiva.jpg" },
+    { "id": "lanzami",  "category": "empresa",     "icon": "🎤",  "name": "Lanzamiento producto","desc": "Presentación con stage, AV y cóctel",         "badge": "badge-pre", "img": "lanzamiento.jpg" },
+    { "id": "cocktail", "category": "empresa",     "icon": "🍸",  "name": "Cóctel & Networking", "desc": "De pie, dinámico · fingerfood + cócteles",    "badge": "badge-est", "img": "coctel.jpg" },
+    { "id": "formaci",  "category": "empresa",     "icon": "🎓",  "name": "Formación / Workshop","desc": "Sala formato escuela + coffee breaks",        "badge": "badge-eco", "img": "formacion.jpg" },
+    { "id": "galaCorp", "category": "empresa",     "icon": "🎁",  "name": "Cena de gala",        "desc": "Cena anual de empresa + entrega de premios",  "badge": "badge-lux", "img": "gala_corporativa.jpg" }
+  ]
+}

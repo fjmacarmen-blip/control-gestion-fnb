@@ -1,0 +1,52 @@
+{
+  "razon_social": "Gran Hotel Miramar Dorado, S.L.",
+  "nombre_comercial": "Gran Hotel Miramar Dorado",
+  "categoria": "5 estrellas Gran Lujo",
+  "nif": "B-29123456",
+  "direccion": {
+    "calle": "Bulevar del Mediterráneo s/n",
+    "cp": "29602",
+    "ciudad": "Marbella",
+    "provincia": "Málaga",
+    "pais": "España"
+  },
+  "registro_turismo": "H/MA/01234",
+  "contacto": {
+    "telefono": "+34 952 830 711",
+    "email": "eventos@miramardorado.com",
+    "web": "www.miramardorado.com"
+  },
+  "datos_legacy": {
+    "razon": "Gran Hotel Miramar Dorado, S.L.",
+    "nif": "B-29123456",
+    "direccion": "Bulevar del Mediterráneo s/n, 29602 Marbella (Málaga)",
+    "registro": "Registro Turismo Andalucía: H/MA/01234",
+    "telefono": "+34 952 830 711",
+    "email": "eventos@miramardorado.com"
+  },
+  "stats": {
+    "habitaciones": 188,
+    "pax_max": 900,
+    "superficie_eventos_m2": 4200,
+    "spa_m2": 2200,
+    "spa_cabinas": 14
+  },
+  "espacios": [
+    { "id": "gran_salon_mediterraneo", "nombre": "Gran Salón Mediterráneo", "superficie_m2": 850, "capacidad_sentado": 650, "capacidad_coctel": 900 },
+    { "id": "salon_andalucia", "nombre": "Salón Andalucía", "superficie_m2": 380, "capacidad_sentado": 280, "capacidad_coctel": 400 },
+    { "id": "salon_alhambra", "nombre": "Salón Alhambra", "superficie_m2": 220, "capacidad_sentado": 160, "capacidad_coctel": 220 },
+    { "id": "salon_picasso", "nombre": "Salón Picasso", "superficie_m2": 120, "capacidad_sentado": 80, "capacidad_coctel": 120 },
+    { "id": "terraza_mar", "nombre": "Terraza Mar", "superficie_m2": 600, "capacidad_sentado": 400, "capacidad_coctel": 600 },
+    { "id": "jardines_andaluces", "nombre": "Jardines Andaluces", "superficie_m2": 2800, "capacidad_sentado": 500, "capacidad_coctel": 800 },
+    { "id": "anfiteatro", "nombre": "Anfiteatro al aire libre", "superficie_m2": null, "capacidad_sentado": 250, "capacidad_coctel": null },
+    { "id": "beach_club", "nombre": "Beach Club", "superficie_m2": 250, "capacidad_sentado": 180, "capacidad_coctel": 300 },
+    { "id": "rooftop_piscina", "nombre": "Rooftop Piscina", "superficie_m2": 320, "capacidad_sentado": 120, "capacidad_coctel": 200 },
+    { "id": "sky_lounge", "nombre": "Sky Lounge", "superficie_m2": 180, "capacidad_sentado": 60, "capacidad_coctel": 150 }
+  ],
+  "equipo_clave": [
+    { "rol": "Director F&B", "nombre": "—" },
+    { "rol": "Jefe de Cocina", "nombre": "—" },
+    { "rol": "Maître", "nombre": "—" },
+    { "rol": "Jefa de Eventos", "nombre": "—" }
+  ]
+}
