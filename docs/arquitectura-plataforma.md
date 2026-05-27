@@ -42,6 +42,9 @@ El producto comercial es el **dashboard del director**: la herramienta que permi
 | D4 | **Vanilla static + JSON en repo** | Coherente con el stack actual. Cero coste mensual, cero servidor que mantener, deploy automático en cada commit. |
 | D5 | **Escritura vía GitHub API con Personal Access Token** | El dashboard hace commits automáticos. El PAT vive solo en tu navegador (localStorage cifrado o env var). |
 | D6 | **Refactor del piloto a multi-tenant primero, dashboard después** | Asegura cimientos sólidos. Antes de construir el dashboard hay que demostrar que el piloto funciona consumiendo datos externos. |
+| D8 | **Bulk import obligatorio (Excel/CSV + fotos drag&drop + PDF)** | Un hostelero entrega su carta en Excel/PDF con 100-200 platos. Sin importers el producto es inviable comercialmente. Manual formulario por formulario solo para datos básicos. |
+| D9 | **Storage de imágenes: repo + compresión agresiva client-side** | Antes de subir, el navegador reduce cada foto a ≤1600px / ≤200KB WebP. 100 fotos ≈ 20MB. Aguanta varios proyectos sin tocar Git LFS. Cero dependencia externa. |
+| D10 | **Librería "nuclear" de starters pre-cargados** | El wizard ofrece catálogos completos importables: cocina andaluza, mediterránea, clásicos de boda, brunch internacional. Cada starter = 15-30 platos con escandallo y fotos. Reduce el onboarding de "días de trabajo" a "horas". |
 
 ### Decisión derivada (D7): Modelo de seguridad
 
@@ -149,10 +152,23 @@ control-gestion-fnb/
 │   │   ├── tokens.css          # Paleta Navy, espaciados, sombras (variables CSS)
 │   │   ├── components.css      # .card, .svc-row, .modal, etc.
 │   │   └── temas/              # Temas alternativos (fase 2)
-│   └── schemas/                # JSON Schemas para validación
-│       ├── establecimiento.schema.json
-│       ├── menus.schema.json
-│       └── recetas.schema.json
+│   ├── schemas/                # JSON Schemas para validación
+│   │   ├── establecimiento.schema.json
+│   │   ├── menus.schema.json
+│   │   └── recetas.schema.json
+│   ├── importers/              # Parsers de datos externos
+│   │   ├── excel-importer.js   # Lee XLSX vía SheetJS
+│   │   ├── csv-importer.js     # Lee CSV vía PapaParse
+│   │   ├── pdf-importer.js     # Lee PDF vía PDF.js (extracción texto + tablas)
+│   │   ├── image-bulk.js       # Drag&drop + compresión + auto-matching
+│   │   └── mapper.js           # UI para mapear columnas-a-campos
+│   └── starters/               # Catálogos pre-cargados ("librería nuclear")
+│       ├── platos-andaluces.json
+│       ├── platos-mediterraneos.json
+│       ├── menus-boda-clasica.json
+│       ├── brunch-internacional.json
+│       ├── productos-mercado-base.json
+│       └── bebidas-distribuidor-makro.json
 ├── projects/
 │   ├── miramar/                # El piloto canónico (lo migramos primero)
 │   │   ├── config.json
@@ -207,8 +223,12 @@ control-gestion-fnb/
 | Hash de passwords | `bcryptjs` (UMD via CDN) | 10 rounds por defecto. |
 | Escritura al repo | GitHub REST API v3 (Octokit Browser) | El PAT vive en `localStorage` cifrado con la password del super-admin. |
 | Métricas / charts | Chart.js (via CDN) | Standard de la industria, ligero, sin build step. |
+| **Importer Excel/CSV** | `SheetJS / xlsx` + `PapaParse` (CDN) | Lee XLSX/XLS/ODS y CSV. Detección automática de delimitador. |
+| **Importer PDF** | `PDF.js` (Mozilla, CDN) | Extracción de texto + posiciones. OCR (`Tesseract.js`) opcional fase 2. |
+| **Compresión imagen** | `browser-image-compression` (CDN) | Wrapper canvas API. Redimensiona + convierte a WebP client-side. |
+| **Validación de import** | `Ajv` (CDN) | Valida cada fila contra JSON Schema. Errores precisos por campo. |
 | Tests | Playwright (ya instalado) + scripts manuales con Chrome DevTools MCP | Continuamos lo que ya hacemos. |
-| Generación de imágenes IA | FLUX vía Pollinations.ai (ya integrado) | Sin API key, gratis. |
+| Generación de imágenes IA | FLUX vía Pollinations.ai (ya integrado) | Sin API key, gratis. Se invoca desde el bulk-image-upload cuando faltan fotos. |
 
 ### Lo que NO se usa (y por qué)
 
@@ -301,7 +321,105 @@ Cada sección con:
 - Top 5 productos más caros del escandallo.
 - Alertas de productos con margen < 25 %.
 
-### 7.6 · Requisito derivado: persistir presupuestos
+### 7.6 · Onboarding y bulk upload de datos
+
+> **Bloque crítico.** Un cliente real entrega su carta en Excel/PDF con 100-200 platos. Sin importers, el producto es inviable. Esta sección define cómo se cargan datos masivamente.
+
+#### 7.6.1 · Importer de Excel/CSV
+
+**Casos de uso típicos:**
+- Carta de platos (nombre, descripción, alérgenos, precio venta)
+- Recetas con escandallo (plato + lista ingredientes + cantidades)
+- Catálogo de productos (materia prima + €/kg + proveedor)
+- Carta de bebidas/vinos (distribuidor entrega lista en Excel)
+
+**Flujo del editor:**
+1. Botón «📥 Importar Excel/CSV» en cada sección del editor (Menús, Recetario, Productos…).
+2. Drag&drop del fichero → preview de la primera hoja con primeras 10 filas.
+3. **Pantalla de mapeo columnas-a-campos** (clave): el sistema sugiere mapeos automáticos por nombre de header (`"Nombre" → name`, `"Precio" → price`, `"Alérgenos" → allergens`); el usuario confirma o corrige cada uno.
+4. **Validación**: se valida cada fila contra el JSON Schema correspondiente. Las filas con errores se marcan en rojo con motivo.
+5. Pantalla de resumen: «142 platos válidos · 8 con errores · 3 duplicados». Botones «Importar válidos» / «Editar errores» / «Cancelar».
+6. Al importar → commit único con mensaje descriptivo («Importa 142 platos desde menu_2026.xlsx»).
+
+**Librerías:**
+- `SheetJS / xlsx` (CDN) — lee XLSX, XLS, ODS.
+- `PapaParse` (CDN) — lee CSV con detección de delimitador.
+- `Ajv` (CDN) — valida cada fila contra JSON Schema.
+
+#### 7.6.2 · Importer de PDF
+
+**Casos de uso:** carta del establecimiento en PDF (no editable), tarifa de proveedor.
+
+**Estrategia 2-niveles:**
+- **Nivel A (MVP)**: PDF.js extrae texto y tablas. Renderiza el contenido en una vista 2-columnas: izquierda el texto crudo, derecha el editor de platos. El usuario hace **copy-paste asistido** desde el PDF a los formularios.
+- **Nivel B (fase posterior)**: OCR para PDFs escaneados (Tesseract.js). Detección automática de columnas de tabla con `pdfplumber`-equivalente en JS. Se evalúa cuando sea necesario.
+
+#### 7.6.3 · Bulk upload de imágenes con compresión client-side
+
+**Flujo:**
+1. Botón «🖼 Subir fotos» en Recetario / Espacios / Eventos.
+2. Drag&drop de **carpeta entera** o multi-selección.
+3. Para cada imagen, en el navegador (canvas API):
+   - Redimensiona a max 1600px en lado largo.
+   - Convierte a WebP con calidad 80.
+   - Genera thumbnail 400px para previews.
+   - Si la original era >5MB, además genera una versión 800px para fallback.
+4. **Auto-matching por nombre de archivo**: si el archivo se llama `gazpacho-andaluz.jpg` y existe un plato «Gazpacho Andaluz», se sugiere el match. El usuario confirma o arrastra manualmente.
+5. **Generación IA fallback**: para platos sin foto tras el match, botón «Generar con IA» que dispara Pollinations.ai con prompt construido del nombre + alérgenos (sistema ya integrado en `scripts/generar_fotos_platos.py`, lo portamos a JS browser).
+6. Commit único con todas las imágenes («Sube 47 fotos al recetario»).
+
+**Librería:** `browser-image-compression` (CDN) — wrapper sobre canvas API con buenos defaults.
+
+**Límites duros:**
+- Foto comprimida final: ≤250KB. Si el usuario sube una de 8MB, el compresor la baja a ~200KB sin pedir permiso.
+- Nº de fotos por commit: ≤100 (si suben más, se trocea en commits de 100).
+
+#### 7.6.4 · Librería de starters
+
+**Concepto:** catálogos completos que el director puede importar de golpe al crear un proyecto. Reducen el onboarding de días a horas.
+
+**Starters previstos (commit inicial de la Fase 3):**
+
+| Starter | Contenido | Origen |
+|---|---|---|
+| 🌅 Cocina andaluza tradicional | 25 platos (gazpacho, salmorejo, pescaíto frito, rabo de toro, churros, torrijas…) con escandallo y fotos | Adaptado del recetario actual del Miramar |
+| 🌊 Mediterránea costera | 20 platos (arroces, pescados a la sal, fritura, mariscos) | Generado nuevo |
+| 💒 Clásicos de boda 5★ | 4 menús completos (Esencial / Selecta / Gourmet / Premium) sentados | Adaptado del Miramar |
+| ☕ Brunch internacional | 18 platos (eggs benedict, pancakes, açaí bowl, croissants, pastrami…) | Generado nuevo |
+| 🛒 Productos de mercado base | 80 materias primas con precios €/kg actualizados Costa del Sol 2026 | Adaptado del Miramar |
+| 🍷 Carta vinos D.O. España | 40 referencias por D.O. y rango de precio | Generado |
+| 🥗 Vegano/Vegetariano | 15 platos premium veganos completos | Generado nuevo |
+
+**Mecanismo:**
+- Cada starter es un JSON en `/core/starters/<nombre>.json` con la misma estructura que el JSON del proyecto destino.
+- En el editor, botón «📚 Importar desde librería» → modal con cards de starters disponibles → preview con primeros 5 ítems → botón «Importar todos» o «Seleccionar cuáles».
+- Al importar, los IDs se reasignan para no colisionar con datos existentes del proyecto.
+- Las fotos del starter viven en `/core/starters/assets/<nombre>/` (referenciadas por URL relativa). **Se copian al proyecto destino** al importar, para que el cliente pueda editarlas independientemente.
+
+#### 7.6.5 · Wizard "Nuevo proyecto" ampliado (revisa 7.3)
+
+La sección 7.3 listaba 5 pasos. **Se amplían a 7**:
+
+1. Información básica (nombre, slug, ciudad, categoría).
+2. **Importar template o starters**: «Copiar Miramar» / «Partir de starters» (multi-select de la librería 7.6.4) / «Vacío».
+3. Ficha del establecimiento.
+4. **🆕 Bulk import opcional**: «¿Tienes ya tu carta en Excel/PDF?» → upload + mapeo (sección 7.6.1/7.6.2). Saltable.
+5. **🆕 Upload masivo de fotos opcional**: drag&drop carpeta (sección 7.6.3). Saltable.
+6. Cuenta del responsable del proyecto.
+7. Resumen y confirmación → commit inicial.
+
+Después del wizard, el editor abre con un mensaje «✨ Proyecto creado con X platos, Y fotos, Z menús. Empieza a editar.»
+
+#### 7.6.6 · Validación y reporte de errores
+
+Todo import grande termina con un report descargable como `informe-import-<fecha>.csv` con:
+- Fila origen del fichero
+- Resultado (importado / error / duplicado)
+- Motivo del error si aplica
+
+Esto es esencial para que el director pueda corregir el fichero del cliente y reintentar sin perder trazabilidad.
+
+### 7.7 · Requisito derivado: persistir presupuestos
 
 Para que las métricas funcionen, cada presupuesto generado en el frontend público debe guardarse en `projects/<id>/budgets/`. Esto se hace **al pulsar «Generar contrato»** o «Generar orden de servicio» en el cotizador: se hace un commit con el JSON del presupuesto + referencia + timestamp.
 
@@ -348,16 +466,28 @@ Pasos:
 
 ### FASE 3 · Dashboard MVP · 3-4 sesiones
 
-**Objetivo:** dashboard funcional con login, lista, editor de menús (la sección más compleja primero) y métricas básicas.
+**Objetivo:** dashboard funcional con login, lista, editor de menús (la sección más compleja primero) y métricas básicas. **Sin importers todavía** — solo edición a partir de proyecto piloto duplicado.
 
 Pasos:
 1. Crear `dashboard/index.html` con login + lista de proyectos.
 2. Crear `dashboard/editor.html` con sidebar y al menos 3 secciones: establecimiento, menús, recetario.
 3. Integrar `core/js/github-api.js` con Octokit Browser para commits automáticos.
 4. Integrar `auth.js` con bcryptjs.
-5. Wizard de creación de proyecto.
+5. Wizard de creación de proyecto (versión simple, sin importers — solo «Copiar Miramar» o «Vacío»).
 6. Métricas Miramar 1 (presupuestos) y 3 (agenda) — las otras llegan después.
 7. Tests E2E con Chrome DevTools MCP.
+
+### FASE 3.5 · Bulk import y librería de starters · 3 sesiones
+
+**Objetivo:** hacer el producto comercialmente viable para clientes reales con cartas grandes.
+
+Pasos:
+1. **Sesión A** · Importer Excel/CSV — `SheetJS` + `PapaParse` + mapper UI columnas-a-campos + validación `Ajv`.
+2. **Sesión B** · Importer PDF (nivel A: extracción texto, copy-paste asistido) — `PDF.js`.
+3. **Sesión C** · Bulk upload imágenes con compresión client-side + auto-matching por nombre — `browser-image-compression`.
+4. Crear los 7 starters iniciales en `/core/starters/` con assets.
+5. Ampliar wizard de proyecto nuevo a 7 pasos (sección 7.6.5).
+6. Tests E2E: crear un proyecto «restaurante demo» importando un Excel de prueba + 30 fotos de muestra.
 
 ### FASE 4 · Métricas completas + tema visual · 2-3 sesiones
 
@@ -372,7 +502,7 @@ Pasos:
 - Vídeo demo (Loom o similar) de 2-3 min.
 - Posible deploy de un proyecto-demo «restaurante» como segundo ejemplo.
 
-**Total estimado: 10-13 sesiones.** Cada sesión nueva debe arrancar leyendo este documento y tocar UNA fase como mucho.
+**Total estimado: 13-16 sesiones** (con la Fase 3.5 incluida). Cada sesión nueva debe arrancar leyendo este documento y tocar UNA fase como mucho.
 
 ---
 
@@ -386,23 +516,28 @@ Pasos:
 | v4.1 | Fase 1 · Externalizar JSON Miramar | 🔜 |
 | v4.2 | Fase 2 · Multi-tenant routing | 🔜 |
 | v4.3 | Fase 3 · Dashboard MVP (login + lista + editor menús) | 🔜 |
-| v4.4 | Fase 3 · Wizard crear proyecto | 🔜 |
+| v4.4 | Fase 3 · Wizard crear proyecto (versión simple) | 🔜 |
 | v4.5 | Fase 3 · Editor de las demás secciones | 🔜 |
+| **v4.5.5** | **Fase 3.5 · Importer Excel/CSV + mapper** | 🔜 |
+| **v4.5.6** | **Fase 3.5 · Importer PDF (nivel A)** | 🔜 |
+| **v4.5.7** | **Fase 3.5 · Bulk upload imágenes + compresión + starters** | 🔜 |
 | v4.6 | Fase 4 · Métricas Miramar (5 pestañas) | 🔜 |
 | v4.7 | Fase 4 · Sistema de temas personalizables | 🔜 |
-| v4.8 | Fase 5 · Polish + segundo proyecto demo | 🔜 |
+| v4.8 | Fase 5 · Polish + segundo proyecto demo «restaurante» (con import real) | 🔜 |
 | v5.0 | (Opcional) Migración a backend real / Supabase | Por evaluar |
 
 ---
 
 ## 10 · Decisiones pendientes / preguntas abiertas
 
-1. **Flujo de guardado de presupuestos para métricas** — ¿cliente del hotel hace «submit» que llega al dashboard via email/Resend/EmailJS? ¿O el director copia/pega el JSON del cliente al dashboard manualmente?
-2. **PAT seguro en localStorage** — investigar si conviene cifrarlo con la password del admin o si es suficiente con `sessionStorage` (que se borra al cerrar pestaña).
-3. **Editor visual de recetas** — ¿incluye AI-fotos automático al crear receta (vía Pollinations) o queda manual?
-4. **Internacionalización (i18n)** — ¿soportamos proyectos en otros idiomas (inglés, francés) desde el inicio? Decisión: **no, fase 5+**.
-5. **Versioning de JSON Schemas** — cuando evolucione el schema de menús, ¿migración automática de proyectos antiguos? Decisión: **mantener semver en cada schema + migrations.js que detecte versión y migre**.
-6. **Política de fotos** — ¿quién paga el storage si pasamos de Git LFS? Por ahora todas las fotos caben directas en el repo.
+1. **Flujo de guardado de presupuestos para métricas** — ¿cliente del hotel hace «submit» que llega al dashboard vía email/Resend/EmailJS? ¿O el director copia/pega el JSON del cliente al dashboard manualmente? **Decidir en Fase 4** cuando se construyan las métricas.
+2. **PAT seguro en localStorage** — investigar si conviene cifrarlo con la password del admin o si es suficiente con `sessionStorage` (que se borra al cerrar pestaña). **Decidir en Fase 3** cuando se construya el login.
+3. **Editor visual de recetas** — ¿la opción «Generar con IA» de fotos faltantes (sección 7.6.3) se ofrece también dentro del editor de receta individual? Probable: sí, con botón inline. **Decidir en Fase 3.5**.
+4. **OCR para PDFs escaneados** — Tesseract.js es pesado (~3MB). Solo se carga bajo demanda. **Decidir en Fase 5** según volumen real de clientes con cartas escaneadas.
+5. **Internacionalización (i18n)** — ¿soportamos proyectos en otros idiomas (inglés, francés) desde el inicio? **Decisión: no, fase 5+**.
+6. **Versioning de JSON Schemas** — cuando evolucione el schema de menús, ¿migración automática de proyectos antiguos? **Decisión: mantener semver en cada schema + migrations.js que detecte versión y migre**.
+7. **Política de fotos a escala** — con compresión client-side (D9) las fotos caben directas en el repo. Si llegan a 1GB se evalúa Git LFS. **Umbral de alerta: 800MB**.
+8. **Starters de proveedores reales** — la lista de bebidas-distribuidor-makro.json implica scraping/copia de listas comerciales públicas. **¿Hay implicaciones legales?** Decidir antes de publicar los starters.
 
 ---
 
@@ -415,6 +550,9 @@ Pasos:
 | Rate limit del GitHub API (5 000 req/h por user) | Baja | Bajo | El dashboard cachea respuestas. Un editor activo hace ~50 commits/sesión. |
 | Tamaño del repo crece sin control con fotos | Media | Medio | Hooks pre-commit que avisen si una foto supera 1 MB. Migración a Git LFS si llegamos a 1 GB. |
 | Cambio de visión a mitad → re-refactor | Media | Alto | Cada fase se cierra con merge a main + tag. Volver atrás siempre posible. |
+| Import de Excel cliente con estructura caótica | Alta | Medio | Mapper UI con sugerencias + edición manual. Reporte de errores descargable. Cliente puede iterar el fichero y reimportar. |
+| Compresión client-side falla con browsers viejos | Baja | Bajo | `browser-image-compression` soporta Chrome/Firefox/Safari/Edge modernos. Browsers <2020 reciben mensaje «navegador no soportado». |
+| Bulk commit de 100 fotos satura GitHub API | Baja | Medio | Trocear en commits de 100. Mostrar barra de progreso. Reintentar con backoff exponencial si rate limit. |
 
 ---
 
@@ -437,6 +575,9 @@ Cada decisión grande tiene su propio archivo en `docs/adr/`:
 - `005-github-api-commits.md`
 - `006-refactor-antes-de-dashboard.md`
 - `007-soft-auth-trade-off.md`
+- `008-bulk-import-obligatorio.md`
+- `009-compresion-cliente-storage-imagenes.md`
+- `010-starters-libreria-nuclear.md`
 
 (Se crean en la Fase 0 con plantilla MADR — Markdown ADR).
 
@@ -450,3 +591,5 @@ Cuando arranques sesión nueva para implementar:
 > «Hola. Lee `docs/arquitectura-plataforma.md` completo y luego empieza la **Fase 1** del plan de migración: externalizar los datos del Miramar a JSON. No toques nada más. Cuando termines la Fase 1, abre un PR y para — no continúes con la Fase 2 sin mi luz verde.»
 
 Esto le da a la sesión nueva un anclaje fuerte (este documento) y un alcance acotado (una sola fase), evitando que se desvíe.
+
+**Cuidado especial con la Fase 3.5** (importers): es donde más fácil se «escapa» el alcance. Cada importer (Excel, PDF, imágenes) es UNA sesión separada. No mezclar.
