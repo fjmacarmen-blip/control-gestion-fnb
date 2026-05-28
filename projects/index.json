@@ -1,0 +1,16 @@
+{
+  "_README": "Manifiesto de proyectos visibles en el dashboard. Lo mantendrá automáticamente el wizard de creación de proyectos (Fase 3.B). Por ahora se edita a mano cuando se añade un proyecto nuevo.",
+  "proyectos": [
+    {
+      "id": "miramar",
+      "es_piloto": true,
+      "archivado": false
+    },
+    {
+      "id": "demo",
+      "es_piloto": false,
+      "archivado": false,
+      "nota": "Proyecto vacío de regresión multi-tenant"
+    }
+  ]
+}
