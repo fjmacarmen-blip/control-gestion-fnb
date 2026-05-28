@@ -1429,7 +1429,7 @@ body{
 
 </div><!-- /app -->
 
-<script src="../core/js/loader.js"></script>
+<script src="../js/loader.js"></script>
 <script>
 // ══════════════════════════════════════════════════
 // STATE
@@ -1457,8 +1457,8 @@ const sel = {
 // ══════════════════════════════════════════════════
 // DATA
 // ══════════════════════════════════════════════════
-const BASE_EVT = '../imagenes/eventos/eventos/';
-const BASE_PLT = '../imagenes/platos/';
+const BASE_EVT = '../../imagenes/eventos/eventos/';
+const BASE_PLT = '../../imagenes/platos/';
 
 let eventTypes = []; // cargado desde projects/<id>/eventos.json vía loader.js (Fase 1 v4.1)
 
@@ -1731,7 +1731,7 @@ function renderCompItem(text, asLabel) {
   let html = text;
   RECETAS_CATALOG.forEach(name => {
     if (text.indexOf(name) !== -1) {
-      const url = `../recetario/recetario.html#${encodeURIComponent(name)}`;
+      const url = `recetario.html#${encodeURIComponent(name)}`;
       const linked = `<a class="comp-recipe-link" href="${url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Ver ficha y escandallo de ${name}">${name} <span class="link-arrow">↗</span></a>`;
       html = html.split(name).join(linked);
     }

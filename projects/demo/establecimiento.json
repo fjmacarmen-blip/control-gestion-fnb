@@ -1,0 +1,36 @@
+{
+  "razon_social": "—",
+  "nombre_comercial": "Establecimiento Demo",
+  "categoria": "—",
+  "nif": "—",
+  "direccion": {
+    "calle": "—",
+    "cp": "—",
+    "ciudad": "—",
+    "provincia": "—",
+    "pais": "España"
+  },
+  "registro_turismo": "—",
+  "contacto": {
+    "telefono": "—",
+    "email": "—",
+    "web": "—"
+  },
+  "datos_legacy": {
+    "razon": "—",
+    "nif": "—",
+    "direccion": "—",
+    "registro": "—",
+    "telefono": "—",
+    "email": "—"
+  },
+  "stats": {
+    "habitaciones": null,
+    "pax_max": null,
+    "superficie_eventos_m2": null,
+    "spa_m2": null,
+    "spa_cabinas": null
+  },
+  "espacios": [],
+  "equipo_clave": []
+}

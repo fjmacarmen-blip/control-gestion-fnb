@@ -38,7 +38,8 @@
   function getRepoBase() {
     const meta = document.querySelector('meta[name="project-base"]');
     if (meta && meta.content) return meta.content.replace(/\/?$/, '/');
-    return '../';
+    // Default Fase 2+: las páginas viven en /core/pages/, así que el repo está dos niveles arriba.
+    return '../../';
   }
 
   async function fetchJson(url) {

@@ -1,0 +1,13 @@
+{
+  "id": "demo",
+  "slug": "demo",
+  "nombre": "Proyecto Demo · Vacío",
+  "categoria_establecimiento": "hotel",
+  "es_piloto": false,
+  "es_template": false,
+  "locale": "es-ES",
+  "moneda": "EUR",
+  "tema": "navy-boutique",
+  "version_schema": "1.0.0",
+  "creado": "2026-05-27"
+}
