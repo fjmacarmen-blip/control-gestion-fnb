@@ -289,6 +289,7 @@
         <div class="section-actions">
           <button class="btn" data-action="reset-establecimiento" title="Descartar cambios locales">↩ Descartar</button>
           <button class="btn primary" data-action="save-establecimiento" disabled>💾 Guardar borrador</button>
+          <button class="btn" data-action="publish-establecimiento" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
         </div>
       </div>
 
@@ -346,6 +347,7 @@
           <button class="btn" data-action="add-menu">+ Nuevo menú</button>
           <button class="btn" data-action="reset-menus">↩ Descartar</button>
           <button class="btn primary" data-action="save-menus" disabled>💾 Guardar borrador</button>
+          <button class="btn" data-action="publish-menus" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
         </div>
       </div>
       <div class="item-grid" id="menusList"></div>
@@ -361,6 +363,7 @@
         <div class="section-actions">
           <button class="btn" data-action="reset-recetas">↩ Descartar</button>
           <button class="btn primary" data-action="save-recetas" disabled>💾 Guardar borrador</button>
+          <button class="btn" data-action="publish-recetas" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
         </div>
       </div>
       <div id="recetasContent"></div>
@@ -376,6 +379,7 @@
         <div class="section-actions">
           <button class="btn" data-action="reset-tema">↩ Descartar</button>
           <button class="btn primary" data-action="save-tema" disabled>💾 Guardar borrador</button>
+          <button class="btn" data-action="publish-tema" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
         </div>
       </div>
       <div class="card-block">
@@ -427,6 +431,7 @@
 <!-- ─── SCRIPTS ────────────────────────────────── -->
 <script src="../core/js/loader.js"></script>
 <script src="../core/js/auth.js"></script>
+<script src="../core/js/github-api.js"></script>
 <script src="../core/js/editor-core.js"></script>
 <script>
 'use strict';
@@ -935,6 +940,57 @@ function discardAll() {
 }
 
 // ══════════════════════════════════════════════
+// PUBLICAR · commit del draft al repo (Fase 3.C.1)
+// ══════════════════════════════════════════════
+async function publishSection(section) {
+  const data = state.data[section];
+  if (!data) { window.fnbEditor.showToast('Nada que publicar en ' + section, 'error'); return; }
+
+  // Validación previa
+  const validation = window.fnbEditor.validateSection(section, data);
+  if (!validation.ok) {
+    window.fnbEditor.showToast('No se puede publicar: ' + validation.errors[0], 'error');
+    return;
+  }
+
+  // Asegurar PAT (si no hay, pedirlo)
+  if (!window.fnbAuth.getPAT()) {
+    const r = await window.fnbAuth.promptForPAT({
+      title: 'PAT necesario para publicar',
+      description: 'Para escribir <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">' + section + '.json</code> al repo necesitamos un Personal Access Token con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">repo</code>. Vive solo en esta pestaña.'
+    });
+    if (!r.ok) {
+      window.fnbEditor.showToast('Publicación cancelada · sin PAT', 'info');
+      return;
+    }
+  }
+
+  const navName = navKey(section);
+  const button = document.querySelector(`[data-action="publish-${navName}"]`)
+              || document.querySelector(`[data-action="publish-${section}"]`);
+  if (button) { button.disabled = true; button.textContent = '☁ Publicando…'; }
+
+  try {
+    const path = 'projects/' + PROJECT_ID + '/' + section + '.json';
+    const message = 'chore(' + PROJECT_ID + '): actualizar ' + section + '.json vía dashboard';
+    const result = await window.fnbGitHub.putFile(path, data, message);
+
+    if (result.dryRun) {
+      window.fnbEditor.showToast('🌫 Dry-run · sin PAT no se publica (ver consola)', 'info');
+    } else if (result.ok) {
+      window.fnbEditor.showToast('☁ Publicado · ' + (result.commit.sha || '').slice(0, 7), 'success');
+      // El draft local queda como respaldo · no lo borramos hasta que el usuario lo confirme
+    } else {
+      window.fnbEditor.showToast('⚠ Fallo: ' + result.error, 'error');
+    }
+  } catch (e) {
+    window.fnbEditor.showToast('⚠ Excepción: ' + e.message, 'error');
+  } finally {
+    if (button) { button.disabled = false; button.textContent = '☁ Publicar'; }
+  }
+}
+
+// ══════════════════════════════════════════════
 // Eventos
 // ══════════════════════════════════════════════
 document.addEventListener('click', (e) => {
@@ -960,6 +1016,10 @@ document.addEventListener('click', (e) => {
     case 'save-menus':           saveSection('menus'); break;
     case 'save-recetas':         saveSection('recetas'); break;
     case 'save-tema':            saveSection('config'); break;
+    case 'publish-establecimiento': publishSection('establecimiento'); break;
+    case 'publish-menus':           publishSection('menus'); break;
+    case 'publish-recetas':         publishSection('recetas'); break;
+    case 'publish-tema':            publishSection('config'); break;
     case 'reset-establecimiento':resetSection('establecimiento'); break;
     case 'reset-menus':          resetSection('menus'); break;
     case 'reset-recetas':        resetSection('recetas'); break;
