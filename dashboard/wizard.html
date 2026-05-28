@@ -246,6 +246,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
 <script src="../core/js/loader.js"></script>
 <script src="../core/js/auth.js"></script>
 <script src="../core/js/github-api.js"></script>
@@ -480,38 +481,43 @@ async function commitProject() {
     // Persistir SIEMPRE drafts locales primero (respaldo + fallback durante deploy)
     saveLocalDrafts(project);
 
-    // Si no hay PAT, ofrecer pegarlo. Si el usuario lo cancela → fallback a solo drafts.
-    if (!window.fnbAuth.getPAT()) {
-      $('#btnNext').textContent = 'Solicitando PAT…';
-      const r = await window.fnbAuth.promptForPAT({
-        title: 'Publicar al repo · necesita PAT',
-        description: 'Para crear <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">projects/' + escapeHtml(wizard.data.id) + '/</code> con sus 10 JSONs, necesitamos un PAT con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">repo</code>. Si cancelas, el proyecto queda como borrador local y podrás publicarlo más tarde desde el editor.'
-      });
-      if (!r.ok) {
-        window.fnbEditor.showToast('Proyecto creado como borrador local · publica más tarde desde el editor', 'info');
-        setTimeout(() => location.replace('./editor.html?proyecto=' + encodeURIComponent(wizard.data.id) + '&fresh=1'), 1200);
-        return;
+    // Re-verificar password antes del commit masivo (skippeable si fresh <5min)
+    const verifyResult = await window.fnbAuth.promptPasswordAndExecute(async () => {
+
+      // Si no hay PAT, ofrecer pegarlo. Si lo cancela → null para gestionar fallback.
+      if (!window.fnbAuth.getPAT()) {
+        $('#btnNext').textContent = 'Solicitando PAT…';
+        const r = await window.fnbAuth.promptForPAT({
+          title: 'Publicar al repo · necesita PAT',
+          description: 'Para crear <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">projects/' + escapeHtml(wizard.data.id) + '/</code> con sus 10 JSONs, necesitamos un PAT con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">repo</code>. Si cancelas, el proyecto queda como borrador local.'
+        });
+        if (!r.ok) return { ok: false, noPat: true };
       }
-    }
 
-    // Construir la lista de archivos para el commit masivo
-    $('#btnNext').textContent = 'Publicando al repo…';
-    const files = buildCommitFiles(project);
+      $('#btnNext').textContent = 'Publicando al repo…';
+      const files = buildCommitFiles(project);
+      const updatedManifest = await buildUpdatedManifest();
+      files.push({ path: 'projects/index.json', content: updatedManifest });
+      const message = 'feat(' + wizard.data.id + '): crear proyecto «' + wizard.data.name + '» (' +
+        wizard.data.template + ', tema=' + wizard.data.tema + ')';
+      return window.fnbGitHub.commitMultipleFiles(files, message);
+    }, {
+      title: 'Confirmar creación del proyecto',
+      description: 'Vas a hacer un commit al repo creando <strong>' + escapeHtml(wizard.data.name) + '</strong>. Confirma tu password para autorizar.',
+      actionLabel: 'Verificar y crear',
+    });
 
-    // Actualizar projects/index.json incluyendo el nuevo proyecto
-    const updatedManifest = await buildUpdatedManifest();
-    files.push({ path: 'projects/index.json', content: updatedManifest });
-
-    const message = 'feat(' + wizard.data.id + '): crear proyecto «' + wizard.data.name + '» (' +
-      wizard.data.template + ', tema=' + wizard.data.tema + ')';
-    const result = await window.fnbGitHub.commitMultipleFiles(files, message);
-
-    if (result.dryRun) {
-      window.fnbEditor.showToast('🌫 Dry-run · proyecto NO publicado al repo (ver consola). Usa el editor para añadir el PAT y publicar.', 'info');
-    } else if (result.ok) {
-      window.fnbEditor.showToast('☁ Proyecto publicado · commit ' + result.commit.sha.slice(0, 7) + ' · GitHub Pages tarda ~60s en deployar', 'success');
-    } else {
-      window.fnbEditor.showToast('⚠ Fallo al publicar: ' + result.error + ' · borrador local intacto', 'error');
+    // Gestionar resultado
+    if (verifyResult && verifyResult.cancelled) {
+      window.fnbEditor.showToast('Creación cancelada · proyecto queda como borrador local', 'info');
+    } else if (verifyResult && verifyResult.noPat) {
+      window.fnbEditor.showToast('Proyecto creado como borrador local · publica más tarde desde el editor', 'info');
+    } else if (verifyResult && verifyResult.dryRun) {
+      window.fnbEditor.showToast('🌫 Dry-run · proyecto NO publicado al repo (ver consola)', 'info');
+    } else if (verifyResult && verifyResult.ok) {
+      window.fnbEditor.showToast('☁ Proyecto publicado · commit ' + verifyResult.commit.sha.slice(0, 7) + ' · GitHub Pages tarda ~60s en deployar', 'success');
+    } else if (verifyResult && verifyResult.error) {
+      window.fnbEditor.showToast('⚠ Fallo al publicar: ' + verifyResult.error + ' · borrador local intacto', 'error');
     }
 
     setTimeout(() => location.replace('./editor.html?proyecto=' + encodeURIComponent(wizard.data.id) + '&fresh=1'), 1500);

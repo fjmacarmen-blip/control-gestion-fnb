@@ -429,6 +429,7 @@
 </div>
 
 <!-- ─── SCRIPTS ────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
 <script src="../core/js/loader.js"></script>
 <script src="../core/js/auth.js"></script>
 <script src="../core/js/github-api.js"></script>
@@ -953,41 +954,48 @@ async function publishSection(section) {
     return;
   }
 
-  // Asegurar PAT (si no hay, pedirlo)
-  if (!window.fnbAuth.getPAT()) {
-    const r = await window.fnbAuth.promptForPAT({
-      title: 'PAT necesario para publicar',
-      description: 'Para escribir <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">' + section + '.json</code> al repo necesitamos un Personal Access Token con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">repo</code>. Vive solo en esta pestaña.'
-    });
-    if (!r.ok) {
-      window.fnbEditor.showToast('Publicación cancelada · sin PAT', 'info');
-      return;
+  // Re-verificar password (skippeable si sesión fresh <5min · ver ADR 011)
+  await window.fnbAuth.promptPasswordAndExecute(async () => {
+
+    // Asegurar PAT (si no hay, pedirlo)
+    if (!window.fnbAuth.getPAT()) {
+      const r = await window.fnbAuth.promptForPAT({
+        title: 'PAT necesario para publicar',
+        description: 'Para escribir <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">' + section + '.json</code> al repo necesitamos un Personal Access Token con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">repo</code>. Vive solo en esta pestaña.'
+      });
+      if (!r.ok) {
+        window.fnbEditor.showToast('Publicación cancelada · sin PAT', 'info');
+        return { ok: false };
+      }
     }
-  }
 
-  const navName = navKey(section);
-  const button = document.querySelector(`[data-action="publish-${navName}"]`)
-              || document.querySelector(`[data-action="publish-${section}"]`);
-  if (button) { button.disabled = true; button.textContent = '☁ Publicando…'; }
+    const navName = navKey(section);
+    const button = document.querySelector(`[data-action="publish-${navName}"]`)
+                || document.querySelector(`[data-action="publish-${section}"]`);
+    if (button) { button.disabled = true; button.textContent = '☁ Publicando…'; }
 
-  try {
-    const path = 'projects/' + PROJECT_ID + '/' + section + '.json';
-    const message = 'chore(' + PROJECT_ID + '): actualizar ' + section + '.json vía dashboard';
-    const result = await window.fnbGitHub.putFile(path, data, message);
+    try {
+      const path = 'projects/' + PROJECT_ID + '/' + section + '.json';
+      const message = 'chore(' + PROJECT_ID + '): actualizar ' + section + '.json vía dashboard';
+      const result = await window.fnbGitHub.putFile(path, data, message);
 
-    if (result.dryRun) {
-      window.fnbEditor.showToast('🌫 Dry-run · sin PAT no se publica (ver consola)', 'info');
-    } else if (result.ok) {
-      window.fnbEditor.showToast('☁ Publicado · ' + (result.commit.sha || '').slice(0, 7), 'success');
-      // El draft local queda como respaldo · no lo borramos hasta que el usuario lo confirme
-    } else {
-      window.fnbEditor.showToast('⚠ Fallo: ' + result.error, 'error');
+      if (result.dryRun) {
+        window.fnbEditor.showToast('🌫 Dry-run · sin PAT no se publica (ver consola)', 'info');
+      } else if (result.ok) {
+        window.fnbEditor.showToast('☁ Publicado · ' + (result.commit.sha || '').slice(0, 7), 'success');
+      } else {
+        window.fnbEditor.showToast('⚠ Fallo: ' + result.error, 'error');
+      }
+    } catch (e) {
+      window.fnbEditor.showToast('⚠ Excepción: ' + e.message, 'error');
+    } finally {
+      if (button) { button.disabled = false; button.textContent = '☁ Publicar'; }
     }
-  } catch (e) {
-    window.fnbEditor.showToast('⚠ Excepción: ' + e.message, 'error');
-  } finally {
-    if (button) { button.disabled = false; button.textContent = '☁ Publicar'; }
-  }
+  }, {
+    title: 'Confirmar publicación al repo',
+    description: 'Vas a hacer un commit a GitHub. Confirma tu password para autorizar la operación.',
+    actionLabel: 'Verificar y publicar',
+  });
 }
 
 // ══════════════════════════════════════════════

@@ -139,3 +139,51 @@ Estas funciones SE AÑADEN en Fase 3.C, no en 3.A/3.B. Esta sección documenta l
 4. **`scripts/change-password.html`** standalone: herramienta para generar hash desde el navegador sin tocar Node.
 5. **Wizard filtra `auth.users`** en `buildMiramarCopy` para que proyectos nuevos no hereden credenciales del piloto.
 6. Este ADR (sección Modelo de amenaza) documenta lo que sí y lo que no se protege, y deja el contrato para Fase 3.C.
+
+---
+
+## Anexo · v4.8 · Implementación final de re-verify password (Fase 3.C.3)
+
+Cumple el contrato planteado en la sección «Punto crítico para Fase 3.C» de este ADR. Cierra definitivamente el crítico #2 de la auditoría completa («Sesión sin firma, manipulable vía DevTools»).
+
+### API implementada en `core/js/auth.js`
+
+```js
+window.fnbAuth.markFreshAuth()           // marca timestamp en sessionStorage
+window.fnbAuth.isFreshAuth(maxAgeMs?)    // true si markFreshAuth se llamó hace <maxAge (default 5 min)
+window.fnbAuth.clearFreshAuth()
+window.fnbAuth.promptPasswordAndExecute(callback, opts?)
+  // Si la sesión es fresh, ejecuta callback directamente.
+  // Si no, abre modal pidiendo password. Verifica contra auth.json.
+  // Tras OK, markFreshAuth + ejecuta callback. Cancelar = no se ejecuta.
+```
+
+### Flujo
+
+1. **Tras login exitoso** (`loginSuperAdmin`): se llama automáticamente `markFreshAuth()`. La sesión queda «fresh» durante 5 minutos.
+2. **Tras cualquier acción destructiva** (publish, commit): el callback se ejecuta sin modal porque la sesión es fresh, y `markFreshAuth()` se renueva al final.
+3. **Si pasan >5 min sin acción destructiva**: el siguiente intento abre el modal pidiendo password.
+4. **Tampering detectado**: si un atacante modifica `fnb_fresh_auth` en sessionStorage, en el peor caso solo extiende la ventana fresh. Las acciones destructivas SIGUEN pidiendo verificación cuando la cookie real expira. El callback solo se ejecuta tras `verifyPassword` exitoso contra el hash de `auth.json`.
+
+### Integración
+
+| Acción | Archivo | Estado |
+|---|---|---|
+| `loginSuperAdmin` → `markFreshAuth` | `core/js/auth.js` | ✅ |
+| `publishSection(section)` envuelto | `dashboard/editor.html` | ✅ |
+| `commitProject()` del wizard envuelto | `dashboard/wizard.html` | ✅ |
+
+### Trade-offs aceptados
+
+- **Si el atacante puede ejecutar código JS arbitrario** (XSS o DevTools en sesión activa), bypassea todo. Mitigación: dashboard sin inputs HTML renderizados (todo pasa por `escapeHtml`), sin dependencias 3rd-party más allá de bcryptjs CDN.
+- **El modal pide la misma password que el login**. Un atacante con la password verdadera ya tiene acceso total — el modal solo añade defensa contra "atacante con acceso temporal al navegador" (postilla pegado, dispositivo compartido).
+- **No hay rate limiting en el modal**. bcrypt rounds=12 ya es ~250ms por intento; brute-force interactivo es inviable. Brute-force programático tendría que recargar la página entre intentos (porque el modal se cierra).
+
+### Cierre del crítico
+
+Tras v4.8, la cadena de defensa es:
+1. **Acceso al dashboard**: password (login).
+2. **Sesión activa**: token en sessionStorage (UX, no seguridad).
+3. **Acción destructiva (commit, edit)**: re-verify password si la sesión no es fresh.
+
+Esto satisface el principio de "defensa en profundidad" sin necesidad de backend.

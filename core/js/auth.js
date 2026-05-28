@@ -21,7 +21,9 @@
 
   const SESSION_KEY = 'fnb_session';
   const PAT_KEY     = 'fnb_pat';
+  const FRESH_KEY   = 'fnb_fresh_auth';   // timestamp ISO de la última re-verify
   const SESSION_TTL_MS = 8 * 60 * 60 * 1000; // 8 horas
+  const FRESH_TTL_MS   = 5 * 60 * 1000;      // 5 minutos · ventana de "fresh auth" tras login
 
   // ── bcrypt wrapper (UMD varía entre versiones) ─────────────────
   function getBcrypt() {
@@ -80,6 +82,23 @@
     sessionStorage.removeItem(SESSION_KEY);
   }
 
+  // ── Fresh auth (re-verify password en acciones destructivas) ──
+  function markFreshAuth() {
+    try {
+      sessionStorage.setItem(FRESH_KEY, String(Date.now()));
+    } catch (e) {}
+  }
+  function isFreshAuth(maxAgeMs) {
+    try {
+      const t = Number(sessionStorage.getItem(FRESH_KEY) || 0);
+      if (!t) return false;
+      return (Date.now() - t) < (maxAgeMs || FRESH_TTL_MS);
+    } catch (e) { return false; }
+  }
+  function clearFreshAuth() {
+    sessionStorage.removeItem(FRESH_KEY);
+  }
+
   // ── GitHub PAT (sessionStorage) ────────────────────────────────
   function setPAT(pat) {
     if (!pat) { clearPAT(); return; }
@@ -109,6 +128,7 @@
       const valid = await verifyPassword(password, user.passwordHash);
       if (!valid) return { ok: false, error: 'Usuario o contraseña incorrectos' };
       setSession({ email: user.email, name: user.name || user.email }, user.scope || 'super-admin');
+      markFreshAuth();
       return { ok: true, user };
     } catch (e) {
       console.error('loginSuperAdmin error:', e);
@@ -202,6 +222,128 @@
     });
   }
 
+  // ── Modal de re-verificación de password ───────────────────────
+  /**
+   * Pide la password al usuario, la verifica contra dashboard/auth.json
+   * y si es correcta ejecuta el callback. Si la sesión está "fresh"
+   * (acaba de hacer login o re-verify hace <5 min), salta el prompt.
+   *
+   * @param {Function} callback  Función async a ejecutar tras verify
+   * @param {Object} opts
+   *   - title:       título del modal
+   *   - description: HTML descriptivo
+   *   - actionLabel: texto del botón primario (default «Confirmar»)
+   *   - bypassFresh: si true, ignora el fresh window y siempre prompt
+   *   - authPath:    ruta a auth.json (default '../dashboard/auth.json'
+   *                  asume que estamos en /dashboard/ o /core/pages/)
+   * @returns Promise con el resultado del callback, o { cancelled: true }
+   */
+  async function promptPasswordAndExecute(callback, opts) {
+    opts = opts || {};
+    const session = getSession();
+    if (!session) return { ok: false, error: 'Sin sesión activa' };
+
+    // Si la sesión es fresh y no se fuerza bypass, ejecutamos directamente
+    if (!opts.bypassFresh && isFreshAuth()) {
+      return callback();
+    }
+
+    return new Promise((resolve) => {
+      const prev = document.getElementById('__verifyModal__');
+      if (prev) prev.remove();
+
+      const overlay = document.createElement('div');
+      overlay.id = '__verifyModal__';
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,17,23,.85);backdrop-filter:blur(6px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Inter,system-ui,sans-serif;';
+      const title = opts.title || 'Confirma tu identidad';
+      const description = opts.description || 'Antes de ejecutar esta acción destructiva, vuelve a teclear la password para confirmar.';
+      const actionLabel = opts.actionLabel || 'Confirmar y continuar';
+      overlay.innerHTML = `
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:14px;width:100%;max-width:480px;padding:28px 26px;box-shadow:0 24px 60px rgba(0,0,0,.6);color:#e6edf3;">
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#a78bfa;margin-bottom:8px;">Verificación de identidad</div>
+          <h2 style="font-size:22px;font-weight:600;line-height:1.2;margin-bottom:6px;">${title}</h2>
+          <p style="font-size:13px;color:#8b949e;line-height:1.55;margin-bottom:16px;">${description}</p>
+          <p style="font-size:11px;color:#6e7681;margin-bottom:14px;">Sesión: <strong style="color:#e6edf3;">${session.user && session.user.email ? session.user.email : '—'}</strong></p>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+            <label style="font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#6e7681;">Password</label>
+            <input type="password" id="__verifyInput__" autocomplete="current-password" placeholder="Tu password actual" style="background:#21262d;border:1px solid #30363d;color:#e6edf3;padding:10px 13px;border-radius:7px;font-size:13px;">
+          </div>
+          <div id="__verifyErr__" style="display:none;background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.35);color:#f85149;padding:9px 12px;border-radius:7px;font-size:12px;margin-bottom:14px;line-height:1.45;"></div>
+          <div style="display:flex;gap:10px;justify-content:flex-end;">
+            <button id="__verifyCancel__" style="padding:10px 18px;border-radius:8px;border:1px solid #30363d;background:#21262d;color:#8b949e;font:inherit;font-size:13px;cursor:pointer;">Cancelar</button>
+            <button id="__verifyOk__" style="padding:10px 20px;border-radius:8px;border:none;background:linear-gradient(135deg,#a78bfa 0%,#7c3aed 100%);color:#0d1117;font:inherit;font-size:13px;font-weight:600;cursor:pointer;">${actionLabel}</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      const input = overlay.querySelector('#__verifyInput__');
+      const err = overlay.querySelector('#__verifyErr__');
+      const okBtn = overlay.querySelector('#__verifyOk__');
+      const cancelBtn = overlay.querySelector('#__verifyCancel__');
+      setTimeout(() => input.focus(), 50);
+
+      function close() { overlay.remove(); }
+      function fail(msg) {
+        err.textContent = msg;
+        err.style.display = '';
+        okBtn.disabled = false;
+        okBtn.textContent = actionLabel;
+      }
+
+      cancelBtn.addEventListener('click', () => {
+        close();
+        resolve({ ok: false, cancelled: true });
+      });
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) { close(); resolve({ ok: false, cancelled: true }); }
+      });
+
+      okBtn.addEventListener('click', async () => {
+        const pw = input.value;
+        if (!pw) { fail('Escribe la password'); return; }
+        okBtn.disabled = true;
+        okBtn.textContent = 'Verificando…';
+
+        // Determinar ruta de auth.json relativa a la página actual
+        let authPath = opts.authPath;
+        if (!authPath) {
+          // Si estamos en /dashboard/, es 'auth.json'. Si en /core/pages/, es '../../dashboard/auth.json'.
+          const path = location.pathname;
+          if (path.includes('/dashboard/')) authPath = 'auth.json';
+          else if (path.includes('/core/pages/')) authPath = '../../dashboard/auth.json';
+          else authPath = 'dashboard/auth.json';
+        }
+
+        try {
+          const res = await fetch(authPath, { cache: 'no-store' });
+          if (!res.ok) { fail('No se pudo leer auth.json (' + res.status + ')'); return; }
+          const data = await res.json();
+          const users = (data && data.users) || [];
+          const user = users.find(u =>
+            (u.email || '').toLowerCase() === (session.user && session.user.email || '').toLowerCase()
+          );
+          if (!user) { fail('Usuario de la sesión ya no existe en auth.json'); return; }
+          const valid = await verifyPassword(pw, user.passwordHash);
+          if (!valid) { fail('Password incorrecta'); return; }
+
+          // Verify OK: marcar fresh + ejecutar callback
+          markFreshAuth();
+          close();
+          try {
+            const result = await callback();
+            resolve(result);
+          } catch (e) {
+            resolve({ ok: false, error: 'Excepción del callback: ' + e.message });
+          }
+        } catch (e) {
+          fail('Error inesperado: ' + e.message);
+        }
+      });
+
+      input.addEventListener('keydown', (e) => { if (e.key === 'Enter') okBtn.click(); });
+    });
+  }
+
   // Exports
   window.fnbAuth = {
     hashPassword,
@@ -212,8 +354,13 @@
     setPAT,
     getPAT,
     clearPAT,
+    markFreshAuth,
+    isFreshAuth,
+    clearFreshAuth,
     loginSuperAdmin,
     promptForPAT,
+    promptPasswordAndExecute,
     SESSION_TTL_MS,
+    FRESH_TTL_MS,
   };
 })();
