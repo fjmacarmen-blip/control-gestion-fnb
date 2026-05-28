@@ -6,30 +6,24 @@
 <meta name="project-base" content="../">
 <title>Nuevo proyecto · Dashboard F&B</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../core/css/dashboard-theme.css">
 <style>
-  :root {
-    --navy-deep:#050e1f; --navy-base:#0a1228; --navy-card:#0f1a35;
-    --navy-card-2:#14213f; --navy-border:#1c2845;
-    --gold:#c9a84c; --gold-soft:#d4b76a;
-    --text:#e8ecf5; --text-soft:#a6b0c8; --muted:#6f7a96;
-    --accent:#5a8dee; --danger:#ff6b6b; --success:#4ade80;
-  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { min-height: 100vh; }
   body {
-    font-family: 'DM Sans', system-ui, sans-serif;
-    background: radial-gradient(ellipse at top, #122047 0%, var(--navy-base) 50%, var(--navy-deep) 100%);
+    font-family: var(--font-ui);
+    background: radial-gradient(ellipse at top, var(--bg-surface) 0%, var(--bg-surface) 50%, var(--bg-base) 100%);
     color: var(--text);
     padding: 24px;
   }
-  a { color: var(--gold); text-decoration: none; }
+  a { color: var(--accent); text-decoration: none; }
 
   .wrap { max-width: 720px; margin: 24px auto; }
   .crumb { color: var(--text-soft); font-size: 13px; margin-bottom: 18px; }
   .crumb a { color: var(--text-soft); }
-  .crumb a:hover { color: var(--gold); }
-  .crumb-sep { color: var(--navy-border); margin: 0 8px; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb-sep { color: var(--border-default); margin: 0 8px; }
 
   .stepper {
     display: flex; gap: 10px; margin-bottom: 32px;
@@ -37,74 +31,104 @@
   .step-dot {
     flex: 1;
     padding: 14px 18px; border-radius: 10px;
-    background: var(--navy-card); border: 1px solid var(--navy-border);
+    background: var(--bg-elevated); border: 1px solid var(--border-default);
     display: flex; align-items: center; gap: 12px;
     transition: all .15s;
   }
-  .step-dot.active { border-color: var(--gold); background: var(--navy-card-2); }
+  .step-dot.active { border-color: var(--accent); background: var(--bg-elevated-2); }
   .step-dot.done { border-color: rgba(74,222,128,.4); background: rgba(74,222,128,.05); }
   .step-num {
     width: 26px; height: 26px; border-radius: 100px;
     display: flex; align-items: center; justify-content: center;
-    background: var(--navy-border); color: var(--muted); font-size: 12px; font-weight: 600;
+    background: var(--border-default); color: var(--text-muted); font-size: 12px; font-weight: 600;
   }
-  .step-dot.active .step-num { background: var(--gold); color: var(--navy-deep); }
-  .step-dot.done .step-num { background: var(--success); color: var(--navy-deep); }
+  .step-dot.active .step-num { background: var(--accent); color: var(--bg-base); }
+  .step-dot.done .step-num { background: var(--success); color: var(--bg-base); }
   .step-label { font-size: 12px; }
   .step-name { color: var(--text); font-weight: 500; }
-  .step-sub { color: var(--muted); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+  .step-sub { color: var(--text-muted); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
 
   .panel {
-    background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px;
+    background: var(--bg-elevated); border: 1px solid var(--border-default); border-radius: 14px;
     padding: 32px;
     box-shadow: 0 20px 50px rgba(0,0,0,.45);
   }
-  .panel h1 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; margin-bottom: 8px; }
+  .panel h1 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; font-size: 30px; font-weight: 500; margin-bottom: 8px; }
   .panel .lede { color: var(--text-soft); font-size: 14px; margin-bottom: 24px; }
 
   .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-  .field label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .field label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
   .field input, .field select {
-    background: var(--navy-base); border: 1px solid var(--navy-border);
+    background: var(--bg-surface); border: 1px solid var(--border-default);
     color: var(--text); padding: 11px 14px; border-radius: 8px; font-size: 14px;
   }
-  .field input:focus, .field select:focus { outline: none; border-color: var(--gold); }
-  .field .hint { color: var(--muted); font-size: 11px; }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
+  .field .hint { color: var(--text-muted); font-size: 11px; }
   .field .err { color: var(--danger); font-size: 12px; min-height: 16px; }
 
   .template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 600px) { .template-grid { grid-template-columns: 1fr; } }
   .tpl-card {
-    background: var(--navy-base); border: 1px solid var(--navy-border); border-radius: 10px;
+    background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 10px;
     padding: 18px; cursor: pointer; transition: all .15s;
   }
-  .tpl-card:hover { border-color: var(--gold-soft); }
-  .tpl-card.selected { border-color: var(--gold); background: var(--navy-card-2); box-shadow: 0 6px 20px rgba(201,168,76,.18); }
+  .tpl-card:hover { border-color: var(--accent-soft); }
+  .tpl-card.selected { border-color: var(--accent); background: var(--bg-elevated-2); box-shadow: 0 6px 20px rgba(52,211,153,.18); }
   .tpl-icon { font-size: 28px; margin-bottom: 8px; }
-  .tpl-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; }
+  .tpl-name { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; font-size: 18px; font-weight: 600; }
   .tpl-desc { color: var(--text-soft); font-size: 12px; margin-top: 4px; line-height: 1.45; }
 
-  .summary-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--navy-border); font-size: 13px; }
-  .summary-row .k { color: var(--muted); letter-spacing: .5px; }
+  /* ── Cards de tema · paso 3 ─────────────────── */
+  .theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 12px;
+  }
+  .theme-card {
+    background: var(--bg-surface); border: 2px solid var(--border-default); border-radius: 12px;
+    padding: 0; cursor: pointer; transition: all .15s; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .theme-card:hover { border-color: var(--accent-soft); transform: translateY(-2px); }
+  .theme-card.selected { border-color: var(--accent); box-shadow: 0 8px 24px rgba(52,211,153,.25); }
+  .theme-swatch {
+    height: 96px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;
+    font-family: var(--th-font, sans-serif);
+  }
+  .theme-swatch .swatch-title {
+    font-size: 18px; font-weight: 600; line-height: 1.1;
+  }
+  .theme-swatch .swatch-dots { display: flex; gap: 6px; }
+  .theme-swatch .swatch-dot {
+    width: 16px; height: 16px; border-radius: 100px;
+    border: 1px solid rgba(0,0,0,.08);
+  }
+  .theme-meta { padding: 12px 14px 14px; background: var(--bg-surface); }
+  .theme-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .theme-desc { font-size: 11px; color: var(--text-soft); margin-top: 4px; line-height: 1.4; }
+  .theme-card.selected .theme-meta { background: var(--bg-elevated-2); }
+
+  .summary-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--border-default); font-size: 13px; }
+  .summary-row .k { color: var(--text-muted); letter-spacing: .5px; }
   .summary-row .v { color: var(--text); font-weight: 500; }
 
   .actions { display: flex; justify-content: space-between; margin-top: 24px; gap: 10px; }
   .btn {
-    padding: 12px 22px; border-radius: 8px; border: 1px solid var(--navy-border);
-    background: var(--navy-card); color: var(--text-soft);
+    padding: 12px 22px; border-radius: 8px; border: 1px solid var(--border-default);
+    background: var(--bg-elevated); color: var(--text-soft);
     font-family: inherit; font-size: 14px; cursor: pointer; transition: all .15s;
   }
-  .btn:hover { color: var(--gold); border-color: var(--gold); }
+  .btn:hover { color: var(--accent); border-color: var(--accent); }
   .btn:disabled { opacity: .45; cursor: not-allowed; }
   .btn.primary {
-    background: linear-gradient(135deg, var(--gold) 0%, #a8893a 100%);
-    color: var(--navy-deep); border: none; font-weight: 600;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base); border: none; font-weight: 600;
   }
-  .btn.primary:hover { box-shadow: 0 6px 20px rgba(201,168,76,.3); }
+  .btn.primary:hover { box-shadow: 0 6px 20px rgba(52,211,153,.3); }
 
   .toast-info {
-    background: rgba(90,141,238,.1); border: 1px solid rgba(90,141,238,.3);
-    color: var(--accent); padding: 12px 16px; border-radius: 8px; font-size: 13px;
+    background: rgba(167,139,250,.1); border: 1px solid rgba(167,139,250,.3);
+    color: var(--info); padding: 12px 16px; border-radius: 8px; font-size: 13px;
     margin-top: 18px; line-height: 1.5;
   }
   .toast-info strong { color: var(--text); }
@@ -123,7 +147,8 @@
   <div class="stepper" id="stepper">
     <div class="step-dot active" data-step="1"><div class="step-num">1</div><div class="step-label"><div class="step-name">Identidad</div><div class="step-sub">Paso 1</div></div></div>
     <div class="step-dot"        data-step="2"><div class="step-num">2</div><div class="step-label"><div class="step-name">Plantilla</div><div class="step-sub">Paso 2</div></div></div>
-    <div class="step-dot"        data-step="3"><div class="step-num">3</div><div class="step-label"><div class="step-name">Confirmar</div><div class="step-sub">Paso 3</div></div></div>
+    <div class="step-dot"        data-step="3"><div class="step-num">3</div><div class="step-label"><div class="step-name">Tema</div><div class="step-sub">Paso 3</div></div></div>
+    <div class="step-dot"        data-step="4"><div class="step-num">4</div><div class="step-label"><div class="step-name">Confirmar</div><div class="step-sub">Paso 4</div></div></div>
   </div>
 
   <div class="panel">
@@ -182,8 +207,20 @@
       </div>
     </div>
 
-    <!-- ── PASO 3: Confirmar ─────────────────── -->
+    <!-- ── PASO 3: Tema visual ─────────────────── -->
     <div data-step-content="3" class="hidden">
+      <h1>Tema visual</h1>
+      <p class="lede">Elige la identidad gráfica de la app pública del establecimiento. Podrás cambiarla después desde el editor.</p>
+      <div class="theme-grid" id="themeGrid">
+        <!-- Generado por JS -->
+      </div>
+      <div class="toast-info" style="margin-top:18px;">
+        Cada hotel/restaurante debería sentirse distinto. Aquí decides el lenguaje visual base: la paleta, las tipografías y el carácter general. Hay 5 temas iniciales; en Fase 4 se podrán personalizar paletas a medida.
+      </div>
+    </div>
+
+    <!-- ── PASO 4: Confirmar ─────────────────── -->
+    <div data-step-content="4" class="hidden">
       <h1>Revisa y confirma</h1>
       <p class="lede">Si todo está bien, se generará el borrador del proyecto en local. Sigue siendo editable.</p>
 
@@ -223,8 +260,31 @@ const RESERVED = ['index', 'demo', 'miramar', '_template', 'budgets']; // demo/m
 
 const wizard = {
   step: 1,
-  data: { name: '', id: '', categoria: 'hotel', ciudad: '', template: 'vacio' },
+  data: { name: '', id: '', categoria: 'hotel', ciudad: '', template: 'vacio', tema: 'navy-boutique' },
 };
+
+const THEMES = [
+  {
+    id: 'navy-boutique', name: 'Navy Boutique', desc: 'Lujo urbano. Hoteles 5★, salones con identidad clásica.',
+    bg: '#0a1228', card: '#0f1a35', text: '#e8ecf5', brand: '#c9a84c', font: '"Cormorant Garamond", serif',
+  },
+  {
+    id: 'mediterraneo', name: 'Mediterráneo', desc: 'Costa, beach clubs, hoteles de playa. Arena + sunset.',
+    bg: '#f4ebd8', card: '#fbf6e7', text: '#1f3d4f', brand: '#d97543', font: '"Playfair Display", serif',
+  },
+  {
+    id: 'tipico-andaluz', name: 'Típico Andaluz', desc: 'Ventas, mesones, restaurantes tradicionales del sur.',
+    bg: '#fdf5e6', card: '#fbecd3', text: '#3d2412', brand: '#b8390e', font: '"Playfair Display", serif',
+  },
+  {
+    id: 'moderno-minimalista', name: 'Moderno Minimalista', desc: 'Bistros, urban dining, casual contemporáneo.',
+    bg: '#fafafa', card: '#f5f5f5', text: '#0a0a0a', brand: '#059669', font: '"Inter", sans-serif',
+  },
+  {
+    id: 'cercano-rustico', name: 'Cercano Rústico', desc: 'Casas rurales, posadas, mesones familiares.',
+    bg: '#f4ebe0', card: '#efe1cb', text: '#3d2914', brand: '#8b1e3f', font: '"Lora", serif',
+  },
+];
 
 const $  = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -239,7 +299,36 @@ function refreshStepper() {
     el.classList.toggle('hidden', Number(el.dataset.stepContent) !== wizard.step);
   });
   $('#btnBack').disabled = wizard.step === 1;
-  $('#btnNext').textContent = wizard.step === 3 ? '✨ Crear proyecto' : 'Siguiente →';
+  $('#btnNext').textContent = wizard.step === 4 ? '✨ Crear proyecto' : 'Siguiente →';
+  if (wizard.step === 3) renderThemeGrid();
+}
+
+function renderThemeGrid() {
+  const grid = $('#themeGrid');
+  if (grid.dataset.rendered === '1') return;
+  grid.innerHTML = THEMES.map(t => `
+    <div class="theme-card ${t.id === wizard.data.tema ? 'selected' : ''}" data-tema="${t.id}">
+      <div class="theme-swatch" style="background:${t.bg};color:${t.text};--th-font:${t.font};">
+        <div class="swatch-title" style="font-family:${t.font};">${t.name.split(' ')[0]}</div>
+        <div class="swatch-dots">
+          <span class="swatch-dot" style="background:${t.brand};"></span>
+          <span class="swatch-dot" style="background:${t.card};"></span>
+          <span class="swatch-dot" style="background:${t.text};opacity:.4;"></span>
+        </div>
+      </div>
+      <div class="theme-meta">
+        <div class="theme-name">${t.name}</div>
+        <div class="theme-desc">${t.desc}</div>
+      </div>
+    </div>
+  `).join('');
+  grid.dataset.rendered = '1';
+}
+
+function selectTheme(id) {
+  if (!THEMES.find(t => t.id === id)) return;
+  wizard.data.tema = id;
+  $$('.theme-card').forEach(el => el.classList.toggle('selected', el.dataset.tema === id));
 }
 
 function slugify(s) {
@@ -286,13 +375,16 @@ function selectTemplate(tpl) {
 
 function renderSummary() {
   const tplLabel = wizard.data.template === 'miramar' ? 'Copiar Miramar (catálogo completo)' : 'Proyecto vacío (estructura mínima)';
+  const themeObj = THEMES.find(t => t.id === wizard.data.tema);
+  const themeLabel = themeObj ? themeObj.name : wizard.data.tema;
   $('#summary').innerHTML = `
     <div class="summary-row"><span class="k">Nombre</span><span class="v">${escapeHtml(wizard.data.name)}</span></div>
     <div class="summary-row"><span class="k">ID / slug</span><span class="v"><code>${escapeHtml(wizard.data.id)}</code></span></div>
     <div class="summary-row"><span class="k">Categoría</span><span class="v">${escapeHtml(wizard.data.categoria)}</span></div>
     <div class="summary-row"><span class="k">Ciudad</span><span class="v">${escapeHtml(wizard.data.ciudad || '—')}</span></div>
     <div class="summary-row"><span class="k">Plantilla</span><span class="v">${escapeHtml(tplLabel)}</span></div>
-    <div class="summary-row"><span class="k">Estado</span><span class="v" style="color:var(--accent);">Borrador local · pendiente de Fase 3.C para commit a repo</span></div>
+    <div class="summary-row"><span class="k">Tema visual</span><span class="v">${escapeHtml(themeLabel)} · <code>${escapeHtml(wizard.data.tema)}</code></span></div>
+    <div class="summary-row"><span class="k">Estado</span><span class="v" style="color:var(--info);">Borrador local · pendiente de Fase 3.C para commit a repo</span></div>
   `;
 }
 
@@ -312,7 +404,7 @@ function buildEmptyProject() {
       es_template: false,
       locale: 'es-ES',
       moneda: 'EUR',
-      tema: 'navy-boutique',
+      tema: wizard.data.tema || 'navy-boutique',
       version_schema: '1.0.0',
       creado: new Date().toISOString().slice(0, 10),
     },
@@ -361,6 +453,7 @@ async function buildMiramarCopy() {
     out.config.nombre = wizard.data.name;
     out.config.es_piloto = false;
     out.config.es_template = false;
+    out.config.tema = wizard.data.tema || 'navy-boutique';
     out.config.creado = new Date().toISOString().slice(0, 10);
   }
   if (out.establecimiento) {
@@ -406,6 +499,11 @@ document.addEventListener('click', (e) => {
   const tpl = e.target.closest('.tpl-card');
   if (tpl && tpl.dataset.tpl) {
     selectTemplate(tpl.dataset.tpl);
+    return;
+  }
+  const themeCard = e.target.closest('.theme-card');
+  if (themeCard && themeCard.dataset.tema) {
+    selectTheme(themeCard.dataset.tema);
   }
 });
 
@@ -424,10 +522,15 @@ $('#btnNext').addEventListener('click', async () => {
   if (wizard.step === 2) {
     wizard.step = 3;
     refreshStepper();
-    renderSummary();
     return;
   }
   if (wizard.step === 3) {
+    wizard.step = 4;
+    refreshStepper();
+    renderSummary();
+    return;
+  }
+  if (wizard.step === 4) {
     await commitProject();
   }
 });

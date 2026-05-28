@@ -1,0 +1,233 @@
+/* ───────────────────────────────────────────────────────────────
+ * Themes · Frontend público de proyectos
+ * --------------------------------------------------------------
+ * Cada proyecto declara su tema en config.json (`tema: "<id>"`).
+ * theme.js lee el config y aplica `<html data-theme="<id>">` antes
+ * del primer render. Esta hoja proporciona las paletas y tipografías.
+ *
+ * Variables semánticas que consumen los HTML del frontend público:
+ *   --bg-page, --bg-surface, --bg-card, --bg-card-2, --border
+ *   --brand, --brand-soft, --brand-deep
+ *   --text, --text-soft, --text-muted
+ *   --info, --danger, --success
+ *   --font-display, --font-body
+ *
+ * 5 temas iniciales (v4.5):
+ *   navy-boutique       · 5★ urbano / luxury hotels (default)
+ *   mediterraneo        · costa, beach clubs, sunset
+ *   tipico-andaluz      · ventas, restaurantes tradicionales
+ *   moderno-minimalista · bistros, urban dining, monoespaciado
+ *   cercano-rustico     · casas rurales, posadas familiares
+ * ───────────────────────────────────────────────────────────────
+ */
+
+/* ── Aliases legacy COMUNES a todos los temas ────────────────────
+ * Los HTMLs del frontend público usan nombres de variable propios
+ * (--bg, --card, --gold, --cream, --glass...) heredados de su CSS
+ * inline antes del refactor v4.5. En lugar de tocar 4000+ líneas de
+ * estilos, mapeamos esos nombres a las variables semánticas del tema
+ * actual. Cada tema solo define las 12 variables semánticas; los
+ * aliases viven en este bloque base.
+ * ────────────────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg:           var(--bg-page);
+  --dark:         var(--bg-page);
+  --card:         var(--bg-card);
+  --dark2:        var(--bg-card);
+  --card2:        var(--bg-card-2);
+  --dark3:        var(--bg-card-2);
+  --card3:        var(--bg-card-2);
+  --dark4:        var(--bg-card-2);
+
+  /* Marca dorada legacy → marca del tema actual */
+  --gold:         var(--brand);
+  --gold-light:   var(--brand-soft);
+  --gold-soft:    var(--brand-soft);
+  --gold-deep:    var(--brand-deep);
+  --gold-dim:     color-mix(in srgb, var(--brand) 10%, transparent);
+  --gold-border:  color-mix(in srgb, var(--brand) 30%, transparent);
+  --gold-glow:    color-mix(in srgb, var(--brand) 25%, transparent);
+
+  /* Texto */
+  --cream:        var(--text);
+  --muted:        var(--text-muted);
+
+  /* Glass / overlays */
+  --glass:        rgba(255,255,255,.04);
+  --glass2:       rgba(255,255,255,.07);
+  --glass-border: rgba(255,255,255,.07);
+
+  /* Border legacy duplicado */
+  --border2:      rgba(255,255,255,.13);
+
+  /* Aliases navy/familia anterior usada en algún HTML */
+  --navy-deep:   var(--bg-page);
+  --navy-base:   var(--bg-surface);
+  --navy-card:   var(--bg-card);
+  --navy-card-2: var(--bg-card-2);
+  --navy-border: var(--border);
+
+  /* Transición común */
+  --t:           all .28s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── 1 · Navy Boutique (default Miramar) ──────────────────────── */
+:root,
+[data-theme="navy-boutique"] {
+  --bg-page:    #050e1f;
+  --bg-surface: #0a1228;
+  --bg-card:    #0f1a35;
+  --bg-card-2:  #14213f;
+  --border:     #1c2845;
+
+  --brand:      #c9a84c;
+  --brand-soft: #d4b76a;
+  --brand-deep: #8d7430;
+
+  --text:       #e8ecf5;
+  --text-soft:  #a6b0c8;
+  --text-muted: #6f7a96;
+
+  --info:       #5a8dee;
+  --danger:     #ff6b6b;
+  --success:    #4ade80;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* ── 2 · Mediterráneo · arena + azul mar + sunset ─────────────── */
+[data-theme="mediterraneo"] {
+  --bg-page:    #f4ebd8;
+  --bg-surface: #fbf6e7;
+  --bg-card:    #ffffff;
+  --bg-card-2:  #f1e2bd;
+  --border:     #d9c89a;
+
+  --brand:      #d97543;
+  --brand-soft: #f49560;
+  --brand-deep: #a8512b;
+
+  --text:       #1f3d4f;
+  --text-soft:  #43687f;
+  --text-muted: #82a0b1;
+
+  --info:       #2a8db6;
+  --danger:     #c0392b;
+  --success:    #2e8b57;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Work Sans', system-ui, sans-serif;
+
+  --navy-deep:   var(--bg-page);
+  --navy-base:   var(--bg-surface);
+  --navy-card:   var(--bg-card);
+  --navy-card-2: var(--bg-card-2);
+  --navy-border: var(--border);
+  --gold:        var(--brand);
+  --gold-soft:   var(--brand-soft);
+  --muted:       var(--text-muted);
+}
+
+/* ── 3 · Típico Andaluz · terracota + ocre + verde olivo ──────── */
+[data-theme="tipico-andaluz"] {
+  --bg-page:    #fdf5e6;
+  --bg-surface: #ffffff;
+  --bg-card:    #fbecd3;
+  --bg-card-2:  #f4dca6;
+  --border:     #e0c081;
+
+  --brand:      #b8390e;
+  --brand-soft: #d65326;
+  --brand-deep: #7a2807;
+
+  --text:       #3d2412;
+  --text-soft:  #6b4424;
+  --text-muted: #9b7748;
+
+  --info:       #6b8e23;        /* verde olivo como secundario */
+  --danger:     #8b1a1a;
+  --success:    #5a7f25;
+
+  --font-display: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Lora', Georgia, serif;
+
+  --navy-deep:   var(--bg-page);
+  --navy-base:   var(--bg-surface);
+  --navy-card:   var(--bg-card);
+  --navy-card-2: var(--bg-card-2);
+  --navy-border: var(--border);
+  --gold:        var(--brand);
+  --gold-soft:   var(--brand-soft);
+  --muted:       var(--text-muted);
+}
+
+/* ── 4 · Moderno Minimalista · blanco + negro + esmeralda dark ── */
+[data-theme="moderno-minimalista"] {
+  --bg-page:    #fafafa;
+  --bg-surface: #ffffff;
+  --bg-card:    #f5f5f5;
+  --bg-card-2:  #e5e5e5;
+  --border:     #d4d4d4;
+
+  --brand:      #059669;
+  --brand-soft: #10b981;
+  --brand-deep: #065f46;
+
+  --text:       #0a0a0a;
+  --text-soft:  #404040;
+  --text-muted: #737373;
+
+  --info:       #2563eb;
+  --danger:     #dc2626;
+  --success:    #16a34a;
+
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+
+  --navy-deep:   var(--bg-page);
+  --navy-base:   var(--bg-surface);
+  --navy-card:   var(--bg-card);
+  --navy-card-2: var(--bg-card-2);
+  --navy-border: var(--border);
+  --gold:        var(--brand);
+  --gold-soft:   var(--brand-soft);
+  --muted:       var(--text-muted);
+}
+
+/* ── 5 · Cercano Rústico · papel + madera + burdeos ───────────── */
+[data-theme="cercano-rustico"] {
+  --bg-page:    #f4ebe0;
+  --bg-surface: #faf3e8;
+  --bg-card:    #efe1cb;
+  --bg-card-2:  #d8bf91;
+  --border:     #b39871;
+
+  --brand:      #8b1e3f;
+  --brand-soft: #b04156;
+  --brand-deep: #5b1429;
+
+  --text:       #3d2914;
+  --text-soft:  #6e5642;
+  --text-muted: #9a8060;
+
+  --info:       #2a6b4f;
+  --danger:     #8b1a1a;
+  --success:    #4d7a26;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Lora', Georgia, serif;
+
+  --navy-deep:   var(--bg-page);
+  --navy-base:   var(--bg-surface);
+  --navy-card:   var(--bg-card);
+  --navy-card-2: var(--bg-card-2);
+  --navy-border: var(--border);
+  --gold:        var(--brand);
+  --gold-soft:   var(--brand-soft);
+  --muted:       var(--text-muted);
+}
+
+/* ── Aplicación base en body ─────────────────────────────────── */
+html, body { background: var(--bg-page); color: var(--text); font-family: var(--font-body); }

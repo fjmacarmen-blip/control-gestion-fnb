@@ -1,0 +1,73 @@
+/* ───────────────────────────────────────────────────────────────
+ * Dashboard theme · Plataforma F&B
+ * --------------------------------------------------------------
+ * Paleta propia del panel de control del director. Deliberadamente
+ * DISTINTA de los temas del frontend público (navy-boutique, etc.):
+ * el dashboard es la herramienta interna, no el escaparate del cliente.
+ *
+ * Inspiración: Linear / Stripe / Vercel — slate dark + esmeralda.
+ * Tipografía: Inter (UI) + JetBrains Mono (code).
+ * ───────────────────────────────────────────────────────────────
+ */
+
+:root {
+  /* ── Superficies ───────────────────────────────── */
+  --bg-base:        #0d1117;   /* fondo de página */
+  --bg-surface:     #161b22;   /* sidebar, nav */
+  --bg-elevated:    #21262d;   /* cards, inputs */
+  --bg-elevated-2:  #30363d;   /* hover, modales */
+  --bg-overlay:     rgba(13,17,23,.78);
+
+  /* ── Bordes ────────────────────────────────────── */
+  --border-default: #30363d;
+  --border-strong:  #484f58;
+
+  /* ── Texto ─────────────────────────────────────── */
+  --text:           #e6edf3;
+  --text-soft:      #8b949e;
+  --text-muted:     #6e7681;
+  --text-inverse:   #0d1117;
+
+  /* ── Acentos · esmeralda (acción principal) ────── */
+  --accent:         #34d399;
+  --accent-soft:    #6ee7b7;
+  --accent-deep:    #059669;
+  --accent-glow:    rgba(52,211,153,.18);
+
+  /* ── Acento secundario · violeta (info / chips) ── */
+  --info:           #a78bfa;
+  --info-soft:      #c4b5fd;
+  --info-glow:      rgba(167,139,250,.15);
+
+  /* ── Estados ───────────────────────────────────── */
+  --warning:        #fbbf24;
+  --warning-glow:   rgba(251,191,36,.15);
+  --danger:         #f85149;
+  --danger-glow:    rgba(248,81,73,.15);
+  --success:        #3fb950;
+  --success-glow:   rgba(63,185,80,.15);
+
+  /* ── Tipografía ────────────────────────────────── */
+  --font-ui:        'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:      'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display:   'Inter', system-ui, sans-serif;
+
+  /* ── Geometría ─────────────────────────────────── */
+  --radius-sm:      6px;
+  --radius-md:      8px;
+  --radius-lg:      12px;
+  --radius-xl:      16px;
+
+  /* ── Sombras (más planas, sin profundidad de papel) */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.35);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.45);
+  --shadow-glow: 0 0 0 1px var(--accent-glow), 0 6px 20px var(--accent-glow);
+}
+
+/* ── Reset base coherente ──────────────────────────── */
+html, body { background: var(--bg-base); color: var(--text); }
+body { font-family: var(--font-ui); font-size: 14px; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); }
+a:hover { color: var(--accent-soft); }
+code { font-family: var(--font-mono); font-size: .92em; background: var(--bg-elevated); padding: 2px 5px; border-radius: 4px; color: var(--accent-soft); }

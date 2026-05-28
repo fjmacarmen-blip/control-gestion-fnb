@@ -6,25 +6,19 @@
 <meta name="project-base" content="../">
 <title>Editor · Dashboard F&B</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../core/css/dashboard-theme.css">
 <style>
-  :root {
-    --navy-deep:#050e1f; --navy-base:#0a1228; --navy-card:#0f1a35;
-    --navy-card-2:#14213f; --navy-border:#1c2845;
-    --gold:#c9a84c; --gold-soft:#d4b76a;
-    --text:#e8ecf5; --text-soft:#a6b0c8; --muted:#6f7a96;
-    --accent:#5a8dee; --danger:#ff6b6b; --success:#4ade80; --warning:#f5b342;
-  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
-    font-family: 'DM Sans', system-ui, sans-serif;
-    background: var(--navy-deep);
+    font-family: var(--font-ui);
+    background: var(--bg-base);
     color: var(--text);
     display: flex; flex-direction: column;
   }
-  a { color: var(--gold); text-decoration: none; }
-  a:hover { color: var(--gold-soft); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-soft); }
   button, input, textarea, select { font-family: inherit; }
 
   /* ── Header ──────────────────────────────────── */
@@ -34,54 +28,54 @@
     gap: 18px;
     background: rgba(5, 14, 31, .85);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--navy-border);
+    border-bottom: 1px solid var(--border-default);
     position: sticky; top: 0; z-index: 50;
   }
   .topbar-left { display: flex; align-items: center; gap: 14px; }
   .crumb a { color: var(--text-soft); }
-  .crumb a:hover { color: var(--gold); }
-  .crumb-sep { color: var(--navy-border); margin: 0 8px; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb-sep { color: var(--border-default); margin: 0 8px; }
   .proj-pill {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 6px 12px; border-radius: 100px;
-    background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.3);
-    color: var(--gold); font-size: 12px; font-weight: 500;
+    background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.3);
+    color: var(--accent); font-size: 12px; font-weight: 500;
   }
   .topbar-right { display: flex; align-items: center; gap: 10px; font-size: 13px; }
   .btn {
-    padding: 8px 14px; border-radius: 7px; border: 1px solid var(--navy-border);
-    background: var(--navy-card); color: var(--text-soft);
+    padding: 8px 14px; border-radius: 7px; border: 1px solid var(--border-default);
+    background: var(--bg-elevated); color: var(--text-soft);
     font-size: 12px; cursor: pointer; transition: all .15s;
     text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
   }
-  .btn:hover { color: var(--gold); border-color: var(--gold); }
+  .btn:hover { color: var(--accent); border-color: var(--accent); }
   .btn:disabled { opacity: .45; cursor: not-allowed; }
   .btn.primary {
-    background: linear-gradient(135deg, var(--gold) 0%, #a8893a 100%);
-    color: var(--navy-deep); border: none; font-weight: 600;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base); border: none; font-weight: 600;
   }
-  .btn.primary:hover { box-shadow: 0 4px 14px rgba(201,168,76,.3); color: var(--navy-deep); }
-  .btn.primary:disabled { background: var(--navy-card); color: var(--muted); box-shadow: none; }
-  .btn.danger { color: var(--danger); border-color: rgba(255,107,107,.4); }
-  .btn.danger:hover { background: rgba(255,107,107,.1); }
+  .btn.primary:hover { box-shadow: 0 4px 14px rgba(52,211,153,.3); color: var(--bg-base); }
+  .btn.primary:disabled { background: var(--bg-elevated); color: var(--text-muted); box-shadow: none; }
+  .btn.danger { color: var(--danger); border-color: rgba(248,81,73,.4); }
+  .btn.danger:hover { background: rgba(248,81,73,.1); }
 
   /* ── Layout ──────────────────────────────────── */
   .editor-shell { flex: 1; display: grid; grid-template-columns: 260px 1fr; min-height: 0; }
   .sidebar {
-    background: var(--navy-base);
-    border-right: 1px solid var(--navy-border);
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border-default);
     padding: 22px 14px;
     overflow-y: auto;
   }
-  .sidebar-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); padding: 0 10px 12px; }
+  .sidebar-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 0 10px 12px; }
   .nav-section {
     display: flex; align-items: center; justify-content: space-between;
     padding: 11px 12px; border-radius: 8px;
     color: var(--text-soft); cursor: pointer;
     transition: all .12s; font-size: 14px;
   }
-  .nav-section:hover { background: var(--navy-card); color: var(--text); }
-  .nav-section.active { background: var(--navy-card-2); color: var(--text); border-left: 3px solid var(--gold); padding-left: 9px; }
+  .nav-section:hover { background: var(--bg-elevated); color: var(--text); }
+  .nav-section.active { background: var(--bg-elevated-2); color: var(--text); border-left: 3px solid var(--accent); padding-left: 9px; }
   .nav-section.disabled { opacity: .4; cursor: not-allowed; }
   .nav-section .left { display: flex; align-items: center; gap: 10px; }
   .nav-section .dirty-dot {
@@ -93,10 +87,10 @@
   .main { padding: 24px 32px 80px; overflow-y: auto; max-width: 1200px; }
   .section-head {
     display: flex; justify-content: space-between; align-items: flex-end; gap: 20px;
-    margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--navy-border);
+    margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border-default);
     flex-wrap: wrap;
   }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 500; }
+  .section-title { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; font-size: 32px; font-weight: 500; }
   .section-sub { color: var(--text-soft); font-size: 13px; margin-top: 4px; }
   .section-actions { display: flex; gap: 8px; align-items: center; }
 
@@ -105,67 +99,90 @@
   .form-grid.two-col { grid-template-columns: 1fr 1fr; }
   @media (max-width: 720px) { .form-grid.two-col { grid-template-columns: 1fr; } }
   .field { display: flex; flex-direction: column; gap: 6px; }
-  .field label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .field label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
   .field input, .field select, .field textarea {
-    background: var(--navy-card); border: 1px solid var(--navy-border);
+    background: var(--bg-elevated); border: 1px solid var(--border-default);
     color: var(--text); padding: 10px 13px; border-radius: 7px;
     font-size: 14px;
   }
-  .field textarea { resize: vertical; min-height: 80px; font-family: 'DM Sans', system-ui; }
-  .field textarea.code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; line-height: 1.5; min-height: 120px; }
-  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--gold); }
-  .field .hint { color: var(--muted); font-size: 11px; }
+  .field textarea { resize: vertical; min-height: 80px; font-family: var(--font-ui); }
+  .field textarea.code { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; min-height: 120px; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+  .field .hint { color: var(--text-muted); font-size: 11px; }
 
   .card-block {
-    background: var(--navy-card); border: 1px solid var(--navy-border);
+    background: var(--bg-elevated); border: 1px solid var(--border-default);
     border-radius: 10px; padding: 20px; margin-bottom: 20px;
   }
-  .card-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; margin-bottom: 14px; }
+  .card-block h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; font-size: 20px; font-weight: 600; margin-bottom: 14px; }
 
   /* ── Tabla editable ─────────────────────────── */
   table.edit-table {
     width: 100%; border-collapse: separate; border-spacing: 0;
     font-size: 13px;
   }
-  .edit-table th, .edit-table td { padding: 8px 10px; border-bottom: 1px solid var(--navy-border); }
-  .edit-table th { text-align: left; color: var(--muted); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+  .edit-table th, .edit-table td { padding: 8px 10px; border-bottom: 1px solid var(--border-default); }
+  .edit-table th { text-align: left; color: var(--text-muted); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
   .edit-table input { width: 100%; background: transparent; border: 1px solid transparent; color: var(--text); padding: 6px 8px; border-radius: 5px; font-size: 13px; }
-  .edit-table input:focus { outline: none; background: var(--navy-card-2); border-color: var(--gold); }
+  .edit-table input:focus { outline: none; background: var(--bg-elevated-2); border-color: var(--accent); }
   .edit-table .row-actions { white-space: nowrap; text-align: right; }
-  .icon-btn { background: transparent; border: none; color: var(--muted); cursor: pointer; padding: 4px 8px; border-radius: 5px; }
-  .icon-btn:hover { color: var(--danger); background: rgba(255,107,107,.08); }
-  .add-row-btn { margin-top: 10px; font-size: 12px; color: var(--gold); background: transparent; border: 1px dashed var(--navy-border); padding: 8px 14px; border-radius: 7px; cursor: pointer; }
-  .add-row-btn:hover { border-color: var(--gold); }
+  .icon-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 4px 8px; border-radius: 5px; }
+  .icon-btn:hover { color: var(--danger); background: rgba(248,81,73,.08); }
+  .add-row-btn { margin-top: 10px; font-size: 12px; color: var(--accent); background: transparent; border: 1px dashed var(--border-default); padding: 8px 14px; border-radius: 7px; cursor: pointer; }
+  .add-row-btn:hover { border-color: var(--accent); }
 
   /* ── Lista de items (menús y recetas) ────────── */
   .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+
+  /* Theme picker · sección «Tema visual» */
+  .theme-grid-editor { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .theme-pick {
+    background: var(--bg-elevated); border: 2px solid var(--border-default); border-radius: 12px;
+    overflow: hidden; cursor: pointer; transition: all .15s; display: flex; flex-direction: column;
+  }
+  .theme-pick:hover { border-color: var(--accent-soft); transform: translateY(-2px); }
+  .theme-pick.selected { border-color: var(--accent); box-shadow: 0 8px 24px rgba(52,211,153,.25); }
+  .theme-pick .swatch {
+    height: 92px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .theme-pick .swatch .swatch-title { font-size: 17px; font-weight: 600; line-height: 1.1; }
+  .theme-pick .swatch .dots { display: flex; gap: 5px; }
+  .theme-pick .swatch .dots span { width: 14px; height: 14px; border-radius: 100px; border: 1px solid rgba(0,0,0,.08); }
+  .theme-pick .meta { padding: 11px 13px 13px; }
+  .theme-pick .name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .theme-pick .desc { font-size: 11px; color: var(--text-soft); margin-top: 3px; line-height: 1.4; }
+  .theme-pick .preview-link {
+    margin-top: 8px; display: inline-block; font-size: 11px; color: var(--info);
+    text-decoration: none;
+  }
+  .theme-pick .preview-link:hover { color: var(--info-soft); text-decoration: underline; }
   .item-card {
-    background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 10px;
+    background: var(--bg-elevated); border: 1px solid var(--border-default); border-radius: 10px;
     padding: 16px; cursor: pointer; transition: all .15s; display: flex; flex-direction: column; gap: 8px;
   }
-  .item-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .item-card:hover { border-color: var(--accent); transform: translateY(-2px); }
   .item-card.is-new { border-style: dashed; opacity: .85; }
   .item-card .item-icon { font-size: 28px; }
-  .item-card .item-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; line-height: 1.2; }
-  .item-card .item-meta { font-size: 11px; color: var(--muted); letter-spacing: .5px; }
+  .item-card .item-name { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; font-size: 18px; font-weight: 600; line-height: 1.2; }
+  .item-card .item-meta { font-size: 11px; color: var(--text-muted); letter-spacing: .5px; }
   .item-card .item-desc { font-size: 12px; color: var(--text-soft); line-height: 1.45; min-height: 34px; }
   .item-card .item-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
-  .price { color: var(--gold); font-weight: 600; }
+  .price { color: var(--accent); font-weight: 600; }
   .pill {
     display: inline-block; padding: 2px 8px; border-radius: 100px;
     font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
-    background: rgba(90,141,238,.15); color: var(--accent);
-    border: 1px solid rgba(90,141,238,.3);
+    background: rgba(167,139,250,.15); color: var(--info);
+    border: 1px solid rgba(167,139,250,.3);
   }
-  .pill.gold { background: rgba(201,168,76,.15); color: var(--gold); border-color: rgba(201,168,76,.3); }
-  .pill.muted { background: rgba(111,122,150,.15); color: var(--muted); border-color: rgba(111,122,150,.3); }
+  .pill.gold { background: rgba(52,211,153,.15); color: var(--accent); border-color: rgba(52,211,153,.3); }
+  .pill.muted { background: rgba(110,118,129,.15); color: var(--text-muted); border-color: rgba(110,118,129,.3); }
 
   .category-header {
     display: flex; align-items: baseline; justify-content: space-between;
-    margin: 28px 0 14px; padding-bottom: 8px; border-bottom: 1px dashed var(--navy-border);
+    margin: 28px 0 14px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-default);
   }
-  .category-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; text-transform: capitalize; }
-  .category-count { color: var(--muted); font-size: 12px; }
+  .category-name { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; font-size: 22px; font-weight: 600; text-transform: capitalize; }
+  .category-count { color: var(--text-muted); font-size: 12px; }
 
   /* ── Modal ──────────────────────────────────── */
   .modal-overlay {
@@ -174,22 +191,22 @@
   }
   .modal-overlay.visible { display: flex; }
   .modal {
-    background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px;
+    background: var(--bg-elevated); border: 1px solid var(--border-default); border-radius: 14px;
     width: 100%; max-width: 720px; max-height: 90vh; display: flex; flex-direction: column;
     box-shadow: 0 24px 60px rgba(0,0,0,.6);
   }
   .modal-head {
-    padding: 18px 24px; border-bottom: 1px solid var(--navy-border);
+    padding: 18px 24px; border-bottom: 1px solid var(--border-default);
     display: flex; justify-content: space-between; align-items: center;
   }
-  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; }
+  .modal-title { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; font-size: 22px; font-weight: 600; }
   .modal-body { padding: 22px 24px; overflow-y: auto; flex: 1; }
-  .modal-foot { padding: 16px 24px; border-top: 1px solid var(--navy-border); display: flex; justify-content: space-between; gap: 10px; }
+  .modal-foot { padding: 16px 24px; border-top: 1px solid var(--border-default); display: flex; justify-content: space-between; gap: 10px; }
 
   .save-bar {
     position: fixed; bottom: 0; left: 260px; right: 0;
     background: rgba(15,26,53,.95); backdrop-filter: blur(8px);
-    border-top: 1px solid var(--gold);
+    border-top: 1px solid var(--accent);
     padding: 14px 32px;
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
     transform: translateY(120%); transition: transform .25s;
@@ -197,12 +214,12 @@
   }
   .save-bar.visible { transform: translateY(0); }
   .save-bar .info { font-size: 13px; color: var(--text); }
-  .save-bar .info strong { color: var(--gold); }
+  .save-bar .info strong { color: var(--accent); }
   .save-bar .right { display: flex; gap: 10px; }
 
   .empty {
-    padding: 40px; text-align: center; color: var(--muted); background: var(--navy-card);
-    border: 1px dashed var(--navy-border); border-radius: 12px;
+    padding: 40px; text-align: center; color: var(--text-muted); background: var(--bg-elevated);
+    border: 1px dashed var(--border-default); border-radius: 12px;
   }
 
   .hidden { display: none !important; }
@@ -242,6 +259,10 @@
     </div>
     <div class="nav-section" data-section="recetas">
       <span class="left">📖 Recetario</span>
+      <span class="dirty-dot" title="Cambios sin guardar"></span>
+    </div>
+    <div class="nav-section" data-section="tema">
+      <span class="left">🎨 Tema visual</span>
       <span class="dirty-dot" title="Cambios sin guardar"></span>
     </div>
     <div class="nav-section disabled" title="Disponible en fases posteriores">
@@ -345,6 +366,28 @@
       <div id="recetasContent"></div>
     </section>
 
+    <!-- TEMA VISUAL -->
+    <section data-content="tema" class="hidden">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Tema visual</div>
+          <div class="section-sub">Identidad gráfica de la app pública del establecimiento. Afecta solo al frontend, no al dashboard.</div>
+        </div>
+        <div class="section-actions">
+          <button class="btn" data-action="reset-tema">↩ Descartar</button>
+          <button class="btn primary" data-action="save-tema" disabled>💾 Guardar borrador</button>
+        </div>
+      </div>
+      <div class="card-block">
+        <h3>Selecciona el tema</h3>
+        <div class="theme-grid-editor" id="temaGrid"></div>
+        <div style="margin-top:18px;font-size:12px;color:var(--text-soft);">
+          ⓘ El cambio se aplica al frontend público al guardar.
+          Botón <em>Ver público</em> en la topbar abre el preview en nueva pestaña.
+        </div>
+      </div>
+    </section>
+
     <div id="emptyState" class="empty" style="margin-top:80px;">
       Selecciona una sección del menú lateral para empezar a editar.
     </div>
@@ -392,7 +435,7 @@ const PROJECT_ID = (new URLSearchParams(location.search).get('proyecto') || '').
 const VALID_RE = /^[a-z0-9_-]+$/;
 
 if (!PROJECT_ID || !VALID_RE.test(PROJECT_ID)) {
-  document.body.innerHTML = '<div style="padding:60px;text-align:center;color:#ff8a8a;font:14px/1.6 system-ui;">Falta el parámetro <code>?proyecto=&lt;id&gt;</code> o el id es inválido.<br><br><a href="./index.html" style="color:#c9a84c;">← Volver al dashboard</a></div>';
+  document.body.innerHTML = '<div style="padding:60px;text-align:center;color:#ff8a8a;font:14px/1.6 system-ui;">Falta el parámetro <code>?proyecto=&lt;id&gt;</code> o el id es inválido.<br><br><a href="./index.html" style="color:var(--accent);">← Volver al dashboard</a></div>';
   throw new Error('PROJECT_ID inválido');
 }
 
@@ -407,14 +450,23 @@ if (!PROJECT_ID || !VALID_RE.test(PROJECT_ID)) {
 
 // ── Estado global del editor ───────────────────────────────
 const state = {
-  current: null,                    // sección activa
-  data: { establecimiento: null, menus: null, recetas: null },
-  original: { establecimiento: null, menus: null, recetas: null },
-  dirty: { establecimiento: false, menus: false, recetas: false },
-  modalContext: null,               // { section, type, index, category? }
+  current: null,                    // sección activa (visualmente: establecimiento/menus/recetas/tema)
+  data: { establecimiento: null, menus: null, recetas: null, config: null },
+  original: { establecimiento: null, menus: null, recetas: null, config: null },
+  dirty: { establecimiento: false, menus: false, recetas: false, config: false },
+  modalContext: null,
 };
 
-const SECTIONS = ['establecimiento', 'menus', 'recetas'];
+const SECTIONS = ['establecimiento', 'menus', 'recetas', 'config'];
+const TEMA_SECTION_KEY = 'config'; // la sección «tema» edita config.tema
+
+const THEMES = [
+  { id: 'navy-boutique',      name: 'Navy Boutique',      desc: 'Lujo urbano. Hoteles 5★, salones con identidad clásica.',          bg: '#0a1228', card: '#0f1a35', text: '#e8ecf5', brand: '#c9a84c', font: '"Cormorant Garamond", serif' },
+  { id: 'mediterraneo',       name: 'Mediterráneo',       desc: 'Costa, beach clubs, hoteles de playa. Arena + sunset.',           bg: '#f4ebd8', card: '#fbf6e7', text: '#1f3d4f', brand: '#d97543', font: '"Playfair Display", serif' },
+  { id: 'tipico-andaluz',     name: 'Típico Andaluz',     desc: 'Ventas, mesones, restaurantes tradicionales del sur.',            bg: '#fdf5e6', card: '#fbecd3', text: '#3d2412', brand: '#b8390e', font: '"Playfair Display", serif' },
+  { id: 'moderno-minimalista',name: 'Moderno Minimalista',desc: 'Bistros, urban dining, casual contemporáneo.',                    bg: '#fafafa', card: '#f5f5f5', text: '#0a0a0a', brand: '#059669', font: '"Inter", sans-serif' },
+  { id: 'cercano-rustico',    name: 'Cercano Rústico',    desc: 'Casas rurales, posadas, mesones familiares.',                     bg: '#f4ebe0', card: '#efe1cb', text: '#3d2914', brand: '#8b1e3f', font: '"Lora", serif' },
+];
 
 // ── Helpers DOM ────────────────────────────────────────────
 const $  = (s, el) => (el || document).querySelector(s);
@@ -434,22 +486,35 @@ function setByPath(obj, path, value) {
   cur[parts[parts.length - 1]] = value;
 }
 
+// nav-section "tema" en sidebar corresponde a la sección «config» del archivo
+const NAV_TO_SECTION = { establecimiento: 'establecimiento', menus: 'menus', recetas: 'recetas', tema: 'config' };
+const SECTION_TO_NAV = Object.fromEntries(Object.entries(NAV_TO_SECTION).map(([nav, sec]) => [sec, nav]));
+function navKey(section) { return SECTION_TO_NAV[section] || section; }
+function dirtyOfNav(navId) { return !!state.dirty[NAV_TO_SECTION[navId]]; }
+
 function markDirty(section) {
   state.dirty[section] = true;
   $$('.nav-section').forEach(el => {
-    const s = el.dataset.section;
-    el.classList.toggle('is-dirty', !!state.dirty[s]);
+    const navId = el.dataset.section;
+    if (!navId) return;
+    el.classList.toggle('is-dirty', dirtyOfNav(navId));
   });
+  // Encuentra el botón save correspondiente (puede ser save-config o save-tema)
+  const navName = navKey(section);
   $(`[data-action="save-${section}"]`)?.removeAttribute('disabled');
+  $(`[data-action="save-${navName}"]`)?.removeAttribute('disabled');
   updateSaveBar();
 }
 function markClean(section) {
   state.dirty[section] = false;
   $$('.nav-section').forEach(el => {
-    const s = el.dataset.section;
-    el.classList.toggle('is-dirty', !!state.dirty[s]);
+    const navId = el.dataset.section;
+    if (!navId) return;
+    el.classList.toggle('is-dirty', dirtyOfNav(navId));
   });
+  const navName = navKey(section);
   $(`[data-action="save-${section}"]`)?.setAttribute('disabled', 'true');
+  $(`[data-action="save-${navName}"]`)?.setAttribute('disabled', 'true');
   updateSaveBar();
 }
 
@@ -504,6 +569,7 @@ function showSection(name) {
   $$('[data-content]').forEach(el => el.classList.toggle('hidden', el.dataset.content !== name));
   $('#emptyState').classList.add('hidden');
   if (name === 'establecimiento') renderEstablecimiento();
+  else if (name === 'tema') renderTema();
   else if (name === 'menus') renderMenusList();
   else if (name === 'recetas') renderRecetasList();
 }
@@ -792,6 +858,41 @@ function deleteRecetaModal() {
 }
 
 // ══════════════════════════════════════════════
+// SECCIÓN · TEMA VISUAL (edita config.tema)
+// ══════════════════════════════════════════════
+function renderTema() {
+  const cfg = state.data.config;
+  if (!cfg) { $('#temaGrid').innerHTML = '<div class="empty">No se pudo cargar config.json del proyecto.</div>'; return; }
+  const currentTheme = cfg.tema || 'navy-boutique';
+  $('#temaGrid').innerHTML = THEMES.map(t => `
+    <div class="theme-pick ${t.id === currentTheme ? 'selected' : ''}" data-tema="${t.id}">
+      <div class="swatch" style="background:${t.bg};color:${t.text};font-family:${t.font};">
+        <div class="swatch-title">${escapeHtml(t.name.split(' ')[0])}</div>
+        <div class="dots">
+          <span style="background:${t.brand};"></span>
+          <span style="background:${t.card};"></span>
+          <span style="background:${t.text};opacity:.4;"></span>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="name">${escapeHtml(t.name)}</div>
+        <div class="desc">${escapeHtml(t.desc)}</div>
+        <a class="preview-link" href="../core/pages/presupuesto-evento.html?proyecto=${encodeURIComponent(PROJECT_ID)}&tema=${encodeURIComponent(t.id)}" target="_blank" rel="noopener">Preview en pestaña nueva ↗</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectThemeInEditor(id) {
+  if (!THEMES.find(t => t.id === id)) return;
+  if (!state.data.config) state.data.config = {};
+  if (state.data.config.tema === id) return;
+  state.data.config.tema = id;
+  markDirty('config');
+  renderTema();
+}
+
+// ══════════════════════════════════════════════
 // MODAL infra
 // ══════════════════════════════════════════════
 function closeModal() {
@@ -837,6 +938,13 @@ function discardAll() {
 // Eventos
 // ══════════════════════════════════════════════
 document.addEventListener('click', (e) => {
+  // Click en theme-pick (sección tema) — chequear primero, no requiere data-action
+  const themeCard = e.target.closest('.theme-pick');
+  if (themeCard && !e.target.closest('.preview-link')) {
+    selectThemeInEditor(themeCard.dataset.tema);
+    return;
+  }
+
   const target = e.target.closest('[data-action], [data-section]');
   if (!target) return;
   const action = target.dataset.action;
@@ -851,9 +959,11 @@ document.addEventListener('click', (e) => {
     case 'save-establecimiento': saveSection('establecimiento'); break;
     case 'save-menus':           saveSection('menus'); break;
     case 'save-recetas':         saveSection('recetas'); break;
+    case 'save-tema':            saveSection('config'); break;
     case 'reset-establecimiento':resetSection('establecimiento'); break;
     case 'reset-menus':          resetSection('menus'); break;
     case 'reset-recetas':        resetSection('recetas'); break;
+    case 'reset-tema':           resetSection('config'); break;
     case 'discard-all':          discardAll(); break;
     case 'add-espacio': {
       state.data.establecimiento.espacios = state.data.establecimiento.espacios || [];
