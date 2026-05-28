@@ -222,6 +222,69 @@
     border: 1px dashed var(--border-default); border-radius: 12px;
   }
 
+  /* ── Importer Excel/CSV ──────────────────── */
+  .imp-step { color: var(--text-soft); font-size: 13px; line-height: 1.55; }
+  .imp-step strong { color: var(--text); }
+  .imp-step code { font-family: var(--font-mono); background: var(--bg-surface); padding: 2px 6px; border-radius: 4px; color: var(--accent-soft); font-size: 11.5px; }
+  .imp-drop {
+    border: 2px dashed var(--border-default); border-radius: 12px;
+    padding: 40px 24px; text-align: center; cursor: pointer;
+    transition: all .15s; margin-top: 16px;
+    background: var(--bg-surface);
+  }
+  .imp-drop.hover { border-color: var(--accent); background: rgba(52,211,153,.05); }
+  .imp-drop .imp-icon { font-size: 36px; margin-bottom: 10px; opacity: .7; }
+  .imp-drop .imp-msg { font-size: 14px; color: var(--text); margin-bottom: 4px; }
+  .imp-drop .imp-sub { font-size: 11px; color: var(--text-muted); }
+  .imp-drop input[type=file] { display: none; }
+
+  .imp-preview-table {
+    width: 100%; border-collapse: collapse; font-size: 11.5px;
+    margin-top: 12px; background: var(--bg-surface); border-radius: 8px; overflow: hidden;
+  }
+  .imp-preview-table th, .imp-preview-table td {
+    padding: 6px 9px; border-bottom: 1px solid var(--border-default);
+    text-align: left; max-width: 180px; overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap;
+  }
+  .imp-preview-table th { color: var(--accent); font-weight: 600; background: var(--bg-elevated-2); position: sticky; top: 0; }
+  .imp-preview-wrap { max-height: 280px; overflow: auto; border-radius: 8px; border: 1px solid var(--border-default); }
+
+  .imp-mapping {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 8px 14px; align-items: center;
+    background: var(--bg-surface); padding: 14px 16px; border-radius: 10px;
+    border: 1px solid var(--border-default);
+  }
+  .imp-mapping .field-label { font-size: 12px; color: var(--text-soft); display: flex; gap: 6px; align-items: center; }
+  .imp-mapping .field-label .req { color: var(--danger); font-size: 11px; }
+  .imp-mapping select {
+    background: var(--bg-elevated); border: 1px solid var(--border-default);
+    color: var(--text); padding: 7px 10px; border-radius: 6px; font-size: 12px;
+    font-family: inherit; width: 100%;
+  }
+  .imp-mapping select:focus { outline: none; border-color: var(--accent); }
+
+  .imp-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+  .imp-stat {
+    background: var(--bg-surface); border: 1px solid var(--border-default);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .imp-stat-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
+  .imp-stat-val { font-family: var(--font-display); font-size: 26px; font-weight: 700; line-height: 1; margin-top: 6px; }
+  .imp-stat-val.ok { color: var(--success); }
+  .imp-stat-val.err { color: var(--danger); }
+  .imp-stat-val.dup { color: var(--warning); }
+
+  .imp-errors {
+    background: var(--bg-surface); border: 1px solid var(--border-default);
+    border-radius: 8px; padding: 12px; margin-top: 14px;
+    max-height: 240px; overflow: auto; font-size: 12px;
+  }
+  .imp-err-row { padding: 6px 0; border-bottom: 1px dashed var(--border-default); color: var(--text-soft); }
+  .imp-err-row:last-child { border-bottom: none; }
+  .imp-err-row strong { color: var(--danger); font-family: var(--font-mono); font-size: 11px; }
+
   .hidden { display: none !important; }
 </style>
 </head>
@@ -344,6 +407,7 @@
           <div class="section-sub">Paquetes de catering: sentado, cóctel, desayuno, brunch, barra libre, etc.</div>
         </div>
         <div class="section-actions">
+          <button class="btn" data-action="import-menus" title="Importar desde Excel/CSV">📥 Importar</button>
           <button class="btn" data-action="add-menu">+ Nuevo menú</button>
           <button class="btn" data-action="reset-menus">↩ Descartar</button>
           <button class="btn primary" data-action="save-menus" disabled>💾 Guardar borrador</button>
@@ -361,6 +425,7 @@
           <div class="section-sub">Recetas con escandallo, alérgenos y pasos. Agrupadas por categoría.</div>
         </div>
         <div class="section-actions">
+          <button class="btn" data-action="import-recetas" title="Importar desde Excel/CSV">📥 Importar</button>
           <button class="btn" data-action="reset-recetas">↩ Descartar</button>
           <button class="btn primary" data-action="save-recetas" disabled>💾 Guardar borrador</button>
           <button class="btn" data-action="publish-recetas" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
@@ -410,6 +475,23 @@
   </div>
 </div>
 
+<!-- ─── MODAL IMPORTER ─────────────────────────── -->
+<div class="modal-overlay" id="importerOverlay">
+  <div class="modal" style="max-width:880px;">
+    <div class="modal-head">
+      <div class="modal-title" id="importerTitle">Importar Excel/CSV</div>
+      <button class="btn" data-action="importer-close">✕</button>
+    </div>
+    <div class="modal-body" id="importerBody">
+      <!-- contenido dinámico por paso -->
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-action="importer-cancel">Cancelar</button>
+      <div style="display:flex;gap:10px;" id="importerFootRight"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ─── MODAL ──────────────────────────────────── -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
@@ -433,6 +515,7 @@
 <script src="../core/js/loader.js"></script>
 <script src="../core/js/auth.js"></script>
 <script src="../core/js/github-api.js"></script>
+<script src="../core/js/importer-excel.js"></script>
 <script src="../core/js/editor-core.js"></script>
 <script>
 'use strict';
@@ -941,6 +1024,191 @@ function discardAll() {
 }
 
 // ══════════════════════════════════════════════
+// IMPORTER · Fase 3.5.A (Excel/CSV)
+// ══════════════════════════════════════════════
+const imp = { target: null, file: null, sheets: null, sheetIdx: 0, headers: [], rows: [], mapping: {}, result: null };
+
+function openImporter(target) {
+  imp.target = target;
+  imp.file = null; imp.sheets = null; imp.sheetIdx = 0;
+  imp.headers = []; imp.rows = []; imp.mapping = {}; imp.result = null;
+  $('#importerTitle').textContent = '📥 Importar ' + (target === 'menus' ? 'menús' : 'recetas') + ' desde Excel/CSV';
+  $('#importerOverlay').classList.add('visible');
+  renderImporterStep('drop');
+}
+
+function closeImporter() {
+  $('#importerOverlay').classList.remove('visible');
+  imp.target = null;
+}
+
+function renderImporterStep(step) {
+  const body = $('#importerBody');
+  const foot = $('#importerFootRight');
+  if (step === 'drop') {
+    body.innerHTML = `
+      <div class="imp-step">
+        Sube un archivo <strong>.xlsx</strong>, <strong>.xls</strong>, <strong>.csv</strong> o <strong>.tsv</strong>.
+        La primera fila debe contener los nombres de columnas.
+        ${imp.target === 'menus'
+          ? 'Campos esperados: <code>id</code>, <code>nombre</code>, <code>precio</code>, <code>tipo</code>, <code>descripcion</code>, <code>incluye</code>, <code>imagen</code>.'
+          : 'Campos esperados: <code>nombre</code>, <code>categoria</code> (entremeses/entrantes/primeros/segundos/postres/coctel), <code>emoji</code>, <code>desc</code>, <code>prep</code>, <code>coc</code>, <code>rac</code>, <code>dif</code>, <code>mp</code>, <code>alergenos</code>.'}
+      </div>
+      <div class="imp-drop" id="impDrop">
+        <div class="imp-icon">📂</div>
+        <div class="imp-msg">Arrastra el archivo aquí o haz click para elegir</div>
+        <div class="imp-sub">Máx ~5 MB · primera fila = headers</div>
+        <input type="file" id="impFile" accept=".xlsx,.xls,.ods,.csv,.tsv">
+      </div>
+      <div id="impLoading" style="display:none;margin-top:14px;color:var(--text-soft);font-size:12px;">⏳ Cargando libs y parseando…</div>
+      <div id="impError" style="display:none;margin-top:14px;background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.35);color:var(--danger);padding:10px 12px;border-radius:7px;font-size:12px;"></div>
+    `;
+    foot.innerHTML = '';
+    const drop = $('#impDrop');
+    const input = $('#impFile');
+    drop.addEventListener('click', () => input.click());
+    input.addEventListener('change', (e) => onFileChosen(e.target.files[0]));
+    drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('hover'); });
+    drop.addEventListener('dragleave', () => drop.classList.remove('hover'));
+    drop.addEventListener('drop', (e) => {
+      e.preventDefault(); drop.classList.remove('hover');
+      onFileChosen(e.dataTransfer.files[0]);
+    });
+
+  } else if (step === 'mapping') {
+    const T = window.fnbImporter.getTargetFields(imp.target);
+    const headerOptions = '<option value="">— sin mapear —</option>' +
+      imp.headers.map(h => '<option value="' + escapeHtml(h) + '">' + escapeHtml(h) + '</option>').join('');
+    body.innerHTML = `
+      <div class="imp-step" style="margin-bottom:14px;">
+        Hoja <strong>${escapeHtml(imp.sheets[imp.sheetIdx].name)}</strong> · <strong>${imp.rows.length}</strong> filas.
+        Asocia cada campo del proyecto con una columna del archivo. Hemos sugerido la mejor opción para cada uno.
+      </div>
+      <div class="imp-preview-wrap">
+        <table class="imp-preview-table">
+          <thead><tr>${imp.headers.map(h => '<th>' + escapeHtml(h) + '</th>').join('')}</tr></thead>
+          <tbody>
+            ${imp.rows.slice(0, 5).map(r => '<tr>' + imp.headers.map(h => '<td>' + escapeHtml(r[h] != null ? String(r[h]) : '—') + '</td>').join('') + '</tr>').join('')}
+          </tbody>
+        </table>
+      </div>
+      <h3 style="font-family:var(--font-display);font-size:14px;font-weight:600;margin:18px 0 8px;">Mapeo</h3>
+      <div class="imp-mapping">
+        ${T.map(spec => `
+          <div class="field-label">
+            <code>${escapeHtml(spec.field)}</code>
+            ${spec.required ? '<span class="req">*</span>' : ''}
+          </div>
+          <select data-imp-field="${escapeHtml(spec.field)}">
+            ${headerOptions.replace('value="' + escapeHtml(imp.mapping[spec.field] || '') + '"', 'value="' + escapeHtml(imp.mapping[spec.field] || '') + '" selected')}
+          </select>
+        `).join('')}
+      </div>
+    `;
+    foot.innerHTML = '<button class="btn primary" data-action="importer-validate">Validar y previsualizar →</button>';
+    // Conectar listener para actualizar mapping al cambio
+    $$('[data-imp-field]', body).forEach(sel => {
+      sel.addEventListener('change', () => {
+        const f = sel.dataset.impField;
+        if (sel.value) imp.mapping[f] = sel.value;
+        else delete imp.mapping[f];
+      });
+    });
+
+  } else if (step === 'summary') {
+    const { validas, invalidas, duplicadas } = imp.result;
+    body.innerHTML = `
+      <div class="imp-summary">
+        <div class="imp-stat"><div class="imp-stat-label">Válidas</div><div class="imp-stat-val ok">${validas.length}</div></div>
+        <div class="imp-stat"><div class="imp-stat-label">Con errores</div><div class="imp-stat-val err">${invalidas.length}</div></div>
+        <div class="imp-stat"><div class="imp-stat-label">Duplicadas</div><div class="imp-stat-val dup">${duplicadas.length}</div></div>
+      </div>
+      <div class="imp-step" style="margin-bottom:14px;">
+        Importar añadirá <strong>${validas.length}</strong> ${imp.target === 'menus' ? 'menús' : 'recetas'} al borrador local.
+        Las duplicadas y con errores no entran. Puedes corregir el archivo y reimportar.
+      </div>
+      ${invalidas.length ? `
+        <div class="imp-step"><strong>Filas con errores:</strong></div>
+        <div class="imp-errors">
+          ${invalidas.slice(0, 10).map(e => `
+            <div class="imp-err-row"><strong>fila ${e.sourceIdx + 2}</strong> · ${escapeHtml((e.errors || []).join(' · '))}</div>
+          `).join('')}
+          ${invalidas.length > 10 ? '<div class="imp-err-row" style="color:var(--text-muted);">… y ' + (invalidas.length - 10) + ' más</div>' : ''}
+        </div>
+      ` : ''}
+    `;
+    foot.innerHTML = '<button class="btn primary" data-action="importer-confirm" ' + (validas.length ? '' : 'disabled') + '>✓ Importar ' + validas.length + ' al borrador</button>';
+  }
+}
+
+async function onFileChosen(file) {
+  if (!file) return;
+  imp.file = file;
+  $('#impLoading').style.display = '';
+  $('#impError').style.display = 'none';
+  try {
+    const parsed = await window.fnbImporter.parseFile(file);
+    imp.sheets = parsed.sheets;
+    imp.sheetIdx = 0;
+    const rows = imp.sheets[0].rows;
+    if (!rows.length) throw new Error('Hoja vacía');
+    imp.rows = rows;
+    imp.headers = Object.keys(rows[0] || {});
+    const fields = window.fnbImporter.getTargetFields(imp.target);
+    imp.mapping = window.fnbImporter.autoMapColumns(imp.headers, fields);
+    renderImporterStep('mapping');
+  } catch (e) {
+    $('#impLoading').style.display = 'none';
+    $('#impError').textContent = '⚠ ' + e.message;
+    $('#impError').style.display = '';
+  }
+}
+
+function validateImporter() {
+  const T = window.fnbImporter.getTargetFields(imp.target);
+  // Comprobar requeridos mapeados
+  const missing = T.filter(s => s.required && !imp.mapping[s.field]).map(s => s.field);
+  if (missing.length) {
+    window.fnbEditor.showToast('Faltan mapeos requeridos: ' + missing.join(', '), 'error');
+    return;
+  }
+  const transformed = window.fnbImporter.transformRows(imp.rows, imp.mapping, imp.target);
+  // Existentes para detectar duplicados
+  let existing = [];
+  if (imp.target === 'menus') existing = (state.data.menus && state.data.menus.paquetes) || [];
+  else if (imp.target === 'recetas') {
+    const cats = (state.data.recetas && state.data.recetas.categorias) || {};
+    existing = Object.entries(cats).flatMap(([cat, arr]) => (arr || []).map(r => ({ ...r, categoria: cat })));
+  }
+  imp.result = window.fnbImporter.validateItems(transformed, imp.target, existing);
+  renderImporterStep('summary');
+}
+
+function confirmImporter() {
+  if (!imp.result || !imp.result.validas.length) return;
+  const items = imp.result.validas.map(v => v.item);
+  if (imp.target === 'menus') {
+    state.data.menus = state.data.menus || { paquetes: [] };
+    state.data.menus.paquetes = state.data.menus.paquetes.concat(items);
+    markDirty('menus');
+    renderMenusList();
+    window.fnbEditor.showToast('☁ ' + items.length + ' menús importados al borrador local', 'success');
+  } else if (imp.target === 'recetas') {
+    state.data.recetas = state.data.recetas || { categorias: {} };
+    items.forEach(item => {
+      const cat = String(item.categoria).toLowerCase();
+      delete item.categoria;
+      if (!state.data.recetas.categorias[cat]) state.data.recetas.categorias[cat] = [];
+      state.data.recetas.categorias[cat].push(item);
+    });
+    markDirty('recetas');
+    renderRecetasList();
+    window.fnbEditor.showToast('☁ ' + items.length + ' recetas importadas al borrador local', 'success');
+  }
+  closeImporter();
+}
+
+// ══════════════════════════════════════════════
 // PUBLICAR · commit del draft al repo (Fase 3.C.1)
 // ══════════════════════════════════════════════
 async function publishSection(section) {
@@ -1028,6 +1296,12 @@ document.addEventListener('click', (e) => {
     case 'publish-menus':           publishSection('menus'); break;
     case 'publish-recetas':         publishSection('recetas'); break;
     case 'publish-tema':            publishSection('config'); break;
+    case 'import-menus':            openImporter('menus'); break;
+    case 'import-recetas':          openImporter('recetas'); break;
+    case 'importer-close':
+    case 'importer-cancel':         closeImporter(); break;
+    case 'importer-validate':       validateImporter(); break;
+    case 'importer-confirm':        confirmImporter(); break;
     case 'reset-establecimiento':resetSection('establecimiento'); break;
     case 'reset-menus':          resetSection('menus'); break;
     case 'reset-recetas':        resetSection('recetas'); break;
