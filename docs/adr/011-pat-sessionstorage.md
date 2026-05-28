@@ -1,7 +1,8 @@
-# ADR 011 · GitHub PAT del super-admin en `sessionStorage`
+# ADR 011 · GitHub PAT del super-admin en `sessionStorage` + Modelo de amenaza
 
 - **Estado:** aceptado
 - **Fecha:** 2026-05-28
+- **Última revisión:** 2026-05-28 (v4.5.1 · auditoría)
 - **Fase:** 3.A · dashboard MVP · login + lista de proyectos
 - **Cierra decisión pendiente:** [arquitectura-plataforma.md §10.2](../arquitectura-plataforma.md)
 
@@ -70,3 +71,71 @@ Re-evaluar al final de Fase 5 si:
 - Surgen requisitos de auditoría (logs de quién commiteó qué).
 
 En cualquiera de esos casos, el camino correcto es migrar a backend/BaaS, no añadir cifrado en cliente.
+
+---
+
+## Anexo · Modelo de amenaza completo (post-auditoría v4.5.1)
+
+La auditoría detectó que la decisión original (PAT en sessionStorage) era correcta pero no estaba completamente articulado el modelo de amenaza del que se defiende y, sobre todo, del que **NO se defiende**. Este anexo cierra esa carencia.
+
+### Lo que SÍ protege este modelo
+
+1. **Acceso casual no autenticado al editor**. Sin la password del super-admin, el formulario rechaza el login.
+2. **Visualización pública del frontend**. El frontend público es… público. No requiere auth (D3) ni la usa.
+3. **PAT exfiltrado en caso de cierre de pestaña**. El PAT vive en sessionStorage; cerrar la pestaña lo elimina.
+4. **Robo de PAT vía localStorage compartido entre pestañas/dominios**. localStorage NO se usa para el PAT (sessionStorage es por-pestaña).
+5. **Repaleta de credenciales tras compromiso**. Cambiar la password regenera el hash; rotar el PAT en GitHub invalida el viejo.
+
+### Lo que NO protege (asumido, documentado)
+
+1. **Brute-force offline del hash bcrypt**. `dashboard/auth.json` es público en GitHub Pages. Cualquiera puede `curl` el hash. Defensa: password ≥20 chars aleatorios + bcrypt rounds=12. **No usar passwords débiles o palabras de diccionario.**
+2. **Manipulación de la sesión en `sessionStorage`**. El objeto `{user, scope, iat, exp}` no está firmado. Un atacante con acceso al navegador (físico o XSS) puede modificar `exp` para extender la sesión, o crear una sesión desde cero. **Defensa: no añadimos firma en cliente porque no hay secreto válido que mantener ahí**; en su lugar, las acciones críticas (Fase 3.C: commit a GitHub) re-verifican la password.
+3. **XSS en el dashboard**. Si entra HTML hostil al dashboard, se puede leer PAT + sesión. Defensa: ningún input se renderiza como HTML; todo pasa por `escapeHtml`. Sin dependencias de terceros más allá de bcryptjs CDN.
+4. **MITM en el fetch de `auth.json`**. GitHub Pages sirve sobre HTTPS, pero un atacante con control de red local podría inyectar un auth.json falso. Defensa: navegador valida cert TLS de GitHub.
+5. **Compromiso del PAT (token de GitHub)**. Si el PAT se filtra (logs, captura de pantalla), un atacante puede commitear como tú. Defensa: scope mínimo (`repo` solo a este repo), revocación rápida en GitHub Settings.
+6. **Repudio**. No hay log de "quién hizo qué desde el dashboard" más allá del autor del commit en git. Si dos personas comparten el super-admin (no debería), no se puede distinguir. Asumido.
+
+### Defensas obligatorias antes de deploy público
+
+Si este repo va a deployarse en un dominio público (no solo `localhost`):
+
+- [ ] Cambiar la password del super-admin con `scripts/change-password.html`. **NO** usar la password placeholder.
+- [ ] Verificar que `_passwordPlaceholder` NO existe en `auth.json` (eliminado en v4.5.1).
+- [ ] Generar el PAT con scope `repo` y guardarlo solo en el password manager personal del super-admin.
+- [ ] Verificar que `.gitignore` incluye `.local-credentials.txt`.
+- [ ] (Si el dashboard se va a usar de verdad) considerar mover a un dominio NO público / con basic auth a nivel de host / con Cloudflare Access.
+
+### Punto crítico para Fase 3.C
+
+Cuando se construya `core/js/github-api.js`, **las operaciones de commit deben re-pedir la password** antes de ejecutarse. Razones:
+
+- La sesión NO es seguridad — solo UX.
+- Un atacante con acceso al navegador puede iniciar sesión falsa pero NO conoce la password real.
+- Re-pedir password al primer commit (y cada N minutos) garantiza autenticación real para la única acción destructiva (escribir al repo).
+
+API tentativa para 3.C:
+```js
+await window.fnbAuth.promptPasswordAndExecute(async (verified) => {
+  // verified === true significa que la password se acaba de revalidar contra auth.json
+  await window.fnbGitHub.commit({ branch, files, message });
+});
+```
+
+Si se quiere persistir la verificación por unos minutos:
+```js
+window.fnbAuth.markFreshAuth(); // tras un login o re-prompt exitoso, marca un timestamp en sessionStorage
+window.fnbAuth.isFreshAuth(5 * 60 * 1000); // true si markFreshAuth se llamó hace menos de 5 min
+```
+
+Estas funciones SE AÑADEN en Fase 3.C, no en 3.A/3.B. Esta sección documenta la API contractual.
+
+---
+
+## Anexo · v4.5.1 · Cambios derivados de la auditoría
+
+1. **Eliminado `_passwordPlaceholder` de `auth.json`** (revelaba la password en claro junto al hash).
+2. **Nueva password aleatoria 24 chars con bcrypt rounds=12** (era "admin2026" con rounds=10).
+3. **Banner amber en el login** advirtiendo del modelo soft + enlaces a este ADR y a `scripts/change-password.html`.
+4. **`scripts/change-password.html`** standalone: herramienta para generar hash desde el navegador sin tocar Node.
+5. **Wizard filtra `auth.users`** en `buildMiramarCopy` para que proyectos nuevos no hereden credenciales del piloto.
+6. Este ADR (sección Modelo de amenaza) documenta lo que sí y lo que no se protege, y deja el contrato para Fase 3.C.

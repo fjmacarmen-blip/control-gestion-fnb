@@ -121,20 +121,26 @@
     display: none;
   }
   .login-error.visible { display: block; }
-  .login-hint {
+  .login-warn {
     margin-top: 18px;
-    padding-top: 18px;
-    border-top: 1px solid var(--border-default);
+    padding: 12px 14px;
+    background: rgba(251,191,36,.08);
+    border: 1px solid rgba(251,191,36,.3);
+    border-radius: 8px;
     font-size: 11px;
-    color: var(--text-muted);
-    line-height: 1.5;
+    color: var(--warning);
+    line-height: 1.55;
   }
-  .login-hint code {
+  .login-warn strong { color: var(--text); }
+  .login-warn a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  .login-warn a:hover { color: var(--accent-soft); }
+  .login-warn code {
     background: var(--bg-surface);
-    padding: 2px 6px;
+    padding: 1px 5px;
     border-radius: 4px;
     color: var(--accent-soft);
-    font-size: 11px;
+    font-size: 10.5px;
+    font-family: var(--font-mono);
   }
 
   /* ── Lista de proyectos ──────────────────────────────── */
@@ -272,10 +278,12 @@
     <button type="submit" class="btn-primary" id="btnLogin">Acceder</button>
     <div class="login-error" id="loginError"></div>
 
-    <div class="login-hint">
-      <strong>Demo:</strong> el repositorio incluye un super-admin placeholder
-      <code>admin@miramar.dev</code> / <code>admin2026</code>. Cambiar antes de deployar:
-      ver <code>dashboard/auth.json</code>.
+    <div class="login-warn" role="alert">
+      ⚠ <strong>Sesión soft (sin servidor).</strong> El hash bcrypt vive en <code>auth.json</code> público.
+      Antes de deployar a un dominio público, cambia la password con
+      <a href="../scripts/change-password.html" target="_blank" rel="noopener">scripts/change-password.html</a>
+      y consulta el <a href="../docs/adr/011-pat-sessionstorage.md" target="_blank" rel="noopener">ADR 011</a>
+      sobre el modelo de amenaza.
     </div>
   </form>
 </div>

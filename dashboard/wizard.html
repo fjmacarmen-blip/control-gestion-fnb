@@ -456,6 +456,9 @@ async function buildMiramarCopy() {
     out.config.tema = wizard.data.tema || 'navy-boutique';
     out.config.creado = new Date().toISOString().slice(0, 10);
   }
+  // SEGURIDAD: nunca heredar usuarios del proyecto origen. Cada proyecto
+  // arranca sin credenciales — el responsable se añade desde el editor.
+  out.auth = { users: [] };
   if (out.establecimiento) {
     out.establecimiento.razon_social = wizard.data.name;
     out.establecimiento.nombre_comercial = wizard.data.name;
