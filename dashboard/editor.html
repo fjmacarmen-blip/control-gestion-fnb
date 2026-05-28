@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="project-base" content="../">
+<title>Editor · Dashboard F&B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep:#050e1f; --navy-base:#0a1228; --navy-card:#0f1a35;
+    --navy-card-2:#14213f; --navy-border:#1c2845;
+    --gold:#c9a84c; --gold-soft:#d4b76a;
+    --text:#e8ecf5; --text-soft:#a6b0c8; --muted:#6f7a96;
+    --accent:#5a8dee; --danger:#ff6b6b; --success:#4ade80; --warning:#f5b342;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--navy-deep);
+    color: var(--text);
+    display: flex; flex-direction: column;
+  }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { color: var(--gold-soft); }
+  button, input, textarea, select { font-family: inherit; }
+
+  /* ── Header ──────────────────────────────────── */
+  .topbar {
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 18px;
+    background: rgba(5, 14, 31, .85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--navy-border);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 14px; }
+  .crumb a { color: var(--text-soft); }
+  .crumb a:hover { color: var(--gold); }
+  .crumb-sep { color: var(--navy-border); margin: 0 8px; }
+  .proj-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border-radius: 100px;
+    background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.3);
+    color: var(--gold); font-size: 12px; font-weight: 500;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .btn {
+    padding: 8px 14px; border-radius: 7px; border: 1px solid var(--navy-border);
+    background: var(--navy-card); color: var(--text-soft);
+    font-size: 12px; cursor: pointer; transition: all .15s;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn:hover { color: var(--gold); border-color: var(--gold); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.primary {
+    background: linear-gradient(135deg, var(--gold) 0%, #a8893a 100%);
+    color: var(--navy-deep); border: none; font-weight: 600;
+  }
+  .btn.primary:hover { box-shadow: 0 4px 14px rgba(201,168,76,.3); color: var(--navy-deep); }
+  .btn.primary:disabled { background: var(--navy-card); color: var(--muted); box-shadow: none; }
+  .btn.danger { color: var(--danger); border-color: rgba(255,107,107,.4); }
+  .btn.danger:hover { background: rgba(255,107,107,.1); }
+
+  /* ── Layout ──────────────────────────────────── */
+  .editor-shell { flex: 1; display: grid; grid-template-columns: 260px 1fr; min-height: 0; }
+  .sidebar {
+    background: var(--navy-base);
+    border-right: 1px solid var(--navy-border);
+    padding: 22px 14px;
+    overflow-y: auto;
+  }
+  .sidebar-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); padding: 0 10px 12px; }
+  .nav-section {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 11px 12px; border-radius: 8px;
+    color: var(--text-soft); cursor: pointer;
+    transition: all .12s; font-size: 14px;
+  }
+  .nav-section:hover { background: var(--navy-card); color: var(--text); }
+  .nav-section.active { background: var(--navy-card-2); color: var(--text); border-left: 3px solid var(--gold); padding-left: 9px; }
+  .nav-section.disabled { opacity: .4; cursor: not-allowed; }
+  .nav-section .left { display: flex; align-items: center; gap: 10px; }
+  .nav-section .dirty-dot {
+    width: 7px; height: 7px; border-radius: 100px; background: var(--warning);
+    display: none;
+  }
+  .nav-section.is-dirty .dirty-dot { display: inline-block; }
+
+  .main { padding: 24px 32px 80px; overflow-y: auto; max-width: 1200px; }
+  .section-head {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 20px;
+    margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--navy-border);
+    flex-wrap: wrap;
+  }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 500; }
+  .section-sub { color: var(--text-soft); font-size: 13px; margin-top: 4px; }
+  .section-actions { display: flex; gap: 8px; align-items: center; }
+
+  /* ── Forms ──────────────────────────────────── */
+  .form-grid { display: grid; gap: 18px; }
+  .form-grid.two-col { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 720px) { .form-grid.two-col { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .field input, .field select, .field textarea {
+    background: var(--navy-card); border: 1px solid var(--navy-border);
+    color: var(--text); padding: 10px 13px; border-radius: 7px;
+    font-size: 14px;
+  }
+  .field textarea { resize: vertical; min-height: 80px; font-family: 'DM Sans', system-ui; }
+  .field textarea.code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; line-height: 1.5; min-height: 120px; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--gold); }
+  .field .hint { color: var(--muted); font-size: 11px; }
+
+  .card-block {
+    background: var(--navy-card); border: 1px solid var(--navy-border);
+    border-radius: 10px; padding: 20px; margin-bottom: 20px;
+  }
+  .card-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; margin-bottom: 14px; }
+
+  /* ── Tabla editable ─────────────────────────── */
+  table.edit-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    font-size: 13px;
+  }
+  .edit-table th, .edit-table td { padding: 8px 10px; border-bottom: 1px solid var(--navy-border); }
+  .edit-table th { text-align: left; color: var(--muted); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+  .edit-table input { width: 100%; background: transparent; border: 1px solid transparent; color: var(--text); padding: 6px 8px; border-radius: 5px; font-size: 13px; }
+  .edit-table input:focus { outline: none; background: var(--navy-card-2); border-color: var(--gold); }
+  .edit-table .row-actions { white-space: nowrap; text-align: right; }
+  .icon-btn { background: transparent; border: none; color: var(--muted); cursor: pointer; padding: 4px 8px; border-radius: 5px; }
+  .icon-btn:hover { color: var(--danger); background: rgba(255,107,107,.08); }
+  .add-row-btn { margin-top: 10px; font-size: 12px; color: var(--gold); background: transparent; border: 1px dashed var(--navy-border); padding: 8px 14px; border-radius: 7px; cursor: pointer; }
+  .add-row-btn:hover { border-color: var(--gold); }
+
+  /* ── Lista de items (menús y recetas) ────────── */
+  .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .item-card {
+    background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 10px;
+    padding: 16px; cursor: pointer; transition: all .15s; display: flex; flex-direction: column; gap: 8px;
+  }
+  .item-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .item-card.is-new { border-style: dashed; opacity: .85; }
+  .item-card .item-icon { font-size: 28px; }
+  .item-card .item-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; line-height: 1.2; }
+  .item-card .item-meta { font-size: 11px; color: var(--muted); letter-spacing: .5px; }
+  .item-card .item-desc { font-size: 12px; color: var(--text-soft); line-height: 1.45; min-height: 34px; }
+  .item-card .item-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+  .price { color: var(--gold); font-weight: 600; }
+  .pill {
+    display: inline-block; padding: 2px 8px; border-radius: 100px;
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    background: rgba(90,141,238,.15); color: var(--accent);
+    border: 1px solid rgba(90,141,238,.3);
+  }
+  .pill.gold { background: rgba(201,168,76,.15); color: var(--gold); border-color: rgba(201,168,76,.3); }
+  .pill.muted { background: rgba(111,122,150,.15); color: var(--muted); border-color: rgba(111,122,150,.3); }
+
+  .category-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin: 28px 0 14px; padding-bottom: 8px; border-bottom: 1px dashed var(--navy-border);
+  }
+  .category-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; text-transform: capitalize; }
+  .category-count { color: var(--muted); font-size: 12px; }
+
+  /* ── Modal ──────────────────────────────────── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(5,14,31,.75); backdrop-filter: blur(6px);
+    z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.visible { display: flex; }
+  .modal {
+    background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px;
+    width: 100%; max-width: 720px; max-height: 90vh; display: flex; flex-direction: column;
+    box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  }
+  .modal-head {
+    padding: 18px 24px; border-bottom: 1px solid var(--navy-border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; }
+  .modal-body { padding: 22px 24px; overflow-y: auto; flex: 1; }
+  .modal-foot { padding: 16px 24px; border-top: 1px solid var(--navy-border); display: flex; justify-content: space-between; gap: 10px; }
+
+  .save-bar {
+    position: fixed; bottom: 0; left: 260px; right: 0;
+    background: rgba(15,26,53,.95); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--gold);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    transform: translateY(120%); transition: transform .25s;
+    z-index: 60;
+  }
+  .save-bar.visible { transform: translateY(0); }
+  .save-bar .info { font-size: 13px; color: var(--text); }
+  .save-bar .info strong { color: var(--gold); }
+  .save-bar .right { display: flex; gap: 10px; }
+
+  .empty {
+    padding: 40px; text-align: center; color: var(--muted); background: var(--navy-card);
+    border: 1px dashed var(--navy-border); border-radius: 12px;
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ─── TOPBAR ──────────────────────────────────── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="crumb">
+      <a href="./index.html">← Dashboard</a>
+      <span class="crumb-sep">/</span>
+      <span style="color:var(--text);">Editor</span>
+    </div>
+    <span class="proj-pill" id="projPill">⏳ cargando…</span>
+  </div>
+  <div class="topbar-right">
+    <a id="linkPublic" class="btn" target="_blank" rel="noopener">👁 Ver público</a>
+    <button class="btn" id="btnLogout">Cerrar sesión</button>
+  </div>
+</div>
+
+<!-- ─── SHELL ──────────────────────────────────── -->
+<div class="editor-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Secciones del proyecto</div>
+    <div class="nav-section" data-section="establecimiento">
+      <span class="left">🏨 Establecimiento</span>
+      <span class="dirty-dot" title="Cambios sin guardar"></span>
+    </div>
+    <div class="nav-section" data-section="menus">
+      <span class="left">🍽️ Menús</span>
+      <span class="dirty-dot" title="Cambios sin guardar"></span>
+    </div>
+    <div class="nav-section" data-section="recetas">
+      <span class="left">📖 Recetario</span>
+      <span class="dirty-dot" title="Cambios sin guardar"></span>
+    </div>
+    <div class="nav-section disabled" title="Disponible en fases posteriores">
+      <span class="left">🌿 Dietas <span style="opacity:.5;">· próximo</span></span>
+    </div>
+    <div class="nav-section disabled" title="Disponible en fases posteriores">
+      <span class="left">🎉 Eventos <span style="opacity:.5;">· próximo</span></span>
+    </div>
+    <div class="nav-section disabled" title="Disponible en fases posteriores">
+      <span class="left">📦 Productos <span style="opacity:.5;">· próximo</span></span>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- ESTABLECIMIENTO -->
+    <section data-content="establecimiento" class="hidden">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Ficha del establecimiento</div>
+          <div class="section-sub">Datos legales, contacto y espacios disponibles del hotel.</div>
+        </div>
+        <div class="section-actions">
+          <button class="btn" data-action="reset-establecimiento" title="Descartar cambios locales">↩ Descartar</button>
+          <button class="btn primary" data-action="save-establecimiento" disabled>💾 Guardar borrador</button>
+        </div>
+      </div>
+
+      <div class="card-block">
+        <h3>Identidad</h3>
+        <div class="form-grid two-col">
+          <div class="field"><label>Razón social</label><input type="text" data-bind="razon_social"></div>
+          <div class="field"><label>Nombre comercial</label><input type="text" data-bind="nombre_comercial"></div>
+          <div class="field"><label>Categoría</label><input type="text" data-bind="categoria"></div>
+          <div class="field"><label>NIF / CIF</label><input type="text" data-bind="nif"></div>
+          <div class="field"><label>Registro Turismo</label><input type="text" data-bind="registro_turismo"></div>
+        </div>
+      </div>
+
+      <div class="card-block">
+        <h3>Dirección</h3>
+        <div class="form-grid two-col">
+          <div class="field"><label>Calle</label><input type="text" data-bind="direccion.calle"></div>
+          <div class="field"><label>Código postal</label><input type="text" data-bind="direccion.cp"></div>
+          <div class="field"><label>Ciudad</label><input type="text" data-bind="direccion.ciudad"></div>
+          <div class="field"><label>Provincia</label><input type="text" data-bind="direccion.provincia"></div>
+          <div class="field"><label>País</label><input type="text" data-bind="direccion.pais"></div>
+        </div>
+      </div>
+
+      <div class="card-block">
+        <h3>Contacto</h3>
+        <div class="form-grid two-col">
+          <div class="field"><label>Teléfono</label><input type="text" data-bind="contacto.telefono"></div>
+          <div class="field"><label>Email</label><input type="email" data-bind="contacto.email"></div>
+          <div class="field"><label>Web</label><input type="text" data-bind="contacto.web"></div>
+        </div>
+      </div>
+
+      <div class="card-block">
+        <h3>Espacios</h3>
+        <table class="edit-table" id="espaciosTable">
+          <thead>
+            <tr><th style="width:18%">ID</th><th style="width:32%">Nombre</th><th>m²</th><th>Cap. sentado</th><th>Cap. cóctel</th><th></th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button class="add-row-btn" data-action="add-espacio">+ Añadir espacio</button>
+      </div>
+    </section>
+
+    <!-- MENUS -->
+    <section data-content="menus" class="hidden">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Menús</div>
+          <div class="section-sub">Paquetes de catering: sentado, cóctel, desayuno, brunch, barra libre, etc.</div>
+        </div>
+        <div class="section-actions">
+          <button class="btn" data-action="add-menu">+ Nuevo menú</button>
+          <button class="btn" data-action="reset-menus">↩ Descartar</button>
+          <button class="btn primary" data-action="save-menus" disabled>💾 Guardar borrador</button>
+        </div>
+      </div>
+      <div class="item-grid" id="menusList"></div>
+    </section>
+
+    <!-- RECETAS -->
+    <section data-content="recetas" class="hidden">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Recetario</div>
+          <div class="section-sub">Recetas con escandallo, alérgenos y pasos. Agrupadas por categoría.</div>
+        </div>
+        <div class="section-actions">
+          <button class="btn" data-action="reset-recetas">↩ Descartar</button>
+          <button class="btn primary" data-action="save-recetas" disabled>💾 Guardar borrador</button>
+        </div>
+      </div>
+      <div id="recetasContent"></div>
+    </section>
+
+    <div id="emptyState" class="empty" style="margin-top:80px;">
+      Selecciona una sección del menú lateral para empezar a editar.
+    </div>
+
+  </main>
+</div>
+
+<!-- ─── SAVE BAR (visible al haber cambios) ─────── -->
+<div class="save-bar" id="saveBar">
+  <div class="info">
+    <strong>Borrador local sin publicar</strong> ·
+    <span id="saveBarInfo">Los cambios se guardan solo en este navegador hasta que Fase 3.C habilite los commits a GitHub.</span>
+  </div>
+  <div class="right">
+    <button class="btn" data-action="discard-all">Descartar todos</button>
+  </div>
+</div>
+
+<!-- ─── MODAL ──────────────────────────────────── -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">—</div>
+      <button class="btn" data-action="modal-close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot">
+      <button class="btn danger" data-action="modal-delete" id="modalDelete">🗑 Eliminar</button>
+      <div style="display:flex;gap:10px;">
+        <button class="btn" data-action="modal-close">Cancelar</button>
+        <button class="btn primary" data-action="modal-save">Aplicar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SCRIPTS ────────────────────────────────── -->
+<script src="../core/js/loader.js"></script>
+<script src="../core/js/auth.js"></script>
+<script src="../core/js/editor-core.js"></script>
+<script>
+'use strict';
+
+const PROJECT_ID = (new URLSearchParams(location.search).get('proyecto') || '').trim();
+const VALID_RE = /^[a-z0-9_-]+$/;
+
+if (!PROJECT_ID || !VALID_RE.test(PROJECT_ID)) {
+  document.body.innerHTML = '<div style="padding:60px;text-align:center;color:#ff8a8a;font:14px/1.6 system-ui;">Falta el parámetro <code>?proyecto=&lt;id&gt;</code> o el id es inválido.<br><br><a href="./index.html" style="color:#c9a84c;">← Volver al dashboard</a></div>';
+  throw new Error('PROJECT_ID inválido');
+}
+
+// ── Autenticación: bloqueo si no hay sesión ────────────────
+(function gateAuth() {
+  const session = window.fnbAuth.getSession();
+  if (!session) {
+    location.replace('./index.html');
+    throw new Error('Sin sesión');
+  }
+})();
+
+// ── Estado global del editor ───────────────────────────────
+const state = {
+  current: null,                    // sección activa
+  data: { establecimiento: null, menus: null, recetas: null },
+  original: { establecimiento: null, menus: null, recetas: null },
+  dirty: { establecimiento: false, menus: false, recetas: false },
+  modalContext: null,               // { section, type, index, category? }
+};
+
+const SECTIONS = ['establecimiento', 'menus', 'recetas'];
+
+// ── Helpers DOM ────────────────────────────────────────────
+const $  = (s, el) => (el || document).querySelector(s);
+const $$ = (s, el) => [...(el || document).querySelectorAll(s)];
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function getByPath(obj, path) {
+  return path.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
+}
+function setByPath(obj, path, value) {
+  const parts = path.split('.');
+  let cur = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    if (cur[parts[i]] == null || typeof cur[parts[i]] !== 'object') cur[parts[i]] = {};
+    cur = cur[parts[i]];
+  }
+  cur[parts[parts.length - 1]] = value;
+}
+
+function markDirty(section) {
+  state.dirty[section] = true;
+  $$('.nav-section').forEach(el => {
+    const s = el.dataset.section;
+    el.classList.toggle('is-dirty', !!state.dirty[s]);
+  });
+  $(`[data-action="save-${section}"]`)?.removeAttribute('disabled');
+  updateSaveBar();
+}
+function markClean(section) {
+  state.dirty[section] = false;
+  $$('.nav-section').forEach(el => {
+    const s = el.dataset.section;
+    el.classList.toggle('is-dirty', !!state.dirty[s]);
+  });
+  $(`[data-action="save-${section}"]`)?.setAttribute('disabled', 'true');
+  updateSaveBar();
+}
+
+function updateSaveBar() {
+  const dirtyCount = SECTIONS.filter(s => state.dirty[s]).length;
+  const localDraftCount = SECTIONS.filter(s => window.fnbEditor.hasDraft(PROJECT_ID, s)).length;
+  const bar = $('#saveBar');
+  if (dirtyCount > 0 || localDraftCount > 0) {
+    bar.classList.add('visible');
+    const parts = [];
+    if (dirtyCount) parts.push(dirtyCount + ' secci' + (dirtyCount === 1 ? 'ón' : 'ones') + ' con cambios sin guardar');
+    if (localDraftCount) parts.push(localDraftCount + ' borrador' + (localDraftCount === 1 ? '' : 'es') + ' local' + (localDraftCount === 1 ? '' : 'es'));
+    $('#saveBarInfo').innerHTML = parts.join(' · ') + ' · Se publicarán a GitHub en Fase 3.C.';
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+// ── Carga inicial de las 3 secciones ───────────────────────
+async function loadSection(section) {
+  // Si hay draft local, lo usamos como fuente. El original solo se necesita
+  // para «descartar» (resetear al estado del repo). Proyectos creados por el
+  // wizard aún no tienen JSON en repo, solo drafts locales — esto es válido.
+  const draft = window.fnbEditor.loadDraft(PROJECT_ID, section);
+  let original = null;
+  try {
+    original = await window.fnbEditor.loadOriginal(PROJECT_ID, section);
+  } catch (e) {
+    if (!draft) {
+      console.warn('loadSection ' + section + ': sin original ni draft — proyecto vacío o ID inválido');
+      state.data[section] = null;
+      state.original[section] = null;
+      return;
+    }
+    // Hay draft pero no original: proyecto solo-local (creado por wizard).
+    // No es un error real, el draft es la fuente de verdad hasta Fase 3.C.
+  }
+  state.original[section] = original ? JSON.parse(JSON.stringify(original)) : null;
+  if (draft) {
+    state.data[section] = draft;
+    state.dirty[section] = true;
+  } else {
+    state.data[section] = JSON.parse(JSON.stringify(original));
+    state.dirty[section] = false;
+  }
+}
+
+// ── Selector de sección activa ─────────────────────────────
+function showSection(name) {
+  state.current = name;
+  $$('.nav-section').forEach(el => el.classList.toggle('active', el.dataset.section === name));
+  $$('[data-content]').forEach(el => el.classList.toggle('hidden', el.dataset.content !== name));
+  $('#emptyState').classList.add('hidden');
+  if (name === 'establecimiento') renderEstablecimiento();
+  else if (name === 'menus') renderMenusList();
+  else if (name === 'recetas') renderRecetasList();
+}
+
+// ══════════════════════════════════════════════
+// SECCIÓN · ESTABLECIMIENTO
+// ══════════════════════════════════════════════
+function renderEstablecimiento() {
+  const data = state.data.establecimiento;
+  if (!data) { $('[data-content="establecimiento"]').innerHTML += '<div class="empty">No se pudo cargar establecimiento.json</div>'; return; }
+  $$('[data-bind]', $('[data-content="establecimiento"]')).forEach(input => {
+    const path = input.dataset.bind;
+    input.value = getByPath(data, path) || '';
+    input.onchange = () => {
+      setByPath(state.data.establecimiento, path, input.value);
+      markDirty('establecimiento');
+    };
+  });
+  renderEspaciosTable();
+  $$('[data-action="save-establecimiento"]').forEach(b => { b.disabled = !state.dirty.establecimiento; });
+}
+
+function renderEspaciosTable() {
+  const tbody = $('#espaciosTable tbody');
+  tbody.innerHTML = '';
+  const espacios = state.data.establecimiento.espacios || [];
+  espacios.forEach((esp, idx) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" data-field="id"></td>
+      <td><input type="text" data-field="nombre"></td>
+      <td><input type="number" data-field="superficie_m2"></td>
+      <td><input type="number" data-field="capacidad_sentado"></td>
+      <td><input type="number" data-field="capacidad_coctel"></td>
+      <td class="row-actions"><button class="icon-btn" data-action="del-espacio" data-idx="${idx}" title="Eliminar">🗑</button></td>
+    `;
+    $$('input', tr).forEach(input => {
+      const field = input.dataset.field;
+      input.value = esp[field] == null ? '' : esp[field];
+      input.onchange = () => {
+        const v = input.type === 'number' ? (input.value === '' ? null : Number(input.value)) : input.value;
+        state.data.establecimiento.espacios[idx][field] = v;
+        markDirty('establecimiento');
+      };
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+// ══════════════════════════════════════════════
+// SECCIÓN · MENUS
+// ══════════════════════════════════════════════
+function renderMenusList() {
+  const data = state.data.menus;
+  if (!data) { $('#menusList').innerHTML = '<div class="empty">No se pudo cargar menus.json</div>'; return; }
+  const paquetes = data.paquetes || [];
+  $('#menusList').innerHTML = '';
+  if (!paquetes.length) {
+    $('#menusList').innerHTML = '<div class="empty" style="grid-column:1/-1;">No hay menús todavía. <button class="btn" data-action="add-menu">+ Añadir uno</button></div>';
+  }
+  paquetes.forEach((m, idx) => {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.dataset.idx = idx;
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="item-icon">${escapeHtml(m.icon || '🍽️')}</div>
+        <div>
+          <div class="item-name">${escapeHtml(m.name || '(sin nombre)')}</div>
+          <div class="item-meta">id: ${escapeHtml(m.id)} · ${escapeHtml(m.type || '—')}</div>
+        </div>
+      </div>
+      <div class="item-desc">${escapeHtml(m.desc || '')}</div>
+      <div class="item-bottom">
+        <span class="price">${m.ppax === 0 ? 'según selección' : (m.ppax || 0) + ' € / pax'}</span>
+        ${m.badge ? '<span class="pill gold">' + escapeHtml(m.badge.replace('badge-','')) + '</span>' : ''}
+      </div>
+    `;
+    card.onclick = () => openMenuModal(idx);
+    $('#menusList').appendChild(card);
+  });
+  $$('[data-action="save-menus"]').forEach(b => { b.disabled = !state.dirty.menus; });
+}
+
+function openMenuModal(idx) {
+  const isNew = idx === -1;
+  const item = isNew
+    ? { id: '', name: '', type: 'sentado', scope: 'all', badge: 'badge-est', g: 'g6', icon: '🍽️', ppax: 0, desc: '', incl: '', img: '', composition: {} }
+    : JSON.parse(JSON.stringify(state.data.menus.paquetes[idx]));
+
+  state.modalContext = { section: 'menus', index: idx, draft: item };
+  $('#modalTitle').textContent = isNew ? 'Nuevo menú' : 'Editar · ' + (item.name || item.id);
+  $('#modalDelete').style.display = isNew ? 'none' : '';
+  $('#modalBody').innerHTML = `
+    <div class="form-grid two-col">
+      <div class="field"><label>ID</label><input type="text" data-mb="id" value="${escapeHtml(item.id)}"></div>
+      <div class="field"><label>Nombre</label><input type="text" data-mb="name" value="${escapeHtml(item.name)}"></div>
+      <div class="field"><label>Tipo</label>
+        <select data-mb="type">
+          ${['sentado','coctel','desayuno','coffee','brunch','barra_libre'].map(t => `<option ${t===item.type?'selected':''}>${t}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field"><label>Scope</label>
+        <select data-mb="scope">
+          <option value="all" ${item.scope==='all'?'selected':''}>all</option>
+          <option value="empresa" ${item.scope==='empresa'?'selected':''}>empresa</option>
+          <option value="celebracion" ${item.scope==='celebracion'?'selected':''}>celebracion</option>
+        </select>
+      </div>
+      <div class="field"><label>Badge</label>
+        <select data-mb="badge">
+          ${['badge-eco','badge-est','badge-pre','badge-lux','badge-hit'].map(b => `<option ${b===item.badge?'selected':''}>${b}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field"><label>Gradiente (g0-g9)</label><input type="text" data-mb="g" value="${escapeHtml(item.g)}"></div>
+      <div class="field"><label>Icon (emoji)</label><input type="text" data-mb="icon" value="${escapeHtml(item.icon)}"></div>
+      <div class="field"><label>Precio €/pax</label><input type="number" step="0.01" data-mb="ppax" value="${item.ppax}"></div>
+    </div>
+    <div class="form-grid" style="margin-top:18px;">
+      <div class="field"><label>Descripción corta</label><textarea data-mb="desc">${escapeHtml(item.desc)}</textarea></div>
+      <div class="field"><label>Incluido en el precio</label><textarea data-mb="incl">${escapeHtml(item.incl)}</textarea></div>
+      <div class="field"><label>Imagen (evt:nombre.jpg o plt:carpeta/nombre.jpg)</label><input type="text" data-mb="img" value="${escapeHtml(item.img)}"></div>
+      <div class="field">
+        <label>Composición (JSON)</label>
+        <textarea class="code" data-mb="composition">${escapeHtml(JSON.stringify(item.composition || {}, null, 2))}</textarea>
+        <span class="hint">Objeto con claves = sección y valores = lista de strings. Se valida al aplicar.</span>
+      </div>
+    </div>
+  `;
+  $('#modalOverlay').classList.add('visible');
+}
+
+function applyMenuModal() {
+  const ctx = state.modalContext;
+  const inputs = $$('[data-mb]', $('#modalBody'));
+  const result = {};
+  let compositionError = null;
+  inputs.forEach(input => {
+    const k = input.dataset.mb;
+    if (k === 'ppax') result[k] = Number(input.value) || 0;
+    else if (k === 'composition') {
+      try { result[k] = JSON.parse(input.value || '{}'); }
+      catch (e) { compositionError = 'composition JSON inválido: ' + e.message; }
+    }
+    else result[k] = input.value;
+  });
+  if (compositionError) { window.fnbEditor.showToast(compositionError, 'error'); return false; }
+  if (!result.id || !result.name) { window.fnbEditor.showToast('ID y Nombre son obligatorios', 'error'); return false; }
+  if (ctx.index === -1) {
+    state.data.menus.paquetes.push(result);
+  } else {
+    state.data.menus.paquetes[ctx.index] = result;
+  }
+  markDirty('menus');
+  renderMenusList();
+  return true;
+}
+
+function deleteMenuModal() {
+  const ctx = state.modalContext;
+  if (ctx.index === -1) return;
+  const item = state.data.menus.paquetes[ctx.index];
+  if (!confirm('Eliminar menú "' + item.name + '" ?')) return;
+  state.data.menus.paquetes.splice(ctx.index, 1);
+  markDirty('menus');
+  renderMenusList();
+  closeModal();
+}
+
+// ══════════════════════════════════════════════
+// SECCIÓN · RECETAS
+// ══════════════════════════════════════════════
+function renderRecetasList() {
+  const data = state.data.recetas;
+  if (!data || !data.categorias) { $('#recetasContent').innerHTML = '<div class="empty">No se pudo cargar recetas.json</div>'; return; }
+  const cats = Object.keys(data.categorias);
+  $('#recetasContent').innerHTML = '';
+  cats.forEach(cat => {
+    const arr = data.categorias[cat] || [];
+    const head = document.createElement('div');
+    head.className = 'category-header';
+    head.innerHTML = `<div class="category-name">${escapeHtml(cat)}</div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <span class="category-count">${arr.length} receta${arr.length===1?'':'s'}</span>
+        <button class="btn" data-action="add-receta" data-cat="${escapeHtml(cat)}">+ Añadir</button>
+      </div>`;
+    $('#recetasContent').appendChild(head);
+    const grid = document.createElement('div');
+    grid.className = 'item-grid';
+    arr.forEach((r, idx) => {
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="item-icon">${escapeHtml(r.e || '🍴')}</div>
+          <div>
+            <div class="item-name">${escapeHtml(r.n || '(sin nombre)')}</div>
+            <div class="item-meta">prep ${r.prep||'—'}m · coc ${r.coc||'—'}m · ${escapeHtml(r.dif || '—')}</div>
+          </div>
+        </div>
+        <div class="item-desc">${escapeHtml(r.sub || '')}</div>
+        <div class="item-bottom">
+          <span class="price">${r.mp ? r.mp.toFixed(2) + ' €/pax' : '—'}</span>
+          ${r.alergen ? '<span class="pill muted" title="' + escapeHtml(r.alergen) + '">alérg.</span>' : ''}
+        </div>
+      `;
+      card.onclick = () => openRecetaModal(cat, idx);
+      grid.appendChild(card);
+    });
+    $('#recetasContent').appendChild(grid);
+  });
+  $$('[data-action="save-recetas"]').forEach(b => { b.disabled = !state.dirty.recetas; });
+}
+
+function openRecetaModal(cat, idx) {
+  const isNew = idx === -1;
+  const item = isNew
+    ? { n: '', e: '🍴', g: 'g6', sub: '', prep: 0, coc: 0, rac: 1, dif: 'Baja', mp: 0, alergen: '', ing: [], pasos: [] }
+    : JSON.parse(JSON.stringify(state.data.recetas.categorias[cat][idx]));
+
+  state.modalContext = { section: 'recetas', category: cat, index: idx, draft: item };
+  $('#modalTitle').textContent = isNew ? 'Nueva receta · ' + cat : 'Editar · ' + (item.n || '');
+  $('#modalDelete').style.display = isNew ? 'none' : '';
+  $('#modalBody').innerHTML = `
+    <div class="form-grid two-col">
+      <div class="field"><label>Nombre</label><input type="text" data-mb="n" value="${escapeHtml(item.n)}"></div>
+      <div class="field"><label>Emoji</label><input type="text" data-mb="e" value="${escapeHtml(item.e)}"></div>
+      <div class="field"><label>Subtítulo / descripción</label><input type="text" data-mb="sub" value="${escapeHtml(item.sub)}"></div>
+      <div class="field"><label>Gradiente</label><input type="text" data-mb="g" value="${escapeHtml(item.g)}"></div>
+      <div class="field"><label>Prep (min)</label><input type="number" data-mb="prep" value="${item.prep||0}"></div>
+      <div class="field"><label>Cocción (min)</label><input type="number" data-mb="coc" value="${item.coc||0}"></div>
+      <div class="field"><label>Raciones</label><input type="number" data-mb="rac" value="${item.rac||1}"></div>
+      <div class="field"><label>Dificultad</label>
+        <select data-mb="dif">${['Baja','Media','Alta'].map(d => `<option ${d===item.dif?'selected':''}>${d}</option>`).join('')}</select>
+      </div>
+      <div class="field"><label>Coste mp (€)</label><input type="number" step="0.01" data-mb="mp" value="${item.mp||0}"></div>
+      <div class="field"><label>Alérgenos (coma)</label><input type="text" data-mb="alergen" value="${escapeHtml(item.alergen)}"></div>
+    </div>
+    <div class="form-grid" style="margin-top:18px;">
+      <div class="field">
+        <label>Ingredientes (JSON: array de [cantidad, nombre, nota])</label>
+        <textarea class="code" data-mb="ing">${escapeHtml(JSON.stringify(item.ing || [], null, 2))}</textarea>
+      </div>
+      <div class="field">
+        <label>Pasos (JSON: array de strings)</label>
+        <textarea class="code" data-mb="pasos">${escapeHtml(JSON.stringify(item.pasos || [], null, 2))}</textarea>
+      </div>
+    </div>
+  `;
+  $('#modalOverlay').classList.add('visible');
+}
+
+function applyRecetaModal() {
+  const ctx = state.modalContext;
+  const inputs = $$('[data-mb]', $('#modalBody'));
+  const result = {};
+  let err = null;
+  inputs.forEach(input => {
+    const k = input.dataset.mb;
+    if (['prep','coc','rac','mp'].includes(k)) result[k] = Number(input.value) || 0;
+    else if (k === 'ing' || k === 'pasos') {
+      try { result[k] = JSON.parse(input.value || '[]'); }
+      catch (e) { err = k + ' JSON inválido: ' + e.message; }
+    }
+    else result[k] = input.value;
+  });
+  if (err) { window.fnbEditor.showToast(err, 'error'); return false; }
+  if (!result.n) { window.fnbEditor.showToast('Nombre obligatorio', 'error'); return false; }
+  const arr = state.data.recetas.categorias[ctx.category];
+  if (ctx.index === -1) arr.push(result);
+  else arr[ctx.index] = result;
+  markDirty('recetas');
+  renderRecetasList();
+  return true;
+}
+
+function deleteRecetaModal() {
+  const ctx = state.modalContext;
+  if (ctx.index === -1) return;
+  const item = state.data.recetas.categorias[ctx.category][ctx.index];
+  if (!confirm('Eliminar receta "' + item.n + '" ?')) return;
+  state.data.recetas.categorias[ctx.category].splice(ctx.index, 1);
+  markDirty('recetas');
+  renderRecetasList();
+  closeModal();
+}
+
+// ══════════════════════════════════════════════
+// MODAL infra
+// ══════════════════════════════════════════════
+function closeModal() {
+  $('#modalOverlay').classList.remove('visible');
+  state.modalContext = null;
+}
+
+// ══════════════════════════════════════════════
+// Save / Reset
+// ══════════════════════════════════════════════
+function saveSection(section) {
+  const data = state.data[section];
+  const validation = window.fnbEditor.validateSection(section, data);
+  if (!validation.ok) {
+    window.fnbEditor.showToast('No se puede guardar: ' + validation.errors[0], 'error');
+    return;
+  }
+  const ok = window.fnbEditor.saveDraft(PROJECT_ID, section, data);
+  if (ok) {
+    window.fnbEditor.showToast('Borrador guardado en local · sincronización GitHub: Fase 3.C', 'success');
+    markClean(section);
+  } else {
+    window.fnbEditor.showToast('Error al guardar (quota localStorage?)', 'error');
+  }
+}
+
+async function resetSection(section) {
+  if (!confirm('Descartar todos los cambios locales de "' + section + '"?')) return;
+  window.fnbEditor.clearDraft(PROJECT_ID, section);
+  await loadSection(section);
+  markClean(section);
+  showSection(section);
+  window.fnbEditor.showToast('Borrador descartado', 'info');
+}
+
+function discardAll() {
+  if (!confirm('Descartar TODOS los borradores locales de este proyecto?')) return;
+  SECTIONS.forEach(s => window.fnbEditor.clearDraft(PROJECT_ID, s));
+  location.reload();
+}
+
+// ══════════════════════════════════════════════
+// Eventos
+// ══════════════════════════════════════════════
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('[data-action], [data-section]');
+  if (!target) return;
+  const action = target.dataset.action;
+  const section = target.dataset.section;
+
+  if (section && !target.classList.contains('disabled')) {
+    showSection(section);
+    return;
+  }
+
+  switch (action) {
+    case 'save-establecimiento': saveSection('establecimiento'); break;
+    case 'save-menus':           saveSection('menus'); break;
+    case 'save-recetas':         saveSection('recetas'); break;
+    case 'reset-establecimiento':resetSection('establecimiento'); break;
+    case 'reset-menus':          resetSection('menus'); break;
+    case 'reset-recetas':        resetSection('recetas'); break;
+    case 'discard-all':          discardAll(); break;
+    case 'add-espacio': {
+      state.data.establecimiento.espacios = state.data.establecimiento.espacios || [];
+      state.data.establecimiento.espacios.push({ id: '', nombre: '', superficie_m2: null, capacidad_sentado: null, capacidad_coctel: null });
+      markDirty('establecimiento');
+      renderEspaciosTable();
+      break;
+    }
+    case 'del-espacio': {
+      const idx = Number(target.dataset.idx);
+      state.data.establecimiento.espacios.splice(idx, 1);
+      markDirty('establecimiento');
+      renderEspaciosTable();
+      break;
+    }
+    case 'add-menu':    openMenuModal(-1); break;
+    case 'add-receta':  openRecetaModal(target.dataset.cat, -1); break;
+    case 'modal-close': closeModal(); break;
+    case 'modal-save': {
+      const ctx = state.modalContext;
+      if (!ctx) return;
+      const okApply = ctx.section === 'menus' ? applyMenuModal() : applyRecetaModal();
+      if (okApply) closeModal();
+      break;
+    }
+    case 'modal-delete': {
+      const ctx = state.modalContext;
+      if (!ctx) return;
+      if (ctx.section === 'menus') deleteMenuModal();
+      else deleteRecetaModal();
+      break;
+    }
+  }
+});
+
+$('#btnLogout').addEventListener('click', () => {
+  window.fnbAuth.clearSession();
+  window.fnbAuth.clearPAT();
+  location.replace('./index.html');
+});
+
+// Aviso al cerrar pestaña si hay cambios sin guardar
+window.addEventListener('beforeunload', (e) => {
+  if (SECTIONS.some(s => state.dirty[s])) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+// ══════════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════════
+(async function boot() {
+  $('#projPill').textContent = '⏳ ' + PROJECT_ID;
+  $('#linkPublic').href = '../core/pages/presupuesto-evento.html?proyecto=' + encodeURIComponent(PROJECT_ID);
+
+  // Cargar config para mostrar nombre
+  try {
+    const cfg = await fetch('../projects/' + PROJECT_ID + '/config.json').then(r => r.json());
+    $('#projPill').textContent = '📂 ' + (cfg.nombre || PROJECT_ID);
+  } catch (e) {
+    $('#projPill').textContent = '⚠ ' + PROJECT_ID;
+    window.fnbEditor.showToast('No se pudo leer config.json del proyecto', 'error');
+  }
+
+  // Cargar las 3 secciones en paralelo
+  await Promise.all(SECTIONS.map(loadSection));
+  // Mostrar establecimiento por defecto
+  showSection('establecimiento');
+  // Marcar dirty en sidebar si hay drafts persistidos
+  SECTIONS.forEach(s => { if (state.dirty[s]) markDirty(s); });
+  updateSaveBar();
+})();
+</script>
+</body>
+</html>

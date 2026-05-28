@@ -301,7 +301,7 @@
       <h1 class="projects-title">Proyectos</h1>
       <p class="projects-sub" id="projectsCount">Cargando…</p>
     </div>
-    <button class="btn-new disabled" title="Disponible en Fase 3.B">➕ Nuevo proyecto · Fase 3.B</button>
+    <a href="wizard.html" class="btn-new">➕ Nuevo proyecto</a>
   </div>
 
   <div class="projects-grid" id="projectsGrid">
@@ -319,6 +319,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
 <script src="../core/js/loader.js"></script>
 <script src="../core/js/auth.js"></script>
+<script src="../core/js/editor-core.js"></script>
 <script>
 'use strict';
 
@@ -424,6 +425,10 @@ async function loadProjectsList() {
       const slug = (c.cfg && c.cfg.slug) || c.id;
       const piloto = c.es_piloto ? '<span class="badge">Piloto</span>' : (c.nota ? '<span class="badge muted">' + c.nota + '</span>' : '');
 
+      const dirtyDrafts = (window.fnbEditor && window.fnbEditor.listDrafts) ? window.fnbEditor.listDrafts(c.id) : [];
+      const dirtyBadge = dirtyDrafts.length
+        ? '<span class="badge" style="background:rgba(245,179,66,.15);color:#f5b342;border-color:rgba(245,179,66,.4);">●  ' + dirtyDrafts.length + ' borrador' + (dirtyDrafts.length === 1 ? '' : 'es') + ' local' + (dirtyDrafts.length === 1 ? '' : 'es') + '</span>'
+        : '';
       card.innerHTML = `
         <div class="proj-card-head">
           <div>
@@ -433,11 +438,11 @@ async function loadProjectsList() {
               <span>${escapeHtml(cat)}</span>
             </div>
           </div>
-          ${piloto}
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">${piloto}${dirtyBadge}</div>
         </div>
         <div class="proj-actions">
           <a href="../core/pages/presupuesto-evento.html?proyecto=${encodeURIComponent(c.id)}" target="_blank" rel="noopener" title="Abrir frontend público">👁 Ver demo</a>
-          <button type="button" disabled title="Disponible en Fase 3.B">✏️ Editar · 3.B</button>
+          <a href="editor.html?proyecto=${encodeURIComponent(c.id)}" title="Editor visual">✏️ Editar</a>
           <button type="button" disabled title="Disponible en Fase 3.D">📊 Métricas · 3.D</button>
         </div>
         ${c.error ? '<div style="color:var(--danger);font-size:11px;">Error cargando config: ' + escapeHtml(c.error) + '</div>' : ''}

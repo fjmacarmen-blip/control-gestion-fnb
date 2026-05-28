@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="project-base" content="../">
+<title>Nuevo proyecto · Dashboard F&B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep:#050e1f; --navy-base:#0a1228; --navy-card:#0f1a35;
+    --navy-card-2:#14213f; --navy-border:#1c2845;
+    --gold:#c9a84c; --gold-soft:#d4b76a;
+    --text:#e8ecf5; --text-soft:#a6b0c8; --muted:#6f7a96;
+    --accent:#5a8dee; --danger:#ff6b6b; --success:#4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100vh; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: radial-gradient(ellipse at top, #122047 0%, var(--navy-base) 50%, var(--navy-deep) 100%);
+    color: var(--text);
+    padding: 24px;
+  }
+  a { color: var(--gold); text-decoration: none; }
+
+  .wrap { max-width: 720px; margin: 24px auto; }
+  .crumb { color: var(--text-soft); font-size: 13px; margin-bottom: 18px; }
+  .crumb a { color: var(--text-soft); }
+  .crumb a:hover { color: var(--gold); }
+  .crumb-sep { color: var(--navy-border); margin: 0 8px; }
+
+  .stepper {
+    display: flex; gap: 10px; margin-bottom: 32px;
+  }
+  .step-dot {
+    flex: 1;
+    padding: 14px 18px; border-radius: 10px;
+    background: var(--navy-card); border: 1px solid var(--navy-border);
+    display: flex; align-items: center; gap: 12px;
+    transition: all .15s;
+  }
+  .step-dot.active { border-color: var(--gold); background: var(--navy-card-2); }
+  .step-dot.done { border-color: rgba(74,222,128,.4); background: rgba(74,222,128,.05); }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 100px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--navy-border); color: var(--muted); font-size: 12px; font-weight: 600;
+  }
+  .step-dot.active .step-num { background: var(--gold); color: var(--navy-deep); }
+  .step-dot.done .step-num { background: var(--success); color: var(--navy-deep); }
+  .step-label { font-size: 12px; }
+  .step-name { color: var(--text); font-weight: 500; }
+  .step-sub { color: var(--muted); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .panel {
+    background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px;
+    padding: 32px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.45);
+  }
+  .panel h1 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; margin-bottom: 8px; }
+  .panel .lede { color: var(--text-soft); font-size: 14px; margin-bottom: 24px; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .field label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .field input, .field select {
+    background: var(--navy-base); border: 1px solid var(--navy-border);
+    color: var(--text); padding: 11px 14px; border-radius: 8px; font-size: 14px;
+  }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--gold); }
+  .field .hint { color: var(--muted); font-size: 11px; }
+  .field .err { color: var(--danger); font-size: 12px; min-height: 16px; }
+
+  .template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .template-grid { grid-template-columns: 1fr; } }
+  .tpl-card {
+    background: var(--navy-base); border: 1px solid var(--navy-border); border-radius: 10px;
+    padding: 18px; cursor: pointer; transition: all .15s;
+  }
+  .tpl-card:hover { border-color: var(--gold-soft); }
+  .tpl-card.selected { border-color: var(--gold); background: var(--navy-card-2); box-shadow: 0 6px 20px rgba(201,168,76,.18); }
+  .tpl-icon { font-size: 28px; margin-bottom: 8px; }
+  .tpl-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; }
+  .tpl-desc { color: var(--text-soft); font-size: 12px; margin-top: 4px; line-height: 1.45; }
+
+  .summary-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--navy-border); font-size: 13px; }
+  .summary-row .k { color: var(--muted); letter-spacing: .5px; }
+  .summary-row .v { color: var(--text); font-weight: 500; }
+
+  .actions { display: flex; justify-content: space-between; margin-top: 24px; gap: 10px; }
+  .btn {
+    padding: 12px 22px; border-radius: 8px; border: 1px solid var(--navy-border);
+    background: var(--navy-card); color: var(--text-soft);
+    font-family: inherit; font-size: 14px; cursor: pointer; transition: all .15s;
+  }
+  .btn:hover { color: var(--gold); border-color: var(--gold); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.primary {
+    background: linear-gradient(135deg, var(--gold) 0%, #a8893a 100%);
+    color: var(--navy-deep); border: none; font-weight: 600;
+  }
+  .btn.primary:hover { box-shadow: 0 6px 20px rgba(201,168,76,.3); }
+
+  .toast-info {
+    background: rgba(90,141,238,.1); border: 1px solid rgba(90,141,238,.3);
+    color: var(--accent); padding: 12px 16px; border-radius: 8px; font-size: 13px;
+    margin-top: 18px; line-height: 1.5;
+  }
+  .toast-info strong { color: var(--text); }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="crumb">
+    <a href="./index.html">← Dashboard</a>
+    <span class="crumb-sep">/</span>
+    <span style="color:var(--text);">Crear proyecto nuevo</span>
+  </div>
+
+  <div class="stepper" id="stepper">
+    <div class="step-dot active" data-step="1"><div class="step-num">1</div><div class="step-label"><div class="step-name">Identidad</div><div class="step-sub">Paso 1</div></div></div>
+    <div class="step-dot"        data-step="2"><div class="step-num">2</div><div class="step-label"><div class="step-name">Plantilla</div><div class="step-sub">Paso 2</div></div></div>
+    <div class="step-dot"        data-step="3"><div class="step-num">3</div><div class="step-label"><div class="step-name">Confirmar</div><div class="step-sub">Paso 3</div></div></div>
+  </div>
+
+  <div class="panel">
+
+    <!-- ── PASO 1: Identidad ─────────────────── -->
+    <div data-step-content="1">
+      <h1>Crear proyecto nuevo</h1>
+      <p class="lede">Empieza por los datos básicos. Podrás editar todo lo demás después desde el editor visual.</p>
+
+      <div class="field">
+        <label>Nombre del establecimiento</label>
+        <input type="text" id="fName" placeholder="Hotel Mar Azul, Restaurante Casa Lola…">
+        <span class="hint">Lo verán los clientes finales en la app pública.</span>
+        <span class="err" id="errName"></span>
+      </div>
+      <div class="field">
+        <label>ID / slug del proyecto</label>
+        <input type="text" id="fId" placeholder="ej. mar-azul">
+        <span class="hint">Solo minúsculas, números, <code>-</code> y <code>_</code>. Se usa en URLs (<code>?proyecto=&lt;id&gt;</code>) y como nombre de carpeta.</span>
+        <span class="err" id="errId"></span>
+      </div>
+      <div class="field">
+        <label>Categoría del establecimiento</label>
+        <select id="fCat">
+          <option value="hotel">Hotel</option>
+          <option value="restaurante">Restaurante</option>
+          <option value="catering">Catering / Banquetes</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Ciudad (opcional)</label>
+        <input type="text" id="fCiudad" placeholder="Marbella, Málaga…">
+      </div>
+    </div>
+
+    <!-- ── PASO 2: Plantilla ─────────────────── -->
+    <div data-step-content="2" class="hidden">
+      <h1>Plantilla de partida</h1>
+      <p class="lede">Elige cómo arranca el proyecto. Podrás cambiar todos los datos después.</p>
+      <div class="template-grid">
+        <div class="tpl-card selected" data-tpl="vacio">
+          <div class="tpl-icon">📄</div>
+          <div class="tpl-name">Proyecto vacío</div>
+          <div class="tpl-desc">JSONs con la estructura mínima válida. Empezarás desde cero rellenando establecimiento, menús y recetario.</div>
+        </div>
+        <div class="tpl-card" data-tpl="miramar">
+          <div class="tpl-icon">🏨</div>
+          <div class="tpl-name">Copiar Miramar</div>
+          <div class="tpl-desc">Duplica el piloto completo (13 eventos, 27 menús, 78 recetas, 7 dietas). Útil para empezar con catálogo y luego adaptar.</div>
+        </div>
+      </div>
+      <div class="toast-info">
+        <strong>Importers (Excel · PDF · imágenes bulk)</strong> aterrizan en <strong>Fase 3.5</strong>.
+        En este wizard básico solo se copia plantilla o se parte vacío.
+      </div>
+    </div>
+
+    <!-- ── PASO 3: Confirmar ─────────────────── -->
+    <div data-step-content="3" class="hidden">
+      <h1>Revisa y confirma</h1>
+      <p class="lede">Si todo está bien, se generará el borrador del proyecto en local. Sigue siendo editable.</p>
+
+      <div id="summary"></div>
+
+      <div class="toast-info">
+        <strong>Fase 3.B · sin commits aún.</strong>
+        El borrador se guarda en <code>localStorage</code> de este navegador como
+        <code>fnb_wizard_draft_&lt;id&gt;</code>. En <strong>Fase 3.C</strong>,
+        al confirmar el proyecto se hará el commit real al repo:
+        creación de <code>projects/&lt;id&gt;/</code> con los 10 JSONs y
+        actualización de <code>projects/index.json</code>.
+      </div>
+    </div>
+
+    <!-- Acciones ────────────────────────────── -->
+    <div class="actions">
+      <button class="btn" id="btnBack" disabled>← Atrás</button>
+      <button class="btn primary" id="btnNext">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<script src="../core/js/loader.js"></script>
+<script src="../core/js/auth.js"></script>
+<script src="../core/js/editor-core.js"></script>
+<script>
+'use strict';
+
+// Gate auth
+(function () {
+  if (!window.fnbAuth.getSession()) { location.replace('./index.html'); throw new Error('Sin sesión'); }
+})();
+
+const VALID_ID_RE = /^[a-z0-9_-]+$/;
+const RESERVED = ['index', 'demo', 'miramar', '_template', 'budgets']; // demo/miramar permitidos sobreescribir? no.
+
+const wizard = {
+  step: 1,
+  data: { name: '', id: '', categoria: 'hotel', ciudad: '', template: 'vacio' },
+};
+
+const $  = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+
+function refreshStepper() {
+  $$('.step-dot').forEach(el => {
+    const n = Number(el.dataset.step);
+    el.classList.toggle('active', n === wizard.step);
+    el.classList.toggle('done', n < wizard.step);
+  });
+  $$('[data-step-content]').forEach(el => {
+    el.classList.toggle('hidden', Number(el.dataset.stepContent) !== wizard.step);
+  });
+  $('#btnBack').disabled = wizard.step === 1;
+  $('#btnNext').textContent = wizard.step === 3 ? '✨ Crear proyecto' : 'Siguiente →';
+}
+
+function slugify(s) {
+  return (s || '').toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9\s_-]/g, '')
+    .trim().replace(/\s+/g, '-');
+}
+
+async function projectIdExists(id) {
+  try {
+    const manifest = await fetch('../projects/index.json').then(r => r.json());
+    return (manifest.proyectos || []).some(p => p.id === id);
+  } catch { return false; }
+}
+
+async function validateStep1() {
+  $('#errName').textContent = '';
+  $('#errId').textContent = '';
+  const name = $('#fName').value.trim();
+  const id   = $('#fId').value.trim();
+
+  if (!name) { $('#errName').textContent = 'El nombre es obligatorio.'; return false; }
+  if (!id)   { $('#errId').textContent = 'El ID es obligatorio.'; return false; }
+  if (!VALID_ID_RE.test(id)) { $('#errId').textContent = 'Solo minúsculas, números, guion y guion bajo.'; return false; }
+  if (RESERVED.includes(id) && id !== 'demo' && id !== 'miramar') {
+    $('#errId').textContent = 'Ese id está reservado.'; return false;
+  }
+  if (await projectIdExists(id)) {
+    $('#errId').textContent = 'Ya existe un proyecto con ese id en el manifiesto.';
+    return false;
+  }
+  wizard.data.name = name;
+  wizard.data.id = id;
+  wizard.data.categoria = $('#fCat').value;
+  wizard.data.ciudad = $('#fCiudad').value.trim();
+  return true;
+}
+
+function selectTemplate(tpl) {
+  wizard.data.template = tpl;
+  $$('.tpl-card').forEach(el => el.classList.toggle('selected', el.dataset.tpl === tpl));
+}
+
+function renderSummary() {
+  const tplLabel = wizard.data.template === 'miramar' ? 'Copiar Miramar (catálogo completo)' : 'Proyecto vacío (estructura mínima)';
+  $('#summary').innerHTML = `
+    <div class="summary-row"><span class="k">Nombre</span><span class="v">${escapeHtml(wizard.data.name)}</span></div>
+    <div class="summary-row"><span class="k">ID / slug</span><span class="v"><code>${escapeHtml(wizard.data.id)}</code></span></div>
+    <div class="summary-row"><span class="k">Categoría</span><span class="v">${escapeHtml(wizard.data.categoria)}</span></div>
+    <div class="summary-row"><span class="k">Ciudad</span><span class="v">${escapeHtml(wizard.data.ciudad || '—')}</span></div>
+    <div class="summary-row"><span class="k">Plantilla</span><span class="v">${escapeHtml(tplLabel)}</span></div>
+    <div class="summary-row"><span class="k">Estado</span><span class="v" style="color:var(--accent);">Borrador local · pendiente de Fase 3.C para commit a repo</span></div>
+  `;
+}
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ── Construcción del payload del proyecto ──────────────────
+function buildEmptyProject() {
+  return {
+    config: {
+      id: wizard.data.id,
+      slug: wizard.data.id,
+      nombre: wizard.data.name,
+      categoria_establecimiento: wizard.data.categoria,
+      es_piloto: false,
+      es_template: false,
+      locale: 'es-ES',
+      moneda: 'EUR',
+      tema: 'navy-boutique',
+      version_schema: '1.0.0',
+      creado: new Date().toISOString().slice(0, 10),
+    },
+    establecimiento: {
+      razon_social: wizard.data.name,
+      nombre_comercial: wizard.data.name,
+      categoria: '—',
+      nif: '—',
+      direccion: { calle: '—', cp: '—', ciudad: wizard.data.ciudad || '—', provincia: '—', pais: 'España' },
+      registro_turismo: '—',
+      contacto: { telefono: '—', email: '—', web: '—' },
+      datos_legacy: { razon: wizard.data.name, nif: '—', direccion: '—', registro: '—', telefono: '—', email: '—' },
+      stats: { habitaciones: null, pax_max: null, superficie_eventos_m2: null, spa_m2: null, spa_cabinas: null },
+      espacios: [],
+      equipo_clave: [],
+    },
+    eventos: { categorias: [], tipos: [] },
+    menus: { paquetes: [] },
+    recetas: { categorias: { entremeses: [], entrantes: [], primeros: [], segundos: [], postres: [], coctel: [] } },
+    dietas: { claves_orden: ['vegano','vegetariano','celiaco','sinLactosa','sinFrutos','halal','kosher'], instrucciones: {} },
+    productos: { items: [] },
+    bebidas: { categorias: [] },
+    extras: { mesas:[], iluminacion:[], montaje:[], centros_mesa:[], floral:[], velas:[], musica:[], show:[], fotografia:[], dulces:[] },
+    auth: { users: [] },
+  };
+}
+
+async function buildMiramarCopy() {
+  // Fetch miramar JSONs y reescribe id/nombre/slug en config y establecimiento
+  const sections = ['config','establecimiento','eventos','menus','recetas','dietas','productos','bebidas','extras','auth'];
+  const out = {};
+  for (const s of sections) {
+    try {
+      out[s] = await fetch('../projects/miramar/' + s + '.json').then(r => {
+        if (!r.ok) throw new Error(s + ' ' + r.status);
+        return r.json();
+      });
+    } catch (e) {
+      out[s] = null;
+    }
+  }
+  // Personalizar config + establecimiento
+  if (out.config) {
+    out.config.id = wizard.data.id;
+    out.config.slug = wizard.data.id;
+    out.config.nombre = wizard.data.name;
+    out.config.es_piloto = false;
+    out.config.es_template = false;
+    out.config.creado = new Date().toISOString().slice(0, 10);
+  }
+  if (out.establecimiento) {
+    out.establecimiento.razon_social = wizard.data.name;
+    out.establecimiento.nombre_comercial = wizard.data.name;
+    if (wizard.data.ciudad) out.establecimiento.direccion.ciudad = wizard.data.ciudad;
+  }
+  return out;
+}
+
+async function commitProject() {
+  $('#btnNext').disabled = true;
+  $('#btnNext').textContent = 'Generando borrador…';
+  try {
+    const project = wizard.data.template === 'miramar' ? await buildMiramarCopy() : buildEmptyProject();
+    if (!project || !project.config) throw new Error('No se pudo construir el proyecto');
+
+    // Guardar como wizard draft (un único objeto serializado)
+    const draftKey = 'fnb_wizard_draft_' + wizard.data.id;
+    localStorage.setItem(draftKey, JSON.stringify({ wizard: wizard.data, project, ts: new Date().toISOString() }));
+
+    // Y, además, cada sección como draft del editor para que el editor pueda abrirlo
+    Object.keys(project).forEach(section => {
+      if (project[section] != null) {
+        window.fnbEditor.saveDraft(wizard.data.id, section, project[section]);
+      }
+    });
+
+    window.fnbEditor.showToast('Borrador del proyecto creado en local · pendiente Fase 3.C para commit a GitHub', 'success');
+    setTimeout(() => {
+      location.replace('./editor.html?proyecto=' + encodeURIComponent(wizard.data.id) + '&fresh=1');
+    }, 800);
+  } catch (e) {
+    console.error('commitProject error:', e);
+    window.fnbEditor.showToast('Error al crear borrador: ' + e.message, 'error');
+    $('#btnNext').disabled = false;
+    $('#btnNext').textContent = '✨ Crear proyecto';
+  }
+}
+
+// ── Eventos ────────────────────────────────────────────────
+document.addEventListener('click', (e) => {
+  const tpl = e.target.closest('.tpl-card');
+  if (tpl && tpl.dataset.tpl) {
+    selectTemplate(tpl.dataset.tpl);
+  }
+});
+
+$('#btnBack').addEventListener('click', () => {
+  if (wizard.step > 1) { wizard.step--; refreshStepper(); }
+});
+
+$('#btnNext').addEventListener('click', async () => {
+  if (wizard.step === 1) {
+    const ok = await validateStep1();
+    if (!ok) return;
+    wizard.step = 2;
+    refreshStepper();
+    return;
+  }
+  if (wizard.step === 2) {
+    wizard.step = 3;
+    refreshStepper();
+    renderSummary();
+    return;
+  }
+  if (wizard.step === 3) {
+    await commitProject();
+  }
+});
+
+// Slug auto-derivado mientras se escribe el nombre, salvo que el user lo haya tocado
+let idTouched = false;
+$('#fId').addEventListener('input', () => { idTouched = true; });
+$('#fName').addEventListener('input', () => {
+  if (!idTouched) $('#fId').value = slugify($('#fName').value);
+});
+
+refreshStepper();
+</script>
+</body>
+</html>
