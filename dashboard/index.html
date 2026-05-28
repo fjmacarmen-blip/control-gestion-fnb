@@ -188,18 +188,25 @@
     transition: border-color .15s, transform .15s;
   }
   .proj-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .proj-card-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
-  .proj-name { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; font-size: 22px; font-weight: 600; line-height: 1.2; }
-  .proj-meta { font-size: 11px; color: var(--text-muted); letter-spacing: .5px; margin-top: 4px; }
+  .proj-card-head { display: flex; flex-direction: column; gap: 8px; }
+  .proj-name { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; font-size: 22px; line-height: 1.2; }
+  .proj-meta { font-size: 11px; color: var(--text-muted); letter-spacing: .5px; }
   .proj-meta span + span::before { content: ' · '; color: var(--border-default); }
+  .proj-badges-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
   .badge {
     display: inline-block; padding: 3px 9px; border-radius: 100px;
-    font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+    font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase;
     background: rgba(52,211,153,.15); color: var(--accent);
     border: 1px solid rgba(52,211,153,.3);
-    white-space: nowrap;
+    max-width: 100%;
+    text-align: center;
+    line-height: 1.35;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
   }
   .badge.muted { background: rgba(110,118,129,.15); color: var(--text-muted); border-color: rgba(110,118,129,.3); }
+  .proj-badges-col { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; max-width: 140px; flex-shrink: 0; }
+  .proj-card-head .proj-headtext { min-width: 0; flex: 1; }
   .proj-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
   .proj-actions a, .proj-actions button {
     flex: 1;
@@ -425,14 +432,12 @@ async function loadProjectsList() {
         : '';
       card.innerHTML = `
         <div class="proj-card-head">
-          <div>
-            <div class="proj-name">${escapeHtml(name)}</div>
-            <div class="proj-meta">
-              <span>id: ${escapeHtml(slug)}</span>
-              <span>${escapeHtml(cat)}</span>
-            </div>
+          <div class="proj-name">${escapeHtml(name)}</div>
+          <div class="proj-meta">
+            <span>id: ${escapeHtml(slug)}</span>
+            <span>${escapeHtml(cat)}</span>
           </div>
-          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">${piloto}${dirtyBadge}</div>
+          ${(piloto || dirtyBadge) ? `<div class="proj-badges-row">${piloto}${dirtyBadge}</div>` : ''}
         </div>
         <div class="proj-actions">
           <a href="../core/pages/presupuesto-evento.html?proyecto=${encodeURIComponent(c.id)}" target="_blank" rel="noopener" title="Abrir frontend público">👁 Ver demo</a>
