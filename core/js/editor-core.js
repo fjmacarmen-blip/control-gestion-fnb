@@ -79,13 +79,46 @@
     return { source: 'original', data: original };
   }
 
+  // Alto #6 auditoría: quota check antes de set. localStorage típicamente
+  // 5-10MB. Si el draft pesa >2MB o el total estimado pasa de 4MB, avisar
+  // antes de fallar silenciosamente.
+  function estimateLocalStorageBytes() {
+    let total = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      const v = localStorage.getItem(k);
+      total += (k || '').length + (v || '').length;
+    }
+    return total * 2; // UTF-16 ≈ 2 bytes/char
+  }
+
   function saveDraft(projectId, sectionKey, data) {
+    const serialized = JSON.stringify(data);
+    const newBytes = serialized.length * 2;
+    const currentBytes = estimateLocalStorageBytes();
+    const projectedBytes = currentBytes + newBytes;
+    const QUOTA_WARN = 4 * 1024 * 1024;  // 4 MB
+    const QUOTA_LIMIT = 5 * 1024 * 1024; // 5 MB
+
+    if (newBytes > 2 * 1024 * 1024) {
+      console.warn('saveDraft: draft grande (' + Math.round(newBytes / 1024) + ' KB)');
+    }
+    if (projectedBytes > QUOTA_LIMIT) {
+      console.error('saveDraft: superaría quota (' + Math.round(projectedBytes / 1024) + ' KB de ~5120 KB)');
+      showToast('⚠ Espacio local agotado · descarta drafts viejos primero', 'error');
+      return false;
+    }
+    if (projectedBytes > QUOTA_WARN) {
+      showToast('⚠ Espacio local al ' + Math.round(projectedBytes / QUOTA_LIMIT * 100) + '%', 'info');
+    }
+
     try {
-      localStorage.setItem(draftKey(projectId, sectionKey), JSON.stringify(data));
+      localStorage.setItem(draftKey(projectId, sectionKey), serialized);
       localStorage.setItem(dirtyKey(projectId, sectionKey), new Date().toISOString());
       return true;
     } catch (e) {
-      console.error('saveDraft error (quota?):', e);
+      console.error('saveDraft error:', e);
+      showToast('⚠ No se pudo guardar (' + e.name + ')', 'error');
       return false;
     }
   }
@@ -120,6 +153,9 @@
   }
 
   // ── Validación mínima por sección ─────────────────────────
+  const VALID_THEMES = ['navy-boutique', 'mediterraneo', 'tipico-andaluz', 'moderno-minimalista', 'cercano-rustico'];
+  const VALID_PROJECT_ID = /^[a-z0-9_-]+$/;
+
   function validateSection(sectionKey, data) {
     const errors = [];
     if (!data || typeof data !== 'object') {
@@ -147,6 +183,17 @@
             if (!r.n) errors.push('categorias.' + cat + '[' + i + '].n requerido');
           });
         });
+      }
+    } else if (sectionKey === 'config') {
+      // Alto #9 auditoría: tema debe ser uno de los 5 conocidos
+      if (data.tema != null && !VALID_THEMES.includes(data.tema)) {
+        errors.push('tema "' + data.tema + '" no es válido · esperados: ' + VALID_THEMES.join(', '));
+      }
+      if (data.id != null && !VALID_PROJECT_ID.test(data.id)) {
+        errors.push('id contiene caracteres no permitidos (solo a-z 0-9 _ -)');
+      }
+      if (data.slug != null && !VALID_PROJECT_ID.test(data.slug)) {
+        errors.push('slug contiene caracteres no permitidos');
       }
     }
 

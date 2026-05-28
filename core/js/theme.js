@@ -69,19 +69,31 @@
     } catch (e) {}
   })();
 
+  // Cache compartida del fetch de config.json para que loader.js y theme.js
+  // no la pidan dos veces en el mismo arranque (alto #5 auditoría).
+  // Mismo projectId → misma Promise. Otros consumidores (loader, metrics) hacen:
+  //   await window.fnbTheme.getConfig(projectId)
+  const configCache = new Map();
+  function getConfig(projectId) {
+    const id = projectId || getProjectIdFromURL();
+    if (configCache.has(id)) return configCache.get(id);
+    const url = getRepoBase() + 'projects/' + id + '/config.json';
+    const promise = fetch(url)
+      .then(res => res.ok ? res.json() : null)
+      .catch(() => null);
+    configCache.set(id, promise);
+    return promise;
+  }
+  function invalidateConfig(projectId) {
+    if (projectId) configCache.delete(projectId);
+    else configCache.clear();
+  }
+
   // Carga config.json y aplica el tema definitivo si no hay override activo
   async function bootstrapThemeFromConfig() {
     if (overrideActive) return;
-    const id = getProjectIdFromURL();
-    const url = getRepoBase() + 'projects/' + id + '/config.json';
-    try {
-      const res = await fetch(url);
-      if (!res.ok) { applyTheme(DEFAULT_THEME); return; }
-      const cfg = await res.json();
-      applyTheme((cfg && cfg.tema) || DEFAULT_THEME);
-    } catch (e) {
-      applyTheme(DEFAULT_THEME);
-    }
+    const cfg = await getConfig();
+    applyTheme((cfg && cfg.tema) || DEFAULT_THEME);
   }
 
   bootstrapThemeFromConfig();
@@ -90,6 +102,8 @@
     apply: applyTheme,
     preview: previewTheme,
     list: () => VALID_THEMES.slice(),
+    getConfig,
+    invalidateConfig,
     DEFAULT: DEFAULT_THEME,
   };
 })();

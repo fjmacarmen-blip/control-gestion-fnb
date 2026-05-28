@@ -78,6 +78,12 @@
       : Object.keys(SECTIONS);
 
     const entries = await Promise.all(keys.map(async k => {
+      // Alto #5 auditoría: si fnbTheme tiene config.json cacheado, reusar
+      // en lugar de duplicar el fetch (theme.js ya lo pidió al arrancar).
+      if (k === 'config' && window.fnbTheme && window.fnbTheme.getConfig) {
+        const cached = await window.fnbTheme.getConfig(projectId);
+        if (cached) return [k, cached];
+      }
       const { fn, file } = SECTIONS[k];
       return [k, await fn(base + file)];
     }));
