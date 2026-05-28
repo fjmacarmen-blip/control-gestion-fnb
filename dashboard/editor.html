@@ -276,6 +276,45 @@
   .imp-stat-val.err { color: var(--danger); }
   .imp-stat-val.dup { color: var(--warning); }
 
+  /* ── Image importer (grid de previews) ───── */
+  .img-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px; padding: 4px; max-height: calc(88vh - 280px); overflow-y: auto;
+  }
+  .img-card {
+    background: var(--bg-surface); border: 1px solid var(--border-default);
+    border-radius: 10px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .img-card .img-thumb {
+    width: 100%; aspect-ratio: 4/3; background: var(--bg-elevated);
+    object-fit: cover; display: block;
+  }
+  .img-card .img-meta { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+  .img-card .img-filename { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+  .img-card .img-size { font-size: 10px; color: var(--text-muted); }
+  .img-card .img-size .saved { color: var(--success); }
+  .img-card select {
+    background: var(--bg-elevated); border: 1px solid var(--border-default);
+    color: var(--text); padding: 5px 8px; border-radius: 5px;
+    font: 11px var(--font-ui); width: 100%;
+  }
+  .img-card .img-match {
+    font-size: 10px; color: var(--accent); display: flex; align-items: center; gap: 4px;
+  }
+  .img-card .img-match.no-match { color: var(--text-muted); }
+  .img-card.unmatched .img-thumb { opacity: .7; }
+
+  /* IA fallback */
+  .ai-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 100px;
+    background: rgba(167,139,250,.12); color: var(--info);
+    border: 1px solid rgba(167,139,250,.3);
+    font: 10px var(--font-ui); cursor: pointer;
+  }
+  .ai-btn:hover { background: rgba(167,139,250,.2); }
+
   /* ── PDF importer (2-columnas) ───────────── */
   .pdf-layout {
     display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
@@ -482,6 +521,7 @@
         <div class="section-actions">
           <button class="btn" data-action="import-recetas" title="Importar desde Excel/CSV">📥 Excel/CSV</button>
           <button class="btn" data-action="import-pdf-recetas" title="Importar desde PDF (copy-paste asistido)">📄 PDF</button>
+          <button class="btn" data-action="import-imgs-recetas" title="Subir fotos en bulk con auto-matching">🖼 Imágenes</button>
           <button class="btn" data-action="reset-recetas">↩ Descartar</button>
           <button class="btn primary" data-action="save-recetas" disabled>💾 Guardar borrador</button>
           <button class="btn" data-action="publish-recetas" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
@@ -579,6 +619,23 @@
   </div>
 </div>
 
+<!-- ─── MODAL IMPORTER IMAGES ──────────────────── -->
+<div class="modal-overlay" id="imgOverlay">
+  <div class="modal" style="max-width:1100px;height:88vh;">
+    <div class="modal-head">
+      <div class="modal-title" id="imgTitle">🖼 Subir imágenes en bulk</div>
+      <button class="btn" data-action="img-close">✕</button>
+    </div>
+    <div class="modal-body" id="imgBody" style="display:flex;flex-direction:column;gap:14px;overflow:hidden;">
+      <!-- contenido dinámico -->
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-action="img-close">Cancelar</button>
+      <div style="display:flex;gap:10px;" id="imgFootRight"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ─── MODAL IMPORTER PDF ────────────────────── -->
 <div class="modal-overlay" id="pdfOverlay">
   <div class="modal" style="max-width:1100px;height:88vh;">
@@ -638,6 +695,7 @@
 <script src="../core/js/github-api.js"></script>
 <script src="../core/js/importer-excel.js"></script>
 <script src="../core/js/importer-pdf.js"></script>
+<script src="../core/js/importer-images.js"></script>
 <script src="../core/js/productos-connector.js"></script>
 <script src="../core/js/editor-core.js"></script>
 <script>
@@ -975,13 +1033,17 @@ function renderRecetasList() {
     arr.forEach((r, idx) => {
       const card = document.createElement('div');
       card.className = 'item-card';
+      const hasPhoto = !!(r.imgDataUrl || r.img);
+      const photoUrl = r.imgDataUrl || r.img || '';
       card.innerHTML = `
+        ${hasPhoto ? '<img class="item-thumb" src="' + escapeHtml(photoUrl) + '" alt="" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:6px;">' : ''}
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="item-icon">${escapeHtml(r.e || '🍴')}</div>
-          <div>
+          <div style="flex:1;">
             <div class="item-name">${escapeHtml(r.n || '(sin nombre)')}</div>
             <div class="item-meta">prep ${r.prep||'—'}m · coc ${r.coc||'—'}m · ${escapeHtml(r.dif || '—')}</div>
           </div>
+          ${!hasPhoto ? '<button class="ai-btn" data-action="ai-photo" data-cat="' + escapeHtml(cat) + '" data-idx="' + idx + '" title="Generar foto con IA · Pollinations.ai">🤖 IA</button>' : ''}
         </div>
         <div class="item-desc">${escapeHtml(r.sub || '')}</div>
         <div class="item-bottom">
@@ -989,7 +1051,10 @@ function renderRecetasList() {
           ${r.alergen ? '<span class="pill muted" title="' + escapeHtml(r.alergen) + '">alérg.</span>' : ''}
         </div>
       `;
-      card.onclick = () => openRecetaModal(cat, idx);
+      card.onclick = (e) => {
+        if (e.target.closest('[data-action="ai-photo"]')) return; // dejar que el handler global procese
+        openRecetaModal(cat, idx);
+      };
       grid.appendChild(card);
     });
     $('#recetasContent').appendChild(grid);
@@ -1392,6 +1457,210 @@ function validateImporter() {
 }
 
 // ══════════════════════════════════════════════
+// IMPORTER · Imágenes (Fase 3.5.C) · bulk + auto-match + IA
+// ══════════════════════════════════════════════
+const imgImp = { target: null, files: [], processed: [] };
+
+function openImgImporter(target) {
+  imgImp.target = target;
+  imgImp.files = [];
+  imgImp.processed = [];
+  $('#imgTitle').textContent = '🖼 Subir imágenes para ' + (target === 'recetas' ? 'recetario' : target);
+  $('#imgOverlay').classList.add('visible');
+  renderImgStep('drop');
+}
+
+function closeImgImporter() {
+  $('#imgOverlay').classList.remove('visible');
+  imgImp.target = null;
+}
+
+function renderImgStep(step) {
+  const body = $('#imgBody');
+  const foot = $('#imgFootRight');
+
+  if (step === 'drop') {
+    body.innerHTML = `
+      <div class="imp-step">
+        Sube varias imágenes a la vez (jpg/png/webp). El sistema las
+        <strong>comprime</strong> a WebP ≤250KB con max 1600px y propone
+        a qué receta corresponde cada una por <strong>auto-matching</strong>
+        del nombre de archivo (ej: <code>gazpacho-andaluz.jpg</code> →
+        receta «Gazpacho Andaluz»).
+      </div>
+      <div class="imp-drop" id="imgDrop" style="flex:0 0 auto;">
+        <div class="imp-icon">🖼</div>
+        <div class="imp-msg">Arrastra carpeta o varios archivos · o haz click</div>
+        <div class="imp-sub">≤100 fotos por sesión · cada una comprimida client-side</div>
+        <input type="file" id="imgFiles" accept="image/*" multiple>
+      </div>
+      <div id="imgError" style="display:none;background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.35);color:var(--danger);padding:10px 12px;border-radius:7px;font-size:12px;"></div>
+    `;
+    foot.innerHTML = '';
+    const drop = $('#imgDrop');
+    const input = $('#imgFiles');
+    drop.addEventListener('click', () => input.click());
+    input.addEventListener('change', (e) => onImgFiles([...e.target.files]));
+    drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('hover'); });
+    drop.addEventListener('dragleave', () => drop.classList.remove('hover'));
+    drop.addEventListener('drop', (e) => {
+      e.preventDefault(); drop.classList.remove('hover');
+      onImgFiles([...e.dataTransfer.files]);
+    });
+
+  } else if (step === 'processing') {
+    body.innerHTML = `
+      <div class="imp-step">
+        ⏳ <strong>Comprimiendo</strong> imágenes a WebP… <span id="imgProgress">0 / ${imgImp.files.length}</span>
+      </div>
+    `;
+    foot.innerHTML = '';
+
+  } else if (step === 'review') {
+    const items = state.data.recetas ? Object.values(state.data.recetas.categorias || {}).flat() : [];
+    const matched = imgImp.processed.filter(p => p.match).length;
+    const unmatched = imgImp.processed.length - matched;
+    const totalSaved = imgImp.processed.reduce((a, p) => a + (p.originalSize - p.finalSize), 0);
+
+    body.innerHTML = `
+      <div class="imp-step">
+        <strong>${imgImp.processed.length}</strong> imágenes comprimidas
+        · <strong>${matched}</strong> con match automático
+        · <strong>${unmatched}</strong> sin match (asígnalas a mano).
+        Ahorrado: <strong style="color:var(--success);">${(totalSaved / 1024 / 1024).toFixed(1)} MB</strong>.
+      </div>
+      <div class="img-grid" id="imgGrid"></div>
+    `;
+
+    const grid = $('#imgGrid');
+    imgImp.processed.forEach((p, idx) => {
+      const card = document.createElement('div');
+      card.className = 'img-card' + (p.match ? '' : ' unmatched');
+      const previewUrl = URL.createObjectURL(p.compressed);
+      const recetaOptions = '<option value="">— sin asignar —</option>' +
+        items.map((r, i) => '<option value="' + i + '"' + (p.match && p.match.idx === i ? ' selected' : '') + '>' + escapeHtml(r.n || ('Receta #' + i)) + '</option>').join('');
+      card.innerHTML = `
+        <img class="img-thumb" src="${previewUrl}" alt="">
+        <div class="img-meta">
+          <div class="img-filename">${escapeHtml(p.filename)}</div>
+          <div class="img-size">
+            ${(p.originalSize / 1024).toFixed(0)} KB → <span class="saved">${(p.finalSize / 1024).toFixed(0)} KB</span>
+            (−${Math.round((1 - p.finalSize / p.originalSize) * 100)}%)
+          </div>
+          <select data-img-idx="${idx}">${recetaOptions}</select>
+          <div class="img-match ${p.match ? '' : 'no-match'}">
+            ${p.match ? '✓ Match (' + p.match.score + '%): ' + escapeHtml(p.match.item.n || '') : '✗ Sin match automático'}
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // Listeners select
+    $$('select[data-img-idx]', grid).forEach(sel => {
+      sel.addEventListener('change', () => {
+        const idx = Number(sel.dataset.imgIdx);
+        const recetaIdx = sel.value;
+        if (recetaIdx === '') {
+          imgImp.processed[idx].assignedIdx = null;
+          imgImp.processed[idx].match = null;
+        } else {
+          imgImp.processed[idx].assignedIdx = Number(recetaIdx);
+          imgImp.processed[idx].match = { idx: Number(recetaIdx), item: items[Number(recetaIdx)], score: 100 };
+        }
+      });
+    });
+
+    foot.innerHTML = '<button class="btn primary" data-action="img-confirm">✓ Asignar imágenes</button>';
+  }
+}
+
+async function onImgFiles(files) {
+  if (!files.length) return;
+  if (files.length > 100) {
+    $('#imgError').textContent = '⚠ Máx 100 imágenes por sesión (trocea en commits de 100)';
+    $('#imgError').style.display = '';
+    return;
+  }
+  imgImp.files = files;
+  renderImgStep('processing');
+
+  // Comprimir todas
+  const results = await window.fnbImages.compressMany(files, (done, total) => {
+    const el = document.getElementById('imgProgress');
+    if (el) el.textContent = done + ' / ' + total;
+  });
+
+  // Auto-match contra recetas
+  const items = state.data.recetas ? Object.values(state.data.recetas.categorias || {}).flat() : [];
+  // Construir índice plano [{cat, catIdx, item}]
+  const flatItems = [];
+  Object.entries(state.data.recetas ? state.data.recetas.categorias : {}).forEach(([cat, arr]) => {
+    (arr || []).forEach((item, catIdx) => flatItems.push({ cat, catIdx, item }));
+  });
+
+  imgImp.processed = results.filter(r => r.ok).map(r => {
+    const match = window.fnbImages.autoMatchByFilename(
+      r.original.name,
+      flatItems,
+      f => f.item.n || ''
+    );
+    return {
+      filename: r.original.name,
+      original: r.original,
+      compressed: r.compressed,
+      originalSize: r.originalSize,
+      finalSize: r.finalSize,
+      match: match ? { idx: flatItems.indexOf(match.item), item: match.item.item, score: match.score, cat: match.item.cat, catIdx: match.item.catIdx } : null,
+      assignedIdx: match ? flatItems.indexOf(match.item) : null,
+    };
+  });
+  // Inyectar el índice plano para el grid
+  imgImp.flatItems = flatItems;
+
+  renderImgStep('review');
+}
+
+async function generateAIPhotoForReceta(cat, idx, btn) {
+  const receta = state.data.recetas.categorias[cat][idx];
+  if (!receta) return;
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ IA…'; }
+  try {
+    const prompt = window.fnbImages.buildAIPrompt(receta);
+    const url = window.fnbImages.generateAIImage(prompt, { width: 1024, height: 768 });
+    // Descargar como blob → comprimir → data URL
+    const blob = await window.fnbImages.urlToBlob(url);
+    const compressed = await window.fnbImages.compressImage(
+      new File([blob], 'ai-' + (receta.n || 'plato') + '.webp', { type: blob.type || 'image/jpeg' })
+    );
+    const dataUrl = await window.fnbImages.fileToDataUrl(compressed);
+    receta.imgDataUrl = dataUrl;
+    markDirty('recetas');
+    renderRecetasList();
+    window.fnbEditor.showToast('🤖 Foto generada con IA · ' + (compressed.size / 1024).toFixed(0) + ' KB', 'success');
+  } catch (e) {
+    window.fnbEditor.showToast('⚠ IA falló: ' + e.message, 'error');
+    if (btn) { btn.disabled = false; btn.textContent = '🤖 IA'; }
+  }
+}
+
+async function imgConfirm() {
+  let assigned = 0;
+  for (const p of imgImp.processed) {
+    if (p.assignedIdx == null || !imgImp.flatItems[p.assignedIdx]) continue;
+    const ref = imgImp.flatItems[p.assignedIdx];
+    const dataUrl = await window.fnbImages.fileToDataUrl(p.compressed);
+    // Guardamos en imgDataUrl (campo separado del img path) para preview en editor
+    state.data.recetas.categorias[ref.cat][ref.catIdx].imgDataUrl = dataUrl;
+    assigned++;
+  }
+  markDirty('recetas');
+  renderRecetasList();
+  closeImgImporter();
+  window.fnbEditor.showToast('🖼 ' + assigned + ' imágenes asignadas al recetario (publica para subir al repo)', 'success');
+}
+
+// ══════════════════════════════════════════════
 // IMPORTER · PDF (Fase 3.5.B) · copy-paste asistido
 // ══════════════════════════════════════════════
 const pdfImp = { target: null, file: null, pages: null, pageIdx: 0, detected: [], applied: new Set() };
@@ -1731,6 +2000,15 @@ document.addEventListener('click', (e) => {
     case 'import-pdf-menus':        openPdfImporter('menus'); break;
     case 'import-pdf-recetas':      openPdfImporter('recetas'); break;
     case 'import-pdf-productos':    openPdfImporter('productos'); break;
+    case 'import-imgs-recetas':     openImgImporter('recetas'); break;
+    case 'img-close':               closeImgImporter(); break;
+    case 'img-confirm':             imgConfirm(); break;
+    case 'ai-photo': {
+      const cat = target.dataset.cat;
+      const idx = Number(target.dataset.idx);
+      generateAIPhotoForReceta(cat, idx, target);
+      break;
+    }
     case 'pdf-close':               closePdfImporter(); break;
     case 'pdf-prev':                if (pdfImp.pageIdx > 0) { pdfImp.pageIdx--; renderPdfStep('review'); } break;
     case 'pdf-next':                if (pdfImp.pageIdx < pdfImp.pages.length - 1) { pdfImp.pageIdx++; renderPdfStep('review'); } break;
