@@ -334,8 +334,9 @@
     <div class="nav-section disabled" title="Disponible en fases posteriores">
       <span class="left">🎉 Eventos <span style="opacity:.5;">· próximo</span></span>
     </div>
-    <div class="nav-section disabled" title="Disponible en fases posteriores">
-      <span class="left">📦 Productos <span style="opacity:.5;">· próximo</span></span>
+    <div class="nav-section" data-section="productos">
+      <span class="left">📦 Productos</span>
+      <span class="dirty-dot" title="Cambios sin guardar"></span>
     </div>
   </aside>
 
@@ -434,6 +435,53 @@
       <div id="recetasContent"></div>
     </section>
 
+    <!-- PRODUCTOS -->
+    <section data-content="productos" class="hidden">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Productos (economato)</div>
+          <div class="section-sub">Catálogo de materias primas con €/unidad. Configura la fuente (CSV/URL) o edita los items localmente. Ver <a href="../docs/adr/012-productos-conectores.md" target="_blank" rel="noopener" style="color:var(--info);">ADR 012</a>.</div>
+        </div>
+        <div class="section-actions">
+          <button class="btn" data-action="prod-sync" title="Forzar refresh desde la fuente externa">🔄 Sincronizar</button>
+          <button class="btn" data-action="reset-productos">↩ Descartar</button>
+          <button class="btn primary" data-action="save-productos" disabled>💾 Guardar borrador</button>
+          <button class="btn" data-action="publish-productos" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
+        </div>
+      </div>
+
+      <div class="card-block">
+        <h3>Fuente del catálogo</h3>
+        <div class="form-grid two-col">
+          <div class="field"><label>Tipo</label>
+            <select data-prod-bind="source.type">
+              <option value="static">static · items en el repo</option>
+              <option value="csv-url">csv-url · Google Sheet CSV / Excel publicado</option>
+              <option value="json-url">json-url · endpoint REST sin auth</option>
+              <option value="api" disabled>api · requiere backend (Fase 5+)</option>
+            </select>
+          </div>
+          <div class="field"><label>Etiqueta</label><input type="text" data-prod-bind="source.label" placeholder="ej. Economato Miramar · Sheet semanal"></div>
+          <div class="field" style="grid-column:1/-1;"><label>URL (si no es static)</label><input type="text" data-prod-bind="source.url" placeholder="https://docs.google.com/.../export?format=csv"></div>
+          <div class="field"><label>Refresh (horas)</label><input type="number" data-prod-bind="source.refreshHours" min="1" max="720"></div>
+          <div class="field"><label>Último sync</label><input type="text" data-prod-bind="source.lastSync" readonly></div>
+        </div>
+        <div id="prodSourceStatus" style="margin-top:14px;font-size:12px;color:var(--text-muted);"></div>
+      </div>
+
+      <div class="card-block">
+        <h3>Catálogo · <span id="prodCount" style="color:var(--accent);">0</span> items</h3>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;" id="prodCacheStatus">—</div>
+        <table class="edit-table" id="prodTable">
+          <thead>
+            <tr><th style="width:16%">ID</th><th style="width:34%">Nombre</th><th>Categoría</th><th>Unidad</th><th>Precio €</th><th>Proveedor</th><th></th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button class="add-row-btn" data-action="prod-add">+ Añadir producto manualmente</button>
+      </div>
+    </section>
+
     <!-- TEMA VISUAL -->
     <section data-content="tema" class="hidden">
       <div class="section-head">
@@ -516,6 +564,7 @@
 <script src="../core/js/auth.js"></script>
 <script src="../core/js/github-api.js"></script>
 <script src="../core/js/importer-excel.js"></script>
+<script src="../core/js/productos-connector.js"></script>
 <script src="../core/js/editor-core.js"></script>
 <script>
 'use strict';
@@ -546,7 +595,7 @@ const state = {
   modalContext: null,
 };
 
-const SECTIONS = ['establecimiento', 'menus', 'recetas', 'config'];
+const SECTIONS = ['establecimiento', 'menus', 'recetas', 'config', 'productos'];
 const TEMA_SECTION_KEY = 'config'; // la sección «tema» edita config.tema
 
 const THEMES = [
@@ -659,6 +708,7 @@ function showSection(name) {
   $('#emptyState').classList.add('hidden');
   if (name === 'establecimiento') renderEstablecimiento();
   else if (name === 'tema') renderTema();
+  else if (name === 'productos') renderProductos();
   else if (name === 'menus') renderMenusList();
   else if (name === 'recetas') renderRecetasList();
 }
@@ -944,6 +994,89 @@ function deleteRecetaModal() {
   markDirty('recetas');
   renderRecetasList();
   closeModal();
+}
+
+// ══════════════════════════════════════════════
+// SECCIÓN · PRODUCTOS (catálogo del economato)
+// ══════════════════════════════════════════════
+function renderProductos() {
+  const data = state.data.productos;
+  if (!data) { $('[data-content="productos"] .card-block').innerHTML = '<div class="empty">No se pudo cargar productos.json</div>'; return; }
+  if (!data.source) data.source = { type: 'static', refreshHours: 24 };
+
+  // Bind controles del source
+  $$('[data-prod-bind]', $('[data-content="productos"]')).forEach(input => {
+    const path = input.dataset.prodBind;
+    const val = getByPath(data, path);
+    if (input.tagName === 'SELECT') {
+      input.value = val || (path === 'source.type' ? 'static' : '');
+    } else if (input.type === 'number') {
+      input.value = val == null ? '' : val;
+    } else {
+      input.value = val == null ? '' : val;
+    }
+    input.onchange = () => {
+      const v = input.type === 'number' ? (input.value === '' ? null : Number(input.value)) : input.value;
+      setByPath(state.data.productos, path, v);
+      markDirty('productos');
+      // Re-bind dependientes
+      if (path === 'source.type') renderProductos();
+    };
+  });
+
+  // Status del cache
+  const cache = window.fnbProductos.getCachedItems(PROJECT_ID);
+  let status;
+  if (data.source.type === 'static') status = 'Fuente: <strong>static</strong> (items viven en el repo)';
+  else if (cache) status = '<strong>' + cache.length + '</strong> items en cache local · pulsa <em>Sincronizar</em> para forzar refresh';
+  else status = 'Sin cache local · pulsa <em>Sincronizar</em> para descargar la primera vez';
+  $('#prodSourceStatus').innerHTML = status;
+
+  // Render tabla items
+  $('#prodCount').textContent = (data.items || []).length;
+  const tbody = $('#prodTable tbody');
+  tbody.innerHTML = '';
+  (data.items || []).forEach((item, idx) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" data-pfield="id"></td>
+      <td><input type="text" data-pfield="nombre"></td>
+      <td><input type="text" data-pfield="categoria"></td>
+      <td><input type="text" data-pfield="unidad" style="max-width:60px;"></td>
+      <td><input type="number" step="0.01" data-pfield="precio" style="max-width:90px;"></td>
+      <td><input type="text" data-pfield="proveedor"></td>
+      <td class="row-actions"><button class="icon-btn" data-action="prod-del" data-idx="${idx}" title="Eliminar">🗑</button></td>
+    `;
+    $$('input', tr).forEach(input => {
+      const field = input.dataset.pfield;
+      input.value = item[field] == null ? '' : item[field];
+      input.onchange = () => {
+        const v = input.type === 'number' ? (input.value === '' ? null : Number(input.value)) : input.value;
+        state.data.productos.items[idx][field] = v;
+        markDirty('productos');
+      };
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+async function syncProductosUI() {
+  const btn = $('[data-action="prod-sync"]');
+  if (btn) { btn.disabled = true; btn.textContent = '🔄 Sincronizando…'; }
+  try {
+    const result = await window.fnbProductos.syncProductos(PROJECT_ID, { source: state.data.productos.source });
+    if (result.ok) {
+      state.data.productos.items = result.items;
+      state.data.productos.source.lastSync = result.syncedAt.slice(0, 10);
+      markDirty('productos');
+      renderProductos();
+      window.fnbEditor.showToast('✓ ' + result.count + ' items sincronizados', 'success');
+    } else {
+      window.fnbEditor.showToast('⚠ ' + result.error, 'error');
+    }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '🔄 Sincronizar'; }
+  }
 }
 
 // ══════════════════════════════════════════════
@@ -1296,6 +1429,24 @@ document.addEventListener('click', (e) => {
     case 'publish-menus':           publishSection('menus'); break;
     case 'publish-recetas':         publishSection('recetas'); break;
     case 'publish-tema':            publishSection('config'); break;
+    case 'publish-productos':       publishSection('productos'); break;
+    case 'save-productos':          saveSection('productos'); break;
+    case 'reset-productos':         resetSection('productos'); break;
+    case 'prod-sync':               syncProductosUI(); break;
+    case 'prod-add': {
+      state.data.productos.items = state.data.productos.items || [];
+      state.data.productos.items.push({ id: '', nombre: '', categoria: '', unidad: 'kg', precio: 0, proveedor: '' });
+      markDirty('productos');
+      renderProductos();
+      break;
+    }
+    case 'prod-del': {
+      const idx = Number(target.dataset.idx);
+      state.data.productos.items.splice(idx, 1);
+      markDirty('productos');
+      renderProductos();
+      break;
+    }
     case 'import-menus':            openImporter('menus'); break;
     case 'import-recetas':          openImporter('recetas'); break;
     case 'importer-close':

@@ -1,3 +1,51 @@
 {
-  "items": []
+  "_README": "Catálogo de productos del economato. Source describe DE DÓNDE viene; items es la cache local (siempre legible). Ver docs/adr/012-productos-conectores.md.",
+  "source": {
+    "type": "static",
+    "label": "Catálogo de demo · precios Makro/Mercabarna Costa del Sol 2026",
+    "url": null,
+    "lastSync": "2026-05-28",
+    "refreshHours": 24,
+    "columnMapping": {
+      "nombre": "Producto",
+      "categoria": "Familia",
+      "unidad": "Ud.",
+      "precio": "Precio €",
+      "proveedor": "Proveedor"
+    }
+  },
+  "items": [
+    { "id": "aov-hojiblanca", "nombre": "AOVE Hojiblanca DO Málaga", "categoria": "aceites", "unidad": "L",   "precio": 6.20, "proveedor": "Cooperativa Antequera" },
+    { "id": "aceite-girasol",  "nombre": "Aceite de girasol refinado",  "categoria": "aceites", "unidad": "L",   "precio": 1.80, "proveedor": "Makro" },
+    { "id": "jamon-bellota",   "nombre": "Jamón ibérico de bellota DOP Guijuelo", "categoria": "embutidos", "unidad": "kg", "precio": 64.00, "proveedor": "Salazones Guijuelo" },
+    { "id": "lomo-iberico",    "nombre": "Lomo ibérico de bellota", "categoria": "embutidos", "unidad": "kg", "precio": 48.00, "proveedor": "Salazones Guijuelo" },
+    { "id": "chorizo-iberico", "nombre": "Chorizo ibérico curado", "categoria": "embutidos", "unidad": "kg", "precio": 22.00, "proveedor": "Distribución Sur" },
+    { "id": "queso-manchego",  "nombre": "Queso manchego curado DO", "categoria": "lacteos", "unidad": "kg", "precio": 18.50, "proveedor": "Quesos La Mancha" },
+    { "id": "queso-cabra",     "nombre": "Queso de cabra rulo cenizo", "categoria": "lacteos", "unidad": "kg", "precio": 16.00, "proveedor": "Mercabarna" },
+    { "id": "mantequilla",     "nombre": "Mantequilla artesana sin sal", "categoria": "lacteos", "unidad": "kg", "precio": 9.20, "proveedor": "Makro" },
+    { "id": "nata-35",         "nombre": "Nata para montar 35% MG", "categoria": "lacteos", "unidad": "L", "precio": 4.80, "proveedor": "Makro" },
+    { "id": "leche-entera",    "nombre": "Leche entera UHT", "categoria": "lacteos", "unidad": "L", "precio": 0.95, "proveedor": "Makro" },
+    { "id": "tomate-pera",     "nombre": "Tomate pera maduro", "categoria": "verduras", "unidad": "kg", "precio": 1.40, "proveedor": "Mercamálaga" },
+    { "id": "cebolla",         "nombre": "Cebolla blanca", "categoria": "verduras", "unidad": "kg", "precio": 0.85, "proveedor": "Mercamálaga" },
+    { "id": "ajo-morado",      "nombre": "Ajo morado de Las Pedroñeras", "categoria": "verduras", "unidad": "kg", "precio": 6.50, "proveedor": "Mercamálaga" },
+    { "id": "patata",          "nombre": "Patata kennebec", "categoria": "verduras", "unidad": "kg", "precio": 0.78, "proveedor": "Mercamálaga" },
+    { "id": "pimiento-rojo",   "nombre": "Pimiento rojo asar", "categoria": "verduras", "unidad": "kg", "precio": 2.10, "proveedor": "Mercamálaga" },
+    { "id": "aguacate-hass",   "nombre": "Aguacate Hass Costa Tropical", "categoria": "verduras", "unidad": "kg", "precio": 3.80, "proveedor": "Cooperativa La Caleta" },
+    { "id": "gamba-roja",      "nombre": "Gamba roja de Málaga fresca", "categoria": "pescados", "unidad": "kg", "precio": 78.00, "proveedor": "Lonja Málaga" },
+    { "id": "atun-rojo",       "nombre": "Atún rojo del estrecho · lomo", "categoria": "pescados", "unidad": "kg", "precio": 52.00, "proveedor": "Lonja Tarifa" },
+    { "id": "lubina",          "nombre": "Lubina salvaje fresca", "categoria": "pescados", "unidad": "kg", "precio": 24.00, "proveedor": "Lonja Málaga" },
+    { "id": "dorada",          "nombre": "Dorada fresca", "categoria": "pescados", "unidad": "kg", "precio": 14.00, "proveedor": "Lonja Málaga" },
+    { "id": "bacalao",         "nombre": "Bacalao salado del Atlántico", "categoria": "pescados", "unidad": "kg", "precio": 21.00, "proveedor": "Distribución Sur" },
+    { "id": "pulpo",           "nombre": "Pulpo gallego cocido", "categoria": "pescados", "unidad": "kg", "precio": 28.00, "proveedor": "Mercamadrid" },
+    { "id": "solomillo",       "nombre": "Solomillo de ternera ibérica", "categoria": "carnes", "unidad": "kg", "precio": 45.00, "proveedor": "Carnicería Andaluza" },
+    { "id": "secreto-iberico", "nombre": "Secreto ibérico de bellota", "categoria": "carnes", "unidad": "kg", "precio": 19.50, "proveedor": "Salazones Guijuelo" },
+    { "id": "pollo-pais",      "nombre": "Pollo de país fresco", "categoria": "carnes", "unidad": "kg", "precio": 6.80, "proveedor": "Avícola Antequera" },
+    { "id": "cordero-lechal",  "nombre": "Cordero lechal de Castilla", "categoria": "carnes", "unidad": "kg", "precio": 16.00, "proveedor": "Carnicería Andaluza" },
+    { "id": "arroz-bomba",     "nombre": "Arroz bomba DO Valencia", "categoria": "secos", "unidad": "kg", "precio": 4.80, "proveedor": "Makro" },
+    { "id": "harina",          "nombre": "Harina de fuerza", "categoria": "secos", "unidad": "kg", "precio": 1.20, "proveedor": "Makro" },
+    { "id": "azucar",          "nombre": "Azúcar blanco refinado", "categoria": "secos", "unidad": "kg", "precio": 1.05, "proveedor": "Makro" },
+    { "id": "sal-gorda",       "nombre": "Sal gorda marina del Sahara", "categoria": "secos", "unidad": "kg", "precio": 0.65, "proveedor": "Salinas Cabo de Gata" },
+    { "id": "vinagre-jerez",   "nombre": "Vinagre de Jerez DO Reserva", "categoria": "secos", "unidad": "L", "precio": 9.80, "proveedor": "Bodega Jerez" },
+    { "id": "miel",            "nombre": "Miel de romero artesana", "categoria": "secos", "unidad": "kg", "precio": 12.00, "proveedor": "Apicultor local Estepona" }
+  ]
 }
