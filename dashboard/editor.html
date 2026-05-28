@@ -276,6 +276,59 @@
   .imp-stat-val.err { color: var(--danger); }
   .imp-stat-val.dup { color: var(--warning); }
 
+  /* ── PDF importer (2-columnas) ───────────── */
+  .pdf-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    flex: 1; min-height: 0; overflow: hidden;
+  }
+  .pdf-pane {
+    display: flex; flex-direction: column;
+    background: var(--bg-surface); border: 1px solid var(--border-default);
+    border-radius: 10px; overflow: hidden;
+  }
+  .pdf-pane-head {
+    padding: 10px 14px; border-bottom: 1px solid var(--border-default);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg-elevated); font-size: 12px; color: var(--text-soft);
+  }
+  .pdf-pane-head .imp-btn-mini {
+    background: transparent; color: var(--text-soft);
+    border: 1px solid var(--border-default); padding: 4px 9px; border-radius: 5px;
+    font: 11px var(--font-ui); cursor: pointer;
+  }
+  .pdf-pane-head .imp-btn-mini:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); }
+  .pdf-pane-head .imp-btn-mini:disabled { opacity: .4; cursor: not-allowed; }
+  .pdf-pane-body { flex: 1; overflow: auto; padding: 10px 14px; }
+  .pdf-text-line {
+    padding: 3px 6px; border-radius: 4px; cursor: pointer; font-size: 12px;
+    line-height: 1.45; transition: background .08s;
+    font-family: var(--font-mono);
+  }
+  .pdf-text-line:hover { background: rgba(167,139,250,.08); }
+  .pdf-text-line.sent { background: rgba(63,185,80,.08); color: var(--success); }
+
+  .pdf-detected {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .pdf-detected-row {
+    display: grid; grid-template-columns: 1fr 90px 30px; gap: 8px;
+    align-items: center; padding: 7px 10px;
+    background: var(--bg-elevated-2); border-radius: 6px;
+    font-size: 12px;
+  }
+  .pdf-detected-row input {
+    background: transparent; border: 1px solid transparent;
+    color: var(--text); padding: 3px 6px; font: 12px var(--font-ui);
+    border-radius: 4px;
+  }
+  .pdf-detected-row input:focus { outline: none; background: var(--bg-elevated); border-color: var(--accent); }
+  .pdf-detected-row .price { color: var(--accent); font-family: var(--font-mono); text-align: right; }
+  .pdf-detected-row .keep { display: flex; align-items: center; justify-content: center; }
+
+  .pdf-empty {
+    padding: 30px; text-align: center; color: var(--text-muted); font-size: 12px;
+  }
+
   .imp-errors {
     background: var(--bg-surface); border: 1px solid var(--border-default);
     border-radius: 8px; padding: 12px; margin-top: 14px;
@@ -408,7 +461,8 @@
           <div class="section-sub">Paquetes de catering: sentado, cóctel, desayuno, brunch, barra libre, etc.</div>
         </div>
         <div class="section-actions">
-          <button class="btn" data-action="import-menus" title="Importar desde Excel/CSV">📥 Importar</button>
+          <button class="btn" data-action="import-menus" title="Importar desde Excel/CSV">📥 Excel/CSV</button>
+          <button class="btn" data-action="import-pdf-menus" title="Importar desde PDF (copy-paste asistido)">📄 PDF</button>
           <button class="btn" data-action="add-menu">+ Nuevo menú</button>
           <button class="btn" data-action="reset-menus">↩ Descartar</button>
           <button class="btn primary" data-action="save-menus" disabled>💾 Guardar borrador</button>
@@ -426,7 +480,8 @@
           <div class="section-sub">Recetas con escandallo, alérgenos y pasos. Agrupadas por categoría.</div>
         </div>
         <div class="section-actions">
-          <button class="btn" data-action="import-recetas" title="Importar desde Excel/CSV">📥 Importar</button>
+          <button class="btn" data-action="import-recetas" title="Importar desde Excel/CSV">📥 Excel/CSV</button>
+          <button class="btn" data-action="import-pdf-recetas" title="Importar desde PDF (copy-paste asistido)">📄 PDF</button>
           <button class="btn" data-action="reset-recetas">↩ Descartar</button>
           <button class="btn primary" data-action="save-recetas" disabled>💾 Guardar borrador</button>
           <button class="btn" data-action="publish-recetas" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
@@ -444,6 +499,7 @@
         </div>
         <div class="section-actions">
           <button class="btn" data-action="prod-sync" title="Forzar refresh desde la fuente externa">🔄 Sincronizar</button>
+          <button class="btn" data-action="import-pdf-productos" title="Importar desde PDF (tarifa proveedor)">📄 PDF</button>
           <button class="btn" data-action="reset-productos">↩ Descartar</button>
           <button class="btn primary" data-action="save-productos" disabled>💾 Guardar borrador</button>
           <button class="btn" data-action="publish-productos" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
@@ -523,6 +579,23 @@
   </div>
 </div>
 
+<!-- ─── MODAL IMPORTER PDF ────────────────────── -->
+<div class="modal-overlay" id="pdfOverlay">
+  <div class="modal" style="max-width:1100px;height:88vh;">
+    <div class="modal-head">
+      <div class="modal-title" id="pdfTitle">📄 Importar desde PDF</div>
+      <button class="btn" data-action="pdf-close">✕</button>
+    </div>
+    <div class="modal-body" id="pdfBody" style="display:flex;flex-direction:column;gap:14px;overflow:hidden;">
+      <!-- contenido dinámico -->
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-action="pdf-close">Cancelar</button>
+      <div style="display:flex;gap:10px;" id="pdfFootRight"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ─── MODAL IMPORTER ─────────────────────────── -->
 <div class="modal-overlay" id="importerOverlay">
   <div class="modal" style="max-width:880px;">
@@ -564,6 +637,7 @@
 <script src="../core/js/auth.js"></script>
 <script src="../core/js/github-api.js"></script>
 <script src="../core/js/importer-excel.js"></script>
+<script src="../core/js/importer-pdf.js"></script>
 <script src="../core/js/productos-connector.js"></script>
 <script src="../core/js/editor-core.js"></script>
 <script>
@@ -1317,6 +1391,207 @@ function validateImporter() {
   renderImporterStep('summary');
 }
 
+// ══════════════════════════════════════════════
+// IMPORTER · PDF (Fase 3.5.B) · copy-paste asistido
+// ══════════════════════════════════════════════
+const pdfImp = { target: null, file: null, pages: null, pageIdx: 0, detected: [], applied: new Set() };
+
+function openPdfImporter(target) {
+  pdfImp.target = target;
+  pdfImp.file = null; pdfImp.pages = null; pdfImp.pageIdx = 0;
+  pdfImp.detected = []; pdfImp.applied = new Set();
+  $('#pdfTitle').textContent = '📄 Importar ' + (target === 'menus' ? 'menús' : target === 'recetas' ? 'recetas' : 'productos') + ' desde PDF';
+  $('#pdfOverlay').classList.add('visible');
+  renderPdfStep('drop');
+}
+
+function closePdfImporter() {
+  $('#pdfOverlay').classList.remove('visible');
+  pdfImp.target = null;
+}
+
+function renderPdfStep(step) {
+  const body = $('#pdfBody');
+  const foot = $('#pdfFootRight');
+
+  if (step === 'drop') {
+    body.innerHTML = `
+      <div class="imp-step">
+        Sube un <strong>PDF de texto</strong> (no escaneado). El importer extrae el texto con PDF.js y propone
+        ${pdfImp.target === 'menus' ? 'menús' : pdfImp.target === 'recetas' ? 'recetas' : 'productos'} detectados
+        por patrón <code>Nombre … precio €</code>. Tú revisas y confirmas.
+      </div>
+      <div class="imp-drop" id="pdfDrop" style="flex:0 0 auto;">
+        <div class="imp-icon">📄</div>
+        <div class="imp-msg">Arrastra el PDF aquí o haz click para elegir</div>
+        <div class="imp-sub">Máx ~10 MB · PDFs escaneados → OCR llegará en una fase posterior</div>
+        <input type="file" id="pdfFile" accept=".pdf">
+      </div>
+      <div id="pdfLoading" style="display:none;color:var(--text-soft);font-size:12px;">⏳ Cargando PDF.js y parseando…</div>
+      <div id="pdfError" style="display:none;background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.35);color:var(--danger);padding:10px 12px;border-radius:7px;font-size:12px;"></div>
+    `;
+    foot.innerHTML = '';
+    const drop = $('#pdfDrop');
+    const input = $('#pdfFile');
+    drop.addEventListener('click', () => input.click());
+    input.addEventListener('change', (e) => onPdfChosen(e.target.files[0]));
+    drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('hover'); });
+    drop.addEventListener('dragleave', () => drop.classList.remove('hover'));
+    drop.addEventListener('drop', (e) => {
+      e.preventDefault(); drop.classList.remove('hover');
+      onPdfChosen(e.dataTransfer.files[0]);
+    });
+
+  } else if (step === 'review') {
+    const page = pdfImp.pages[pdfImp.pageIdx];
+    body.innerHTML = `
+      <div class="pdf-layout">
+        <div class="pdf-pane">
+          <div class="pdf-pane-head">
+            <div>Texto PDF · página <strong>${page.num}</strong> de <strong>${pdfImp.pages.length}</strong></div>
+            <div style="display:flex;gap:6px;">
+              <button class="imp-btn-mini" data-action="pdf-prev" ${pdfImp.pageIdx === 0 ? 'disabled' : ''}>← anterior</button>
+              <button class="imp-btn-mini" data-action="pdf-next" ${pdfImp.pageIdx === pdfImp.pages.length - 1 ? 'disabled' : ''}>siguiente →</button>
+            </div>
+          </div>
+          <div class="pdf-pane-body" id="pdfTextPane">
+            ${page.lines.map((line, i) => '<div class="pdf-text-line" data-line="' + i + '">' + escapeHtml(line) + '</div>').join('')}
+          </div>
+        </div>
+        <div class="pdf-pane">
+          <div class="pdf-pane-head">
+            <div>${pdfImp.target === 'menus' ? 'Menús' : pdfImp.target === 'recetas' ? 'Recetas' : 'Productos'} detectados · <strong>${pdfImp.detected.length}</strong></div>
+            <button class="imp-btn-mini" data-action="pdf-toggle-all">Marcar todos</button>
+          </div>
+          <div class="pdf-pane-body">
+            ${pdfImp.detected.length === 0
+              ? '<div class="pdf-empty">No detectamos patrones automáticos. Puedes hacer copy-paste manualmente desde la izquierda al editor (cancela e importa a mano).</div>'
+              : '<div class="pdf-detected" id="pdfDetectedList">' + renderDetectedRows() + '</div>'}
+          </div>
+        </div>
+      </div>
+    `;
+    foot.innerHTML = '<button class="btn primary" data-action="pdf-confirm" ' + (pdfImp.detected.length ? '' : 'disabled') + '>✓ Importar ' + pdfImp.detected.filter(d => !d._skip).length + ' al borrador</button>';
+
+    // Listeners
+    $$('.pdf-text-line', body).forEach(el => {
+      el.addEventListener('click', () => {
+        el.classList.toggle('sent');
+      });
+    });
+    // Inputs detectados
+    $$('.pdf-detected-row input', body).forEach(inp => {
+      inp.addEventListener('input', () => {
+        const idx = Number(inp.closest('.pdf-detected-row').dataset.idx);
+        const field = inp.dataset.field;
+        const val = inp.type === 'number' ? Number(inp.value) || 0 : inp.value;
+        const item = pdfImp.detected[idx].item;
+        if (pdfImp.target === 'menus') {
+          if (field === 'nombre') item.name = val;
+          else if (field === 'precio') item.ppax = val;
+        } else if (pdfImp.target === 'recetas') {
+          if (field === 'nombre') item.n = val;
+          else if (field === 'precio') item.mp = val;
+        } else if (pdfImp.target === 'productos') {
+          if (field === 'nombre') item.nombre = val;
+          else if (field === 'precio') item.precio = val;
+        }
+      });
+    });
+    $$('.pdf-detected-row .keep input', body).forEach(cb => {
+      cb.addEventListener('change', () => {
+        const idx = Number(cb.closest('.pdf-detected-row').dataset.idx);
+        pdfImp.detected[idx]._skip = !cb.checked;
+        const remaining = pdfImp.detected.filter(d => !d._skip).length;
+        $('[data-action="pdf-confirm"]').textContent = '✓ Importar ' + remaining + ' al borrador';
+        $('[data-action="pdf-confirm"]').disabled = remaining === 0;
+      });
+    });
+  }
+}
+
+function renderDetectedRows() {
+  return pdfImp.detected.map((d, idx) => {
+    const item = d.item;
+    let nombre, precio;
+    if (pdfImp.target === 'menus')    { nombre = item.name; precio = item.ppax; }
+    else if (pdfImp.target === 'recetas') { nombre = item.n; precio = item.mp; }
+    else { nombre = item.nombre; precio = item.precio; }
+    return `
+      <div class="pdf-detected-row" data-idx="${idx}">
+        <input type="text" data-field="nombre" value="${escapeHtml(nombre || '')}">
+        <input type="number" step="0.01" data-field="precio" value="${precio || 0}" class="price">
+        <label class="keep"><input type="checkbox" ${d._skip ? '' : 'checked'}></label>
+      </div>
+    `;
+  }).join('');
+}
+
+async function onPdfChosen(file) {
+  if (!file) return;
+  pdfImp.file = file;
+  $('#pdfLoading').style.display = '';
+  $('#pdfError').style.display = 'none';
+  try {
+    const parsed = await window.fnbPdf.parsePdf(file);
+    pdfImp.pages = parsed.pages;
+    pdfImp.pageIdx = 0;
+    // Concatenar TODO el texto para extraer items
+    const fullText = parsed.pages.map(p => p.text).join('\n');
+    pdfImp.detected = window.fnbPdf.extractItemsFromText(fullText, pdfImp.target);
+    renderPdfStep('review');
+  } catch (e) {
+    $('#pdfLoading').style.display = 'none';
+    $('#pdfError').textContent = '⚠ ' + (e.message || e);
+    $('#pdfError').style.display = '';
+  }
+}
+
+function pdfConfirm() {
+  const items = pdfImp.detected.filter(d => !d._skip).map(d => d.item);
+  if (!items.length) return;
+  if (pdfImp.target === 'menus') {
+    state.data.menus = state.data.menus || { paquetes: [] };
+    // Asegurar IDs únicos contra existentes
+    const existing = new Set(state.data.menus.paquetes.map(m => (m.id || '').toLowerCase()));
+    items.forEach(it => {
+      let id = it.id || 'item';
+      let suffix = 1;
+      while (existing.has(id.toLowerCase())) { id = (it.id || 'item') + '-' + (++suffix); }
+      it.id = id; existing.add(id.toLowerCase());
+    });
+    state.data.menus.paquetes = state.data.menus.paquetes.concat(items);
+    markDirty('menus');
+    renderMenusList();
+    window.fnbEditor.showToast('☁ ' + items.length + ' menús importados (revísalos)', 'success');
+  } else if (pdfImp.target === 'recetas') {
+    state.data.recetas = state.data.recetas || { categorias: {} };
+    items.forEach(item => {
+      const cat = String(item.categoria || 'entrantes').toLowerCase();
+      delete item.categoria;
+      if (!state.data.recetas.categorias[cat]) state.data.recetas.categorias[cat] = [];
+      state.data.recetas.categorias[cat].push(item);
+    });
+    markDirty('recetas');
+    renderRecetasList();
+    window.fnbEditor.showToast('☁ ' + items.length + ' recetas importadas (revísalas y asigna categorías)', 'success');
+  } else if (pdfImp.target === 'productos') {
+    state.data.productos = state.data.productos || { source: { type: 'static' }, items: [] };
+    const existing = new Set(state.data.productos.items.map(p => (p.id || '').toLowerCase()));
+    items.forEach(it => {
+      let id = it.id || 'prod';
+      let suffix = 1;
+      while (existing.has(id.toLowerCase())) { id = (it.id || 'prod') + '-' + (++suffix); }
+      it.id = id; existing.add(id.toLowerCase());
+    });
+    state.data.productos.items = state.data.productos.items.concat(items);
+    markDirty('productos');
+    renderProductos();
+    window.fnbEditor.showToast('☁ ' + items.length + ' productos importados', 'success');
+  }
+  closePdfImporter();
+}
+
 function confirmImporter() {
   if (!imp.result || !imp.result.validas.length) return;
   const items = imp.result.validas.map(v => v.item);
@@ -1453,6 +1728,19 @@ document.addEventListener('click', (e) => {
     case 'importer-cancel':         closeImporter(); break;
     case 'importer-validate':       validateImporter(); break;
     case 'importer-confirm':        confirmImporter(); break;
+    case 'import-pdf-menus':        openPdfImporter('menus'); break;
+    case 'import-pdf-recetas':      openPdfImporter('recetas'); break;
+    case 'import-pdf-productos':    openPdfImporter('productos'); break;
+    case 'pdf-close':               closePdfImporter(); break;
+    case 'pdf-prev':                if (pdfImp.pageIdx > 0) { pdfImp.pageIdx--; renderPdfStep('review'); } break;
+    case 'pdf-next':                if (pdfImp.pageIdx < pdfImp.pages.length - 1) { pdfImp.pageIdx++; renderPdfStep('review'); } break;
+    case 'pdf-confirm':             pdfConfirm(); break;
+    case 'pdf-toggle-all': {
+      const allChecked = pdfImp.detected.every(d => !d._skip);
+      pdfImp.detected.forEach(d => { d._skip = allChecked; });
+      renderPdfStep('review');
+      break;
+    }
     case 'reset-establecimiento':resetSection('establecimiento'); break;
     case 'reset-menus':          resetSection('menus'); break;
     case 'reset-recetas':        resetSection('recetas'); break;
