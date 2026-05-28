@@ -227,12 +227,14 @@
       <div id="summary"></div>
 
       <div class="toast-info">
-        <strong>Fase 3.B · sin commits aún.</strong>
-        El borrador se guarda en <code>localStorage</code> de este navegador como
-        <code>fnb_wizard_draft_&lt;id&gt;</code>. En <strong>Fase 3.C</strong>,
-        al confirmar el proyecto se hará el commit real al repo:
-        creación de <code>projects/&lt;id&gt;/</code> con los 10 JSONs y
-        actualización de <code>projects/index.json</code>.
+        <strong>Al confirmar:</strong> si tienes (o pegas) un PAT con scope
+        <code>repo</code>, se hace un <strong>commit real</strong> al repo
+        creando <code>projects/&lt;id&gt;/</code> con los 10 JSONs + entrada
+        en <code>projects/index.json</code>. GitHub Pages tarda ~60s en
+        deployar el cambio.<br><br>
+        <strong>Sin PAT:</strong> el proyecto queda como borrador local
+        editable. Puedes publicarlo más tarde desde el editor (botón
+        «☁ Publicar» por sección).
       </div>
     </div>
 
@@ -246,6 +248,7 @@
 
 <script src="../core/js/loader.js"></script>
 <script src="../core/js/auth.js"></script>
+<script src="../core/js/github-api.js"></script>
 <script src="../core/js/editor-core.js"></script>
 <script>
 'use strict';
@@ -384,7 +387,7 @@ function renderSummary() {
     <div class="summary-row"><span class="k">Ciudad</span><span class="v">${escapeHtml(wizard.data.ciudad || '—')}</span></div>
     <div class="summary-row"><span class="k">Plantilla</span><span class="v">${escapeHtml(tplLabel)}</span></div>
     <div class="summary-row"><span class="k">Tema visual</span><span class="v">${escapeHtml(themeLabel)} · <code>${escapeHtml(wizard.data.tema)}</code></span></div>
-    <div class="summary-row"><span class="k">Estado</span><span class="v" style="color:var(--info);">Borrador local · pendiente de Fase 3.C para commit a repo</span></div>
+    <div class="summary-row"><span class="k">Acción al confirmar</span><span class="v" style="color:var(--info);">Commit al repo con PAT · fallback a borrador local</span></div>
   `;
 }
 
@@ -469,32 +472,105 @@ async function buildMiramarCopy() {
 
 async function commitProject() {
   $('#btnNext').disabled = true;
-  $('#btnNext').textContent = 'Generando borrador…';
+  $('#btnNext').textContent = 'Generando…';
   try {
     const project = wizard.data.template === 'miramar' ? await buildMiramarCopy() : buildEmptyProject();
     if (!project || !project.config) throw new Error('No se pudo construir el proyecto');
 
-    // Guardar como wizard draft (un único objeto serializado)
-    const draftKey = 'fnb_wizard_draft_' + wizard.data.id;
-    localStorage.setItem(draftKey, JSON.stringify({ wizard: wizard.data, project, ts: new Date().toISOString() }));
+    // Persistir SIEMPRE drafts locales primero (respaldo + fallback durante deploy)
+    saveLocalDrafts(project);
 
-    // Y, además, cada sección como draft del editor para que el editor pueda abrirlo
-    Object.keys(project).forEach(section => {
-      if (project[section] != null) {
-        window.fnbEditor.saveDraft(wizard.data.id, section, project[section]);
+    // Si no hay PAT, ofrecer pegarlo. Si el usuario lo cancela → fallback a solo drafts.
+    if (!window.fnbAuth.getPAT()) {
+      $('#btnNext').textContent = 'Solicitando PAT…';
+      const r = await window.fnbAuth.promptForPAT({
+        title: 'Publicar al repo · necesita PAT',
+        description: 'Para crear <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">projects/' + escapeHtml(wizard.data.id) + '/</code> con sus 10 JSONs, necesitamos un PAT con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">repo</code>. Si cancelas, el proyecto queda como borrador local y podrás publicarlo más tarde desde el editor.'
+      });
+      if (!r.ok) {
+        window.fnbEditor.showToast('Proyecto creado como borrador local · publica más tarde desde el editor', 'info');
+        setTimeout(() => location.replace('./editor.html?proyecto=' + encodeURIComponent(wizard.data.id) + '&fresh=1'), 1200);
+        return;
       }
-    });
+    }
 
-    window.fnbEditor.showToast('Borrador del proyecto creado en local · pendiente Fase 3.C para commit a GitHub', 'success');
-    setTimeout(() => {
-      location.replace('./editor.html?proyecto=' + encodeURIComponent(wizard.data.id) + '&fresh=1');
-    }, 800);
+    // Construir la lista de archivos para el commit masivo
+    $('#btnNext').textContent = 'Publicando al repo…';
+    const files = buildCommitFiles(project);
+
+    // Actualizar projects/index.json incluyendo el nuevo proyecto
+    const updatedManifest = await buildUpdatedManifest();
+    files.push({ path: 'projects/index.json', content: updatedManifest });
+
+    const message = 'feat(' + wizard.data.id + '): crear proyecto «' + wizard.data.name + '» (' +
+      wizard.data.template + ', tema=' + wizard.data.tema + ')';
+    const result = await window.fnbGitHub.commitMultipleFiles(files, message);
+
+    if (result.dryRun) {
+      window.fnbEditor.showToast('🌫 Dry-run · proyecto NO publicado al repo (ver consola). Usa el editor para añadir el PAT y publicar.', 'info');
+    } else if (result.ok) {
+      window.fnbEditor.showToast('☁ Proyecto publicado · commit ' + result.commit.sha.slice(0, 7) + ' · GitHub Pages tarda ~60s en deployar', 'success');
+    } else {
+      window.fnbEditor.showToast('⚠ Fallo al publicar: ' + result.error + ' · borrador local intacto', 'error');
+    }
+
+    setTimeout(() => location.replace('./editor.html?proyecto=' + encodeURIComponent(wizard.data.id) + '&fresh=1'), 1500);
   } catch (e) {
     console.error('commitProject error:', e);
-    window.fnbEditor.showToast('Error al crear borrador: ' + e.message, 'error');
+    window.fnbEditor.showToast('Error: ' + e.message, 'error');
     $('#btnNext').disabled = false;
     $('#btnNext').textContent = '✨ Crear proyecto';
   }
+}
+
+function saveLocalDrafts(project) {
+  // Wizard draft completo
+  const draftKey = 'fnb_wizard_draft_' + wizard.data.id;
+  localStorage.setItem(draftKey, JSON.stringify({ wizard: wizard.data, project, ts: new Date().toISOString() }));
+  // Cada sección como draft del editor (incluso si publicamos al repo, sirve mientras
+  // GitHub Pages termina de deployar el commit)
+  Object.keys(project).forEach(section => {
+    if (project[section] != null) {
+      window.fnbEditor.saveDraft(wizard.data.id, section, project[section]);
+    }
+  });
+}
+
+function buildCommitFiles(project) {
+  const id = wizard.data.id;
+  const sections = ['config', 'establecimiento', 'eventos', 'menus', 'recetas', 'dietas', 'productos', 'bebidas', 'extras', 'auth'];
+  const files = [];
+  sections.forEach(s => {
+    if (project[s] != null) {
+      files.push({ path: 'projects/' + id + '/' + s + '.json', content: project[s] });
+    }
+  });
+  // .gitkeep para la carpeta budgets/ (que es vacía hasta que se guarden presupuestos)
+  files.push({ path: 'projects/' + id + '/budgets/.gitkeep', content: '' });
+  return files;
+}
+
+async function buildUpdatedManifest() {
+  // Leer el manifiesto actual del repo (no de localStorage)
+  let manifest;
+  try {
+    const res = await fetch('../projects/index.json', { cache: 'no-store' });
+    manifest = await res.json();
+  } catch (e) {
+    manifest = { proyectos: [] };
+  }
+  if (!manifest.proyectos) manifest.proyectos = [];
+  // Solo añadir si no existe ya
+  const exists = manifest.proyectos.some(p => p.id === wizard.data.id);
+  if (!exists) {
+    manifest.proyectos.push({
+      id: wizard.data.id,
+      es_piloto: false,
+      archivado: false,
+      creado: new Date().toISOString().slice(0, 10),
+    });
+  }
+  return manifest;
 }
 
 // ── Eventos ────────────────────────────────────────────────

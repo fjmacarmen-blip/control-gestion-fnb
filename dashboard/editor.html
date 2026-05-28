@@ -1080,13 +1080,23 @@ window.addEventListener('beforeunload', (e) => {
   $('#projPill').textContent = '⏳ ' + PROJECT_ID;
   $('#linkPublic').href = '../core/pages/presupuesto-evento.html?proyecto=' + encodeURIComponent(PROJECT_ID);
 
-  // Cargar config para mostrar nombre
+  // Cargar config para mostrar nombre · prioriza draft local sobre repo
+  // (un proyecto recién creado vive solo en localStorage hasta que GitHub Pages despliegue)
   try {
-    const cfg = await fetch('../projects/' + PROJECT_ID + '/config.json').then(r => r.json());
-    $('#projPill').textContent = '📂 ' + (cfg.nombre || PROJECT_ID);
+    let cfg = window.fnbEditor.loadDraft(PROJECT_ID, 'config');
+    if (!cfg) {
+      const res = await fetch('../projects/' + PROJECT_ID + '/config.json');
+      if (res.ok) cfg = await res.json();
+    }
+    if (cfg) {
+      $('#projPill').textContent = '📂 ' + (cfg.nombre || PROJECT_ID);
+    } else {
+      $('#projPill').textContent = '⚠ ' + PROJECT_ID;
+      window.fnbEditor.showToast('No se encontró el proyecto ni en repo ni en local', 'error');
+    }
   } catch (e) {
     $('#projPill').textContent = '⚠ ' + PROJECT_ID;
-    window.fnbEditor.showToast('No se pudo leer config.json del proyecto', 'error');
+    console.warn('Boot config error:', e);
   }
 
   // Cargar las 3 secciones en paralelo
