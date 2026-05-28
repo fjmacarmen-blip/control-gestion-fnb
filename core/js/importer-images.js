@@ -81,27 +81,40 @@
    * o null si no hay similitud razonable.
    */
   function autoMatchByFilename(filename, items, getNameFn) {
-    const normalize = s => (s || '').toString().toLowerCase()
+    // Normalize a string keeping word separators (collapses accents + lowercase
+    // but preserves spaces/dashes so we can split into tokens).
+    const normalizeKeepSep = s => (s || '').toString().toLowerCase()
       .normalize('NFD').replace(/[̀-ͯ]/g, '')
-      .replace(/[^a-z0-9]/g, '');
-    const target = normalize(filename.replace(/\.[^.]+$/, ''));
-    if (!target) return null;
+      .replace(/[^a-z0-9\s_-]/g, '');
+    const tokensOf = s => normalizeKeepSep(s).split(/[\s_-]+/).filter(t => t.length > 0);
+    // Concatenated version sin separadores para exact/contains
+    const flatten = s => normalizeKeepSep(s).replace(/[\s_-]/g, '');
+
+    const targetTokens = tokensOf(filename.replace(/\.[^.]+$/, ''));
+    const targetFlat = flatten(filename.replace(/\.[^.]+$/, ''));
+    if (!targetFlat) return null;
+    // Stopwords cortas comunes en español que no aportan al match
+    const STOP = new Set(['de', 'la', 'el', 'los', 'las', 'al', 'a', 'y', 'o', 'en', 'con', 'del']);
 
     let best = null;
     let bestScore = 0;
     items.forEach((it, idx) => {
       const name = getNameFn ? getNameFn(it) : (it.n || it.nombre || it.name || '');
-      const normName = normalize(name);
-      if (!normName) return;
+      const nameFlat = flatten(name);
+      const nameTokens = tokensOf(name).filter(t => !STOP.has(t));
+      if (!nameFlat) return;
       let score = 0;
-      if (target === normName) score = 100;
-      else if (target.includes(normName) || normName.includes(target)) score = 70;
+      if (targetFlat === nameFlat) score = 100;
+      else if (targetFlat.includes(nameFlat) || nameFlat.includes(targetFlat)) score = 80;
       else {
-        // Substring de palabras (split en originales por espacios)
-        const tParts = target.split(/[^a-z0-9]+/).filter(Boolean);
-        const nParts = normName.split(/[^a-z0-9]+/).filter(Boolean);
-        const overlap = tParts.filter(t => nParts.some(n => n.length > 2 && (t.includes(n) || n.includes(t))));
-        if (overlap.length) score = 30 + overlap.length * 10;
+        // Score por intersección de tokens significativos (>2 chars, no stopwords)
+        const tTokens = targetTokens.filter(t => !STOP.has(t) && t.length > 2);
+        const nSet = new Set(nameTokens.filter(t => t.length > 2));
+        const overlap = tTokens.filter(t => nSet.has(t));
+        if (overlap.length) {
+          // Cada token compartido vale 25; satura a 80 para no eclipsar contains
+          score = Math.min(80, overlap.length * 25);
+        }
       }
       if (score > bestScore) {
         bestScore = score;
