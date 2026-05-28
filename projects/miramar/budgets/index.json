@@ -1,0 +1,167 @@
+{
+  "_README": "Manifest de presupuestos del proyecto. Para añadir uno: incluir en este array + crear el archivo PRES-XXXX.json. Lo mantiene el dashboard automáticamente cuando se guarda un presupuesto.",
+  "presupuestos": [
+    {
+      "ref": "PRES-2026-1001",
+      "fechaEvento": "2026-02-28",
+      "eventType": "teambld",
+      "espacio": "sky_lounge",
+      "pt": 212,
+      "totalConIva": 5863,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1002",
+      "fechaEvento": "2026-03-13",
+      "eventType": "galaCorp",
+      "espacio": "salon_andalucia",
+      "pt": 176,
+      "totalConIva": 5236,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1003",
+      "fechaEvento": "2026-03-28",
+      "eventType": "galaCorp",
+      "espacio": "beach_club",
+      "pt": 241,
+      "totalConIva": 7533,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1004",
+      "fechaEvento": "2026-04-05",
+      "eventType": "aniv",
+      "espacio": "salon_andalucia",
+      "pt": 120,
+      "totalConIva": 9293,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1005",
+      "fechaEvento": "2026-04-16",
+      "eventType": "convenc",
+      "espacio": "terraza_mar",
+      "pt": 155,
+      "totalConIva": 4204,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1006",
+      "fechaEvento": "2026-04-29",
+      "eventType": "bautizo",
+      "espacio": "salon_picasso",
+      "pt": 190,
+      "totalConIva": 5421,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1007",
+      "fechaEvento": "2026-05-08",
+      "eventType": "convenc",
+      "espacio": "jardines_andaluces",
+      "pt": 108,
+      "totalConIva": 2000,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1008",
+      "fechaEvento": "2026-05-18",
+      "eventType": "comuni",
+      "espacio": "jardines_andaluces",
+      "pt": 113,
+      "totalConIva": 2864,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1009",
+      "fechaEvento": "2026-05-23",
+      "eventType": "aniv",
+      "espacio": "sky_lounge",
+      "pt": 240,
+      "totalConIva": 6149,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1010",
+      "fechaEvento": "2026-06-01",
+      "eventType": "lanzami",
+      "espacio": "gran_salon_mediterraneo",
+      "pt": 148,
+      "totalConIva": 6329,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1011",
+      "fechaEvento": "2026-06-08",
+      "eventType": "lanzami",
+      "espacio": "rooftop_piscina",
+      "pt": 99,
+      "totalConIva": 3309,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1012",
+      "fechaEvento": "2026-06-17",
+      "eventType": "boda",
+      "espacio": "beach_club",
+      "pt": 166,
+      "totalConIva": 5139,
+      "estado": "borrador"
+    },
+    {
+      "ref": "PRES-2026-1013",
+      "fechaEvento": "2026-06-24",
+      "eventType": "cumple",
+      "espacio": "salon_andalucia",
+      "pt": 149,
+      "totalConIva": 13068,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1014",
+      "fechaEvento": "2026-07-04",
+      "eventType": "lanzami",
+      "espacio": "salon_picasso",
+      "pt": 207,
+      "totalConIva": 5434,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1015",
+      "fechaEvento": "2026-07-15",
+      "eventType": "cumple",
+      "espacio": "jardines_andaluces",
+      "pt": 78,
+      "totalConIva": 2059,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1016",
+      "fechaEvento": "2026-07-27",
+      "eventType": "comuni",
+      "espacio": "terraza_mar",
+      "pt": 217,
+      "totalConIva": 7662,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1017",
+      "fechaEvento": "2026-08-09",
+      "eventType": "galaCorp",
+      "espacio": "salon_picasso",
+      "pt": 171,
+      "totalConIva": 3029,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-1018",
+      "fechaEvento": "2026-08-20",
+      "eventType": "teambld",
+      "espacio": "sky_lounge",
+      "pt": 136,
+      "totalConIva": 3850,
+      "estado": "confirmado"
+    }
+  ]
+}

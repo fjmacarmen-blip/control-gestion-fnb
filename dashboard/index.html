@@ -442,7 +442,7 @@ async function loadProjectsList() {
         <div class="proj-actions">
           <a href="../core/pages/presupuesto-evento.html?proyecto=${encodeURIComponent(c.id)}" target="_blank" rel="noopener" title="Abrir frontend público">👁 Ver demo</a>
           <a href="editor.html?proyecto=${encodeURIComponent(c.id)}" title="Editor visual">✏️ Editar</a>
-          <button type="button" disabled title="Disponible en Fase 3.D">📊 Métricas · 3.D</button>
+          <a href="metricas.html?proyecto=${encodeURIComponent(c.id)}" title="Métricas del proyecto">📊 Métricas</a>
         </div>
         ${c.error ? '<div style="color:var(--danger);font-size:11px;">Error cargando config: ' + escapeHtml(c.error) + '</div>' : ''}
       `;

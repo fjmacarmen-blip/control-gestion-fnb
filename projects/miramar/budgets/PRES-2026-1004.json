@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1004",
+  "generado": "2026-02-07T15:58:00Z",
+  "fechaEvento": "2026-04-05",
+  "horaInicio": "21:00",
+  "horaFin": "04:00",
+  "clientName": "Boda Martín y Sofía",
+  "eventType": {
+    "id": "aniv",
+    "name": "Aniversario",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "lux",
+    "name": "Menú de Autor",
+    "ppax": 88
+  },
+  "espacio": "salon_andalucia",
+  "pt": 120,
+  "pn": 96,
+  "pi": 24,
+  "total": 8448,
+  "iva": 845,
+  "totalConIva": 9293,
+  "senial": 1394,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 1,
+    "vegetariano": 0,
+    "celiaco": 2,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1009",
+  "generado": "2026-04-24T11:34:00Z",
+  "fechaEvento": "2026-05-23",
+  "horaInicio": "20:00",
+  "horaFin": "02:00",
+  "clientName": "Cumpleaños 18 · Iván Castro",
+  "eventType": {
+    "id": "aniv",
+    "name": "Aniversario",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "ck_sol",
+    "name": "Cóctel Costa del Sol",
+    "ppax": 26
+  },
+  "espacio": "sky_lounge",
+  "pt": 240,
+  "pn": 215,
+  "pi": 25,
+  "total": 5590,
+  "iva": 559,
+  "totalConIva": 6149,
+  "senial": 922,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 4,
+    "vegetariano": 4,
+    "celiaco": 4,
+    "sinLactosa": 5,
+    "sinFrutos": 4,
+    "halal": 0,
+    "kosher": 0
+  }
+}

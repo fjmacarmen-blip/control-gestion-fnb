@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1011",
+  "generado": "2026-05-19T12:47:00Z",
+  "fechaEvento": "2026-06-08",
+  "horaInicio": "13:00",
+  "horaFin": "19:00",
+  "clientName": "Hotel Group Sur",
+  "eventType": {
+    "id": "lanzami",
+    "name": "Lanzamiento producto",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "bru_cla",
+    "name": "Brunch Clásico",
+    "ppax": 32
+  },
+  "espacio": "rooftop_piscina",
+  "pt": 99,
+  "pn": 94,
+  "pi": 5,
+  "total": 3008,
+  "iva": 301,
+  "totalConIva": 3309,
+  "senial": 496,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 1,
+    "vegetariano": 0,
+    "celiaco": 1,
+    "sinLactosa": 0,
+    "sinFrutos": 1,
+    "halal": 0,
+    "kosher": 0
+  }
+}

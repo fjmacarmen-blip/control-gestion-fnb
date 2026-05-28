@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1010",
+  "generado": "2026-05-13T12:55:00Z",
+  "fechaEvento": "2026-06-01",
+  "horaInicio": "13:00",
+  "horaFin": "20:00",
+  "clientName": "Team Andalucía Digital",
+  "eventType": {
+    "id": "lanzami",
+    "name": "Lanzamiento producto",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "est",
+    "name": "Menú Selecta",
+    "ppax": 42
+  },
+  "espacio": "gran_salon_mediterraneo",
+  "pt": 148,
+  "pn": 137,
+  "pi": 11,
+  "total": 5754,
+  "iva": 575,
+  "totalConIva": 6329,
+  "senial": 949,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 2,
+    "vegetariano": 0,
+    "celiaco": 5,
+    "sinLactosa": 1,
+    "sinFrutos": 2,
+    "halal": 0,
+    "kosher": 0
+  }
+}

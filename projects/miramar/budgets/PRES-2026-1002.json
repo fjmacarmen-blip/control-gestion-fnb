@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1002",
+  "generado": "2026-01-12T15:51:00Z",
+  "fechaEvento": "2026-03-13",
+  "horaInicio": "09:00",
+  "horaFin": "16:00",
+  "clientName": "Hotel Group Sur",
+  "eventType": {
+    "id": "galaCorp",
+    "name": "Cena de gala",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "eco",
+    "name": "Menú Esencial",
+    "ppax": 28
+  },
+  "espacio": "salon_andalucia",
+  "pt": 176,
+  "pn": 170,
+  "pi": 6,
+  "total": 4760,
+  "iva": 476,
+  "totalConIva": 5236,
+  "senial": 785,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 8,
+    "vegetariano": 2,
+    "celiaco": 5,
+    "sinLactosa": 3,
+    "sinFrutos": 2,
+    "halal": 0,
+    "kosher": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1007",
+  "generado": "2026-04-11T13:36:00Z",
+  "fechaEvento": "2026-05-08",
+  "horaInicio": "10:30",
+  "horaFin": "17:30",
+  "clientName": "Boda Carmen y Andrés",
+  "eventType": {
+    "id": "convenc",
+    "name": "Convención",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "ck_brisa",
+    "name": "Cóctel Brisa",
+    "ppax": 18
+  },
+  "espacio": "jardines_andaluces",
+  "pt": 108,
+  "pn": 101,
+  "pi": 7,
+  "total": 1818,
+  "iva": 182,
+  "totalConIva": 2000,
+  "senial": 300,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 1,
+    "vegetariano": 0,
+    "celiaco": 2,
+    "sinLactosa": 0,
+    "sinFrutos": 1,
+    "halal": 0,
+    "kosher": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1015",
+  "generado": "2026-07-02T17:56:00Z",
+  "fechaEvento": "2026-07-15",
+  "horaInicio": "19:00",
+  "horaFin": "00:00",
+  "clientName": "Boda Martín y Sofía",
+  "eventType": {
+    "id": "cumple",
+    "name": "Cumpleaños",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "ck_sol",
+    "name": "Cóctel Costa del Sol",
+    "ppax": 26
+  },
+  "espacio": "jardines_andaluces",
+  "pt": 78,
+  "pn": 72,
+  "pi": 6,
+  "total": 1872,
+  "iva": 187,
+  "totalConIva": 2059,
+  "senial": 309,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 1,
+    "vegetariano": 2,
+    "celiaco": 0,
+    "sinLactosa": 1,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

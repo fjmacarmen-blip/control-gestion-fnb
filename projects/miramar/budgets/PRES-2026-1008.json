@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1008",
+  "generado": "2026-03-24T10:17:00Z",
+  "fechaEvento": "2026-05-18",
+  "horaInicio": "18:00",
+  "horaFin": "02:00",
+  "clientName": "Boda Martín y Sofía",
+  "eventType": {
+    "id": "comuni",
+    "name": "Comunión",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "eco",
+    "name": "Menú Esencial",
+    "ppax": 28
+  },
+  "espacio": "jardines_andaluces",
+  "pt": 113,
+  "pn": 93,
+  "pi": 20,
+  "total": 2604,
+  "iva": 260,
+  "totalConIva": 2864,
+  "senial": 430,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 2,
+    "vegetariano": 1,
+    "celiaco": 2,
+    "sinLactosa": 0,
+    "sinFrutos": 2,
+    "halal": 0,
+    "kosher": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1006",
+  "generado": "2026-03-01T10:16:00Z",
+  "fechaEvento": "2026-04-29",
+  "horaInicio": "19:00",
+  "horaFin": "00:00",
+  "clientName": "Cumpleaños 50 · Ana Cabrera",
+  "eventType": {
+    "id": "bautizo",
+    "name": "Bautizo",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "eco",
+    "name": "Menú Esencial",
+    "ppax": 28
+  },
+  "espacio": "salon_picasso",
+  "pt": 190,
+  "pn": 176,
+  "pi": 14,
+  "total": 4928,
+  "iva": 493,
+  "totalConIva": 5421,
+  "senial": 813,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 4,
+    "vegetariano": 1,
+    "celiaco": 1,
+    "sinLactosa": 3,
+    "sinFrutos": 6,
+    "halal": 0,
+    "kosher": 0
+  }
+}

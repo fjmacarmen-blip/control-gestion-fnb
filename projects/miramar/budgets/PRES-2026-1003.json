@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1003",
+  "generado": "2026-02-26T16:10:00Z",
+  "fechaEvento": "2026-03-28",
+  "horaInicio": "13:00",
+  "horaFin": "21:00",
+  "clientName": "Cumpleaños 18 · Iván Castro",
+  "eventType": {
+    "id": "galaCorp",
+    "name": "Cena de gala",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "bru_cla",
+    "name": "Brunch Clásico",
+    "ppax": 32
+  },
+  "espacio": "beach_club",
+  "pt": 241,
+  "pn": 214,
+  "pi": 27,
+  "total": 6848,
+  "iva": 685,
+  "totalConIva": 7533,
+  "senial": 1130,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 3,
+    "vegetariano": 4,
+    "celiaco": 4,
+    "sinLactosa": 4,
+    "sinFrutos": 2,
+    "halal": 0,
+    "kosher": 0
+  }
+}

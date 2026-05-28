@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1014",
+  "generado": "2026-06-02T14:35:00Z",
+  "fechaEvento": "2026-07-04",
+  "horaInicio": "10:30",
+  "horaFin": "18:30",
+  "clientName": "Familia Ruiz-Delgado",
+  "eventType": {
+    "id": "lanzami",
+    "name": "Lanzamiento producto",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "ck_sol",
+    "name": "Cóctel Costa del Sol",
+    "ppax": 26
+  },
+  "espacio": "salon_picasso",
+  "pt": 207,
+  "pn": 190,
+  "pi": 17,
+  "total": 4940,
+  "iva": 494,
+  "totalConIva": 5434,
+  "senial": 815,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 1,
+    "vegetariano": 2,
+    "celiaco": 1,
+    "sinLactosa": 0,
+    "sinFrutos": 3,
+    "halal": 0,
+    "kosher": 0
+  }
+}

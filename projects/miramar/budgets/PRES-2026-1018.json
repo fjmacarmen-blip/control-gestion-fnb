@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1018",
+  "generado": "2026-08-06T15:35:00Z",
+  "fechaEvento": "2026-08-20",
+  "horaInicio": "10:30",
+  "horaFin": "18:30",
+  "clientName": "Familia García-López",
+  "eventType": {
+    "id": "teambld",
+    "name": "Team building",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "eco",
+    "name": "Menú Esencial",
+    "ppax": 28
+  },
+  "espacio": "sky_lounge",
+  "pt": 136,
+  "pn": 125,
+  "pi": 11,
+  "total": 3500,
+  "iva": 350,
+  "totalConIva": 3850,
+  "senial": 578,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 2,
+    "vegetariano": 1,
+    "celiaco": 0,
+    "sinLactosa": 0,
+    "sinFrutos": 2,
+    "halal": 0,
+    "kosher": 0
+  }
+}

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="project-base" content="../">
+<title>Métricas · Dashboard F&B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../core/css/dashboard-theme.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100vh; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 70% -200px, rgba(52,211,153,.06), transparent 60%),
+      radial-gradient(900px 500px at 10% 0%, rgba(167,139,250,.05), transparent 60%),
+      var(--bg-base);
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-soft); }
+
+  /* Topbar */
+  .topbar {
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 18px;
+    background: rgba(13,17,23,.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-default);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .crumb { color: var(--text-soft); font-size: 13px; }
+  .crumb a { color: var(--text-soft); }
+  .crumb a:hover { color: var(--accent); }
+  .crumb-sep { color: var(--border-default); margin: 0 8px; }
+  .proj-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border-radius: 100px;
+    background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.3);
+    color: var(--accent); font-size: 12px; font-weight: 500;
+  }
+  .btn {
+    padding: 8px 14px; border-radius: 7px; border: 1px solid var(--border-default);
+    background: var(--bg-elevated); color: var(--text-soft);
+    font: 500 12px var(--font-ui); cursor: pointer; transition: all .15s;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* Layout */
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 28px 80px; }
+  .head { margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; flex-wrap: wrap; }
+  h1 { font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -.01em; }
+  .lede { color: var(--text-soft); font-size: 14px; margin-top: 4px; }
+
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 4px; border-bottom: 1px solid var(--border-default);
+    margin-bottom: 24px;
+  }
+  .tab {
+    padding: 12px 18px; cursor: pointer;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted); font-size: 14px; font-weight: 500;
+    transition: all .15s;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* KPI cards */
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px; margin-bottom: 28px;
+  }
+  .kpi {
+    background: var(--bg-elevated); border: 1px solid var(--border-default);
+    border-radius: 12px; padding: 18px 20px;
+  }
+  .kpi-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+  .kpi-val { font-family: var(--font-display); font-size: 30px; font-weight: 700; letter-spacing: -.02em; line-height: 1; }
+  .kpi-val.accent { color: var(--accent); }
+  .kpi-val.info { color: var(--info); }
+  .kpi-sub { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
+  /* Charts */
+  .card-block {
+    background: var(--bg-elevated); border: 1px solid var(--border-default);
+    border-radius: 12px; padding: 22px;
+    margin-bottom: 18px;
+  }
+  .card-block h3 {
+    font-family: var(--font-display); font-size: 18px; font-weight: 600;
+    margin-bottom: 14px; letter-spacing: -.01em;
+  }
+  .chart-wrap { position: relative; height: 280px; }
+
+  /* Top eventos */
+  .top-list { display: flex; flex-direction: column; gap: 8px; }
+  .top-row {
+    display: grid; grid-template-columns: 28px 1fr 60px 100px; gap: 12px;
+    align-items: center; padding: 8px 10px;
+    background: var(--bg-surface); border-radius: 7px;
+    font-size: 13px;
+  }
+  .top-rank { color: var(--text-muted); font-family: var(--font-mono); font-size: 11px; }
+  .top-name { color: var(--text); font-weight: 500; }
+  .top-count { color: var(--info); font-weight: 600; text-align: right; }
+  .top-amount { color: var(--accent); font-weight: 600; font-family: var(--font-mono); font-size: 12px; text-align: right; }
+
+  /* Agenda */
+  .agenda-list { display: flex; flex-direction: column; gap: 8px; }
+  .agenda-row {
+    display: grid; grid-template-columns: 80px 1fr 110px 100px; gap: 14px;
+    align-items: center; padding: 12px 14px;
+    background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 8px;
+    font-size: 13px;
+  }
+  .agenda-row.estado-borrador { opacity: .7; border-style: dashed; }
+  .agenda-date { font-family: var(--font-mono); font-size: 12px; color: var(--info); font-weight: 600; }
+  .agenda-name { color: var(--text); font-weight: 500; line-height: 1.3; }
+  .agenda-meta { color: var(--text-muted); font-size: 11px; margin-top: 3px; }
+  .agenda-pax { font-family: var(--font-mono); font-size: 12px; color: var(--text-soft); text-align: right; }
+  .agenda-amount { color: var(--accent); font-weight: 600; font-family: var(--font-mono); font-size: 12px; text-align: right; }
+  .pill {
+    display: inline-block; padding: 2px 7px; border-radius: 100px;
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    background: rgba(63,185,80,.15); color: var(--success); border: 1px solid rgba(63,185,80,.3);
+  }
+  .pill.borrador { background: rgba(251,191,36,.15); color: var(--warning); border-color: rgba(251,191,36,.3); }
+
+  /* Ocupación */
+  .occ-row {
+    display: grid; grid-template-columns: 1fr 80px; gap: 14px;
+    align-items: center; padding: 10px 0;
+    border-bottom: 1px solid var(--border-default);
+  }
+  .occ-row:last-child { border-bottom: none; }
+  .occ-name { color: var(--text); font-size: 13px; font-weight: 500; text-transform: capitalize; }
+  .occ-bar { height: 6px; background: var(--bg-surface); border-radius: 100px; margin-top: 6px; overflow: hidden; }
+  .occ-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--info)); border-radius: 100px; }
+  .occ-count { font-family: var(--font-mono); font-size: 12px; color: var(--text-soft); text-align: right; }
+
+  .empty { padding: 50px; text-align: center; color: var(--text-muted); }
+  .empty .icon { font-size: 42px; margin-bottom: 10px; opacity: .6; }
+  .hidden { display: none !important; }
+
+  @media (max-width: 720px) {
+    .agenda-row { grid-template-columns: 1fr; gap: 6px; }
+    .agenda-pax, .agenda-amount { text-align: left; }
+    .head { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="crumb">
+      <a href="./index.html">← Dashboard</a>
+      <span class="crumb-sep">/</span>
+      <span style="color:var(--text);">Métricas</span>
+    </div>
+    <span class="proj-pill" id="projPill">⏳ cargando…</span>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <a id="linkEditor" class="btn" title="Abrir editor del proyecto">✏️ Editor</a>
+    <button class="btn" id="btnLogout">Cerrar sesión</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <div>
+      <h1>Métricas <span style="color:var(--text-muted);font-weight:500;font-size:18px;font-family:var(--font-ui);">·</span> <span id="projName" style="color:var(--accent-soft);font-size:24px;font-weight:500;">—</span></h1>
+      <div class="lede">Presupuestos generados y agenda de próximos eventos. Las otras 3 vistas de métricas llegan en Fase 4.</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="presupuestos">📋 Presupuestos</div>
+    <div class="tab" data-tab="agenda">📅 Agenda · próximos eventos</div>
+  </div>
+
+  <!-- TAB · PRESUPUESTOS -->
+  <div data-content="presupuestos">
+    <div class="kpi-grid" id="kpiGrid">
+      <!-- KPIs generados por JS -->
+    </div>
+
+    <div class="card-block">
+      <h3>Tendencia mensual · presupuestos generados</h3>
+      <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+    </div>
+
+    <div class="card-block">
+      <h3>Top 5 tipos de evento</h3>
+      <div class="top-list" id="topEventList">
+        <!-- Generado por JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB · AGENDA -->
+  <div data-content="agenda" class="hidden">
+    <div class="kpi-grid" id="kpiAgenda">
+      <!-- KPIs generados por JS -->
+    </div>
+
+    <div class="card-block">
+      <h3>Ocupación por espacio · próximos 90 días</h3>
+      <div id="occupancyList">
+        <!-- Generado por JS -->
+      </div>
+    </div>
+
+    <div class="card-block">
+      <h3>Próximos eventos</h3>
+      <div class="agenda-list" id="agendaList">
+        <!-- Generado por JS -->
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Dependencias -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+<script src="../core/js/loader.js"></script>
+<script src="../core/js/auth.js"></script>
+<script src="../core/js/metrics.js"></script>
+<script>
+'use strict';
+
+const PROJECT_ID = (new URLSearchParams(location.search).get('proyecto') || '').trim();
+const VALID_RE = /^[a-z0-9_-]+$/;
+
+if (!PROJECT_ID || !VALID_RE.test(PROJECT_ID)) {
+  document.body.innerHTML = '<div style="padding:60px;text-align:center;color:#ff8a8a;font:14px/1.6 system-ui;">Falta el parámetro <code>?proyecto=&lt;id&gt;</code> o el id es inválido.<br><br><a href="./index.html" style="color:#34d399;">← Volver al dashboard</a></div>';
+  throw new Error('PROJECT_ID inválido');
+}
+
+// Gate auth
+if (!window.fnbAuth.getSession()) {
+  location.replace('./index.html');
+  throw new Error('Sin sesión');
+}
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+let state = { budgets: [], summary: null };
+
+// ── Tabs ──────────────────────────────────────
+$$('.tab').forEach(t => t.addEventListener('click', () => {
+  $$('.tab').forEach(x => x.classList.toggle('active', x === t));
+  const tabKey = t.dataset.tab;
+  $$('[data-content]').forEach(c => c.classList.toggle('hidden', c.dataset.content !== tabKey));
+}));
+
+// ── Boot ──────────────────────────────────────
+(async function boot() {
+  $('#projPill').textContent = '⏳ ' + PROJECT_ID;
+  $('#linkEditor').href = './editor.html?proyecto=' + encodeURIComponent(PROJECT_ID);
+
+  // Cargar config para nombre
+  try {
+    const cfg = await fetch('../projects/' + PROJECT_ID + '/config.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null);
+    const name = (cfg && cfg.nombre) || PROJECT_ID;
+    $('#projPill').textContent = '📂 ' + name;
+    $('#projName').textContent = name;
+  } catch (e) {
+    $('#projPill').textContent = '⚠ ' + PROJECT_ID;
+  }
+
+  // Cargar presupuestos
+  state.budgets = await window.fnbMetrics.loadBudgets(PROJECT_ID);
+  state.summary = window.fnbMetrics.summarizeBudgets(state.budgets);
+
+  renderPresupuestos();
+  renderAgenda();
+})();
+
+function renderPresupuestos() {
+  const s = state.summary;
+  $('#kpiGrid').innerHTML = `
+    <div class="kpi">
+      <div class="kpi-label">Total presupuestos</div>
+      <div class="kpi-val accent">${s.total}</div>
+      <div class="kpi-sub">${s.confirmados} confirmados · ${s.borradores} borradores</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Total facturable</div>
+      <div class="kpi-val accent">${window.fnbMetrics.formatEur(s.totalFacturable)}</div>
+      <div class="kpi-sub">IVA incluido</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Ticket medio</div>
+      <div class="kpi-val info">${window.fnbMetrics.formatEur(s.ticketMedio)}</div>
+      <div class="kpi-sub">por evento</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Pax · acumulado</div>
+      <div class="kpi-val">${s.paxTotal.toLocaleString('es-ES')}</div>
+      <div class="kpi-sub">${s.paxMedio} pax/evento</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Tasa confirmación</div>
+      <div class="kpi-val">${s.confirmRate}%</div>
+      <div class="kpi-sub">${s.confirmados}/${s.total}</div>
+    </div>
+  `;
+
+  // Trend chart
+  const trend = window.fnbMetrics.groupByMonth(state.budgets, 12);
+  const ctx = document.getElementById('trendChart');
+  if (!state.budgets.length) {
+    ctx.parentElement.innerHTML = '<div class="empty"><div class="icon">📊</div>Sin presupuestos todavía.</div>';
+  } else {
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: trend.map(m => m.label),
+        datasets: [
+          {
+            label: 'Nº presupuestos',
+            data: trend.map(m => m.count),
+            borderColor: '#34d399',
+            backgroundColor: 'rgba(52,211,153,.12)',
+            tension: .3,
+            fill: true,
+            yAxisID: 'y1',
+          },
+          {
+            label: 'Facturable €',
+            data: trend.map(m => Math.round(m.facturable / 1000)),
+            borderColor: '#a78bfa',
+            backgroundColor: 'rgba(167,139,250,.12)',
+            tension: .3,
+            yAxisID: 'y2',
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { color: '#8b949e', font: { family: 'Inter, sans-serif', size: 11 } } },
+          tooltip: {
+            backgroundColor: '#161b22',
+            borderColor: '#30363d',
+            borderWidth: 1,
+            titleColor: '#e6edf3',
+            bodyColor: '#8b949e',
+            callbacks: {
+              label: (ctx) => {
+                if (ctx.dataset.label === 'Facturable €') return ctx.dataset.label + ': ' + (ctx.parsed.y * 1000).toLocaleString('es-ES') + ' €';
+                return ctx.dataset.label + ': ' + ctx.parsed.y;
+              }
+            }
+          },
+        },
+        scales: {
+          x: { ticks: { color: '#6e7681', font: { size: 10, family: 'JetBrains Mono, monospace' } }, grid: { color: 'rgba(48,54,61,.4)' } },
+          y1: { type: 'linear', position: 'left', ticks: { color: '#34d399', font: { size: 10 } }, grid: { color: 'rgba(48,54,61,.4)' }, beginAtZero: true },
+          y2: { type: 'linear', position: 'right', ticks: { color: '#a78bfa', font: { size: 10 }, callback: (v) => v + 'k' }, grid: { display: false }, beginAtZero: true },
+        },
+      },
+    });
+  }
+
+  // Top eventos
+  const top = window.fnbMetrics.topEventTypes(state.budgets, 5);
+  if (!top.length) {
+    $('#topEventList').innerHTML = '<div class="empty" style="padding:20px;">Sin datos.</div>';
+  } else {
+    $('#topEventList').innerHTML = top.map((t, i) => `
+      <div class="top-row">
+        <div class="top-rank">#${i + 1}</div>
+        <div class="top-name">${escapeHtml(t.name)}</div>
+        <div class="top-count">${t.count}</div>
+        <div class="top-amount">${window.fnbMetrics.formatEur(t.facturable)}</div>
+      </div>
+    `).join('');
+  }
+}
+
+function renderAgenda() {
+  const upcoming = window.fnbMetrics.nextEvents(state.budgets, 90);
+  const confirmed = upcoming.filter(b => b.estado === 'confirmado');
+  const drafts = upcoming.filter(b => b.estado === 'borrador');
+  const paxNext = upcoming.reduce((a, b) => a + (b.pt || 0), 0);
+  const facNext = upcoming.reduce((a, b) => a + (b.totalConIva || 0), 0);
+
+  $('#kpiAgenda').innerHTML = `
+    <div class="kpi">
+      <div class="kpi-label">Eventos próximos 90 días</div>
+      <div class="kpi-val accent">${upcoming.length}</div>
+      <div class="kpi-sub">${confirmed.length} confirmados · ${drafts.length} borradores</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Pax próximos 90 días</div>
+      <div class="kpi-val">${paxNext.toLocaleString('es-ES')}</div>
+      <div class="kpi-sub">acumulado</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Facturable comprometido</div>
+      <div class="kpi-val info">${window.fnbMetrics.formatEur(facNext)}</div>
+      <div class="kpi-sub">IVA incluido</div>
+    </div>
+  `;
+
+  // Ocupación por espacio
+  const occ = window.fnbMetrics.occupancyBySpace(state.budgets, 90);
+  if (!occ.length) {
+    $('#occupancyList').innerHTML = '<div class="empty" style="padding:20px;">Sin eventos en los próximos 90 días.</div>';
+  } else {
+    $('#occupancyList').innerHTML = occ.map(o => {
+      const nombre = o.espacio.replace(/_/g, ' ');
+      return `
+        <div class="occ-row">
+          <div>
+            <div class="occ-name">${escapeHtml(nombre)}</div>
+            <div class="occ-bar"><div class="occ-fill" style="width:${o.percent}%"></div></div>
+          </div>
+          <div class="occ-count">${o.count} evento${o.count === 1 ? '' : 's'}<br><span style="color:var(--accent);font-size:11px;">${window.fnbMetrics.formatEur(o.facturable)}</span></div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Lista próximos eventos
+  if (!upcoming.length) {
+    $('#agendaList').innerHTML = '<div class="empty" style="padding:20px;">Sin eventos próximos.</div>';
+  } else {
+    $('#agendaList').innerHTML = upcoming.map(b => `
+      <div class="agenda-row estado-${b.estado}">
+        <div class="agenda-date">${window.fnbMetrics.formatDate(b.fechaEvento)}</div>
+        <div>
+          <div class="agenda-name">${escapeHtml(b.clientName || '—')} <span class="pill ${b.estado === 'borrador' ? 'borrador' : ''}">${escapeHtml(b.estado)}</span></div>
+          <div class="agenda-meta">${escapeHtml(b.eventType.name)} · ${escapeHtml(b.espacio.replace(/_/g, ' '))} · ${escapeHtml(b.menuPkg.name)}</div>
+        </div>
+        <div class="agenda-pax">${b.pt} pax</div>
+        <div class="agenda-amount">${window.fnbMetrics.formatEur(b.totalConIva)}</div>
+      </div>
+    `).join('');
+  }
+}
+
+$('#btnLogout').addEventListener('click', () => {
+  window.fnbAuth.clearSession();
+  window.fnbAuth.clearPAT();
+  location.replace('./index.html');
+});
+</script>
+</body>
+</html>

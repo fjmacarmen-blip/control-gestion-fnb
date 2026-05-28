@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1005",
+  "generado": "2026-02-24T16:17:00Z",
+  "fechaEvento": "2026-04-16",
+  "horaInicio": "09:00",
+  "horaFin": "16:00",
+  "clientName": "Boda Martín y Sofía",
+  "eventType": {
+    "id": "convenc",
+    "name": "Convención",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "ck_sol",
+    "name": "Cóctel Costa del Sol",
+    "ppax": 26
+  },
+  "espacio": "terraza_mar",
+  "pt": 155,
+  "pn": 147,
+  "pi": 8,
+  "total": 3822,
+  "iva": 382,
+  "totalConIva": 4204,
+  "senial": 631,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 1,
+    "vegetariano": 5,
+    "celiaco": 1,
+    "sinLactosa": 4,
+    "sinFrutos": 3,
+    "halal": 0,
+    "kosher": 0
+  }
+}

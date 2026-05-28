@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1017",
+  "generado": "2026-07-26T17:09:00Z",
+  "fechaEvento": "2026-08-09",
+  "horaInicio": "12:00",
+  "horaFin": "18:00",
+  "clientName": "Comunión Pablo Jiménez",
+  "eventType": {
+    "id": "galaCorp",
+    "name": "Cena de gala",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "ck_brisa",
+    "name": "Cóctel Brisa",
+    "ppax": 18
+  },
+  "espacio": "salon_picasso",
+  "pt": 171,
+  "pn": 153,
+  "pi": 18,
+  "total": 2754,
+  "iva": 275,
+  "totalConIva": 3029,
+  "senial": 454,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 2,
+    "vegetariano": 0,
+    "celiaco": 3,
+    "sinLactosa": 0,
+    "sinFrutos": 2,
+    "halal": 0,
+    "kosher": 0
+  }
+}

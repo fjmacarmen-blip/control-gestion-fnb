@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1001",
+  "generado": "2026-01-22T18:43:00Z",
+  "fechaEvento": "2026-02-28",
+  "horaInicio": "13:00",
+  "horaFin": "20:00",
+  "clientName": "Aniversario Pérez-Vega",
+  "eventType": {
+    "id": "teambld",
+    "name": "Team building",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "ck_sol",
+    "name": "Cóctel Costa del Sol",
+    "ppax": 26
+  },
+  "espacio": "sky_lounge",
+  "pt": 212,
+  "pn": 205,
+  "pi": 7,
+  "total": 5330,
+  "iva": 533,
+  "totalConIva": 5863,
+  "senial": 879,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 2,
+    "vegetariano": 3,
+    "celiaco": 2,
+    "sinLactosa": 2,
+    "sinFrutos": 5,
+    "halal": 0,
+    "kosher": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1013",
+  "generado": "2026-06-13T16:12:00Z",
+  "fechaEvento": "2026-06-24",
+  "horaInicio": "21:00",
+  "horaFin": "05:00",
+  "clientName": "Empresa Inversiones Tartessos S.L.",
+  "eventType": {
+    "id": "cumple",
+    "name": "Cumpleaños",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "lux",
+    "name": "Menú de Autor",
+    "ppax": 88
+  },
+  "espacio": "salon_andalucia",
+  "pt": 149,
+  "pn": 135,
+  "pi": 14,
+  "total": 11880,
+  "iva": 1188,
+  "totalConIva": 13068,
+  "senial": 1960,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 1,
+    "vegetariano": 0,
+    "celiaco": 1,
+    "sinLactosa": 2,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

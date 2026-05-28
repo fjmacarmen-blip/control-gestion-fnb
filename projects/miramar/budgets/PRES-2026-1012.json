@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1012",
+  "generado": "2026-05-11T16:08:00Z",
+  "fechaEvento": "2026-06-17",
+  "horaInicio": "19:00",
+  "horaFin": "00:00",
+  "clientName": "Cumpleaños 50 · Ana Cabrera",
+  "eventType": {
+    "id": "boda",
+    "name": "Boda",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "bru_cla",
+    "name": "Brunch Clásico",
+    "ppax": 32
+  },
+  "espacio": "beach_club",
+  "pt": 166,
+  "pn": 146,
+  "pi": 20,
+  "total": 4672,
+  "iva": 467,
+  "totalConIva": 5139,
+  "senial": 0,
+  "estado": "borrador",
+  "dietas": {
+    "vegano": 5,
+    "vegetariano": 2,
+    "celiaco": 0,
+    "sinLactosa": 3,
+    "sinFrutos": 3,
+    "halal": 0,
+    "kosher": 0
+  }
+}

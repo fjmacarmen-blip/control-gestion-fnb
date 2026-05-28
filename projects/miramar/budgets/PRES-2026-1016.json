@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-1016",
+  "generado": "2026-07-14T17:56:00Z",
+  "fechaEvento": "2026-07-27",
+  "horaInicio": "20:00",
+  "horaFin": "04:00",
+  "clientName": "Familia Ruiz-Delgado",
+  "eventType": {
+    "id": "comuni",
+    "name": "Comunión",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "bl_est",
+    "name": "Barra Selecta",
+    "ppax": 35
+  },
+  "espacio": "terraza_mar",
+  "pt": 217,
+  "pn": 199,
+  "pi": 18,
+  "total": 6965,
+  "iva": 697,
+  "totalConIva": 7662,
+  "senial": 1149,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 1,
+    "vegetariano": 2,
+    "celiaco": 1,
+    "sinLactosa": 4,
+    "sinFrutos": 3,
+    "halal": 0,
+    "kosher": 0
+  }
+}
