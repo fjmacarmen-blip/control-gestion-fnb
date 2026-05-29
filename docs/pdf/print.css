@@ -1,0 +1,191 @@
+/* ─────────────────────────────────────────────────────
+ * Print-ready CSS · Plataforma F&B v5.3
+ * --------------------------------------------------
+ * Optimizado para Ctrl+P → Guardar como PDF en Chrome.
+ * Documentos profesionales con tablas legibles, código
+ * destacado y márgenes que respetan el A4.
+ * ───────────────────────────────────────────────────── */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 22mm 16mm;
+  @bottom-left  { content: "Plataforma F&B · v5.3"; font-family: 'Inter', sans-serif; font-size: 9pt; color: #888; }
+  @bottom-right { content: counter(page) " / " counter(pages); font-family: 'Inter', sans-serif; font-size: 9pt; color: #888; }
+}
+
+* { box-sizing: border-box; }
+html { font-size: 11pt; }
+body {
+  font-family: 'Inter', system-ui, 'Segoe UI', -apple-system, sans-serif;
+  color: #1a202c;
+  line-height: 1.55;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #fff;
+}
+
+/* Cover header */
+.cover {
+  border-bottom: 2px solid #059669;
+  padding-bottom: 18px;
+  margin-bottom: 28px;
+}
+.cover .eyebrow {
+  font-size: 9pt; letter-spacing: 3px; text-transform: uppercase;
+  color: #059669; margin-bottom: 8px;
+}
+.cover .meta {
+  font-size: 9pt; color: #64748b;
+  margin-top: 8px;
+}
+.cover .meta a { color: #059669; text-decoration: none; }
+
+/* Tipografía */
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 24pt; font-weight: 700;
+  letter-spacing: -0.5pt;
+  margin: 0 0 8pt; line-height: 1.15;
+  color: #0f172a;
+}
+h2 {
+  font-size: 14pt; font-weight: 700;
+  margin: 24pt 0 8pt; line-height: 1.2;
+  color: #0f172a;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 4pt;
+  page-break-after: avoid;
+}
+h3 {
+  font-size: 11.5pt; font-weight: 700;
+  margin: 16pt 0 4pt; line-height: 1.3;
+  color: #1e293b;
+  page-break-after: avoid;
+}
+h4 { font-size: 10.5pt; font-weight: 700; margin: 12pt 0 4pt; color: #334155; page-break-after: avoid; }
+p { margin: 0 0 8pt; orphans: 3; widows: 3; }
+strong { color: #0f172a; }
+em { color: #475569; }
+
+a { color: #059669; text-decoration: none; }
+
+/* Listas */
+ul, ol { margin: 0 0 10pt; padding-left: 18pt; }
+li { margin-bottom: 3pt; line-height: 1.5; }
+li > p { margin: 0; }
+
+/* Blockquote · destacado */
+blockquote {
+  margin: 10pt 0;
+  padding: 8pt 14pt;
+  border-left: 3pt solid #059669;
+  background: #f0fdf4;
+  color: #166534;
+  font-style: normal;
+  font-size: 10pt;
+}
+blockquote p { margin: 0; }
+
+/* Código */
+code {
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 9pt;
+  background: #f1f5f9;
+  color: #475569;
+  padding: 1pt 4pt;
+  border-radius: 3pt;
+  word-break: break-word;
+}
+pre {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4pt;
+  padding: 10pt 12pt;
+  overflow-x: auto;
+  font-size: 9pt;
+  line-height: 1.4;
+  margin: 8pt 0 12pt;
+  page-break-inside: avoid;
+}
+pre code { background: transparent; padding: 0; color: #1e293b; }
+
+/* Tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8pt 0 14pt;
+  font-size: 9.5pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+th {
+  background: #1e293b;
+  color: #ffffff;
+  text-align: left;
+  padding: 7pt 9pt;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.2pt;
+}
+td {
+  padding: 6pt 9pt;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f8fafc; }
+
+/* Separadores */
+hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 20pt 0;
+}
+
+/* Footer · solo en pantalla */
+.print-cta {
+  position: fixed;
+  top: 12px; right: 16px;
+  background: linear-gradient(135deg, #059669, #047857);
+  color: #fff;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font: 600 13px/1 'Inter', sans-serif;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 6px 18px rgba(5,150,105,.35);
+  z-index: 999;
+}
+.print-cta:hover { filter: brightness(1.1); }
+
+.print-hint {
+  position: fixed;
+  top: 60px; right: 16px;
+  background: #fff;
+  color: #475569;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font: 11px/1.55 'Inter', sans-serif;
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  border: 1px solid #e2e8f0;
+  max-width: 220px;
+  z-index: 998;
+}
+
+@media print {
+  .print-cta, .print-hint { display: none !important; }
+  body { padding: 0; max-width: 100%; }
+  a { color: #047857; }
+  /* Mostrar URL tras los links externos (pero no internos/anchors) */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #94a3b8;
+    word-break: break-all;
+  }
+  /* No mostrar URL en footer/header del print */
+  .cover a::after, .footer a::after { content: ""; }
+  h1, h2, h3 { page-break-after: avoid; }
+  table, pre, blockquote { page-break-inside: avoid; }
+}

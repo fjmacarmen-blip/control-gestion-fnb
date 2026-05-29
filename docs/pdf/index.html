@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Documentos maquetados para guardar como PDF · Plataforma F&B v5.3">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d1117">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../core/css/dashboard-theme.css">
+<title>Documentos para PDF · Plataforma F&B</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg-base); color: var(--text); padding: 40px 24px 80px; }
+  .wrap { max-width: 800px; margin: 0 auto; }
+  .crumb { font-size: 13px; color: var(--text-soft); margin-bottom: 24px; }
+  .crumb a { color: var(--text-soft); text-decoration: none; }
+  .crumb a:hover { color: var(--accent); }
+  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h1 { font-size: clamp(28px, 4vw, 38px); font-weight: 600; letter-spacing: -.01em; margin-bottom: 14px; }
+  .lede { color: var(--text-soft); font-size: 14px; margin-bottom: 32px; max-width: 600px; line-height: 1.6; }
+  .doc-grid { display: grid; gap: 14px; }
+  .doc-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 12px;
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    transition: border-color .15s;
+  }
+  .doc-card:hover { border-color: var(--accent); }
+  .doc-info { flex: 1; }
+  .doc-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .doc-desc { font-size: 12px; color: var(--text-soft); line-height: 1.5; }
+  .doc-link {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base);
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .doc-link:hover { filter: brightness(1.1); }
+  .doc-md-link {
+    background: transparent;
+    color: var(--text-soft);
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 12px;
+    border: 1px solid var(--border-default);
+    margin-left: 6px;
+  }
+  .doc-md-link:hover { color: var(--accent); border-color: var(--accent); }
+  .help-box {
+    background: rgba(52,211,153,.06);
+    border: 1px solid rgba(52,211,153,.25);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-top: 32px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-soft);
+  }
+  .help-box h3 { font-size: 13px; color: var(--accent); margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+  .help-box code { background: var(--bg-elevated); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="crumb">
+    <a href="../../index.html">← Plataforma</a>
+    <span style="color:var(--border-default);margin:0 8px;">/</span>
+    <a href="../../">docs/</a>
+    <span style="color:var(--border-default);margin:0 8px;">/</span>
+    <span style="color:var(--text);">PDF</span>
+  </div>
+
+  <div class="eyebrow">v5.3 · material descargable</div>
+  <h1>Documentos para guardar como PDF</h1>
+  <p class="lede">Cada uno se abre maquetado para impresión A4. Pulsa el botón verde <strong>🖨️ Guardar como PDF</strong> arriba a la derecha (o <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:11px;">Ctrl + P</code>) y elige <em>Guardar como PDF</em> en el destino. Chrome o Edge dan el mejor resultado.</p>
+
+  <div class="doc-grid">
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">📄 Resumen ejecutivo</div>
+        <div class="doc-desc">Una página, sin código. Para enviar a un empleador o socio potencial antes de cualquier reunión.</div>
+      </div>
+      <div>
+        <a class="doc-link" href="print.html?doc=RESUMEN-EJECUTIVO">Abrir →</a>
+        <a class="doc-md-link" href="../RESUMEN-EJECUTIVO.md">MD</a>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">📘 Case study</div>
+        <div class="doc-desc">Narrativa completa de cómo se construyó el proyecto y qué aprendí. Orientado a empleadores técnicos.</div>
+      </div>
+      <div>
+        <a class="doc-link" href="print.html?doc=CASE-STUDY">Abrir →</a>
+        <a class="doc-md-link" href="../CASE-STUDY.md">MD</a>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">💼 Plan de comercialización</div>
+        <div class="doc-desc">3 caminos posibles (consultoría · SaaS · licencia) con números, inversión inicial y plan semana a semana.</div>
+      </div>
+      <div>
+        <a class="doc-link" href="print.html?doc=COMERCIALIZACION">Abrir →</a>
+        <a class="doc-md-link" href="../COMERCIALIZACION.md">MD</a>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">📚 Detalle del proyecto</div>
+        <div class="doc-desc">Inventario técnico exhaustivo. Para enseñar a un CTO o desarrollador senior que quiera ir al detalle.</div>
+      </div>
+      <div>
+        <a class="doc-link" href="print.html?doc=DETALLE-PROYECTO">Abrir →</a>
+        <a class="doc-md-link" href="../DETALLE-PROYECTO.md">MD</a>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">🔒 Auditoría de ingeniería</div>
+        <div class="doc-desc">Informe de la auditoría v4.14 con su plan de remediación, todos los hallazgos ya cerrados.</div>
+      </div>
+      <div>
+        <a class="doc-link" href="print.html?doc=AUDITORIA-v4.14">Abrir →</a>
+        <a class="doc-md-link" href="../AUDITORIA-v4.14.md">MD</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="help-box">
+    <h3>Cómo guardar el PDF</h3>
+    <ol style="padding-left:18px;margin:0;">
+      <li>Abre el documento haciendo click en <strong>«Abrir →»</strong>.</li>
+      <li>Pulsa el botón verde <strong>🖨️ Guardar como PDF</strong> (esquina superior derecha) o usa <code>Ctrl + P</code>.</li>
+      <li>En el diálogo de impresión, elige destino <strong>«Guardar como PDF»</strong>.</li>
+      <li>En opciones, deja el formato A4 y márgenes <em>predeterminados</em>. Activa <em>Gráficos de fondo</em> si Chrome lo pide.</li>
+      <li>Listo. PDF profesional sin instalar nada.</li>
+    </ol>
+  </div>
+</div>
+
+</body>
+</html>

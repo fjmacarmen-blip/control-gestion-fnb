@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Pitch deck · Plataforma F&B · gestión digital para hostelería independiente.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d1117">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Plataforma F&B · Pitch deck</title>
+<style>
+  /* ─── Design tokens ─────────────────────────────────────── */
+  :root {
+    --bg-base:    #0d1117;
+    --bg-surface: #161b22;
+    --bg-elev:    #21262d;
+    --bg-elev2:   #30363d;
+    --border:     #30363d;
+    --border-strong: #484f58;
+    --text:       #e6edf3;
+    --text-soft:  #8b949e;
+    --text-muted: #6e7681;
+    --accent:     #34d399;
+    --accent-soft: #6ee7b7;
+    --accent-deep: #059669;
+    --info:       #a78bfa;
+    --warning:    #fbbf24;
+    --danger:     #f85149;
+    --font-ui:    'Inter', system-ui, sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-mono:  'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; background: var(--bg-base); color: var(--text); font-family: var(--font-ui); }
+  body {
+    background:
+      radial-gradient(1400px 700px at 75% -200px, rgba(52,211,153,.07), transparent 60%),
+      radial-gradient(1000px 600px at 5% 0%, rgba(167,139,250,.05), transparent 60%),
+      var(--bg-base);
+  }
+
+  /* ─── Progress bar ───────────────────────────────────────── */
+  .progress {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 3px; background: rgba(48,54,61,.4);
+    z-index: 100;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-deep) 100%);
+    transition: width .4s cubic-bezier(.4,.0,.2,1);
+    width: 0;
+  }
+
+  /* ─── Slide container ────────────────────────────────────── */
+  .deck { position: relative; width: 100vw; height: 100vh; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: 60px 80px 80px;
+    opacity: 0; pointer-events: none;
+    transform: translateX(40px);
+    transition: opacity .4s ease, transform .4s ease;
+    overflow-y: auto;
+  }
+  .slide.active {
+    opacity: 1; pointer-events: auto;
+    transform: translateX(0);
+  }
+  .slide.exited {
+    transform: translateX(-40px);
+  }
+
+  /* ─── Slide meta ─────────────────────────────────────────── */
+  .slide-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 42px;
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .slide-meta .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base);
+    font-weight: 700; font-size: 10px;
+    display: flex; align-items: center; justify-content: center;
+    letter-spacing: 0;
+  }
+  .slide-meta .num { font-family: var(--font-mono); }
+
+  /* ─── Typography ─────────────────────────────────────────── */
+  .eyebrow {
+    font-size: 11px; letter-spacing: 3.5px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 18px;
+    font-weight: 500;
+  }
+  h1.title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5.5vw, 72px);
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.05;
+    margin-bottom: 28px;
+    color: var(--text);
+  }
+  h1.title em { color: var(--accent); font-style: normal; }
+  h2.section {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.5vw, 56px);
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.1;
+    margin-bottom: 28px;
+  }
+  h2.section em { color: var(--accent); font-style: normal; }
+  .lede {
+    font-size: clamp(16px, 1.5vw, 20px);
+    line-height: 1.6;
+    color: var(--text-soft);
+    max-width: 760px;
+    margin-bottom: 32px;
+  }
+  .lede strong { color: var(--text); font-weight: 600; }
+
+  /* ─── Hero (slide 1) ─────────────────────────────────────── */
+  .hero {
+    margin: auto;
+    max-width: 900px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px;
+  }
+  .hero-tag {
+    display: inline-block;
+    margin-top: 38px;
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 12px; color: var(--text-soft);
+    font-family: var(--font-mono);
+  }
+  .hero-author {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+    font-size: 13px;
+  }
+  .hero-author strong { color: var(--text); }
+
+  /* ─── Two columns (problem / fact) ───────────────────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    flex: 1;
+  }
+  .two-col .col h3 {
+    font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 14px; font-weight: 500;
+  }
+  .two-col .col ul { list-style: none; padding: 0; }
+  .two-col .col li {
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .two-col .col.red li::before { content: "✗ "; color: var(--danger); font-weight: 700; margin-right: 6px; }
+  .two-col .col.green li::before { content: "✓ "; color: var(--accent); font-weight: 700; margin-right: 6px; }
+
+  /* ─── Card grid (differentiators) ────────────────────────── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-top: 14px;
+  }
+  .card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+  .card-num {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .card-title {
+    font-size: 17px; font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 13px; color: var(--text-soft);
+    line-height: 1.55;
+  }
+
+  /* ─── Demo slides ────────────────────────────────────────── */
+  .demo-slide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    flex: 1;
+    align-items: center;
+  }
+  .demo-side h2 { margin-bottom: 18px; }
+  .demo-features { list-style: none; padding: 0; margin: 22px 0 24px; }
+  .demo-features li {
+    padding-left: 24px;
+    position: relative;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: var(--text-soft);
+    line-height: 1.55;
+  }
+  .demo-features li::before {
+    content: "›";
+    position: absolute; left: 0; top: 0;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .demo-features strong { color: var(--text); font-weight: 500; }
+  .demo-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base);
+    padding: 12px 22px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: .3px;
+    box-shadow: 0 8px 24px rgba(52,211,153,.25);
+  }
+  .demo-cta:hover { filter: brightness(1.1); }
+  .demo-cta .arrow { transition: transform .15s; }
+  .demo-cta:hover .arrow { transform: translateX(3px); }
+
+  /* Mockup frame */
+  .demo-mockup {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 1px var(--border);
+    background: var(--bg-surface);
+    aspect-ratio: 16 / 10;
+    display: flex;
+    flex-direction: column;
+  }
+  .mockup-bar {
+    background: var(--bg-elev);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 6px; align-items: center;
+  }
+  .mockup-bar .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border-strong); }
+  .mockup-bar .dot:nth-child(1) { background: #f85149; }
+  .mockup-bar .dot:nth-child(2) { background: #fbbf24; }
+  .mockup-bar .dot:nth-child(3) { background: var(--accent); }
+  .mockup-bar .url {
+    flex: 1;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-left: 12px;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+  .mockup-content {
+    flex: 1;
+    padding: 24px;
+    display: flex; flex-direction: column;
+    gap: 14px;
+    background:
+      radial-gradient(circle at 75% 0%, rgba(52,211,153,.08), transparent 60%),
+      var(--bg-base);
+  }
+  .mockup-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mock-pill {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 100px;
+    background: rgba(52,211,153,.12);
+    color: var(--accent);
+    font-size: 10px;
+    font-family: var(--font-mono);
+    border: 1px solid rgba(52,211,153,.25);
+  }
+  .mock-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--text);
+  }
+  .mock-rows { display: flex; flex-direction: column; gap: 8px; }
+  .mock-row {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .mock-row .left { display: flex; flex-direction: column; gap: 3px; }
+  .mock-row .name { font-size: 11px; color: var(--text); font-weight: 500; }
+  .mock-row .sub { font-size: 9px; color: var(--text-muted); }
+  .mock-row .price { color: var(--accent); font-size: 12px; font-weight: 600; }
+
+  /* Phone mockup for mobile demos */
+  .phone-mockup {
+    width: 240px; height: 480px;
+    margin: 0 auto;
+    border-radius: 32px;
+    background: #000;
+    padding: 11px;
+    box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 0 2px var(--border-strong);
+    position: relative;
+  }
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: var(--bg-base);
+    border-radius: 22px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .phone-notch {
+    position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 18px;
+    background: #000;
+    border-radius: 0 0 10px 10px;
+    z-index: 2;
+  }
+  .phone-topbar {
+    padding: 28px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 10px; color: var(--text); font-weight: 600;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .phone-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-surface);
+  }
+  .phone-tabs .tab { flex: 1; padding: 9px 4px; text-align: center; font-size: 9px; color: var(--text-soft); }
+  .phone-tabs .tab.act { color: var(--accent); border-bottom: 2px solid var(--accent); font-weight: 600; }
+  .phone-body { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+  .phone-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 10px;
+    color: var(--text);
+  }
+  .phone-card .ttl { font-weight: 600; margin-bottom: 4px; }
+  .phone-card .sub { font-size: 9px; color: var(--text-soft); }
+  .phone-pill {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 100px;
+    font-size: 8px;
+    margin-right: 4px;
+    margin-top: 4px;
+  }
+
+  /* ─── Pricing table ──────────────────────────────────────── */
+  .pricing {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 14px;
+  }
+  @media (max-width: 1100px) { .pricing { grid-template-columns: repeat(2, 1fr); } }
+  .price-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex; flex-direction: column;
+  }
+  .price-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, rgba(52,211,153,.08), var(--bg-surface));
+    position: relative;
+  }
+  .price-card.featured::before {
+    content: "Más popular";
+    position: absolute;
+    top: -10px; right: 18px;
+    background: var(--accent); color: var(--bg-base);
+    padding: 3px 10px; border-radius: 100px;
+    font-size: 10px; font-weight: 600; letter-spacing: .3px;
+  }
+  .price-name {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 8px; font-weight: 500;
+  }
+  .price-num {
+    font-family: var(--font-display);
+    font-size: 38px; font-weight: 600;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .price-num span { font-size: 12px; color: var(--text-muted); font-weight: 400; font-family: var(--font-ui); }
+  .price-target {
+    font-size: 11px; color: var(--text-soft);
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .price-features {
+    list-style: none; padding: 0;
+    font-size: 12px; color: var(--text-soft);
+    line-height: 1.7;
+  }
+  .price-features li::before { content: "✓ "; color: var(--accent); font-weight: 700; }
+  .price-implant {
+    background: var(--bg-elev);
+    border: 1px dashed var(--border-strong);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-soft);
+    text-align: center;
+  }
+  .price-implant strong { color: var(--accent); font-family: var(--font-mono); font-size: 13px; }
+
+  /* ─── Author slide ───────────────────────────────────────── */
+  .author-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 50px;
+    align-items: center;
+    margin: auto 0;
+  }
+  .author-avatar {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 72px; color: var(--bg-base);
+    font-weight: 600;
+    box-shadow: 0 30px 80px rgba(52,211,153,.3);
+  }
+  .author-info p { font-size: 15px; line-height: 1.7; color: var(--text-soft); margin-bottom: 14px; max-width: 560px; }
+  .author-info p:last-child { margin-bottom: 0; }
+  .author-info strong { color: var(--text); }
+
+  /* ─── Steps slide (next steps / pilot) ───────────────────── */
+  .step-list {
+    display: flex; flex-direction: column;
+    gap: 16px; margin-top: 12px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 20px;
+    align-items: flex-start;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+  .step-num {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    color: var(--bg-base);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px;
+  }
+  .step-info h3 { font-size: 16px; color: var(--text); margin-bottom: 4px; font-weight: 600; }
+  .step-info p { font-size: 13px; color: var(--text-soft); line-height: 1.55; }
+
+  /* ─── Contact slide ──────────────────────────────────────── */
+  .contact {
+    margin: auto 0;
+    max-width: 760px;
+  }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 38px; }
+  .contact-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+  }
+  .contact-card h4 {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 12px; font-weight: 500;
+  }
+  .contact-card a {
+    display: block; color: var(--accent); text-decoration: none;
+    font-size: 14px; padding: 6px 0;
+    font-family: var(--font-mono);
+  }
+  .contact-card a:hover { color: var(--accent-soft); }
+  .contact-card .note { font-size: 11px; color: var(--text-muted); margin-top: 8px; line-height: 1.4; }
+
+  /* ─── Nav controls ───────────────────────────────────────── */
+  .nav {
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px;
+    background: rgba(22,27,34,.85);
+    backdrop-filter: blur(10px);
+    padding: 8px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    z-index: 90;
+  }
+  .nav button {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-soft);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font: 600 11px/1 var(--font-ui);
+    cursor: pointer;
+    letter-spacing: .5px;
+  }
+  .nav button:hover { color: var(--accent); border-color: var(--border); }
+  .nav .counter {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 6px 8px;
+    align-self: center;
+    letter-spacing: 1px;
+  }
+
+  /* Print: all slides on separate pages */
+  @media print {
+    body { overflow: visible; }
+    .deck { width: auto; height: auto; }
+    .slide {
+      position: relative; inset: auto;
+      opacity: 1; pointer-events: auto;
+      transform: none;
+      page-break-after: always;
+      height: 100vh;
+      min-height: 720px;
+    }
+    .progress, .nav { display: none; }
+  }
+
+  /* Smaller screens */
+  @media (max-width: 800px) {
+    .slide { padding: 40px 28px 80px; }
+    h1.title { font-size: 36px; }
+    h2.section { font-size: 30px; }
+    .demo-slide, .two-col, .author-grid, .contact-grid { grid-template-columns: 1fr; gap: 24px; }
+    .pricing { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="deck" id="deck">
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 1 · COVER                                                -->
+  <!-- ============================================================ -->
+  <section class="slide active">
+    <div class="hero">
+      <div class="hero-eyebrow">Plataforma F&amp;B · v5.3</div>
+      <h1 class="title">Gestión digital<br>para la hostelería<br><em>independiente</em></h1>
+      <p class="lede" style="margin: 0 auto;">
+        Una herramienta construida por un hostelero, para hosteleros.
+        Eventos, recetario, escandallos, sala, carta digital. Todo en un solo sitio.
+        Sin servidores caros, sin atarte a un proveedor, sin que tus datos salgan de tu casa.
+      </p>
+      <div class="hero-tag">15-20 min · pulsa → para empezar</div>
+      <div class="hero-author">
+        <strong>Francisco Javier Martínez Alba</strong> · Director hotelero · Algeciras
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 2 · EL PROBLEMA                                          -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">02 · El problema</div>
+    </div>
+    <div class="eyebrow">Cómo se gestiona hoy un hotel mediano</div>
+    <h2 class="section">El Excel del <em>2011</em> sigue mandando.</h2>
+    <p class="lede">
+      He pasado 30 años dentro del oficio. En el último hotel que dirigí, cada presupuesto de boda salía
+      de la misma plantilla Excel que un compañero construyó hace década y media. La carta vivía en
+      un Word con tres versiones simultáneas. Las recetas estaban en la libreta del jefe de cocina,
+      y los precios de economato había que pedirlos al proveedor por WhatsApp.
+    </p>
+    <div class="two-col">
+      <div class="col red">
+        <h3>Síntomas habituales</h3>
+        <ul>
+          <li>Presupuestos a mano sobre una plantilla heredada</li>
+          <li>Carta desactualizada que nadie sabe quién mantiene</li>
+          <li>Escandallos calculados a ojo o no calculados</li>
+          <li>Dietas especiales en post-it sobre la barra</li>
+          <li>Sin métricas de ocupación reales</li>
+        </ul>
+      </div>
+      <div class="col green">
+        <h3>Lo que el cliente sí espera</h3>
+        <ul>
+          <li>Cotización del evento en menos de 24 h</li>
+          <li>Alérgenos visibles antes de sentarse a la mesa</li>
+          <li>Una carta digital que pueda escanear con el móvil</li>
+          <li>Que el personal sepa qué mesa lleva qué dieta</li>
+          <li>Profesionalidad coherente del primer click al postre</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 3 · POR QUÉ NO FUNCIONA EL SOFTWARE ACTUAL              -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">03 · El mercado</div>
+    </div>
+    <div class="eyebrow">Por qué lo que hay no resuelve esto</div>
+    <h2 class="section">Lo grande es <em>caro</em>. Lo barato no se habla.</h2>
+    <div class="card-grid" style="margin-top: 36px;">
+      <div class="card">
+        <div class="card-num">ERPs grandes</div>
+        <div class="card-title">Opera, SAP, Protel</div>
+        <div class="card-desc">
+          800 €/mes mínimo. Pensados para cadenas con departamento IT propio. Configuración de meses.
+          Pagar por módulos que no usas. Para un hotel independiente, sobredimensionado y prohibitivo.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-num">SaaS modulares</div>
+        <div class="card-title">TheFork, Cover Manager, Last.app</div>
+        <div class="card-desc">
+          Cada uno resuelve un trozo (reservas, gestión de salón, comandas) y no hablan entre sí.
+          Acabas teniendo cinco suscripciones que no se sincronizan y cinco contraseñas que recordar.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-num">Soluciones locales</div>
+        <div class="card-title">El programa del primo del cuñado</div>
+        <div class="card-desc">
+          Software a medida que costó 6 000 € en 2014 y lleva siete años sin actualizarse. Solo funciona
+          en aquel ordenador del despacho. El día que el disco duro falle, fin de partida.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 4 · LA SOLUCIÓN EN UNA FRASE                            -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">04 · La propuesta</div>
+    </div>
+    <div style="margin: auto 0; max-width: 920px;">
+      <div class="eyebrow">La idea, en una frase</div>
+      <h2 class="section" style="font-size: clamp(40px, 5vw, 64px);">
+        Una plataforma <em>multi-tenant</em> donde cada hotel tiene su propio espacio,<br>
+        todo corre en el navegador del cliente,<br>
+        y el coste de infraestructura es <em>cero</em>.
+      </h2>
+      <p class="lede" style="margin-top: 32px;">
+        El hotel paga la implantación y el mantenimiento. No paga hospedaje. No paga licencias por usuario.
+        Los datos viven en su propio repositorio y se versionan automáticamente. Si algo se rompe,
+        un <code style="font-family: var(--font-mono); background: var(--bg-elev); padding: 2px 7px; border-radius: 4px; color: var(--accent); font-size: 14px;">git revert</code>
+        y vuelve a estar bien. Hosting en GitHub Pages. CDN global gratis.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 5 · DEMO · DASHBOARD                                    -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">05 · Demo · dashboard</div>
+    </div>
+    <div class="demo-slide">
+      <div class="demo-side">
+        <div class="eyebrow">Para el director</div>
+        <h2 class="section" style="font-size: clamp(28px, 3.5vw, 42px);">Un panel de control<br>en lugar de cinco hojas Excel.</h2>
+        <ul class="demo-features">
+          <li><strong>Lista de proyectos</strong> con badges de estado, métricas resumidas, último cambio</li>
+          <li><strong>Acciones rápidas</strong> por establecimiento: editar, ver métricas, cotizador interno</li>
+          <li><strong>Modo claro y oscuro</strong> persistente por usuario</li>
+          <li><strong>Login con bcrypt</strong>, sesión de 8 horas, re-verify en acciones críticas</li>
+        </ul>
+        <a class="demo-cta" href="https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/" target="_blank" rel="noopener">
+          Probar en vivo <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="demo-mockup">
+        <div class="mockup-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/</span>
+        </div>
+        <div class="mockup-content">
+          <div class="mockup-header">
+            <div class="mock-title">Mis proyectos</div>
+            <div class="mock-pill">2 activos</div>
+          </div>
+          <div class="mock-rows">
+            <div class="mock-row">
+              <div class="left">
+                <div class="name">Hotel Miramar Dorado</div>
+                <div class="sub">5* Gran Lujo · Algeciras · 18 presupuestos</div>
+              </div>
+              <div class="price">PILOTO</div>
+            </div>
+            <div class="mock-row">
+              <div class="left">
+                <div class="name">Restaurante Casa Lola</div>
+                <div class="sub">Mediterránea · Marbella · 12 presupuestos</div>
+              </div>
+              <div class="price">ACTIVO</div>
+            </div>
+            <div class="mock-row" style="opacity: .5;">
+              <div class="left">
+                <div class="name">Proyecto Demo</div>
+                <div class="sub">Esqueleto · regresión</div>
+              </div>
+              <div class="price">DEMO</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 6 · DEMO · EDITOR + ESCANDALLOS                          -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">06 · Demo · editor</div>
+    </div>
+    <div class="demo-slide">
+      <div class="demo-side">
+        <div class="eyebrow">Edición visual</div>
+        <h2 class="section" style="font-size: clamp(28px, 3.5vw, 42px);">Cambiar la carta<br>en cinco minutos.</h2>
+        <ul class="demo-features">
+          <li><strong>Seis secciones editables</strong>: establecimiento, menús, recetas, productos, tema visual, eventos</li>
+          <li><strong>Importadores</strong> de Excel, PDF y bulk de imágenes con auto-matching</li>
+          <li><strong>Calculadora de escandallos</strong>: cruza recetas con catálogo y sugiere PVP por categoría</li>
+          <li><strong>Publicación atómica</strong> al repositorio con un solo click (re-verify de contraseña en destructivas)</li>
+        </ul>
+        <a class="demo-cta" href="https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/editor.html?proyecto=miramar" target="_blank" rel="noopener">
+          Abrir editor de Miramar <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="demo-mockup">
+        <div class="mockup-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">…/dashboard/editor.html?proyecto=miramar</span>
+        </div>
+        <div class="mockup-content">
+          <div class="mockup-header">
+            <div class="mock-title">Recetario · escandallos</div>
+            <div class="mock-pill">78 recetas</div>
+          </div>
+          <div class="mock-rows">
+            <div class="mock-row">
+              <div class="left">
+                <div class="name">Salmorejo cordobés</div>
+                <div class="sub">Coste: 1.85 € · Cobertura 92%</div>
+              </div>
+              <div class="price">PVP 6.20 €</div>
+            </div>
+            <div class="mock-row">
+              <div class="left">
+                <div class="name">Solomillo a la Rioja</div>
+                <div class="sub">Coste: 8.40 € · Cobertura 88%</div>
+              </div>
+              <div class="price">PVP 24.00 €</div>
+            </div>
+            <div class="mock-row">
+              <div class="left">
+                <div class="name">Tarta de queso la Viña</div>
+                <div class="sub">Coste: 1.40 € · Cobertura 100%</div>
+              </div>
+              <div class="price">PVP 6.30 €</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 7 · DEMO · COTIZADOR CLIENTE FINAL                       -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">07 · Demo · cotizador</div>
+    </div>
+    <div class="demo-slide">
+      <div class="demo-side">
+        <div class="eyebrow">Para el cliente final</div>
+        <h2 class="section" style="font-size: clamp(28px, 3.5vw, 42px);">Que el cliente<br>se cotice <em>solo</em>.</h2>
+        <ul class="demo-features">
+          <li><strong>Self-service</strong> en 7 pasos: tipo de evento, espacio, menú, extras, dietas, pax, datos</li>
+          <li><strong>Precio en vivo</strong> con IVA mientras configura</li>
+          <li><strong>Solicitud formal</strong> abre email prerellenado al hotel y copia el detalle al portapapeles</li>
+          <li><strong>Botón WhatsApp</strong> si el cliente prefiere hablar directamente</li>
+          <li><strong>Modo interno</strong> separado para que el comercial genere contrato y orden de servicio</li>
+        </ul>
+        <a class="demo-cta" href="https://fjmacarmen-blip.github.io/control-gestion-fnb/core/pages/presupuesto-evento.html?proyecto=miramar" target="_blank" rel="noopener">
+          Probar cotizador <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="demo-mockup">
+        <div class="mockup-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">…/presupuesto-evento.html?proyecto=miramar</span>
+        </div>
+        <div class="mockup-content">
+          <div class="mockup-header">
+            <div class="mock-title">Tu presupuesto</div>
+            <div class="mock-pill">Paso 7 de 7</div>
+          </div>
+          <div style="background: linear-gradient(135deg, rgba(52,211,153,.12), rgba(5,150,105,.06)); border: 1px solid rgba(52,211,153,.25); border-radius: 10px; padding: 18px; text-align: center;">
+            <div style="font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">Inversión total estimada</div>
+            <div style="font-family: var(--font-display); font-size: 28px; font-weight: 600; color: var(--accent);">8 470 €</div>
+            <div style="font-size: 9px; color: var(--text-muted); margin-top: 4px;">88 pax · IVA incluido</div>
+          </div>
+          <div class="mock-rows">
+            <div class="mock-row">
+              <div class="left"><div class="name">Boda íntima · Menú Lola</div><div class="sub">Sábado 14 jun 2026</div></div>
+              <div class="price">CONFIRMAR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 8 · DEMO · SALA MÓVIL PWA                                -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">08 · Demo · sala móvil</div>
+    </div>
+    <div class="demo-slide">
+      <div class="demo-side">
+        <div class="eyebrow">Para el equipo de sala</div>
+        <h2 class="section" style="font-size: clamp(28px, 3.5vw, 42px);">La dieta de la mesa 8<br>en el bolsillo del camarero.</h2>
+        <ul class="demo-features">
+          <li><strong>App instalable</strong> (PWA) en iPhone y Android sin pasar por App Store</li>
+          <li><strong>Eventos del día</strong> con dietas críticas marcadas por colores de pulsera</li>
+          <li><strong>Funciona offline</strong> tras la primera visita gracias al service worker</li>
+          <li><strong>Ocupación de espacios</strong> a 30 días vista</li>
+          <li><strong>Simulador TPV</strong> para entrenar al equipo antes del primer servicio</li>
+        </ul>
+        <a class="demo-cta" href="https://fjmacarmen-blip.github.io/control-gestion-fnb/sala-movil.html?proyecto=miramar" target="_blank" rel="noopener">
+          Abrir sala móvil <span class="arrow">→</span>
+        </a>
+      </div>
+      <div style="display: flex; justify-content: center;">
+        <div class="phone-mockup">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-topbar">
+              <span>Sala · Miramar</span>
+              <span style="color: var(--accent); font-size: 8px;">● online</span>
+            </div>
+            <div class="phone-tabs">
+              <div class="tab act">Hoy</div>
+              <div class="tab">Dietas</div>
+              <div class="tab">Espacios</div>
+              <div class="tab">TPV</div>
+            </div>
+            <div class="phone-body">
+              <div class="phone-card">
+                <div class="ttl">Familia Romero · Boda</div>
+                <div class="sub">20:30 · Salón Mediterráneo · 88 pax</div>
+                <div>
+                  <span class="phone-pill" style="background: rgba(239,68,68,.15); color: #ef4444;">🌾 CEL 2</span>
+                  <span class="phone-pill" style="background: rgba(34,197,94,.15); color: #22c55e;">🌱 VEG 3</span>
+                  <span class="phone-pill" style="background: rgba(249,115,22,.15); color: #f97316;">🌰 SF 1</span>
+                </div>
+              </div>
+              <div class="phone-card">
+                <div class="ttl">Banco Andalucía · Cena</div>
+                <div class="sub">21:00 · Reservado · 24 pax</div>
+              </div>
+              <div class="phone-card" style="opacity: .6;">
+                <div class="ttl">Cumple 50 · Sra. Hernández</div>
+                <div class="sub">Jueves · 14 pax</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 9 · DEMO · CARTA DIGITAL + QR                            -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">09 · Demo · carta pública</div>
+    </div>
+    <div class="demo-slide">
+      <div class="demo-side">
+        <div class="eyebrow">Para el comensal</div>
+        <h2 class="section" style="font-size: clamp(28px, 3.5vw, 42px);">Carta digital<br>con QR en la mesa.</h2>
+        <ul class="demo-features">
+          <li><strong>Vista pública sin login</strong>, optimizada para móvil</li>
+          <li><strong>Filtros por tipo de menú</strong>: sentado, cóctel, brunch, coffee, barra</li>
+          <li><strong>Alérgenos siempre visibles</strong> al final de la carta</li>
+          <li><strong>Tipografía editorial</strong> (Playfair Display) que da empaque, no parece SaaS</li>
+          <li><strong>QR descargable en SVG</strong> generable desde el editor en un click</li>
+        </ul>
+        <a class="demo-cta" href="https://fjmacarmen-blip.github.io/control-gestion-fnb/carta-publica.html?proyecto=miramar" target="_blank" rel="noopener">
+          Ver carta de Miramar <span class="arrow">→</span>
+        </a>
+      </div>
+      <div style="display: flex; justify-content: center;">
+        <div class="phone-mockup">
+          <div class="phone-notch"></div>
+          <div class="phone-screen" style="background: var(--bg-surface);">
+            <div class="phone-topbar" style="padding: 28px 16px 16px;">
+              <div style="font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--text); text-align: center; width: 100%; line-height: 1.1;">Hotel Miramar<br><span style="font-size: 9px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-family: var(--font-ui); font-weight: 500;">CARTA</span></div>
+            </div>
+            <div class="phone-tabs" style="background: var(--bg-base);">
+              <div class="tab act">Todos</div>
+              <div class="tab">Sentado</div>
+              <div class="tab">Cóctel</div>
+              <div class="tab">Brunch</div>
+            </div>
+            <div class="phone-body" style="background: var(--bg-surface);">
+              <div class="phone-card" style="border-left: 3px solid var(--accent);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                  <div style="font-family: var(--font-display); font-size: 11px; font-weight: 600;">Menú Mediterráneo</div>
+                  <div style="font-family: var(--font-display); color: var(--accent); font-weight: 600;">48 €</div>
+                </div>
+                <div class="sub" style="margin-bottom: 8px;">Selección del chef · 3 entrantes + principal + postre</div>
+                <div style="font-size: 8px; color: var(--text-muted); line-height: 1.5;">
+                  · Salmorejo cordobés · Boquerones en vinagre · Tartar de atún ·
+                  Arroz negro con sepia · Coulant de chocolate
+                </div>
+              </div>
+              <div class="phone-card" style="opacity: .85;">
+                <div style="display: flex; justify-content: space-between;">
+                  <div style="font-family: var(--font-display); font-size: 11px; font-weight: 600;">Menú Esencial</div>
+                  <div style="font-family: var(--font-display); color: var(--accent); font-weight: 600;">32 €</div>
+                </div>
+                <div class="sub">Pescado del día + postre artesano</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 10 · POR QUÉ ES DIFERENTE                                -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">10 · Diferencial</div>
+    </div>
+    <div class="eyebrow">Cinco cosas que no encontrarás en otro SaaS de eventos</div>
+    <h2 class="section">No es otra plataforma más.</h2>
+    <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+      <div class="card">
+        <div class="card-num">01</div>
+        <div class="card-title">Construido por un hostelero</div>
+        <div class="card-desc">30 años de oficio. Conoce las pulseras de dieta, la señal del 15 %, la merma del 8 %, y por qué la mesa 12 es la mejor.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">02</div>
+        <div class="card-title">Cero coste de infraestructura</div>
+        <div class="card-desc">El cliente no paga hospedaje. El sitio vive en GitHub Pages. Escala a cero cuando no hay tráfico.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">03</div>
+        <div class="card-title">Datos en su navegador</div>
+        <div class="card-desc">La información sensible nunca pasa por servidores nuestros. Todo client-side. Total soberanía del dato.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">04</div>
+        <div class="card-title">Versionado en git</div>
+        <div class="card-desc">Cada cambio queda registrado. Si alguien borra una receta sin querer, vuelve con un click. Auditoría completa.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">05</div>
+        <div class="card-title">Convive con el caos</div>
+        <div class="card-desc">Importadores que tragan ese Excel del 2011, los PDFs antiguos y las fotos sin nombrar. No exige limpieza previa.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 11 · AUTOR                                              -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">11 · Quién hay detrás</div>
+    </div>
+    <div class="author-grid">
+      <div class="author-avatar">F</div>
+      <div class="author-info">
+        <div class="eyebrow">Francisco Javier Martínez Alba</div>
+        <h2 class="section" style="font-size: clamp(28px, 3vw, 42px); margin-bottom: 24px;">30 años dentro<br>de la hostelería.</h2>
+        <p>
+          Director hotelero en Algeciras durante toda mi trayectoria. He vivido la transformación de los
+          hoteles independientes desde dentro: del libro de reservas en papel a los PMS, de la carta
+          manuscrita a Word, de los Excel sueltos a las TPVs cerradas que no se hablan.
+        </p>
+        <p>
+          Esta plataforma resuelve la herramienta que me hubiera gustado tener. La construí con asistencia
+          de IA, pero las decisiones son todas mías. <strong>El conocimiento del oficio es la mitad
+          del trabajo</strong>; el código solo lo materializa.
+        </p>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 14px;">
+          Algeciras · <a href="https://www.linkedin.com/in/franciscojaviermartinezalba" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">LinkedIn ↗</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 12 · PRECIOS                                             -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">12 · Precios</div>
+    </div>
+    <div class="eyebrow">Tarifa orientativa · 14 días de prueba gratis</div>
+    <h2 class="section">Transparente. <em>Por establecimiento</em>, no por usuario.</h2>
+    <div class="pricing">
+      <div class="price-card">
+        <div class="price-name">Demo</div>
+        <div class="price-num">0 €<span> / 14 días</span></div>
+        <div class="price-target">Cualquiera que quiera explorar la plataforma sin compromiso.</div>
+        <ul class="price-features">
+          <li>Acceso completo al editor</li>
+          <li>1 proyecto de prueba</li>
+          <li>Sin tarjeta</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Bistró</div>
+        <div class="price-num">29 €<span> / mes</span></div>
+        <div class="price-target">Restaurantes con ≤30 mesas y un solo establecimiento.</div>
+        <ul class="price-features">
+          <li>1 proyecto activo</li>
+          <li>Importadores Excel/PDF</li>
+          <li>Carta pública + QR</li>
+          <li>Soporte por email</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-name">Hotel</div>
+        <div class="price-num">79 €<span> / mes</span></div>
+        <div class="price-target">Hoteles con ≤50 habitaciones y servicio de banquetes.</div>
+        <ul class="price-features">
+          <li>1 proyecto activo</li>
+          <li>Sala móvil PWA</li>
+          <li>Métricas + agenda</li>
+          <li>Conectores de productos</li>
+          <li>Soporte prioritario</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Grupo</div>
+        <div class="price-num">199 €<span> / mes</span></div>
+        <div class="price-target">Hasta 5 establecimientos con sub-cuentas independientes.</div>
+        <ul class="price-features">
+          <li>5 proyectos activos</li>
+          <li>Panel multi-establecimiento</li>
+          <li>Integración TPV (Glop, etc.)</li>
+          <li>Onboarding asistido</li>
+        </ul>
+      </div>
+    </div>
+    <div class="price-implant">
+      <strong>Implantación llave en mano: 1 500 – 3 500 € one-shot</strong> · incluye importación de datos heredados (Excel, PDF, fotos), configuración de espacios/menús/recetas y formación de 2 h al equipo. Los 3 primeros hoteles pagan el 50 %.
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 13 · QUIÉN LO HA PROBADO                                 -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">13 · Clientes piloto</div>
+    </div>
+    <div class="eyebrow">Programa piloto · cupos limitados</div>
+    <h2 class="section">Buscamos <em>3 hoteles</em><br>que quieran ser los primeros.</h2>
+    <p class="lede">
+      Los 3 primeros establecimientos que firmen pagan el 50 % de la implantación y mantienen tarifa de
+      por vida. A cambio, comprometen feedback estructurado al cabo de 30 y 90 días, y permiten que su
+      caso aparezca como referencia (sin compartir datos sensibles).
+    </p>
+    <div class="card-grid" style="margin-top: 32px; grid-template-columns: repeat(3, 1fr);">
+      <div class="card" style="text-align: center; padding: 40px 24px;">
+        <div style="font-family: var(--font-display); font-size: 48px; color: var(--accent); font-weight: 600; line-height: 1;">01</div>
+        <div style="margin-top: 14px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted);">Cupo disponible</div>
+      </div>
+      <div class="card" style="text-align: center; padding: 40px 24px;">
+        <div style="font-family: var(--font-display); font-size: 48px; color: var(--accent); font-weight: 600; line-height: 1;">02</div>
+        <div style="margin-top: 14px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted);">Cupo disponible</div>
+      </div>
+      <div class="card" style="text-align: center; padding: 40px 24px;">
+        <div style="font-family: var(--font-display); font-size: 48px; color: var(--accent); font-weight: 600; line-height: 1;">03</div>
+        <div style="margin-top: 14px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted);">Cupo disponible</div>
+      </div>
+    </div>
+    <p style="font-size: 12px; color: var(--text-muted); margin-top: 28px; text-align: center;">
+      Demos públicas en producción: <a href="https://fjmacarmen-blip.github.io/control-gestion-fnb/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">Hotel Miramar Dorado</a> · <a href="https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/?proyecto=restaurante-casa-lola" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">Restaurante Casa Lola</a>
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 14 · PRÓXIMOS PASOS                                      -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">14 · Cómo seguimos</div>
+    </div>
+    <div class="eyebrow">Si te ha interesado</div>
+    <h2 class="section">Cuatro pasos hasta tener<br>tu establecimiento <em>online</em>.</h2>
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-info">
+          <h3>Demo en vivo, 30 minutos</h3>
+          <p>Una llamada donde te enseño el dashboard con datos reales y resolvemos dudas. Sin presentación previa: solo producto.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-info">
+          <h3>Plantilla de propuesta económica</h3>
+          <p>Te envío un PDF de 2 páginas con el alcance ajustado a tu establecimiento, calendario y precio final. Sin letra pequeña.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-info">
+          <h3>30 días de piloto sin compromiso</h3>
+          <p>Si firmas, los 30 primeros días pagas el 50 %. Si al cabo no te aporta valor, cancelamos y no me debes nada más.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-info">
+          <h3>Implantación y formación</h3>
+          <p>2 horas de formación a tu equipo en remoto o presencial (Algeciras y entorno). Yo me ocupo de migrar tus datos heredados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 15 · CONTACTO                                            -->
+  <!-- ============================================================ -->
+  <section class="slide">
+    <div class="slide-meta">
+      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="num">15 · Contacto</div>
+    </div>
+    <div class="contact">
+      <div class="eyebrow">Hablamos cuando quieras</div>
+      <h2 class="section">Una llamada, un café o un email.<br><em>Tú decides.</em></h2>
+      <p class="lede">
+        Si llevas un establecimiento y crees que esto puede ayudarte, escríbeme directamente.
+        Respondo personalmente, no hay equipo de ventas entre medias.
+      </p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h4>Correo principal</h4>
+          <a href="mailto:fjmacarmen@gmail.com">fjmacarmen@gmail.com</a>
+          <p class="note">Llega directamente al móvil. Respondo en menos de 24 h en días laborables.</p>
+        </div>
+        <div class="contact-card">
+          <h4>Demos y pruebas</h4>
+          <a href="mailto:crisbellybutton@gmail.com">crisbellybutton@gmail.com</a>
+          <p class="note">Buzón de pruebas que recibe los presupuestos que generes desde el cotizador público.</p>
+        </div>
+        <div class="contact-card">
+          <h4>LinkedIn</h4>
+          <a href="https://www.linkedin.com/in/franciscojaviermartinezalba" target="_blank" rel="noopener">/in/franciscojaviermartinezalba</a>
+          <p class="note">Mensajería directa. 30 años de trayectoria visibles desde el primer click.</p>
+        </div>
+        <div class="contact-card">
+          <h4>Producto en vivo</h4>
+          <a href="https://fjmacarmen-blip.github.io/control-gestion-fnb/" target="_blank" rel="noopener">github.io/control-gestion-fnb</a>
+          <p class="note">Demo pública, sin login, sin registros. Todo funciona en tiempo real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ─── Navegación ─────────────────────────────────────── -->
+<nav class="nav">
+  <button id="btnPrev" aria-label="Slide anterior">← Anterior</button>
+  <span class="counter" id="counter">01 / 15</span>
+  <button id="btnNext" aria-label="Slide siguiente">Siguiente →</button>
+</nav>
+
+<script>
+'use strict';
+
+const slides = [...document.querySelectorAll('.slide')];
+const total = slides.length;
+let currentIdx = 0;
+
+const counter = document.getElementById('counter');
+const progressFill = document.getElementById('progressFill');
+
+function goTo(idx) {
+  idx = Math.max(0, Math.min(total - 1, idx));
+  slides.forEach((slide, i) => {
+    slide.classList.remove('active', 'exited');
+    if (i === idx) slide.classList.add('active');
+    else if (i < idx) slide.classList.add('exited');
+  });
+  currentIdx = idx;
+  counter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+  progressFill.style.width = (((idx + 1) / total) * 100) + '%';
+  history.replaceState(null, '', '#' + (idx + 1));
+}
+
+function next() { goTo(currentIdx + 1); }
+function prev() { goTo(currentIdx - 1); }
+
+document.getElementById('btnNext').addEventListener('click', next);
+document.getElementById('btnPrev').addEventListener('click', prev);
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.matches('input, textarea, select')) return;
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+  if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+  if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+  if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  }
+});
+
+// Swipe en móvil
+let touchStartX = null;
+document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', (e) => {
+  if (touchStartX === null) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
+  touchStartX = null;
+}, { passive: true });
+
+// Hash inicial: pitch.html#7 abre directamente en slide 7
+const initialHash = parseInt(location.hash.slice(1), 10);
+if (!isNaN(initialHash) && initialHash >= 1 && initialHash <= total) {
+  goTo(initialHash - 1);
+} else {
+  goTo(0);
+}
+</script>
+</body>
+</html>

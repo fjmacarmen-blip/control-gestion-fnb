@@ -5,14 +5,11 @@
 
 ## Qué es
 
-Una plataforma online para que **hoteles y restaurantes gestionen su negocio de eventos y banquetes** sin Excel ni servidores caros. Cada cliente tiene su propio espacio dentro de la misma aplicación, con su identidad visual, sus menús, sus recetas y sus presupuestos.
+Una plataforma online para que hoteles y restaurantes gestionen su negocio de eventos y banquetes sin Excel suelto ni servidores caros. Cada cliente vive en su propio espacio dentro de la misma aplicación, con su identidad visual, sus menús, sus recetas y sus presupuestos.
 
 ## Para quién
 
-- **Hoteles independientes** y pequeñas cadenas (3-15 establecimientos)
-- **Restaurantes con servicio de eventos y banquetes**
-- **Catering y empresas de servicios gastronómicos**
-- **Consultores de hostelería** que necesitan implantar herramientas en sus clientes
+Hoteles independientes y pequeñas cadenas de 3 a 15 establecimientos. Restaurantes con servicio de eventos y banquetes. Empresas de catering. Y consultores de hostelería que implantan herramientas a sus clientes y necesitan algo que se pueda llevar puesto.
 
 ## El problema que resuelve
 
@@ -67,23 +64,24 @@ Una plataforma online para que **hoteles y restaurantes gestionen su negocio de 
 
 ## El factor diferencial
 
-**No es otra plataforma de eventos.** Es una plataforma:
+Cinco cosas la separan de cualquier SaaS de eventos al uso:
 
-1. Diseñada por alguien que **lleva 30 años dirigiendo hoteles**
-2. **Sin coste de infraestructura** — los clientes no pagan hospedaje
-3. **Sus datos no salen de su navegador** ni de su repositorio
-4. **Versionada en git** — cualquier cambio se revierte con un click
-5. **Importadores que conviven con el caos real** del cliente (Excel de 2011, PDFs, fotos sin nombrar)
+1. La diseñó alguien que lleva 30 años dirigiendo hoteles, no un product manager mirando entrevistas.
+2. No hay coste de infraestructura. Los clientes no pagan hospedaje.
+3. Los datos del cliente nunca salen de su navegador ni de su repositorio.
+4. Está versionada en git. Cualquier cambio se revierte con un click, no hay rollback opaco.
+5. Los importadores aceptan el caos real del cliente: ese Excel de 2011, los PDFs antiguos, las fotos sin nombrar.
 
 ## Lo que falta para llevar al mercado
 
-- **Onboarding asistido**: hoy el cliente necesita ayuda para crear su PAT de GitHub. Sustituible por un backend mínimo de 50 €/mes que gestione tokens.
-- **Cliente piloto pagado**: el primer cliente real que use Glop o TICKBASE de verdad permitirá implementar los conectores reales (hoy son stubs).
-- **Plan de precios**: nada decidido. Propuesta en `docs/COMERCIALIZACION.md`.
-- **Marketing**: nada hecho. Propuesta en `docs/COMERCIALIZACION.md`.
+El onboarding aún no es del todo autónomo. Hoy el cliente necesita ayuda para crear su PAT de GitHub; resoluble con un backend mínimo de unos 50 €/mes que gestione tokens.
 
-## La pregunta importante
+No hay todavía un cliente piloto pagado. El primero que use Glop o TICKBASE de verdad permitirá implementar los conectores reales — los actuales son stubs documentados.
 
-> ¿Existe demanda real para esto?
+El plan de precios y el material de marketing no están decididos. Las opciones razonadas están en [`docs/COMERCIALIZACION.md`](COMERCIALIZACION.md).
 
-La respuesta corta: **sí, con matices**. El sector de hostelería independiente española mueve 50 000 millones €/año. El 70 % sigue gestionando con Excel o software local de hace 10 años. El nicho hay. La pregunta es si Paco quiere convertirse en vendedor o quiere licenciarlo a alguien que lo venda. Las dos opciones se exploran en el plan de comercialización.
+## Sobre si esto tiene mercado
+
+La hostelería independiente española mueve unos 50 000 millones de euros al año. Alrededor del 70 % sigue gestionando con Excel o con software local de hace una década. Nicho hay. La pregunta no es esa.
+
+La pregunta real es si Paco quiere convertirse en vendedor de software o prefiere licenciarlo a alguien con red comercial. Ambas opciones están desarrolladas en el plan de comercialización.
