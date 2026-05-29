@@ -132,6 +132,6 @@ El wizard de alta permite elegir tema y previsualizar antes de confirmar. Cada c
 ## Contacto
 
 Francisco Javier Martínez Alba · Algeciras
-fjmacarmen@gmail.com
+fjmacarmen@gmail.com · [LinkedIn](https://www.linkedin.com/in/franciscojaviermartinezalba)
 
 Si llevas un grupo hotelero o estás construyendo producto en el sector y este case study te ha resultado útil, escríbeme.

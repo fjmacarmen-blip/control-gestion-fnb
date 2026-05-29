@@ -108,7 +108,7 @@ La visión completa está en [docs/arquitectura-plataforma.md](docs/arquitectura
 **Francisco Javier Martínez Alba** · 30 años en dirección hotelera · Algeciras.
 Este proyecto es el resultado de querer entender de primera mano qué se puede construir hoy con las herramientas disponibles, traduciendo a código operaciones que llevo décadas haciendo a mano. Más detalle en el [case study](docs/CASE-STUDY.md).
 
-[LinkedIn](#) · [Email](mailto:fjmacarmen@gmail.com)
+[LinkedIn](https://www.linkedin.com/in/franciscojaviermartinezalba) · [Email](mailto:fjmacarmen@gmail.com)
 
 ## Licencia
 
