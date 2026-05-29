@@ -1374,7 +1374,7 @@ function renderRecipes(cat) {
     var imgSrc = IMG_MAP[r.n];
     c.innerHTML =
       '<div class="card-thumb ' + r.g + '">' +
-        (imgSrc ? '<img src="' + imgSrc + '" alt="' + r.n + '" loading="lazy">' : '<span class="emoji">' + r.e + '</span>') +
+        (imgSrc ? '<img src="' + imgSrc + '" alt="' + r.n + '" loading="lazy" decoding="async">' : '<span class="emoji">' + r.e + '</span>') +
         (imgSrc ? '<span class="emoji-overlay">' + r.e + '</span>' : '') +
         '<span class="card-difficulty ' + diffClass(r.dif) + '">' + r.dif + '</span>' +
       '</div>' +

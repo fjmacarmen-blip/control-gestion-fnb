@@ -1633,7 +1633,7 @@ function pkgCard(item, selKey, grid) {
   const hasComp = !!(item.composition && Object.keys(item.composition).length);
   card.innerHTML = `
     <div class="pkg-thumb ${item.g}">
-      ${item.img ? `<img src="${item.img}" alt="${item.name}" loading="lazy">` : ''}
+      ${item.img ? `<img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async">` : ''}
       <span class="pkg-icon">${item.icon}</span>
       <span class="pkg-badge ${item.badge}">${item.type === 'coctel' ? '🥂 Cóctel de Pie' : item.name}</span>
     </div>
@@ -1767,7 +1767,7 @@ function showComposition(pkgId) {
   const body = document.getElementById('compModalBody');
   body.innerHTML = `
     <div class="comp-modal-hero ${pkg.g}">
-      ${pkg.img ? `<img src="${pkg.img}" alt="${pkg.name}">` : ''}
+      ${pkg.img ? `<img src="${pkg.img}" alt="${pkg.name}" decoding="async">` : ''}
       <div class="comp-modal-hero-content">
         <div class="comp-icon">${pkg.icon}</div>
         <h2>${pkg.name}</h2>
@@ -1939,7 +1939,7 @@ function dishCard(item, cat) {
     <div class="dc-chk"></div>
     <div class="dc-head">
       ${imgSrc
-        ? `<img class="dc-img" src="${imgSrc}" alt="${item.n}" loading="lazy">`
+        ? `<img class="dc-img" src="${imgSrc}" alt="${item.n}" loading="lazy" decoding="async">`
         : `<span class="dc-emo">${item.e}</span>`}
       <div><div class="dc-name">${item.n}</div></div>
     </div>
@@ -2021,7 +2021,7 @@ function initGrids() {
     if (t.img) {
       c.innerHTML = `
         <div class="evt-thumb">
-          <img src="${t.img}" alt="${t.name}" loading="lazy">
+          <img src="${t.img}" alt="${t.name}" loading="lazy" decoding="async">
           <span class="evt-thumb-icon">${t.icon}</span>
         </div>
         <div class="evt-body">

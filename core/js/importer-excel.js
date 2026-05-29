@@ -25,23 +25,30 @@
 
   const CDN_XLSX = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
   const CDN_PAPA = 'https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js';
+  // Subresource Integrity · cierre auditoría C1 (v4.15)
+  const SRI_XLSX = 'sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw';
+  const SRI_PAPA = 'sha384-D/t0ZMqQW31H3az8ktEiNb39wyKnS82iFY52QPACM+IjKW3jDUhyIgh2PApRqJZs';
 
   let libsLoaded = false;
-  function loadScript(src) {
+  function loadScript(src, integrity) {
     return new Promise((resolve, reject) => {
       const s = document.createElement('script');
       s.src = src;
       s.async = true;
+      if (integrity) {
+        s.integrity = integrity;
+        s.crossOrigin = 'anonymous';
+      }
       s.onload = () => resolve();
-      s.onerror = () => reject(new Error('No se pudo cargar ' + src));
+      s.onerror = () => reject(new Error('No se pudo cargar ' + src + ' (¿hash SRI obsoleto?)'));
       document.head.appendChild(s);
     });
   }
 
   async function ensureLibsLoaded() {
     if (libsLoaded) return;
-    if (!window.XLSX) await loadScript(CDN_XLSX);
-    if (!window.Papa) await loadScript(CDN_PAPA);
+    if (!window.XLSX) await loadScript(CDN_XLSX, SRI_XLSX);
+    if (!window.Papa) await loadScript(CDN_PAPA, SRI_PAPA);
     libsLoaded = true;
   }
 

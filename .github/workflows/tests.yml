@@ -1,0 +1,40 @@
+name: tests
+on:
+  push:
+    branches: [main, 'feat/**', 'fix/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  node-tests:
+    name: Node test suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run tests
+        run: node --test test/auto-match.test.js test/loader-validation.test.js test/escape-html.test.js
+
+  json-validate:
+    name: JSON syntax + schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate JSON files parse
+        run: node test/validate-jsons.js
+
+  html-lint:
+    name: HTML smoke checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Smoke check (CSP + SRI present in dashboard HTMLs)
+        run: node test/check-security-headers.js

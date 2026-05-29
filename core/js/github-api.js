@@ -63,6 +63,18 @@
     return 'https://api.github.com/repos/' + owner + '/' + repo + path;
   }
 
+  // Wrapper de fetch con timeout · cierre auditoría M2 (v4.15)
+  // Usa el helper expuesto por loader.js si está disponible; si no, fallback.
+  const REQ_TIMEOUT_MS = 30000;
+  function timedFetch(url, opts) {
+    if (window.fnbFetch && window.fnbFetch.withTimeout) {
+      return window.fnbFetch.withTimeout(url, { ...opts, timeoutMs: REQ_TIMEOUT_MS });
+    }
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), REQ_TIMEOUT_MS);
+    return fetch(url, { ...(opts || {}), signal: ctrl.signal }).finally(() => clearTimeout(t));
+  }
+
   function authHeaders() {
     const pat = window.fnbAuth && window.fnbAuth.getPAT && window.fnbAuth.getPAT();
     if (!pat) return null;
@@ -78,11 +90,20 @@
   }
 
   // ── base64 helpers compatibles con UTF-8 ──────────────
+  // v4.15 · cierre auditoría A4: sustituimos escape()/unescape() (deprecated
+  // en ECMAScript desde 2015) por TextEncoder/TextDecoder. Más rápido y
+  // estandar.
   function utf8ToBase64(str) {
-    return btoa(unescape(encodeURIComponent(str)));
+    const bytes = new TextEncoder().encode(str);
+    let bin = '';
+    for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
   }
   function base64ToUtf8(b64) {
-    return decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+    const bin = atob(b64.replace(/\n/g, ''));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
   }
 
   // ── Operaciones ──────────────────────────────────────
@@ -98,7 +119,7 @@
     if (!headers) return { ok: false, error: 'Sin PAT' };
     try {
       const { owner, repo } = getRepoIdentity();
-      const res = await fetch('https://api.github.com/repos/' + owner + '/' + repo, { headers });
+      const res = await timedFetch('https://api.github.com/repos/' + owner + '/' + repo, { headers });
       if (res.status === 401) return { ok: false, error: 'PAT inválido o expirado' };
       if (res.status === 404) return { ok: false, error: 'Repo no encontrado o PAT sin permiso · scope `repo` requerido' };
       if (!res.ok) return { ok: false, error: 'GitHub respondió ' + res.status };
@@ -124,7 +145,7 @@
     const url = apiUrl('/contents/' + encodeURI(path) + (branch ? '?ref=' + encodeURIComponent(branch) : ''));
     const headers = authHeaders() || { 'Accept': 'application/vnd.github+json' };
     try {
-      const res = await fetch(url, { headers });
+      const res = await timedFetch(url, { headers });
       if (res.status === 404) return { ok: false, status: 404, error: 'No existe' };
       if (!res.ok) return { ok: false, status: res.status, error: 'HTTP ' + res.status };
       const data = await res.json();
@@ -174,7 +195,7 @@
     }
 
     try {
-      const res = await fetch(apiUrl('/contents/' + encodeURI(path)), {
+      const res = await timedFetch(apiUrl('/contents/' + encodeURI(path)), {
         method: 'PUT',
         headers: { ...authHeaders(), 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -212,13 +233,13 @@
 
     try {
       // 1. Obtener último commit del branch
-      const refRes = await fetch(apiUrl('/git/ref/heads/' + branch), { headers: authHeaders() });
+      const refRes = await timedFetch(apiUrl('/git/ref/heads/' + branch), { headers: authHeaders() });
       if (!refRes.ok) return { ok: false, error: 'No se pudo leer ref del branch: ' + refRes.status };
       const refData = await refRes.json();
       const parentSha = refData.object.sha;
 
       // 2. Obtener tree base del commit padre
-      const commitRes = await fetch(apiUrl('/git/commits/' + parentSha), { headers: authHeaders() });
+      const commitRes = await timedFetch(apiUrl('/git/commits/' + parentSha), { headers: authHeaders() });
       if (!commitRes.ok) return { ok: false, error: 'No se pudo leer commit padre' };
       const commitData = await commitRes.json();
       const baseTreeSha = commitData.tree.sha;
@@ -227,7 +248,7 @@
       const blobs = [];
       for (const file of files) {
         const stringContent = typeof file.content === 'string' ? file.content : JSON.stringify(file.content, null, 2) + '\n';
-        const blobRes = await fetch(apiUrl('/git/blobs'), {
+        const blobRes = await timedFetch(apiUrl('/git/blobs'), {
           method: 'POST',
           headers: { ...authHeaders(), 'Content-Type': 'application/json' },
           body: JSON.stringify({ content: utf8ToBase64(stringContent), encoding: 'base64' }),
@@ -238,7 +259,7 @@
       }
 
       // 4. Crear nuevo tree
-      const treeRes = await fetch(apiUrl('/git/trees'), {
+      const treeRes = await timedFetch(apiUrl('/git/trees'), {
         method: 'POST',
         headers: { ...authHeaders(), 'Content-Type': 'application/json' },
         body: JSON.stringify({ base_tree: baseTreeSha, tree: blobs }),
@@ -247,7 +268,7 @@
       const treeData = await treeRes.json();
 
       // 5. Crear commit
-      const newCommitRes = await fetch(apiUrl('/git/commits'), {
+      const newCommitRes = await timedFetch(apiUrl('/git/commits'), {
         method: 'POST',
         headers: { ...authHeaders(), 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -260,7 +281,7 @@
       const newCommitData = await newCommitRes.json();
 
       // 6. Mover el branch al nuevo commit
-      const patchRes = await fetch(apiUrl('/git/refs/heads/' + branch), {
+      const patchRes = await timedFetch(apiUrl('/git/refs/heads/' + branch), {
         method: 'PATCH',
         headers: { ...authHeaders(), 'Content-Type': 'application/json' },
         body: JSON.stringify({ sha: newCommitData.sha }),

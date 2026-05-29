@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /scripts/
+
+Sitemap: https://fjmacarmen-blip.github.io/control-gestion-fnb/sitemap.xml
