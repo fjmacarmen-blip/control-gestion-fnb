@@ -1,0 +1,90 @@
+{
+  "id": "marisqueria",
+  "nombre": "Marisquería · Cocina del mar",
+  "config": {
+    "categoria_establecimiento": "restaurante",
+    "tema": "mediterraneo",
+    "locale": "es-ES",
+    "moneda": "EUR",
+    "version_schema": "1.0.0"
+  },
+  "establecimiento_skeleton": {
+    "espacios": [
+      { "id": "comedor",         "nombre": "Comedor principal", "capacidad_sentado": 80, "capacidad_coctel": 120 },
+      { "id": "terraza_mar",     "nombre": "Terraza con vistas al mar", "capacidad_sentado": 50, "capacidad_coctel": 80 },
+      { "id": "reservado_caja",  "nombre": "Reservado cajas",   "capacidad_sentado": 20, "capacidad_coctel": 30 }
+    ]
+  },
+  "eventos": {
+    "categorias": [
+      { "id": "celebracion", "icon": "🎉", "name": "Celebraciones",       "desc": "Bodas íntimas, comuniones, aniversarios sobre el mar." },
+      { "id": "empresa",     "icon": "🏢", "name": "Empresa",              "desc": "Comidas y cenas corporativas con menú degustación marinero." }
+    ],
+    "tipos": [
+      { "id": "mariscada",   "category": "celebracion", "icon": "🦐", "name": "Mariscada de celebración", "desc": "Plateau marisco fresco + arroz", "badge": "badge-pre" },
+      { "id": "arrocera",    "category": "celebracion", "icon": "🍚", "name": "Comida arrocera",          "desc": "Aperitivos + arroz a elegir",     "badge": "badge-est" },
+      { "id": "cena_emp",    "category": "empresa",     "icon": "🤝", "name": "Cena de empresa",          "desc": "Menú gastronómico marinero",      "badge": "badge-est" }
+    ]
+  },
+  "menus": {
+    "paquetes": [
+      {
+        "id": "mar_eco", "name": "Menú Mar Esencial", "ppax": 38, "type": "sentado",
+        "badge": "badge-eco", "icon": "🐟", "desc": "Aperitivos + arroz seco + postre",
+        "g": "g4",
+        "composition": {
+          "Aperitivos": ["Boquerones en vinagre", "Salmorejo cordobés", "Pulpo a la gallega ración"],
+          "Arroz": ["Arroz seco de calabaza y secreto"],
+          "Postre": ["Tarta de queso", "Sorbete de limón"],
+          "Bodega": ["Vino blanco DO Rías Baixas", "Agua y refrescos"]
+        }
+      },
+      {
+        "id": "mariscada", "name": "Mariscada Premium", "ppax": 85, "type": "sentado",
+        "badge": "badge-pre", "icon": "🦞", "desc": "Plateau de mariscos del día + arroz caldoso + postre",
+        "g": "g8",
+        "composition": {
+          "Plateau": ["Gamba roja", "Cigala", "Bogavante 1/4", "Mejillón", "Berberecho", "Quisquilla"],
+          "Arroz": ["Arroz caldoso de bogavante"],
+          "Postre": ["Sorbete limón Cava", "Coulant chocolate"],
+          "Bodega": ["Albariño · Verdejo · Cava brut"]
+        }
+      },
+      {
+        "id": "mar_lux", "name": "Degustación Marinera", "ppax": 95, "type": "sentado",
+        "badge": "badge-lux", "icon": "👑", "desc": "8 pasos · maridaje incluido",
+        "g": "g9",
+        "composition": {
+          "Snacks": ["Buñuelo de bacalao", "Tartar atún rojo en cucurucho"],
+          "Paso 1": ["Ostra al natural con yuzu"],
+          "Paso 2": ["Carabinero a la brasa"],
+          "Paso 3": ["Arroz cremoso de erizo"],
+          "Paso 4": ["Lubina salvaje a la sal"],
+          "Paso 5": ["Pescado del día"],
+          "Pre-postre": ["Sorbete de yuzu"],
+          "Postre": ["Texturas de chocolate"]
+        }
+      }
+    ]
+  },
+  "recetas_seed": {
+    "entrantes": [
+      { "n": "Pulpo a la Gallega", "e": "🐙", "g": "g7", "sub": "Pulpo cocido · patata · pimentón",
+        "prep": 15, "coc": 40, "rac": 4, "dif": "Media", "mp": 4.20, "alergen": "Moluscos",
+        "ing": [["1.5kg","Pulpo gallego"],["500g","Patata"],["Pimentón de la Vera"],["AOVE"]],
+        "pasos": ["Cocer pulpo asustándolo 3 veces", "40 min a fuego medio", "Cortar y disponer sobre patata", "AOVE + pimentón"] }
+    ],
+    "primeros": [
+      { "n": "Arroz Caldoso de Bogavante", "e": "🦞", "g": "g1", "sub": "Bogavante azul · fumet potente",
+        "prep": 25, "coc": 35, "rac": 2, "dif": "Alta", "mp": 18.00, "alergen": "Crustáceos",
+        "ing": [["1 ud","Bogavante azul vivo"],["400g","Arroz bomba"],["1.5L","Fumet"],["Azafrán"]],
+        "pasos": ["Trocear bogavante vivo", "Sofreír cabezas", "Fumet con cabezas trituradas", "Arroz 18 min con tapa final"] }
+    ],
+    "segundos": [
+      { "n": "Lubina a la Sal", "e": "🐠", "g": "g3", "sub": "Ritual de apertura en mesa",
+        "prep": 10, "coc": 25, "rac": 2, "dif": "Baja", "mp": 6.50, "alergen": "Pescado, Huevo",
+        "ing": [["1ud","Lubina 600g"],["2kg","Sal gruesa"],["2 claras","Huevo"]],
+        "pasos": ["Mezclar sal con claras", "Cubrir lubina", "Hornear 22 min a 220°C"] }
+    ]
+  }
+}

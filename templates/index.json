@@ -1,0 +1,35 @@
+{
+  "_README": "Marketplace de plantillas para el wizard de creación de proyecto.",
+  "templates": [
+    {
+      "id": "cafeteria",
+      "nombre": "Cafetería · Brunch · Coffee Shop",
+      "categoria": "cafeteria",
+      "icon": "☕",
+      "tema_sugerido": "moderno-minimalista",
+      "descripcion": "Cafetería/brunch con menús de desayuno, coffee breaks empresariales y especialidad en café de origen.",
+      "color_acento": "#92664a",
+      "tags": ["café", "brunch", "desayunos", "coffee break"]
+    },
+    {
+      "id": "marisqueria",
+      "nombre": "Marisquería · Cocina del mar",
+      "categoria": "restaurante",
+      "icon": "🦞",
+      "tema_sugerido": "mediterraneo",
+      "descripcion": "Marisquería tradicional con productos del día, arroces, mariscadas y eventos privados sobre el mar.",
+      "color_acento": "#0891b2",
+      "tags": ["mariscos", "arroces", "lonja", "playa"]
+    },
+    {
+      "id": "hotel-rural",
+      "nombre": "Hotel Rural · Casona · Boutique",
+      "categoria": "hotel",
+      "icon": "🏡",
+      "tema_sugerido": "cercano-rustico",
+      "descripcion": "Hotel rural pequeño con menús de cocina tradicional, bodas íntimas y experiencias gastronómicas.",
+      "color_acento": "#a16207",
+      "tags": ["rural", "bodas íntimas", "tradicional", "experiencia"]
+    }
+  ]
+}

@@ -3,7 +3,8 @@
 [![GitHub Pages](https://img.shields.io/badge/demo-online-success?logo=github)](https://fjmacarmen-blip.github.io/control-gestion-fnb/)
 [![Stack](https://img.shields.io/badge/stack-vanilla%20JS-yellow?logo=javascript)](#stack)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](#)
-[![Status](https://img.shields.io/badge/status-v4.14-emerald)](#roadmap)
+[![Status](https://img.shields.io/badge/status-v5.0-emerald)](#roadmap)
+[![Tests](https://github.com/fjmacarmen-blip/control-gestion-fnb/actions/workflows/tests.yml/badge.svg)](https://github.com/fjmacarmen-blip/control-gestion-fnb/actions/workflows/tests.yml)
 
 > Plataforma SaaS de gestión de eventos y banquetes para hoteles y restaurantes, construida sin frameworks, desplegada en GitHub Pages.
 > Arquitectura multi-tenant, importadores Excel/PDF/imágenes, conectores a economatos externos y métricas en tiempo real.
@@ -24,18 +25,25 @@ Una aplicación web estática que gestiona:
 
 - **Múltiples proyectos (multi-tenant)** · cada establecimiento es una carpeta independiente con su tema visual, menús, recetas, espacios y presupuestos.
 - **Editor visual** · CRUD completo de menús, recetas y configuración con autoguardado en `localStorage` y publicación atómica vía GitHub API.
-- **Wizard de alta** · 4 pasos para crear un proyecto nuevo desde cero (identidad → plantilla → tema → confirmar).
+- **Wizard de alta** · 4 pasos para crear un proyecto nuevo desde cero, con marketplace de **plantillas** (cafetería, marisquería, hotel rural) que generan estructura inicial coherente.
 - **Importadores** · Excel/CSV (SheetJS), PDF (pdf.js), imágenes con compresión + fallback de IA (Pollinations).
 - **Conectores de productos** · 4 niveles: catálogo estático, CSV remoto, JSON remoto, REST API. Pensado para conectarse al economato real del cliente.
+- **Conectores TPV** · ADR 013 · simulator + csv-poll listos, stubs nombrados para Glop/TICKBASE/Pingüino. Emite eventos normalizados (`ticket_abierto`, `comanda_enviada`, `ticket_cerrado`, `mesa_liberada`).
+- **Calculadora de escandallos** · cruza recetas con catálogo de productos, calcula coste materia prima por ración, % escandallo real y PVP recomendado por categoría.
 - **Métricas** · facturación mensual, ocupación de espacios, top eventos, próximos eventos (Chart.js).
-- **Multi-tema** · 5 paletas seleccionables por proyecto (moderno, cercano, típico, mediterráneo, clásico).
+- **Multi-tema** · 5 paletas seleccionables por proyecto (moderno, cercano, típico, mediterráneo, clásico) + toggle global claro/oscuro.
+- **Vista móvil sala (PWA)** · app instalable y offline-first para el equipo de sala: eventos del día, dietas críticas con pulseras, ocupación de espacios.
+- **Carta digital pública + QR** · cada proyecto genera su URL pública sin login y su QR descargable en SVG.
 
 ## Demos online
 
-| Proyecto | URL | Descripción |
+| Demo | URL | Descripción |
 | --- | --- | --- |
-| **Hotel Miramar Algeciras** | [/dashboard/?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/?proyecto=miramar) | Piloto · 10 menús · 78 recetas · 18 presupuestos |
-| **Restaurante Casa Lola** | [/dashboard/?proyecto=restaurante-casa-lola](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/?proyecto=restaurante-casa-lola) | Demo Marbella · tema mediterráneo · 12 presupuestos |
+| **Dashboard · Miramar** | [/dashboard/](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/) | Login + listado · piloto Miramar Algeciras |
+| **Dashboard · Casa Lola** | [/dashboard/?proyecto=restaurante-casa-lola](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/?proyecto=restaurante-casa-lola) | Tema mediterráneo · 12 presupuestos seed |
+| **Sala móvil · Miramar** | [/sala-movil.html?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/sala-movil.html?proyecto=miramar) | PWA instalable · offline-first |
+| **Carta pública · Miramar** | [/carta-publica.html?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/carta-publica.html?proyecto=miramar) | Destino del QR · sin login |
+| **Carta pública · Casa Lola** | [/carta-publica.html?proyecto=restaurante-casa-lola](https://fjmacarmen-blip.github.io/control-gestion-fnb/carta-publica.html?proyecto=restaurante-casa-lola) | Carta mediterránea |
 
 ## Stack
 
@@ -88,8 +96,9 @@ Las decisiones de diseño no triviales están documentadas como ADR (Architectur
 
 - [ADR 011 · PAT en sessionStorage + modelo de amenaza](docs/adr/011-pat-sessionstorage.md)
 - [ADR 012 · Conectores de productos · 4 niveles de integración](docs/adr/012-productos-conectores.md)
+- [ADR 013 · Conectores TPV de sala · simulator/csv-poll/api](docs/adr/013-tpv-connectors.md)
 
-La visión completa está en [docs/arquitectura-plataforma.md](docs/arquitectura-plataforma.md).
+La auditoría de ingeniería v4.14 con su plan de remediación está en [docs/AUDITORIA-v4.14.md](docs/AUDITORIA-v4.14.md). La visión completa está en [docs/arquitectura-plataforma.md](docs/arquitectura-plataforma.md).
 
 ## Roadmap
 
@@ -99,9 +108,11 @@ La visión completa está en [docs/arquitectura-plataforma.md](docs/arquitectura
 - [x] **v4.9** · Métricas · 18 presupuestos seed
 - [x] **v4.10–v4.13** · Importadores Excel/PDF/imágenes · conectores externos
 - [x] **v4.14** · Segunda demo (Casa Lola) · README · case study
-- [ ] **v5.0** · App móvil offline-first para el equipo de sala
-- [ ] **v5.1** · Integración con TPVs (Glop, TICKBASE, Pingüino)
-- [ ] **v5.2** · Marketplace de plantillas de menú por categoría
+- [x] **v4.15** · Cierre auditoría (SRI · CSP · CI · 59 tests)
+- [x] **v5.0** · PWA sala móvil · conectores TPV · escandallos · carta pública + QR · 3 plantillas · light mode
+- [ ] **v5.1** · Integración real Glop (cliente piloto)
+- [ ] **v5.2** · Backend mínimo para webhook TPV tiempo real
+- [ ] **v6.0** · Marketplace de plantillas por categoría con publicación de la comunidad
 
 ## Quién lo construyó
 

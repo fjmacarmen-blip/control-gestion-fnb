@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Carta digital del establecimiento · menús · alérgenos · sin login.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0d1117">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carta · F&B">
+<meta property="og:description" content="Carta digital con menús y alérgenos.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://image.pollinations.ai; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="core/css/dashboard-theme.css">
+<link rel="stylesheet" href="core/css/themes.css">
+<title>Carta · F&B</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body {
+    background: var(--bg-base);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.55;
+  }
+  .hero {
+    text-align: center;
+    padding: 60px 20px 32px;
+    border-bottom: 1px solid var(--border-default);
+    background:
+      radial-gradient(800px 400px at 50% -100px, rgba(52,211,153,.08), transparent 60%),
+      var(--bg-surface);
+  }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 48px); font-weight: 600; letter-spacing: -.01em; margin-bottom: 8px; }
+  .hero-sub { color: var(--text-soft); font-size: 14px; }
+  .hero-meta { margin-top: 18px; display: inline-flex; gap: 14px; font-size: 12px; color: var(--text-muted); flex-wrap: wrap; justify-content: center; }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+  main { max-width: 920px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  .filters {
+    display: flex; gap: 8px; overflow-x: auto;
+    padding-bottom: 14px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-default);
+    scrollbar-width: thin;
+  }
+  .filter-btn {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    color: var(--text-soft);
+    padding: 7px 14px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .filter-btn:hover { color: var(--text); }
+  .filter-btn.is-active { background: var(--accent); color: var(--bg-base); border-color: var(--accent); font-weight: 600; }
+
+  .menu-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 18px;
+  }
+  .menu-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 6px; }
+  .menu-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; line-height: 1.2; }
+  .menu-price { font-size: 24px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+  .menu-price small { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+  .menu-desc { color: var(--text-soft); font-size: 14px; margin-bottom: 14px; }
+  .menu-incl { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border-default); }
+  .menu-section { margin-top: 14px; }
+  .menu-section-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .menu-section-items { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .menu-section-items li { list-style: none; padding-left: 16px; position: relative; }
+  .menu-section-items li::before { content: '·'; position: absolute; left: 4px; color: var(--accent); font-weight: 700; }
+
+  .alergens {
+    background: rgba(248,81,73,.06);
+    border: 1px solid rgba(248,81,73,.15);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--text-soft);
+  }
+  .alergens h3 { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--danger); margin-bottom: 10px; }
+  .alergens p { line-height: 1.6; }
+
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border-default);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer .powered { margin-top: 10px; font-size: 11px; }
+
+  .empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+  .empty-icon { font-size: 48px; margin-bottom: 12px; opacity: .5; }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-eyebrow" id="heroEyebrow">CARTA</div>
+    <h1 class="hero-title" id="heroTitle">Cargando…</h1>
+    <div class="hero-sub" id="heroSub"></div>
+    <div class="hero-meta" id="heroMeta"></div>
+  </header>
+
+  <main>
+    <nav class="filters" id="filters" role="tablist"></nav>
+    <div id="menus"></div>
+    <section class="alergens">
+      <h3>⚠️ Información de alérgenos</h3>
+      <p>Esta carta puede contener trazas de los 14 alérgenos legalmente declarables. Si tienes alguna alergia o intolerancia, indícalo al equipo de sala al hacer tu pedido para que adapten la elaboración o te recomienden alternativas seguras.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div id="footerContact"></div>
+    <div class="powered">Carta digital generada con <a href="https://github.com/fjmacarmen-blip/control-gestion-fnb">Plataforma F&B</a></div>
+  </footer>
+
+<script src="core/js/theme.js"></script>
+<script src="core/js/loader.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+const params = new URLSearchParams(location.search);
+const projectId = params.get('proyecto') || 'miramar';
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+async function boot() {
+  let data;
+  try {
+    data = await window.loadProject(projectId, { keys: ['config', 'establecimiento', 'menus'] });
+  } catch (e) {
+    document.body.innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div>No se pudo cargar el proyecto «' + escapeHtml(projectId) + '».</div>';
+    return;
+  }
+  renderHero(data.establecimiento, data.config);
+  renderFilters(data.menus);
+  renderMenus(data.menus, 'all');
+  renderFooter(data.establecimiento);
+
+  // SEO dinámico
+  if (data.establecimiento && data.establecimiento.nombre_comercial) {
+    document.title = 'Carta · ' + data.establecimiento.nombre_comercial;
+    const og = document.querySelector('meta[property="og:title"]');
+    if (og) og.setAttribute('content', 'Carta · ' + data.establecimiento.nombre_comercial);
+  }
+}
+
+function renderHero(est, config) {
+  $('#heroEyebrow').textContent = (config && config.categoria_establecimiento || 'Carta').toUpperCase();
+  $('#heroTitle').textContent = (est && est.nombre_comercial) || 'Carta';
+  $('#heroSub').textContent = (est && est.categoria) || '';
+  const meta = [];
+  if (est && est.direccion) {
+    const dir = typeof est.direccion === 'string' ? est.direccion : [est.direccion.calle, est.direccion.ciudad].filter(Boolean).join(', ');
+    if (dir) meta.push('<span>📍 ' + escapeHtml(dir) + '</span>');
+  }
+  if (est && est.contacto && est.contacto.telefono) meta.push('<span>📞 ' + escapeHtml(est.contacto.telefono) + '</span>');
+  if (est && est.contacto && est.contacto.web) meta.push('<span>🌐 ' + escapeHtml(est.contacto.web) + '</span>');
+  $('#heroMeta').innerHTML = meta.join('');
+}
+
+function renderFilters(menus) {
+  const paquetes = (menus && menus.paquetes) || [];
+  const types = [...new Set(paquetes.map(p => p.type).filter(Boolean))];
+  const labels = { sentado: 'Sentado', coctel: 'Cóctel', brunch: 'Brunch', desayuno: 'Desayuno', coffee: 'Coffee', barra_libre: 'Barra' };
+  const buttons = [
+    '<button class="filter-btn is-active" data-filter="all">Todos</button>',
+    ...types.map(t => '<button class="filter-btn" data-filter="' + t + '">' + escapeHtml(labels[t] || t) + '</button>'),
+  ];
+  $('#filters').innerHTML = buttons.join('');
+  $$('#filters .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('#filters .filter-btn').forEach(b => b.classList.toggle('is-active', b === btn));
+      renderMenus(menus, btn.dataset.filter);
+    });
+  });
+}
+
+function renderMenus(menus, filter) {
+  const paquetes = (menus && menus.paquetes || []).filter(p => filter === 'all' || p.type === filter);
+  const valid = paquetes.filter(p => p.ppax > 0);
+  if (!valid.length) {
+    $('#menus').innerHTML = '<div class="empty"><div class="empty-icon">📋</div>Sin menús en esta categoría.</div>';
+    return;
+  }
+  $('#menus').innerHTML = valid.map(menuCard).join('');
+}
+
+function menuCard(p) {
+  const composition = p.composition || {};
+  const sections = Object.entries(composition).map(([title, items]) => `
+    <div class="menu-section">
+      <div class="menu-section-title">${escapeHtml(title)}</div>
+      <ul class="menu-section-items">
+        ${(items || []).map(it => '<li>' + escapeHtml(it) + '</li>').join('')}
+      </ul>
+    </div>
+  `).join('');
+  return `
+    <article class="menu-card">
+      <div class="menu-head">
+        <div>
+          <div class="menu-name">${escapeHtml((p.icon ? p.icon + ' ' : '') + p.name)}</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px;text-transform:uppercase;letter-spacing:1.5px;">${escapeHtml(p.type || '')}</div>
+        </div>
+        <div class="menu-price">${p.ppax} €<small>/pax</small></div>
+      </div>
+      <div class="menu-desc">${escapeHtml(p.desc || '')}</div>
+      ${p.incl ? '<div class="menu-incl">Incluye: ' + escapeHtml(p.incl) + '</div>' : ''}
+      ${sections}
+    </article>
+  `;
+}
+
+function renderFooter(est) {
+  if (!est) return;
+  const lines = [];
+  if (est.nombre_comercial) lines.push('<strong>' + escapeHtml(est.nombre_comercial) + '</strong>');
+  if (est.razon_social && est.razon_social !== est.nombre_comercial) lines.push(escapeHtml(est.razon_social));
+  if (est.direccion) {
+    const dir = typeof est.direccion === 'string' ? est.direccion : [est.direccion.calle, est.direccion.cp, est.direccion.ciudad].filter(Boolean).join(', ');
+    if (dir) lines.push(escapeHtml(dir));
+  }
+  if (est.contacto) {
+    const c = [];
+    if (est.contacto.telefono) c.push(escapeHtml(est.contacto.telefono));
+    if (est.contacto.email) c.push(escapeHtml(est.contacto.email));
+    if (c.length) lines.push(c.join(' · '));
+  }
+  $('#footerContact').innerHTML = lines.join('<br>');
+}
+
+boot();
+</script>
+</body>
+</html>
