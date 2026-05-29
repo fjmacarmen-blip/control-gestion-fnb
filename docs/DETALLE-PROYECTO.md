@@ -117,13 +117,23 @@ control-gestion-fnb/
 | Simulador TPV | `?vista=tpv` | 2 escenarios pregrabados · eventos en directo |
 | Instalación como app | "Añadir a pantalla de inicio" | Funciona offline tras primera visita |
 
-### 2.3 · Cliente del establecimiento (público)
+### 2.3 · Cliente final potencial (público · self-service)
 
 | Capacidad | URL |
 | --- | --- |
-| Carta digital | `/carta-publica.html?proyecto=X` |
+| Cotizador interactivo de eventos | `/core/pages/presupuesto-evento.html?proyecto=X` |
+| Solicitar presupuesto formal (mailto + clipboard + WhatsApp) | botón final del cotizador |
+| Carta digital del establecimiento | `/carta-publica.html?proyecto=X` |
 | Filtros por tipo de menú | Tabs en la carta |
 | Alérgenos siempre visibles | Bloque rojo abajo |
+
+**v5.2 ·** el cotizador NO envía a un backend (no hay backend). Construye un email con todo el detalle y abre `mailto:` al email del hotel. Como respaldo, copia al portapapeles y ofrece enviarlo por WhatsApp. El hotel recibe la solicitud y la formaliza con el cotizador en `?modo=interno`.
+
+### 2.4 · Cliente del establecimiento (comensal · día del servicio)
+
+| Capacidad | URL |
+| --- | --- |
+| Carta digital del día | `/carta-publica.html?proyecto=X` (vía QR de la mesa) |
 
 ## 3 · Módulos de motor (`core/js/`)
 

@@ -1354,9 +1354,13 @@ body{
         <strong>📌 Importante:</strong> Este presupuesto es orientativo y está sujeto a disponibilidad. Un miembro de nuestro equipo se pondrá en contacto contigo en menos de 24 h para confirmar detalles y enviar la propuesta formal. Validez del presupuesto: 30 días.
       </div>
 
-      <div class="docs-actions" style="margin-top:24px;padding:22px;background:var(--card);border:1px dashed var(--gold-border);border-radius:14px;">
-        <div style="font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.1rem;font-weight:600;margin-bottom:12px;">📄 Documentos derivados</div>
-        <p style="color:var(--text-soft);font-size:.85rem;margin-bottom:16px;line-height:1.6;">Genera automáticamente el contrato legal o la orden de servicio (uso interno) con todos los datos de este presupuesto rellenos.</p>
+      <!-- Sección INTERNA · sólo visible con ?modo=interno (comercial del hotel) -->
+      <div class="docs-actions" id="docsInternosBox" style="display:none;margin-top:24px;padding:22px;background:var(--card);border:1px dashed var(--gold-border);border-radius:14px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <span style="background:rgba(167,139,250,.15);color:#a78bfa;padding:3px 10px;border-radius:100px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;">Modo interno</span>
+          <div style="font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.1rem;font-weight:600;">📄 Documentos derivados</div>
+        </div>
+        <p style="color:var(--text-soft);font-size:.85rem;margin-bottom:16px;line-height:1.6;">Sólo visible al comercial del hotel. Genera el contrato legal o la orden de servicio con todos los datos de este presupuesto.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <button class="btn-next" onclick="abrirContrato()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
             📄 Generar Contrato de Servicios
@@ -1369,7 +1373,7 @@ body{
 
       <div class="step-nav">
         <button class="btn-prev" onclick="goStep(6)">← Revisar</button>
-        <button class="btn-next" onclick="generateBudget()" style="background:linear-gradient(135deg,#2d7a4f,#166534);color:#fff;">
+        <button class="btn-next" id="btnFinalSubmit" onclick="generateBudget()" style="background:linear-gradient(135deg,#2d7a4f,#166534);color:#fff;">
           🎉 Solicitar Presupuesto Formal
         </button>
       </div>
@@ -2440,13 +2444,192 @@ function buildFinalSummary() {
   });
 }
 
-function generateBudget() {
-  const name = document.getElementById('finalName').value || document.getElementById('clientName').value;
-  if (!name) { alert('Por favor, introduce el nombre del cliente para generar el presupuesto.'); return; }
-  const total = calcTotal();
-  const iva = total*0.10;
-  alert(`✅ ¡Presupuesto enviado!\n\nRef: PRES-${new Date().getFullYear()}-${Math.floor(Math.random()*9000)+1000}\nCliente: ${name}\nTotal: ${fmtEur(total+iva)}\n\nNos pondremos en contacto contigo en menos de 24 h. ¡Gracias!`);
+// ══════════════════════════════════════════════════
+// v5.2 · Solicitud de presupuesto formal
+// ──────────────────────────────────────────────────
+// El cliente final pulsa "Solicitar Presupuesto Formal" y:
+//   1. Validamos datos mínimos (nombre + algo de contacto)
+//   2. Generamos el resumen del presupuesto (texto plano legible)
+//   3. Abrimos mailto: prerellenado al email del establecimiento
+//      (de establecimiento.contacto.email del proyecto)
+//   4. Copiamos el mismo texto al portapapeles como fallback
+//   5. Mostramos modal de confirmación con opciones (reintentar email,
+//      copiar otra vez, abrir WhatsApp si hay teléfono)
+//
+// En modo interno (?modo=interno) no se permite "Solicitar" — el comercial
+// del hotel usa "Generar Contrato" / "Generar Orden" para formalizar.
+// ══════════════════════════════════════════════════
+
+let __HOTEL_CONTACT = null;   // se rellena en boot desde establecimiento.json
+
+async function fetchHotelContact() {
+  if (__HOTEL_CONTACT) return __HOTEL_CONTACT;
+  try {
+    const proj = await window.loadProject(undefined, { keys: ['establecimiento'] });
+    __HOTEL_CONTACT = (proj.establecimiento && proj.establecimiento.contacto) || {};
+    __HOTEL_CONTACT._nombre = (proj.establecimiento && proj.establecimiento.nombre_comercial) || '';
+  } catch (e) {
+    console.warn('No se pudo cargar contacto del establecimiento:', e);
+    __HOTEL_CONTACT = {};
+  }
+  return __HOTEL_CONTACT;
 }
+
+function buildPresupuestoTexto(data, ref) {
+  const lines = [];
+  lines.push('SOLICITUD DE PRESUPUESTO FORMAL');
+  lines.push('─────────────────────────────────');
+  lines.push('Referencia: ' + ref);
+  lines.push('Fecha solicitud: ' + new Date().toLocaleString('es-ES'));
+  lines.push('');
+  lines.push('▸ CLIENTE');
+  lines.push('Nombre: ' + (data.cliente.nombre || '—'));
+  if (data.cliente.email) lines.push('Email: ' + data.cliente.email);
+  if (data.cliente.tel)   lines.push('Teléfono: ' + data.cliente.tel);
+  lines.push('');
+  lines.push('▸ EVENTO');
+  if (data.fecha)    lines.push('Fecha: ' + data.fecha + (data.hora ? ' · ' + data.hora : ''));
+  if (data.espacio)  lines.push('Espacio: ' + data.espacio);
+  lines.push('Comensales: ' + data.pt + ' (' + data.adultos + ' adultos + ' + data.ninos + ' niños + ' + data.bebes + ' bebés)');
+  if (data.sel && data.sel.eventType) lines.push('Tipo de evento: ' + (data.sel.eventType.name || ''));
+  if (data.sel && data.sel.menuPkg)   lines.push('Menú: ' + (data.sel.menuPkg.name || '') + ' · ' + (data.sel.menuPkg.ppax || 0) + ' €/pax');
+  lines.push('');
+  // Dietas
+  const dietasActivas = Object.entries(data.dietas || {}).filter(([, n]) => n > 0);
+  if (dietasActivas.length) {
+    lines.push('▸ DIETAS ESPECIALES');
+    dietasActivas.forEach(([k, n]) => lines.push('  · ' + k + ': ' + n));
+    lines.push('');
+  }
+  // Extras (resumen)
+  if (data.sel) {
+    const extras = [];
+    ['bebida', 'show', 'foto', 'dulces', 'decor', 'flores', 'velas', 'musica'].forEach(k => {
+      const v = data.sel[k];
+      if (Array.isArray(v) && v.length) v.forEach(it => extras.push(it.name));
+      else if (v && v.name) extras.push(v.name);
+    });
+    if (extras.length) {
+      lines.push('▸ EXTRAS SELECCIONADOS');
+      extras.forEach(e => lines.push('  · ' + e));
+      lines.push('');
+    }
+  }
+  lines.push('▸ TOTAL ESTIMADO');
+  lines.push('Subtotal sin IVA: ' + fmtEur(data.total));
+  lines.push('IVA 10 %:         ' + fmtEur(data.total * 0.10));
+  lines.push('TOTAL CON IVA:    ' + fmtEur(data.total * 1.10));
+  if (data.notas) {
+    lines.push('');
+    lines.push('▸ NOTAS DEL CLIENTE');
+    lines.push(data.notas);
+  }
+  return lines.join('\n');
+}
+
+async function generateBudget() {
+  // Modo interno: no enviar nada, sólo guardar y avisar
+  if (PRESUP_MODE === 'interno') {
+    exportPresupuestoData();
+    alert('Modo interno · presupuesto guardado en sessionStorage.\n\nUsa "Generar Contrato" o "Generar Orden de Servicio" para formalizar.');
+    return;
+  }
+
+  const name = (document.getElementById('finalName')?.value || document.getElementById('clientName')?.value || '').trim();
+  const email = (document.getElementById('finalEmail')?.value || document.getElementById('clientEmail')?.value || '').trim();
+  const tel   = (document.getElementById('finalTel')?.value || document.getElementById('finalPhone')?.value || '').trim();
+
+  if (!name) {
+    alert('Por favor, introduce tu nombre o el nombre de la empresa.');
+    document.getElementById('finalName')?.focus();
+    return;
+  }
+  if (!email && !tel) {
+    alert('Necesitamos al menos un email o un teléfono para poder enviarte la propuesta formal.');
+    document.getElementById('finalEmail')?.focus();
+    return;
+  }
+
+  const data = exportPresupuestoData();
+  const ref = data.referencia;
+  const texto = buildPresupuestoTexto(data, ref);
+
+  // Cargar contacto del hotel
+  const hotel = await fetchHotelContact();
+  const dest = hotel.email || '';
+  const subject = 'Solicitud de presupuesto · ' + ref + ' · ' + name;
+  const body = texto;
+
+  // 1. Intentar copiar al portapapeles (silencioso si falla)
+  let copiado = false;
+  try {
+    await navigator.clipboard.writeText(texto);
+    copiado = true;
+  } catch {}
+
+  // 2. Construir mailto:
+  const mailto = 'mailto:' + encodeURIComponent(dest) +
+    '?subject=' + encodeURIComponent(subject) +
+    '&body=' + encodeURIComponent(body);
+
+  // 3. Mostrar modal de confirmación con opciones
+  showBudgetConfirmation({
+    ref,
+    name,
+    total: data.total * 1.10,
+    mailto,
+    hotelEmail: dest,
+    hotelTel: hotel.telefono || '',
+    hotelNombre: hotel._nombre || '',
+    texto,
+    copiado,
+  });
+}
+
+function showBudgetConfirmation(opts) {
+  // Limpiar overlay previo
+  document.getElementById('__budgetConfirm__')?.remove();
+
+  const tel = (opts.hotelTel || '').replace(/[^\d+]/g, '');
+  const waMsg = encodeURIComponent('Hola, acabo de generar un presupuesto con la ref ' + opts.ref + ' a nombre de ' + opts.name + '. Te paso el detalle a continuación.\n\n' + opts.texto);
+  const waUrl = tel ? ('https://wa.me/' + tel.replace(/^\+/, '') + '?text=' + waMsg) : '';
+
+  const overlay = document.createElement('div');
+  overlay.id = '__budgetConfirm__';
+  overlay.setAttribute('style', 'position:fixed;inset:0;background:rgba(10,12,20,.88);backdrop-filter:blur(8px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,sans-serif;');
+  overlay.innerHTML = `
+    <div style="background:#161b22;border:1px solid #30363d;border-radius:14px;width:100%;max-width:560px;padding:28px 26px;box-shadow:0 24px 60px rgba(0,0,0,.6);color:#e6edf3;">
+      <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#34d399;margin-bottom:8px;">Solicitud preparada</div>
+      <h2 style="font-size:22px;font-weight:600;line-height:1.2;margin-bottom:6px;">Tu presupuesto está listo para enviar</h2>
+      <p style="font-size:13px;color:#8b949e;line-height:1.55;margin-bottom:18px;">
+        Ref <strong style="color:#e6edf3;font-family:monospace;">${escapeBudgetHtml(opts.ref)}</strong> ·
+        Total estimado <strong style="color:#34d399;">${escapeBudgetHtml(fmtEur(opts.total))}</strong>
+        ${opts.copiado ? '<br><br>✓ El detalle se ha <strong>copiado al portapapeles</strong>. Si tu cliente de email no se abre, puedes pegarlo manualmente donde quieras (WhatsApp, otro email, etc.).' : ''}
+      </p>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px 14px;font-family:monospace;font-size:11px;line-height:1.5;max-height:160px;overflow:auto;margin-bottom:18px;white-space:pre-wrap;color:#8b949e;">${escapeBudgetHtml(opts.texto)}</div>
+      <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:14px;">
+        <a href="${escapeBudgetAttr(opts.mailto)}" target="_blank" style="background:linear-gradient(135deg,#34d399 0%,#059669 100%);color:#0d1117;padding:13px 18px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;text-align:center;">✉️ Abrir email a ${escapeBudgetHtml(opts.hotelNombre || 'el establecimiento')}</a>
+        ${waUrl ? `<a href="${escapeBudgetAttr(waUrl)}" target="_blank" rel="noopener" style="background:#25d366;color:#fff;padding:11px 16px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:500;text-align:center;">💬 Enviar por WhatsApp</a>` : ''}
+        <button id="__budgetCopy" style="background:#21262d;color:#e6edf3;border:1px solid #30363d;padding:11px 16px;border-radius:8px;cursor:pointer;font:inherit;font-size:13px;">📋 Volver a copiar al portapapeles</button>
+        <button id="__budgetClose" style="background:transparent;color:#8b949e;border:1px solid #30363d;padding:9px 16px;border-radius:8px;cursor:pointer;font:inherit;font-size:12px;">Cerrar</button>
+      </div>
+      <p style="font-size:11px;color:#6e7681;line-height:1.5;margin:0;">
+        Esta es una solicitud orientativa. El hotel se pondrá en contacto contigo en &lt;24&nbsp;h
+        para confirmar disponibilidad y enviar la propuesta formal firmable. Guarda tu referencia.
+      </p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  document.getElementById('__budgetClose').addEventListener('click', () => overlay.remove());
+  document.getElementById('__budgetCopy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(opts.texto); document.getElementById('__budgetCopy').textContent = '✓ Copiado'; }
+    catch { alert('No se pudo copiar. Selecciona el texto manualmente.'); }
+  });
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+}
+
+function escapeBudgetHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeBudgetAttr(s) { return escapeBudgetHtml(s); }
 
 // ══════════════════════════════════════════════════
 // EXPORTAR datos del presupuesto a sessionStorage
@@ -2515,6 +2698,28 @@ function resolveMenuImg(img) {
   return img;
 }
 
+// v5.2 · modo presupuesto · cliente final vs comercial interno
+const PRESUP_MODE = (new URLSearchParams(location.search).get('modo') || 'publico').toLowerCase();
+
+function applyPresupModeUI() {
+  // Mostrar bloque interno sólo si modo=interno
+  const docsBox = document.getElementById('docsInternosBox');
+  if (docsBox) docsBox.style.display = (PRESUP_MODE === 'interno') ? '' : 'none';
+  // Adaptar copy del botón final + banner superior
+  const btn = document.getElementById('btnFinalSubmit');
+  if (btn && PRESUP_MODE === 'interno') {
+    btn.textContent = '💾 Guardar borrador interno';
+    btn.style.background = 'linear-gradient(135deg,#7c3aed,#5b21b6)';
+  }
+  if (PRESUP_MODE === 'interno') {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#a78bfa;color:#0d1117;padding:8px 16px;font-size:12px;text-align:center;z-index:1000;font-weight:600;letter-spacing:.5px;';
+    banner.innerHTML = '🛠 Modo interno · vista del comercial del hotel · <a href="../../dashboard/" style="color:#0d1117;text-decoration:underline;">← Volver al dashboard</a>';
+    document.body.appendChild(banner);
+    document.body.style.paddingTop = '32px';
+  }
+}
+
 (async () => {
   window.showLoadingBanner('Cargando catálogo de eventos y menús…');
   try {
@@ -2536,6 +2741,9 @@ function resolveMenuImg(img) {
   renderProgress();
   updateSide();
   syncPaxInputs();
+  applyPresupModeUI();
+  // Precargar contacto del hotel para el mailto (evita esperar al click)
+  fetchHotelContact();
 })();
 </script>
 

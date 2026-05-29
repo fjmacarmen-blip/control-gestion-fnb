@@ -727,3 +727,30 @@ Este apartado actualiza el documento original con todo lo ejecutado entre v4.1 y
 | `docs/adr/013-tpv-connectors.md` | ADR 013 |
 
 Este documento (arquitectura-plataforma.md) **deja de actualizarse incrementalmente** a partir de v5.1. Los siguientes cambios se documentan via ADRs nuevos.
+
+### 15.7 · Corrección de modelo de actor en v5.2
+
+Durante el QA inicial de v5.1, Paco detectó un desajuste entre el flujo dibujado en `flujo-trabajo.html` y el código real:
+
+- El flujo decía que el **Director** usaba el cotizador (`presupuesto-evento.html`).
+- El código (copy, campos «¿cómo nos has conocido?», nota «te contactaremos en 24h») demuestra que el cotizador es **self-service del cliente final potencial**.
+- Además, el botón «Solicitar Presupuesto Formal» sólo mostraba un `alert()` — el presupuesto no llegaba a nadie.
+
+**Cambios v5.2:**
+
+1. **`generateBudget()` reescrito**: prepara un email con el detalle completo del presupuesto, abre `mailto:` apuntando a `establecimiento.contacto.email`, copia al portapapeles como respaldo, ofrece WhatsApp si hay `establecimiento.contacto.telefono`.
+
+2. **Modo interno (`?modo=interno`)**:
+   - Banner morado superior con vuelta al dashboard.
+   - Muestra la sección «Documentos derivados» (contrato + orden de servicio) que estaba oculta al cliente final.
+   - El botón principal cambia a «Guardar borrador interno» (no envía email).
+   - Acceso desde el dashboard (lista de proyectos + editor topbar).
+
+3. **`flujo-trabajo.html` corregido**: ahora 6 etapas con actores correctos:
+   - 1-2: Paco/Director (alta + config inicial)
+   - **3: Cliente final** (self-service del cotizador) ← antes mal asignado
+   - **4: Director/comercial** (recibe email + formaliza contrato y orden) ← antes incompleto
+   - 5: Cliente final + equipo de sala (día del servicio)
+   - 6: Director (mantenimiento)
+
+**Lección de proceso:** el flujo visual debe construirse leyendo el código línea a línea, no inferido. La revisión rápida del usuario me ahorró un fallo de copy que se habría comunicado mal a empleadores y a clientes potenciales del producto.
