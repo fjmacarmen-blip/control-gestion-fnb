@@ -7,6 +7,12 @@
       "archivado": false
     },
     {
+      "id": "restaurante-casa-lola",
+      "es_piloto": false,
+      "archivado": false,
+      "nota": "Demo público · multi-tenant"
+    },
+    {
       "id": "demo",
       "es_piloto": false,
       "archivado": false,

@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2008",
+  "generado": "2026-05-30T18:00:00Z",
+  "fechaEvento": "2026-07-08",
+  "horaInicio": "20:30",
+  "horaFin": "02:00",
+  "clientName": "Marbella Capital",
+  "eventType": {
+    "id": "cumple",
+    "name": "Cumpleaños",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "ck_lola",
+    "name": "Cóctel Lola",
+    "ppax": 22
+  },
+  "espacio": "reservado_bodega",
+  "pt": 49,
+  "pn": 46,
+  "pi": 3,
+  "total": 1012,
+  "iva": 101,
+  "totalConIva": 1113,
+  "senial": 0,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 2,
+    "vegetariano": 1,
+    "celiaco": 0,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

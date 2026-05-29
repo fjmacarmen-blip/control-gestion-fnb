@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2004",
+  "generado": "2026-04-11T11:00:00Z",
+  "fechaEvento": "2026-05-20",
+  "horaInicio": "13:00",
+  "horaFin": "17:00",
+  "clientName": "Inversiones Sur S.L.",
+  "eventType": {
+    "id": "team",
+    "name": "Equipo",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "des_eje",
+    "name": "Desayuno Ejecutivo",
+    "ppax": 14
+  },
+  "espacio": "patio_jardin",
+  "pt": 40,
+  "pn": 38,
+  "pi": 2,
+  "total": 532,
+  "iva": 53,
+  "totalConIva": 585,
+  "senial": 88,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 0,
+    "vegetariano": 0,
+    "celiaco": 1,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

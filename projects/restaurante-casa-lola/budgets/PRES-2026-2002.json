@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2002",
+  "generado": "2026-03-21T11:00:00Z",
+  "fechaEvento": "2026-04-20",
+  "horaInicio": "20:30",
+  "horaFin": "02:00",
+  "clientName": "Aniversario González",
+  "eventType": {
+    "id": "cumple",
+    "name": "Cumpleaños",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "cb_eje",
+    "name": "Coffee Break Casa Lola",
+    "ppax": 11
+  },
+  "espacio": "reservado_bodega",
+  "pt": 26,
+  "pn": 23,
+  "pi": 3,
+  "total": 253,
+  "iva": 25,
+  "totalConIva": 278,
+  "senial": 42,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 1,
+    "vegetariano": 2,
+    "celiaco": 0,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

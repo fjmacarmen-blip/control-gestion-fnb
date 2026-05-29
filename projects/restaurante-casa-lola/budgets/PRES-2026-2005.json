@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2005",
+  "generado": "2026-05-01T15:00:00Z",
+  "fechaEvento": "2026-06-03",
+  "horaInicio": "13:00",
+  "horaFin": "17:00",
+  "clientName": "Tech Costa del Sol",
+  "eventType": {
+    "id": "gala",
+    "name": "Gala anual",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "bru_med",
+    "name": "Brunch Mediterráneo",
+    "ppax": 28
+  },
+  "espacio": "terraza_mar",
+  "pt": 33,
+  "pn": 22,
+  "pi": 11,
+  "total": 616,
+  "iva": 62,
+  "totalConIva": 678,
+  "senial": 102,
+  "estado": "borrador",
+  "dietas": {
+    "vegano": 2,
+    "vegetariano": 2,
+    "celiaco": 0,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

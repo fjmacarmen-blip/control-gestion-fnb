@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2009",
+  "generado": "2026-07-02T09:00:00Z",
+  "fechaEvento": "2026-07-22",
+  "horaInicio": "13:00",
+  "horaFin": "17:00",
+  "clientName": "Cumpleaños Carlos",
+  "eventType": {
+    "id": "cena_negocios",
+    "name": "Cena de negocios",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "mar_lux",
+    "name": "Menú Degustación 8 pasos",
+    "ppax": 75
+  },
+  "espacio": "chefs_table",
+  "pt": 82,
+  "pn": 73,
+  "pi": 9,
+  "total": 5475,
+  "iva": 548,
+  "totalConIva": 6023,
+  "senial": 903,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 0,
+    "vegetariano": 1,
+    "celiaco": 0,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

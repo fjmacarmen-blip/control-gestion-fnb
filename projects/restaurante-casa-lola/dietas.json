@@ -1,0 +1,69 @@
+{
+  "claves_orden": [
+    "vegano",
+    "vegetariano",
+    "celiaco",
+    "sinLactosa",
+    "sinFrutos",
+    "halal",
+    "kosher"
+  ],
+  "instrucciones": {
+    "vegano": {
+      "label": "🌱 VEGANOS",
+      "color": "#22c55e",
+      "cocina": "Menú vegano completo. Sustitutos vegetales.",
+      "sala": "Pulseras verdes. Mesas identificadas.",
+      "bebidas": "Confirmar vinos veganos.",
+      "pedido": "Bebida vegetal · queso vegano."
+    },
+    "vegetariano": {
+      "label": "🥗 VEGETARIANOS",
+      "color": "#84cc16",
+      "cocina": "Sin carne ni pescado.",
+      "sala": "Pulseras verde claro.",
+      "bebidas": "Cualquiera del menú.",
+      "pedido": "Caldo de verduras puro."
+    },
+    "celiaco": {
+      "label": "🌾 CELÍACOS · CRÍTICO",
+      "color": "#ef4444",
+      "cocina": "Zona dedicada. Cero contaminación cruzada.",
+      "sala": "Pulseras amarillas · vajilla separada · pan SG.",
+      "bebidas": "Cervezas SG. Destilados cereal NO.",
+      "pedido": "Pan SG · cerveza SG."
+    },
+    "sinLactosa": {
+      "label": "🥛 SIN LACTOSA",
+      "color": "#3b82f6",
+      "cocina": "Sustitutos vegetales.",
+      "sala": "Pulseras azules.",
+      "bebidas": "Café con leche vegetal.",
+      "pedido": "Leche vegetal."
+    },
+    "sinFrutos": {
+      "label": "🌰 SIN FRUTOS SECOS",
+      "color": "#f97316",
+      "cocina": "Eliminar todo contacto.",
+      "sala": "Pulseras naranjas · informar antes de cada plato.",
+      "bebidas": "Evitar licores con almendra.",
+      "pedido": "Adrenalina autoinyectable disponible."
+    },
+    "halal": {
+      "label": "🕌 HALAL",
+      "color": "#8b5cf6",
+      "cocina": "Carne proveedor halal · sin cerdo.",
+      "sala": "Pulseras moradas · evitar alcohol.",
+      "bebidas": "Sin alcohol.",
+      "pedido": "Carne halal pre-encargada."
+    },
+    "kosher": {
+      "label": "✡️ KOSHER",
+      "color": "#a78bfa",
+      "cocina": "Producto kosher certificado.",
+      "sala": "Pulseras lila.",
+      "bebidas": "Vino kosher.",
+      "pedido": "Producto kosher con sello rabínico."
+    }
+  }
+}

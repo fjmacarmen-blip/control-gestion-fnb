@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2003",
+  "generado": "2026-03-29T14:00:00Z",
+  "fechaEvento": "2026-05-06",
+  "horaInicio": "13:00",
+  "horaFin": "17:00",
+  "clientName": "Cumpleaños 50 · Sra Hernández",
+  "eventType": {
+    "id": "cena_negocios",
+    "name": "Cena de negocios",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "ck_lola",
+    "name": "Cóctel Lola",
+    "ppax": 22
+  },
+  "espacio": "terraza_mar",
+  "pt": 44,
+  "pn": 35,
+  "pi": 9,
+  "total": 770,
+  "iva": 77,
+  "totalConIva": 847,
+  "senial": 127,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 0,
+    "vegetariano": 0,
+    "celiaco": 2,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}
