@@ -27,21 +27,27 @@
 
   const CDN_COMPRESS = 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js';
   const POLLINATIONS_BASE = 'https://image.pollinations.ai/prompt/';
+  // SRI · cierre auditoría C1 (v4.15)
+  const SRI_COMPRESS = 'sha384-dHP9fwqd9BAiDh9uJ0p10khgbbcFMh34bVEiCnJ1Ah/AT2T2k4t572VEo3WXzxXp';
 
   let libLoaded = false;
-  function loadScript(src) {
+  function loadScript(src, integrity) {
     return new Promise((resolve, reject) => {
       const s = document.createElement('script');
       s.src = src;
       s.async = true;
+      if (integrity) {
+        s.integrity = integrity;
+        s.crossOrigin = 'anonymous';
+      }
       s.onload = () => resolve();
-      s.onerror = () => reject(new Error('No se pudo cargar ' + src));
+      s.onerror = () => reject(new Error('No se pudo cargar ' + src + ' (¿hash SRI obsoleto?)'));
       document.head.appendChild(s);
     });
   }
   async function ensureLibLoaded() {
     if (libLoaded) return;
-    if (!window.imageCompression) await loadScript(CDN_COMPRESS);
+    if (!window.imageCompression) await loadScript(CDN_COMPRESS, SRI_COMPRESS);
     libLoaded = true;
   }
 

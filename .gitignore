@@ -1,5 +1,7 @@
 # ── Datos sensibles / binarios grandes ──
+# Excel legacy del antiguo hotel · ahora vive en archive/, también ignorado.
 OFERTA BODAS Y EVENTOS 2011 HOTEL REINA CRISTINA.xls
+archive/
 
 # ── Base de datos generada ──
 database/*.db

@@ -42,15 +42,27 @@
     return '../../';
   }
 
+  // fetchWithTimeout · cierre auditoría M2 (v4.15)
+  // Cualquier fetch sin respuesta en TIMEOUT_MS se aborta para que el UI no
+  // quede colgado indefinido (e.g. GitHub API caído, red lenta).
+  const DEFAULT_TIMEOUT_MS = 20000;
+  function fetchWithTimeout(url, opts) {
+    opts = opts || {};
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), opts.timeoutMs || DEFAULT_TIMEOUT_MS);
+    return fetch(url, { ...opts, signal: ctrl.signal })
+      .finally(() => clearTimeout(t));
+  }
+
   async function fetchJson(url) {
-    const res = await fetch(url);
+    const res = await fetchWithTimeout(url);
     if (!res.ok) throw new Error('No se pudo cargar ' + url + ': ' + res.status);
     return res.json();
   }
 
   async function fetchJsonOptional(url) {
     try {
-      const res = await fetch(url);
+      const res = await fetchWithTimeout(url);
       if (!res.ok) return null;
       return await res.json();
     } catch (e) {
@@ -130,4 +142,6 @@
   window.showLoadingBanner = showLoadingBanner;
   window.hideLoadingBanner = hideLoadingBanner;
   window.showErrorBanner = showErrorBanner;
+  // Útil para otros módulos: reutilizan el patrón sin reimplementarlo.
+  window.fnbFetch = { withTimeout: fetchWithTimeout, DEFAULT_TIMEOUT_MS };
 })();

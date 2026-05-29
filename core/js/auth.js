@@ -119,7 +119,10 @@
    */
   async function loginSuperAdmin(email, password, authPath) {
     try {
-      const res = await fetch(authPath);
+      // cache: 'no-store' · cierre auditoría A3 (v4.15) — si la password se
+      // rota, no queremos que el navegador siga aceptando la versión vieja
+      // cacheada por HTTP. Coherente con el re-verify modal.
+      const res = await fetch(authPath, { cache: 'no-store' });
       if (!res.ok) return { ok: false, error: 'No se pudo leer auth.json (' + res.status + ')' };
       const data = await res.json();
       const users = (data && data.users) || [];
@@ -136,6 +139,21 @@
     }
   }
 
+  // ── Sanitizado defensivo · cierre auditoría C3 (v4.15) ────────
+  // Los modales reciben opts.title / opts.description que históricamente
+  // se interpolaban en innerHTML sin escape. Aunque hoy los callers son
+  // confiables, dejamos la API endurecida para evitar XSS si en el futuro
+  // alguien pasa datos del proyecto sin sanear.
+  function escapeText(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   // ── Modal de PAT ───────────────────────────────────────────────
   /**
    * Abre un modal in-page pidiendo el PAT al usuario. Devuelve una
@@ -144,6 +162,10 @@
    * de aceptar. Si no, solo lo guarda.
    *
    * El modal se inyecta en document.body, NO requiere preexistir.
+   *
+   * Seguridad (v4.15): opts.title y opts.description SE ESCAPAN antes de
+   * inyectar. Si necesitas HTML rico, usa opts.descriptionHtml (uso
+   * restringido — solo cuando el caller controla 100% el contenido).
    */
   function promptForPAT(opts) {
     opts = opts || {};
@@ -152,15 +174,21 @@
       const prev = document.getElementById('__patModal__');
       if (prev) prev.remove();
 
+      const safeTitle = escapeText(opts.title || 'Necesitas un Personal Access Token');
+      const safeDesc = opts.descriptionHtml
+        || (opts.description
+            ? escapeText(opts.description)
+            : 'Para publicar cambios al repo, pega un PAT con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:\'JetBrains Mono\',monospace;font-size:11px;">repo</code>. Vive solo en esta pestaña (sessionStorage) y se borra al cerrar.');
+
       const overlay = document.createElement('div');
       overlay.id = '__patModal__';
       overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,17,23,.85);backdrop-filter:blur(6px);z-index:99998;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Inter,system-ui,sans-serif;';
       overlay.innerHTML = `
         <div style="background:#161b22;border:1px solid #30363d;border-radius:14px;width:100%;max-width:520px;padding:28px 26px;box-shadow:0 24px 60px rgba(0,0,0,.6);color:#e6edf3;">
           <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#34d399;margin-bottom:8px;">GitHub Access</div>
-          <h2 style="font-size:22px;font-weight:600;line-height:1.2;margin-bottom:6px;">${opts.title || 'Necesitas un Personal Access Token'}</h2>
+          <h2 style="font-size:22px;font-weight:600;line-height:1.2;margin-bottom:6px;">${safeTitle}</h2>
           <p style="font-size:13px;color:#8b949e;line-height:1.55;margin-bottom:18px;">
-            ${opts.description || 'Para publicar cambios al repo, pega un PAT con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:\'JetBrains Mono\',monospace;font-size:11px;">repo</code>. Vive solo en esta pestaña (sessionStorage) y se borra al cerrar.'}
+            ${safeDesc}
           </p>
           <p style="font-size:12px;color:#8b949e;margin-bottom:14px;">
             <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener" style="color:#34d399;text-decoration:underline;">Crear un PAT en GitHub →</a>
@@ -255,15 +283,21 @@
       const overlay = document.createElement('div');
       overlay.id = '__verifyModal__';
       overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,17,23,.85);backdrop-filter:blur(6px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Inter,system-ui,sans-serif;';
-      const title = opts.title || 'Confirma tu identidad';
-      const description = opts.description || 'Antes de ejecutar esta acción destructiva, vuelve a teclear la password para confirmar.';
+      // Sanitizado · cierre auditoría C3 (v4.15)
+      const safeTitle = escapeText(opts.title || 'Confirma tu identidad');
+      const safeDesc = opts.descriptionHtml
+        || (opts.description
+            ? escapeText(opts.description)
+            : 'Antes de ejecutar esta acción destructiva, vuelve a teclear la password para confirmar.');
+      const safeActionLabel = escapeText(opts.actionLabel || 'Confirmar y continuar');
       const actionLabel = opts.actionLabel || 'Confirmar y continuar';
+      const safeEmail = escapeText(session.user && session.user.email ? session.user.email : '—');
       overlay.innerHTML = `
         <div style="background:#161b22;border:1px solid #30363d;border-radius:14px;width:100%;max-width:480px;padding:28px 26px;box-shadow:0 24px 60px rgba(0,0,0,.6);color:#e6edf3;">
           <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#a78bfa;margin-bottom:8px;">Verificación de identidad</div>
-          <h2 style="font-size:22px;font-weight:600;line-height:1.2;margin-bottom:6px;">${title}</h2>
-          <p style="font-size:13px;color:#8b949e;line-height:1.55;margin-bottom:16px;">${description}</p>
-          <p style="font-size:11px;color:#6e7681;margin-bottom:14px;">Sesión: <strong style="color:#e6edf3;">${session.user && session.user.email ? session.user.email : '—'}</strong></p>
+          <h2 style="font-size:22px;font-weight:600;line-height:1.2;margin-bottom:6px;">${safeTitle}</h2>
+          <p style="font-size:13px;color:#8b949e;line-height:1.55;margin-bottom:16px;">${safeDesc}</p>
+          <p style="font-size:11px;color:#6e7681;margin-bottom:14px;">Sesión: <strong style="color:#e6edf3;">${safeEmail}</strong></p>
           <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
             <label style="font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#6e7681;">Password</label>
             <input type="password" id="__verifyInput__" autocomplete="current-password" placeholder="Tu password actual" style="background:#21262d;border:1px solid #30363d;color:#e6edf3;padding:10px 13px;border-radius:7px;font-size:13px;">
@@ -271,7 +305,7 @@
           <div id="__verifyErr__" style="display:none;background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.35);color:#f85149;padding:9px 12px;border-radius:7px;font-size:12px;margin-bottom:14px;line-height:1.45;"></div>
           <div style="display:flex;gap:10px;justify-content:flex-end;">
             <button id="__verifyCancel__" style="padding:10px 18px;border-radius:8px;border:1px solid #30363d;background:#21262d;color:#8b949e;font:inherit;font-size:13px;cursor:pointer;">Cancelar</button>
-            <button id="__verifyOk__" style="padding:10px 20px;border-radius:8px;border:none;background:linear-gradient(135deg,#a78bfa 0%,#7c3aed 100%);color:#0d1117;font:inherit;font-size:13px;font-weight:600;cursor:pointer;">${actionLabel}</button>
+            <button id="__verifyOk__" style="padding:10px 20px;border-radius:8px;border:none;background:linear-gradient(135deg,#a78bfa 0%,#7c3aed 100%);color:#0d1117;font:inherit;font-size:13px;font-weight:600;cursor:pointer;">${safeActionLabel}</button>
           </div>
         </div>
       `;

@@ -1,3 +1,12 @@
 {
+  "_README": "Proyecto demo · regresión. Source compatible con ADR 012 aunque vacío de items.",
+  "source": {
+    "type": "static",
+    "label": "Demo · sin items",
+    "url": null,
+    "lastSync": null,
+    "refreshHours": 24,
+    "columnMapping": {}
+  },
   "items": []
 }

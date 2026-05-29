@@ -20,6 +20,14 @@
 
   // PDF.js 4.x. Usamos el bundle "legacy" que funciona en navegadores modernos
   // sin necesidad de import maps. El worker se carga aparte.
+  //
+  // SRI · v4.15: dynamic import() de ES modules NO acepta el atributo integrity
+  // (limitación del navegador, no del SRI). La defensa en profundidad para este
+  // recurso queda en el CSP `script-src https://cdn.jsdelivr.net` que restringe
+  // al origen. Si en el futuro existe import attributes con integrity (TC39),
+  // se añadirá aquí. Hashes sha384 para referencia/validación manual:
+  //   pdf.min.mjs        sha384-iScPVPldmHNKEorrH/K8jbN3oNk57EC6Vv2+ziQO4dUXEKvK/urcvLXAe/x0beSo
+  //   pdf.worker.min.mjs sha384-XeIhh+ArHJ0LGLeWa55fiE6sCa2TXRTNf7zxTR1J998e+mCGF1YYWYXYC7bjdE9P
   const CDN_PDFJS  = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/legacy/build/pdf.min.mjs';
   const CDN_WORKER = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/legacy/build/pdf.worker.min.mjs';
 
