@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '20'
       - name: Run tests
-        run: node --test test/auto-match.test.js test/loader-validation.test.js test/escape-html.test.js
+        run: node --test test/auto-match.test.js test/loader-validation.test.js test/escape-html.test.js test/escandallos.test.js test/tpv-connector.test.js test/qr-url.test.js
 
   json-validate:
     name: JSON syntax + schema

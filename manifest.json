@@ -1,0 +1,39 @@
+{
+  "name": "Control de Gestión F&B",
+  "short_name": "F&B",
+  "description": "Plataforma multi-tenant de gestión de eventos y banquetes",
+  "start_url": "./sala-movil.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1117",
+  "theme_color": "#34d399",
+  "lang": "es",
+  "categories": ["business", "productivity", "food"],
+  "icons": [
+    {
+      "src": "icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Eventos hoy",
+      "url": "./sala-movil.html?vista=hoy",
+      "description": "Ver los eventos del día"
+    },
+    {
+      "name": "Dietas",
+      "url": "./sala-movil.html?vista=dietas",
+      "description": "Pulseras y dietas críticas"
+    }
+  ]
+}

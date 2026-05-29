@@ -1,0 +1,81 @@
+{
+  "id": "cafeteria",
+  "nombre": "Cafetería · Brunch · Coffee Shop",
+  "config": {
+    "categoria_establecimiento": "cafeteria",
+    "tema": "moderno-minimalista",
+    "locale": "es-ES",
+    "moneda": "EUR",
+    "version_schema": "1.0.0"
+  },
+  "establecimiento_skeleton": {
+    "espacios": [
+      { "id": "sala_interior",  "nombre": "Sala interior",   "capacidad_sentado": 40, "capacidad_coctel": 60 },
+      { "id": "terraza",        "nombre": "Terraza",          "capacidad_sentado": 25, "capacidad_coctel": 40 },
+      { "id": "barra_alta",     "nombre": "Barra alta",       "capacidad_sentado": 8,  "capacidad_coctel": 12 }
+    ]
+  },
+  "eventos": {
+    "categorias": [
+      { "id": "desayuno",  "icon": "☕", "name": "Desayunos · Brunch", "desc": "Servicios de mañana en formato grupal." },
+      { "id": "empresa",   "icon": "🏢", "name": "Empresa",            "desc": "Coffee break · meetings · presentaciones." }
+    ],
+    "tipos": [
+      { "id": "brunch_grupo",  "category": "desayuno", "icon": "🥐", "name": "Brunch grupal",        "desc": "Desde 8 pax · brunch buffet con estación de huevos", "badge": "badge-est" },
+      { "id": "coffee_corp",   "category": "empresa",  "icon": "☕", "name": "Coffee break corporativo", "desc": "30 min · café especialidad · pastas · fruta",        "badge": "badge-est" },
+      { "id": "reunion_priv",  "category": "empresa",  "icon": "📋", "name": "Reunión privada con coffee", "desc": "Reservado por horas · café y aguas",               "badge": "badge-eco" }
+    ]
+  },
+  "menus": {
+    "paquetes": [
+      {
+        "id": "brunch_eco", "name": "Brunch Económico", "ppax": 18, "type": "brunch",
+        "badge": "badge-eco", "icon": "🥯", "desc": "Café · zumo · bollería · tostada",
+        "g": "g4",
+        "composition": {
+          "Bebidas": ["Café especialidad", "Té / infusión", "Zumo naranja natural"],
+          "Salado": ["Tostada de aguacate", "Tostada de tomate y AOVE"],
+          "Dulce": ["Croissant", "Bizcocho casero"]
+        }
+      },
+      {
+        "id": "brunch_lux", "name": "Brunch Premium", "ppax": 32, "type": "brunch",
+        "badge": "badge-lux", "icon": "🥂", "desc": "Cava · estación de huevos · platos calientes",
+        "g": "g7",
+        "composition": {
+          "Bebidas": ["Cava brut", "Café especialidad", "Tés Mariage", "Smoothie verde"],
+          "Estaciones": ["Eggs Benedict", "Tortillas a la carta", "Pancakes"],
+          "Salado": ["Salmón ahumado", "Embutidos", "Quesos artesanos"],
+          "Dulce": ["Croissants", "Tartaletas frutos rojos", "Granola"]
+        }
+      },
+      {
+        "id": "coffee_corp", "name": "Coffee Break Empresa", "ppax": 9, "type": "coffee", "scope": "empresa",
+        "badge": "badge-eco", "icon": "☕", "desc": "30 min · 4 piezas + bebida",
+        "g": "g4",
+        "composition": {
+          "Bebidas": ["Café · Descafeinado · Té · Agua"],
+          "Piezas": ["Mini sándwich", "Quiche pequeña", "Mini magdalena", "Fruta de temporada"]
+        }
+      }
+    ]
+  },
+  "recetas_seed": {
+    "entrantes": [
+      { "n": "Tostada de Aguacate", "e": "🥑", "g": "g4", "sub": "Pan de masa madre · AOVE · semillas",
+        "prep": 8, "coc": 3, "rac": 1, "dif": "Baja", "mp": 2.10, "alergen": "Gluten",
+        "ing": [["2 rebanadas","Pan masa madre"],["1 ud","Aguacate"],["10ml","AOVE"],["Sal Maldon"]],
+        "pasos": ["Tostar pan", "Aplastar aguacate", "Aliñar con AOVE y sal"] },
+      { "n": "Eggs Benedict", "e": "🍳", "g": "g7", "sub": "Huevo escalfado · salsa holandesa · jamón",
+        "prep": 15, "coc": 6, "rac": 1, "dif": "Media", "mp": 3.20, "alergen": "Huevo, Lácteos, Gluten",
+        "ing": [["2 ud","Huevo"],["1 muffin","Inglés"],["80g","Bacon"],["80g","Mantequilla"],["1 yema","Holandesa"]],
+        "pasos": ["Escalfar huevos 3 min", "Tostar muffin", "Saltear bacon", "Montar con salsa holandesa"] }
+    ],
+    "postres": [
+      { "n": "Pancakes con Sirope", "e": "🥞", "g": "g5", "sub": "Esponjosos · sirope de arce",
+        "prep": 10, "coc": 8, "rac": 4, "dif": "Baja", "mp": 1.40, "alergen": "Gluten, Huevo, Lácteos",
+        "ing": [["200g","Harina"],["1","Huevo"],["250ml","Leche"],["Sirope arce"]],
+        "pasos": ["Mezclar todo", "Sartén caliente · 2 min por cara", "Servir con sirope y mantequilla"] }
+    ]
+  }
+}

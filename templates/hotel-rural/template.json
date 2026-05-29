@@ -1,0 +1,92 @@
+{
+  "id": "hotel-rural",
+  "nombre": "Hotel Rural · Casona · Boutique",
+  "config": {
+    "categoria_establecimiento": "hotel",
+    "tema": "cercano-rustico",
+    "locale": "es-ES",
+    "moneda": "EUR",
+    "version_schema": "1.0.0"
+  },
+  "establecimiento_skeleton": {
+    "espacios": [
+      { "id": "salon_principal", "nombre": "Salón principal · chimenea", "capacidad_sentado": 50, "capacidad_coctel": 80 },
+      { "id": "patio_piedra",    "nombre": "Patio de piedra",            "capacidad_sentado": 35, "capacidad_coctel": 60 },
+      { "id": "bodega_familiar", "nombre": "Bodega familiar",            "capacidad_sentado": 14, "capacidad_coctel": 20 },
+      { "id": "jardin",          "nombre": "Jardín exterior",            "capacidad_sentado": 60, "capacidad_coctel": 100 }
+    ]
+  },
+  "eventos": {
+    "categorias": [
+      { "id": "celebracion", "icon": "🎉", "name": "Celebraciones íntimas", "desc": "Bodas, aniversarios, reuniones de familia." },
+      { "id": "experiencia", "icon": "🍷", "name": "Experiencias gastronómicas", "desc": "Maridajes · visitas a bodega · cenas con productor." }
+    ],
+    "tipos": [
+      { "id": "boda_intima",  "category": "celebracion", "icon": "💍", "name": "Boda íntima",       "desc": "Hasta 60 invitados · cocina tradicional", "badge": "badge-pre" },
+      { "id": "comunion",     "category": "celebracion", "icon": "🕊️", "name": "Comunión familiar", "desc": "Comida con menú infantil opcional",      "badge": "badge-est" },
+      { "id": "maridaje",     "category": "experiencia", "icon": "🍷", "name": "Maridaje sumiller", "desc": "5 vinos + 5 platos + visita a bodega",   "badge": "badge-lux" },
+      { "id": "cena_productor", "category": "experiencia", "icon": "👨‍🌾", "name": "Cena con productor", "desc": "Charla del agricultor + cena de temporada", "badge": "badge-est" }
+    ]
+  },
+  "menus": {
+    "paquetes": [
+      {
+        "id": "rural_eco", "name": "Menú Casa", "ppax": 28, "type": "sentado",
+        "badge": "badge-eco", "icon": "🍲", "desc": "Cocina de cuchara + asado de la casa",
+        "g": "g6",
+        "composition": {
+          "Entrante": ["Sopa castellana al aroma de comino", "Pisto manchego con huevo de corral"],
+          "Principal": ["Lechazo asado en horno de leña 4h", "Cordero al sarmiento"],
+          "Postre": ["Torrija caramelizada", "Cuajada de la abuela"],
+          "Bodega": ["Tinto crianza Ribera del Duero", "Agua y refrescos"]
+        }
+      },
+      {
+        "id": "boda_intima", "name": "Boda Casa", "ppax": 58, "type": "sentado",
+        "badge": "badge-pre", "icon": "💍", "desc": "5 entrantes + principal + postre + barra libre 2h",
+        "g": "g7",
+        "composition": {
+          "Aperitivo": ["Cava brut + mini queso curado + jamón"],
+          "Entrantes (compartir)": ["Croqueta de jamón", "Carpaccio de presa", "Tortilla líquida", "Ensalada de la huerta", "Pulpo a la brasa"],
+          "Principal (elegir)": ["Solomillo al PX", "Bacalao confitado con piparras", "Risotto de boletus"],
+          "Postre": ["Tarta de los novios", "Café de origen"],
+          "Bodega": ["Albariño · Ribera del Duero crianza · Cava reserva"]
+        }
+      },
+      {
+        "id": "maridaje", "name": "Maridaje Sumiller", "ppax": 85, "type": "sentado",
+        "badge": "badge-lux", "icon": "🍷", "desc": "5 pasos + 5 vinos del entorno · 3h",
+        "g": "g8",
+        "composition": {
+          "Visita previa": ["Tour por la bodega familiar · 25 min"],
+          "Paso 1": ["Vermut local con conserva de la casa"],
+          "Paso 2": ["Crema de calabaza con trufa negra"],
+          "Paso 3": ["Bacalao con piperrada"],
+          "Paso 4": ["Cordero lechal con su jugo"],
+          "Paso 5": ["Selección de quesos del país"],
+          "Maridaje": ["Verdejo · Albillo · Crianza · Reserva · PX"]
+        }
+      }
+    ]
+  },
+  "recetas_seed": {
+    "entrantes": [
+      { "n": "Sopa Castellana", "e": "🍲", "g": "g7", "sub": "Pan, ajo, pimentón, jamón y huevo",
+        "prep": 15, "coc": 25, "rac": 4, "dif": "Baja", "mp": 1.20, "alergen": "Gluten, Huevo, Cerdo",
+        "ing": [["200g","Pan duro"],["4 dientes","Ajo"],["100g","Jamón"],["Pimentón de la Vera"],["4 ud","Huevo"]],
+        "pasos": ["Sofrito de ajo y pan", "Caldo y pimentón", "Hervir 20 min", "Cuajar huevos al servir"] }
+    ],
+    "segundos": [
+      { "n": "Lechazo Asado en Horno de Leña", "e": "🐑", "g": "g7", "sub": "Castellano · 4h a baja temperatura",
+        "prep": 20, "coc": 240, "rac": 4, "dif": "Alta", "mp": 22.00, "alergen": "Ninguno",
+        "ing": [["1.5kg","Cuarto de lechazo"],["Manteca de cerdo"],["Sal gorda"]],
+        "pasos": ["Untar con manteca", "Horno 150°C · 3h", "Subir a 200°C los últimos 30 min"] }
+    ],
+    "postres": [
+      { "n": "Torrija Caramelizada", "e": "🍞", "g": "g5", "sub": "Pan brioche · leche · caramelo rubio",
+        "prep": 10, "coc": 12, "rac": 4, "dif": "Baja", "mp": 0.95, "alergen": "Gluten, Huevo, Lácteos",
+        "ing": [["4 rebanadas","Brioche"],["500ml","Leche"],["80g","Azúcar"],["1 rama","Canela"]],
+        "pasos": ["Infusionar leche", "Empapar brioche", "Freír y caramelizar"] }
+    ]
+  }
+}
