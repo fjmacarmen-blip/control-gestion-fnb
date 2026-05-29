@@ -384,6 +384,11 @@ els.loginForm.addEventListener('submit', async (e) => {
   }
 });
 
+// Toggle apariencia · v5.1
+if (window.fnbAppearance) {
+  window.fnbAppearance.injectToggle(els.btnLogout.parentElement);
+}
+
 els.btnLogout.addEventListener('click', () => {
   window.fnbAuth.clearSession();
   window.fnbAuth.clearPAT();

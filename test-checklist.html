@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Checklist interactivo de QA · marca OK/error · genera prompt de reparaciones.">
+<meta name="theme-color" content="#0d1117">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="core/css/dashboard-theme.css">
+<title>Checklist de pruebas · Plataforma F&B</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body {
+    background: var(--bg-base);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.55;
+  }
+
+  /* ── Top bar ────────────────────────────────── */
+  .top {
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border-default);
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg-surface);
+    backdrop-filter: blur(8px);
+  }
+  .crumb { font-size: 13px; color: var(--text-soft); display:flex; gap:8px; align-items:center; }
+  .crumb a { color: var(--text-soft); text-decoration: none; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb-sep { color: var(--border-default); }
+  .progress-pill {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .top-actions { display: flex; gap: 8px; align-items:center; }
+  .top-actions button {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text-soft);
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-family: inherit; font-size: 12px;
+    cursor: pointer;
+  }
+  .top-actions button:hover { color: var(--accent); border-color: var(--accent); }
+  .top-actions button.primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base);
+    font-weight: 600;
+    border-color: transparent;
+  }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 36px 24px 100px; }
+
+  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h1 { font-size: clamp(28px, 4vw, 38px); font-weight: 600; letter-spacing: -.01em; margin-bottom: 12px; line-height: 1.2; }
+  .lede { color: var(--text-soft); font-size: 14px; max-width: 720px; margin-bottom: 22px; }
+
+  .filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    padding: 12px 14px; border-radius: 12px;
+    margin-bottom: 28px;
+  }
+  .filter-btn {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text-soft);
+    padding: 7px 12px; border-radius: 8px;
+    font-family: inherit; font-size: 12px;
+    cursor: pointer;
+  }
+  .filter-btn:hover { color: var(--text); }
+  .filter-btn.is-active { background: var(--accent); color: var(--bg-base); border-color: var(--accent); font-weight: 600; }
+  .filter-info { margin-left: auto; font-size: 11px; color: var(--text-muted); align-self: center; }
+
+  /* ── Bloque ───────────────────────────── */
+  .block {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .block-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .block-head:hover { background: var(--bg-elevated); }
+  .block-title-wrap { display: flex; align-items: center; gap: 12px; }
+  .block-num {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .block-title { font-size: 16px; font-weight: 600; }
+  .block-status {
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-muted);
+    display: flex; gap: 12px; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .block-status .ok { color: var(--accent); }
+  .block-status .err { color: var(--danger); }
+  .block-status .pend { color: var(--text-muted); }
+  .block-chev { font-size: 14px; color: var(--text-muted); transition: transform .15s; }
+  .block.is-open .block-chev { transform: rotate(180deg); }
+
+  .block-body { display: none; padding: 4px 20px 18px; }
+  .block.is-open .block-body { display: block; }
+  .block-desc { font-size: 13px; color: var(--text-soft); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border-default); }
+  .block-desc a { color: var(--accent); text-decoration: none; }
+
+  .test {
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--border-default);
+  }
+  .test:last-child { border-bottom: none; }
+  .test-head { display: flex; gap: 14px; align-items: flex-start; }
+  .test-info { flex: 1; }
+  .test-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .test-desc { font-size: 12px; color: var(--text-soft); line-height: 1.55; }
+  .test-desc code { font-size: 11px; }
+  .test-link {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+    margin-top: 4px;
+  }
+  .test-link::before { content: '↗ '; }
+
+  .test-controls {
+    display: flex; gap: 6px; flex-shrink: 0;
+  }
+  .test-btn {
+    width: 34px; height: 34px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text-muted);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: inherit;
+  }
+  .test-btn:hover { color: var(--text); }
+  .test-btn.is-active.ok {
+    background: rgba(52,211,153,.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .test-btn.is-active.err {
+    background: rgba(248,81,73,.15);
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
+  .test-note {
+    display: none;
+    width: 100%;
+    margin-top: 10px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    resize: vertical;
+    min-height: 70px;
+  }
+  .test-note:focus { outline: none; border-color: var(--danger); }
+  .test-note.visible { display: block; }
+
+  /* ── Resumen final + generador prompt ─────── */
+  .resumen-card {
+    background: linear-gradient(135deg, rgba(52,211,153,.06) 0%, rgba(167,139,250,.04) 100%);
+    border: 1px solid rgba(52,211,153,.25);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 36px;
+  }
+  .resumen-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+  .resumen-title { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .resumen-stats { display: flex; gap: 18px; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-num { font-size: 22px; font-weight: 600; }
+  .stat-num.ok { color: var(--accent); }
+  .stat-num.err { color: var(--danger); }
+  .stat-num.pend { color: var(--text-muted); }
+  .stat-lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
+
+  .prompt-output {
+    margin-top: 18px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-default);
+    border-radius: 10px;
+    padding: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.55;
+    max-height: 360px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: none;
+  }
+  .prompt-output.visible { display: block; }
+  .prompt-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .prompt-actions button {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text);
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-family: inherit; font-size: 13px;
+    cursor: pointer;
+  }
+  .prompt-actions button:hover { color: var(--accent); border-color: var(--accent); }
+  .prompt-actions button.primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base);
+    border-color: transparent;
+    font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    .test-head { flex-direction: column; }
+    .test-controls { width: 100%; justify-content: flex-end; }
+    .top { padding: 12px 16px; }
+    main { padding: 24px 16px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="crumb">
+    <a href="index.html">← Plataforma</a>
+    <span class="crumb-sep">/</span>
+    <span style="color:var(--text);">Checklist QA</span>
+  </div>
+  <div class="top-actions">
+    <span class="progress-pill" id="progressPill">0 / 0 · 0%</span>
+    <button id="btnReset" title="Borrar todas las marcas">↺ Reset</button>
+    <button id="btnExport" class="primary" title="Generar prompt de reparaciones">📋 Generar prompt</button>
+    <div id="apTglSlot"></div>
+  </div>
+</div>
+
+<main>
+  <div class="eyebrow">Plataforma F&B v5.1 · checklist interactivo</div>
+  <h1>Prueba cada función<br>y marca lo que falle</h1>
+  <p class="lede">
+    Cada bloque agrupa funciones relacionadas. Marca cada test con <strong>✓ OK</strong> o <strong>✗ Error</strong>.
+    Si marcas error, aparece un campo para describir el problema. Al final, el botón
+    <strong>Generar prompt</strong> te crea un mensaje listo para pegarme con todos los errores
+    detallados — con eso tendré contexto suficiente para reparar todo de una sola tacada.
+  </p>
+  <p class="lede" style="font-size:12px;">
+    Tu progreso se guarda automáticamente en este navegador. Puedes cerrar y volver a abrir
+    sin perder lo marcado.
+  </p>
+
+  <div class="filters">
+    <button class="filter-btn is-active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="pending">Pendientes</button>
+    <button class="filter-btn" data-filter="ok">OK</button>
+    <button class="filter-btn" data-filter="err">Con error</button>
+    <span class="filter-info" id="filterInfo">—</span>
+  </div>
+
+  <div id="blocksRoot"></div>
+
+  <div class="resumen-card" id="resumen">
+    <div class="resumen-head">
+      <div>
+        <div class="resumen-title">Resumen de la sesión</div>
+        <div style="font-size:12px;color:var(--text-soft);">Cuando termines, pulsa «Generar prompt» arriba.</div>
+      </div>
+      <div class="resumen-stats">
+        <div class="stat"><div class="stat-num ok" id="statOk">0</div><div class="stat-lbl">OK</div></div>
+        <div class="stat"><div class="stat-num err" id="statErr">0</div><div class="stat-lbl">Errores</div></div>
+        <div class="stat"><div class="stat-num pend" id="statPend">0</div><div class="stat-lbl">Pendientes</div></div>
+        <div class="stat"><div class="stat-num" id="statTotal" style="color:var(--text);">0</div><div class="stat-lbl">Total tests</div></div>
+      </div>
+    </div>
+    <div class="prompt-output" id="promptOutput"></div>
+    <div class="prompt-actions" id="promptActions" style="display:none;">
+      <button class="primary" id="btnCopyPrompt">📋 Copiar al portapapeles</button>
+      <button id="btnDownloadReport">⬇ Descargar como .md</button>
+      <button id="btnClosePrompt">✕ Cerrar</button>
+    </div>
+  </div>
+</main>
+
+<script src="core/js/appearance.js"></script>
+<script>
+'use strict';
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+if (window.fnbAppearance) window.fnbAppearance.injectToggle(document.getElementById('apTglSlot'));
+
+// ─────────────────────────────────────────────────────
+// DEFINICIÓN DE BLOQUES Y TESTS
+// ─────────────────────────────────────────────────────
+const BLOCKS = [
+  {
+    id: 'b1',
+    title: 'Acceso y autenticación',
+    desc: 'Login del dashboard, sesión, gestión del PAT de GitHub y re-verificación en acciones destructivas.',
+    tests: [
+      { id: 'b1t1', name: 'Login dashboard funciona',
+        desc: 'Entra a <a href="dashboard/" target="_blank">/dashboard/</a> con email + password. Debe redirigir a la lista de proyectos.' },
+      { id: 'b1t2', name: 'Login rechaza credenciales incorrectas',
+        desc: 'Probar con password aleatoria. Debe mostrar mensaje de error sin pistas de qué falló.' },
+      { id: 'b1t3', name: 'Sesión persiste tras recargar pestaña',
+        desc: 'Tras login, F5 → sigue dentro. La sesión dura 8 h.' },
+      { id: 'b1t4', name: 'Cerrar sesión limpia la sesión',
+        desc: 'Botón «Cerrar sesión» → vuelve al login. F5 sigue fuera.' },
+      { id: 'b1t5', name: 'Re-verify password en acción destructiva',
+        desc: 'Tras 5 min de inactividad, al publicar al repo → modal violeta pide password. Es la ventana de fresh-auth.' },
+      { id: 'b1t6', name: 'PAT se solicita al publicar y se valida',
+        desc: 'En editor, click ☁ Publicar. Si no hay PAT, modal verde pide pegarlo. Valida contra GitHub antes de aceptar.' },
+    ],
+  },
+  {
+    id: 'b2',
+    title: 'Lista de proyectos y navegación',
+    desc: 'Listado de proyectos, badges, navegación al editor/wizard/métricas y cambio entre proyectos.',
+    tests: [
+      { id: 'b2t1', name: 'Lista muestra 3 proyectos (Miramar, Casa Lola, Demo)',
+        desc: 'En <a href="dashboard/" target="_blank">/dashboard/</a> tras login.' },
+      { id: 'b2t2', name: 'Card de Miramar tiene badge «piloto»',
+        desc: 'Etiqueta visible y diferenciada.' },
+      { id: 'b2t3', name: 'Botón «Editor» abre /dashboard/editor.html?proyecto=ID',
+        desc: 'En cada card.' },
+      { id: 'b2t4', name: 'Botón «Métricas» abre /dashboard/metricas.html?proyecto=ID',
+        desc: 'En cada card.' },
+      { id: 'b2t5', name: 'Botón «+ Nuevo proyecto» abre wizard',
+        desc: 'Top de la lista.' },
+    ],
+  },
+  {
+    id: 'b3',
+    title: 'Editor visual (sin commit a repo)',
+    desc: 'Edición local del proyecto Miramar · 6 secciones · borradores en localStorage · sin tocar GitHub.',
+    tests: [
+      { id: 'b3t1', name: 'Sección Establecimiento carga y edita',
+        desc: 'Cambiar razón social → aparece save bar abajo · botón «Guardar borrador» se activa.' },
+      { id: 'b3t2', name: 'Añadir y eliminar espacio funciona',
+        desc: 'Tabla de espacios · + Añadir espacio + rellenar + Eliminar.' },
+      { id: 'b3t3', name: 'Sección Menús · crear/editar/eliminar paquete',
+        desc: 'Click «+ Nuevo menú» → modal · rellenar · guardar borrador.' },
+      { id: 'b3t4', name: 'Sección Recetario · cambiar emoji + descripción',
+        desc: 'Click receta · modal · cambiar campos · guardar.' },
+      { id: 'b3t5', name: 'Sección Productos · ver tabla con precios',
+        desc: 'Pestaña Productos · debe listar productos del economato Miramar.' },
+      { id: 'b3t6', name: 'Sección Tema · seleccionar otro tema',
+        desc: 'Click otro tema · preview se aplica en vivo (paleta cambia).' },
+      { id: 'b3t7', name: 'Descartar cambios revierte al original',
+        desc: '↩ Descartar · vuelve al estado del repo.' },
+    ],
+  },
+  {
+    id: 'b4',
+    title: 'Wizard de creación + plantillas marketplace',
+    desc: 'Alta de proyecto nuevo en 4 pasos con marketplace de plantillas (cafetería, marisquería, hotel rural).',
+    tests: [
+      { id: 'b4t1', name: 'Paso 1 Identidad · validación de ID',
+        desc: 'Probar ID inválido (con espacios, con barra, con MAYÚSCULAS) → botón siguiente se bloquea.' },
+      { id: 'b4t2', name: 'Paso 2 muestra plantillas del marketplace',
+        desc: 'Cafetería · Marisquería · Hotel rural · Vacío · Copiar Miramar. Total 5 cards visibles.' },
+      { id: 'b4t3', name: 'Seleccionar plantilla cambia tema sugerido',
+        desc: 'Click marisquería → al paso 3 el tema ya marca «mediterraneo».' },
+      { id: 'b4t4', name: 'Paso 3 Tema · 5 temas visibles con preview',
+        desc: 'Click un tema · preview en cabecera.' },
+      { id: 'b4t5', name: 'Paso 4 Resumen muestra plantilla seleccionada',
+        desc: 'Resumen final cuenta con datos correctos.' },
+      { id: 'b4t6', name: 'Crear proyecto modo «Cancelar PAT» → borrador local',
+        desc: 'Pulsar Confirmar · cancelar prompt PAT · proyecto queda en localStorage como draft.' },
+    ],
+  },
+  {
+    id: 'b5',
+    title: 'Importadores (Excel · PDF · imágenes)',
+    desc: 'Tres importadores con auto-detección de columnas, copy-paste asistido y auto-matching.',
+    tests: [
+      { id: 'b5t1', name: 'Importer Excel · subir hoja con menús',
+        desc: 'Editor · Menús · 📥 Excel/CSV · sube un xlsx · debe auto-mapear nombre/precio/desc.' },
+      { id: 'b5t2', name: 'Importer Excel · marca filas inválidas',
+        desc: 'Si una fila no tiene «name» o «ppax», aparece en sección «inválidas» con motivo.' },
+      { id: 'b5t3', name: 'Importer PDF · subir PDF con texto',
+        desc: 'Editor · Recetas · 📄 PDF · sube un PDF · debe extraer texto en columna izquierda.' },
+      { id: 'b5t4', name: 'Importer imágenes · auto-match por filename',
+        desc: 'Editor · Recetas · 🖼 Imágenes · sube «tarta-queso.jpg» · debe matchear con receta «Tarta de Queso».' },
+      { id: 'b5t5', name: 'Botón IA genera foto cuando receta no tiene match',
+        desc: 'Receta sin foto → botón 🤖 IA · descarga URL Pollinations.ai.' },
+    ],
+  },
+  {
+    id: 'b6',
+    title: 'Conectores externos · productos y TPV',
+    desc: 'Catálogo de productos con sus 4 niveles y conector TPV (simulator visible en sala-móvil).',
+    tests: [
+      { id: 'b6t1', name: 'Productos · cambiar source a CSV-URL',
+        desc: 'Editor · Productos · cambiar tipo a csv-url + URL pública de un Sheet. Debe validar.' },
+      { id: 'b6t2', name: 'Productos · cache local persiste',
+        desc: 'Tras sync, los items quedan en localStorage hasta TTL.' },
+      { id: 'b6t3', name: 'TPV simulator · escenario «comida normal»',
+        desc: 'En <a href="sala-movil.html?proyecto=miramar&vista=tpv" target="_blank">sala-móvil · tab TPV</a> · pulsa «Comida normal» · llegan eventos cada 1-5s.' },
+      { id: 'b6t4', name: 'TPV simulator · escenario «evento grande»',
+        desc: 'Mismo · escenario distinto · log muestra ticket BANQUETE.' },
+    ],
+  },
+  {
+    id: 'b7',
+    title: 'Métricas y agenda',
+    desc: 'Dashboard de métricas con KPIs, tendencia mensual, top eventos y agenda próxima.',
+    tests: [
+      { id: 'b7t1', name: 'KPIs visibles (total · ticket medio · pax)',
+        desc: 'En <a href="dashboard/metricas.html?proyecto=miramar" target="_blank">métricas Miramar</a> · 4-5 cards superiores.' },
+      { id: 'b7t2', name: 'Gráfico de tendencia mensual carga',
+        desc: 'Chart.js dual-axis con presupuestos y facturable por mes.' },
+      { id: 'b7t3', name: 'Top tipos de evento ordenado por contador',
+        desc: 'Lista «Top X» con icono · contador · facturable.' },
+      { id: 'b7t4', name: 'Agenda · próximos 30 días con ocupación por espacio',
+        desc: 'Tab Agenda · lista de eventos + ocupación de cada espacio.' },
+    ],
+  },
+  {
+    id: 'b8',
+    title: 'Sala móvil (PWA)',
+    desc: 'Vista del equipo de sala · 4 tabs · instalable como app · funciona offline tras primera visita.',
+    tests: [
+      { id: 'b8t1', name: 'Tab Hoy muestra eventos del día y próximos 7d',
+        desc: '<a href="sala-movil.html?proyecto=miramar&vista=hoy" target="_blank">Sala-móvil Miramar</a>. Si no hay eventos hoy, muestra vacío.' },
+      { id: 'b8t2', name: 'Tab Dietas muestra protocolos por pulsera',
+        desc: 'Dietas críticas (celiacos, frutos) en primer lugar con instrucciones cocina/sala.' },
+      { id: 'b8t3', name: 'Tab Espacios muestra ocupación + catálogo',
+        desc: 'Lista espacios usados con % + lista completa de espacios.' },
+      { id: 'b8t4', name: 'Tab TPV · simulador funciona (ver bloque 6)',
+        desc: 'Repaso visual del simulador desde móvil real.' },
+      { id: 'b8t5', name: 'App se puede instalar en móvil (PWA)',
+        desc: 'Chrome móvil · «Añadir a pantalla inicio» · queda como icono nativo.' },
+      { id: 'b8t6', name: 'Funciona offline tras primera visita',
+        desc: 'Modo avión · recargar app instalada · datos cacheados disponibles.' },
+      { id: 'b8t7', name: 'Cambiar proyecto desde el selector inferior',
+        desc: 'Dropdown abajo · cambiar a Casa Lola · datos correctos.' },
+    ],
+  },
+  {
+    id: 'b9',
+    title: 'Carta pública + QR',
+    desc: 'Carta digital pública sin login y generación de QR descargable.',
+    tests: [
+      { id: 'b9t1', name: 'Carta pública carga sin login',
+        desc: '<a href="carta-publica.html?proyecto=miramar" target="_blank">Carta Miramar</a> debe cargar directamente.' },
+      { id: 'b9t2', name: 'Filtros por tipo de menú funcionan',
+        desc: 'Click «Cóctel» · solo aparecen menús tipo cóctel.' },
+      { id: 'b9t3', name: 'Alérgenos siempre visibles al final',
+        desc: 'Caja roja con info de los 14 alérgenos.' },
+      { id: 'b9t4', name: 'Editor · botón QR genera código',
+        desc: 'Editor · sección Establecimiento · 📱 QR carta · modal con QR válido.' },
+      { id: 'b9t5', name: 'Descargar QR como SVG funciona',
+        desc: 'Botón «⬇ Descargar SVG» · archivo qr-carta-<id>.svg en descargas.' },
+      { id: 'b9t6', name: 'Escanear QR abre la carta pública',
+        desc: 'Con móvil escanear el SVG impreso · abre carta-publica.html del proyecto.' },
+    ],
+  },
+  {
+    id: 'b10',
+    title: 'Calculadora de escandallos',
+    desc: 'Cruce de recetas con catálogo de productos · coste por ración · PVP sugerido por categoría.',
+    tests: [
+      { id: 'b10t1', name: 'Modal abre desde editor · sección Recetas · 💰',
+        desc: 'Botón «Escandallos» abre modal grande.' },
+      { id: 'b10t2', name: 'KPIs superiores correctos (n recetas · coste medio)',
+        desc: '3 cards: recetas / coste medio / sin match.' },
+      { id: 'b10t3', name: 'Tabla por categoría con PVP sugerido y cobertura',
+        desc: 'Cada receta muestra coste / PVP / cobertura %.' },
+      { id: 'b10t4', name: 'Recetas sin match aparecen con cobertura baja',
+        desc: 'Recetas con ingredientes que no están en el economato → cobertura < 80%.' },
+    ],
+  },
+  {
+    id: 'b11',
+    title: 'Apariencia (light/dark mode)',
+    desc: 'Toggle de tema claro/oscuro con persistencia entre páginas.',
+    tests: [
+      { id: 'b11t1', name: 'Toggle visible en topbar de dashboard',
+        desc: 'En dashboard/index.html aparece botón ☀️/🌙 al lado de «Cerrar sesión».' },
+      { id: 'b11t2', name: 'Toggle visible en editor, métricas, wizard',
+        desc: 'Comprobar en cada uno de los 4 dashboards.' },
+      { id: 'b11t3', name: 'Cambio se aplica en vivo y persiste',
+        desc: 'Click toggle · cambia paleta · navegar a otra página · mantiene el modo elegido.' },
+      { id: 'b11t4', name: 'Respeta prefers-color-scheme del SO la primera vez',
+        desc: 'Si el SO está en claro y no hay preferencia previa, primera visita debe iniciar claro.' },
+    ],
+  },
+  {
+    id: 'b12',
+    title: 'Frontend público del establecimiento',
+    desc: 'Las 4 herramientas pre-existentes del Hotel Miramar.',
+    tests: [
+      { id: 'b12t1', name: 'Presupuesto de evento · seleccionar evento + menú',
+        desc: '<a href="core/pages/presupuesto-evento.html?proyecto=miramar" target="_blank">Presupuesto evento</a>: flujo completo hasta resumen.' },
+      { id: 'b12t2', name: 'Recetario · navegar categorías y abrir modal',
+        desc: '<a href="core/pages/recetario.html?proyecto=miramar" target="_blank">Recetario</a>: click receta · modal con detalles.' },
+      { id: 'b12t3', name: 'Contrato de servicios carga',
+        desc: '<a href="core/pages/contrato-servicios.html?proyecto=miramar" target="_blank">Contrato</a>: rellena con datos del establecimiento.' },
+      { id: 'b12t4', name: 'Orden de servicio carga',
+        desc: '<a href="core/pages/orden-servicio.html?proyecto=miramar" target="_blank">Orden de servicio</a>.' },
+    ],
+  },
+  {
+    id: 'b13',
+    title: 'Seguridad y robustez',
+    desc: 'Comprobaciones de defensa en profundidad y casos límite.',
+    tests: [
+      { id: 'b13t1', name: 'ID de proyecto inválido cae al default',
+        desc: 'Probar URL ?proyecto=../foo → debe cargar miramar (sin error visible al usuario).' },
+      { id: 'b13t2', name: 'Recarga del editor preserva borradores',
+        desc: 'Tras editar · F5 · los cambios siguen ahí (warning del navegador si dirty).' },
+      { id: 'b13t3', name: 'Botón «↩ Descartar» pide confirmación',
+        desc: 'Si hay borradores, descartar pide confirmar (no destruye accidental).' },
+      { id: 'b13t4', name: 'Service worker no cachea peticiones GitHub API',
+        desc: 'En sala-móvil con devtools · Network · las requests a api.github.com no aparecen como (ServiceWorker).' },
+      { id: 'b13t5', name: 'CSP no rompe ningún script CDN',
+        desc: 'Abrir cualquier HTML del dashboard · console limpia · sin errores CSP.' },
+    ],
+  },
+];
+
+// ─────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────
+const STORAGE_KEY = 'fnb_qa_state_v1';
+let state = loadState();
+let currentFilter = 'all';
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+}
+
+function getTotalTests() {
+  return BLOCKS.reduce((a, b) => a + b.tests.length, 0);
+}
+function getStat(status) {
+  let n = 0;
+  for (const block of BLOCKS) {
+    for (const test of block.tests) {
+      const s = state[test.id] && state[test.id].status;
+      if ((status === 'pend' && !s) || s === status) n++;
+    }
+  }
+  return n;
+}
+
+// ─────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+
+function renderBlocks() {
+  const root = $('#blocksRoot');
+  root.innerHTML = '';
+  BLOCKS.forEach((block, idx) => {
+    const okCount = block.tests.filter(t => (state[t.id] && state[t.id].status) === 'ok').length;
+    const errCount = block.tests.filter(t => (state[t.id] && state[t.id].status) === 'err').length;
+    const pendCount = block.tests.length - okCount - errCount;
+    // Filtro · si el bloque entero queda sin tests visibles, ocultarlo
+    const visibleTests = block.tests.filter(t => matchesFilter(t));
+    if (!visibleTests.length && currentFilter !== 'all') return;
+    const isOpen = state['__open_' + block.id] !== false;
+    const div = document.createElement('article');
+    div.className = 'block' + (isOpen ? ' is-open' : '');
+    div.dataset.blockId = block.id;
+    div.innerHTML = `
+      <div class="block-head" data-action="toggle-block">
+        <div class="block-title-wrap">
+          <div class="block-num">${idx + 1}</div>
+          <div>
+            <div class="block-title">${escapeHtml(block.title)}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${block.tests.length} test${block.tests.length === 1 ? '' : 's'}</div>
+          </div>
+        </div>
+        <div class="block-status">
+          <span class="ok">✓ ${okCount}</span>
+          <span class="err">✗ ${errCount}</span>
+          <span class="pend">○ ${pendCount}</span>
+          <span class="block-chev">▼</span>
+        </div>
+      </div>
+      <div class="block-body">
+        <div class="block-desc">${block.desc}</div>
+        ${visibleTests.map(t => renderTest(t)).join('')}
+      </div>
+    `;
+    root.appendChild(div);
+  });
+  refreshStats();
+}
+
+function renderTest(t) {
+  const cur = state[t.id] || {};
+  const status = cur.status || '';
+  const note = cur.note || '';
+  return `
+    <div class="test" data-test-id="${t.id}">
+      <div class="test-head">
+        <div class="test-info">
+          <div class="test-name">${escapeHtml(t.name)}</div>
+          <div class="test-desc">${t.desc || ''}</div>
+        </div>
+        <div class="test-controls">
+          <button class="test-btn ${status === 'ok' ? 'is-active ok' : ''}" data-set="ok" title="Marcar OK">✓</button>
+          <button class="test-btn ${status === 'err' ? 'is-active err' : ''}" data-set="err" title="Marcar con error">✗</button>
+        </div>
+      </div>
+      <textarea class="test-note ${status === 'err' ? 'visible' : ''}" placeholder="Describe el problema con detalle (qué hiciste, qué esperabas, qué pasó realmente)...">${escapeHtml(note)}</textarea>
+    </div>
+  `;
+}
+
+function matchesFilter(test) {
+  if (currentFilter === 'all') return true;
+  const s = state[test.id] && state[test.id].status;
+  if (currentFilter === 'pending') return !s;
+  if (currentFilter === 'ok') return s === 'ok';
+  if (currentFilter === 'err') return s === 'err';
+  return true;
+}
+
+function refreshStats() {
+  const ok = getStat('ok');
+  const err = getStat('err');
+  const pend = getStat('pend');
+  const total = getTotalTests();
+  $('#statOk').textContent = ok;
+  $('#statErr').textContent = err;
+  $('#statPend').textContent = pend;
+  $('#statTotal').textContent = total;
+  const done = ok + err;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  $('#progressPill').textContent = done + ' / ' + total + ' · ' + pct + '%';
+  // Filter info
+  const visible = BLOCKS.reduce((a, b) => a + b.tests.filter(matchesFilter).length, 0);
+  $('#filterInfo').textContent = visible + ' visible' + (visible === 1 ? '' : 's');
+}
+
+// ─────────────────────────────────────────────────────
+// EVENT HANDLING
+// ─────────────────────────────────────────────────────
+$('#blocksRoot').addEventListener('click', (e) => {
+  const head = e.target.closest('.block-head');
+  if (head) {
+    const block = head.closest('.block');
+    block.classList.toggle('is-open');
+    state['__open_' + block.dataset.blockId] = block.classList.contains('is-open');
+    saveState();
+    return;
+  }
+  const btn = e.target.closest('.test-btn');
+  if (btn) {
+    const test = btn.closest('.test');
+    const tid = test.dataset.testId;
+    const setVal = btn.dataset.set;
+    const cur = state[tid] || {};
+    const nextStatus = cur.status === setVal ? null : setVal;
+    state[tid] = { ...cur, status: nextStatus };
+    saveState();
+    renderBlocks();
+  }
+});
+
+$('#blocksRoot').addEventListener('input', (e) => {
+  if (e.target.classList.contains('test-note')) {
+    const test = e.target.closest('.test');
+    const tid = test.dataset.testId;
+    state[tid] = { ...(state[tid] || {}), note: e.target.value };
+    saveState();
+    refreshStats();
+  }
+});
+
+$$('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentFilter = btn.dataset.filter;
+    $$('.filter-btn').forEach(b => b.classList.toggle('is-active', b === btn));
+    renderBlocks();
+  });
+});
+
+$('#btnReset').addEventListener('click', () => {
+  if (!confirm('¿Borrar todas las marcas y notas? No se puede deshacer.')) return;
+  state = {};
+  saveState();
+  renderBlocks();
+  hidePromptOutput();
+});
+
+// ─────────────────────────────────────────────────────
+// EXPORT PROMPT
+// ─────────────────────────────────────────────────────
+function buildPrompt() {
+  const errors = [];
+  for (const block of BLOCKS) {
+    for (const test of block.tests) {
+      const cur = state[test.id] || {};
+      if (cur.status === 'err') {
+        errors.push({ block: block.title, test: test.name, note: cur.note || '(sin descripción)' });
+      }
+    }
+  }
+  const ok = getStat('ok'), err = getStat('err'), pend = getStat('pend'), total = getTotalTests();
+  const fecha = new Date().toLocaleString('es-ES');
+
+  let txt = '# Reporte de QA · Plataforma F&B v5.1\n';
+  txt += '_Generado_: ' + fecha + '\n\n';
+  txt += '## Resumen\n';
+  txt += '- Total tests: **' + total + '**\n';
+  txt += '- ✓ OK: ' + ok + '\n';
+  txt += '- ✗ Errores: ' + err + '\n';
+  txt += '- ○ Pendientes: ' + pend + '\n\n';
+
+  if (!errors.length) {
+    txt += '## Resultado\n\n**Todos los tests marcados como OK pasan. Sin errores reportados.**\n\n';
+    if (pend > 0) txt += 'Quedan ' + pend + ' tests sin marcar.\n';
+    return txt;
+  }
+
+  txt += '## Errores reportados (' + errors.length + ')\n\n';
+  errors.forEach((e, i) => {
+    txt += '### ' + (i + 1) + '. ' + e.test + '\n';
+    txt += '_Bloque_: ' + e.block + '\n\n';
+    txt += e.note + '\n\n---\n\n';
+  });
+
+  txt += '## Instrucciones para reparar\n\n';
+  txt += 'Hola Claude. He probado la plataforma con el checklist interactivo (test-checklist.html) y he detectado los errores listados arriba. Por favor:\n\n';
+  txt += '1. Crea una rama `fix/v5.1-qa-issues` desde main.\n';
+  txt += '2. Analiza cada error en orden, lee el código implicado, propón la corrección.\n';
+  txt += '3. Para cada bug, haz un commit separado con mensaje `fix(<bloque>): <test fallido> · <síntesis fix>`.\n';
+  txt += '4. Si algún error es ambiguo o requiere más contexto, no asumas: pregunta antes de tocar nada.\n';
+  txt += '5. Tras aplicar todos los fixes, ejecuta los tests (`node --test test/*.test.js`) y los smoke checks (validate-jsons.js + check-security-headers.js).\n';
+  txt += '6. Abre PR a main con título `fix(v5.1): cierre de QA · <n> bugs`.\n';
+  txt += '7. NO mergees el PR hasta que yo lo revise.\n';
+
+  return txt;
+}
+
+function hidePromptOutput() {
+  $('#promptOutput').classList.remove('visible');
+  $('#promptActions').style.display = 'none';
+}
+
+$('#btnExport').addEventListener('click', () => {
+  const txt = buildPrompt();
+  $('#promptOutput').textContent = txt;
+  $('#promptOutput').classList.add('visible');
+  $('#promptActions').style.display = 'flex';
+  $('#promptOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+$('#btnCopyPrompt').addEventListener('click', async () => {
+  const txt = $('#promptOutput').textContent;
+  try {
+    await navigator.clipboard.writeText(txt);
+    $('#btnCopyPrompt').textContent = '✓ Copiado';
+    setTimeout(() => $('#btnCopyPrompt').textContent = '📋 Copiar al portapapeles', 1500);
+  } catch {
+    // Fallback: seleccionar el texto del pre
+    const range = document.createRange();
+    range.selectNode($('#promptOutput'));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range);
+    alert('Selecciona y copia con Ctrl+C');
+  }
+});
+
+$('#btnDownloadReport').addEventListener('click', () => {
+  const txt = buildPrompt();
+  const blob = new Blob([txt], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'reporte-qa-fnb-' + new Date().toISOString().slice(0, 10) + '.md';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 100);
+});
+
+$('#btnClosePrompt').addEventListener('click', hidePromptOutput);
+
+// ─────────────────────────────────────────────────────
+// BOOT
+// ─────────────────────────────────────────────────────
+renderBlocks();
+</script>
+</body>
+</html>

@@ -454,6 +454,11 @@ function renderAgenda() {
   }
 }
 
+// Toggle apariencia · v5.1
+if (window.fnbAppearance) {
+  window.fnbAppearance.injectToggle($('#btnLogout').parentElement);
+}
+
 $('#btnLogout').addEventListener('click', () => {
   window.fnbAuth.clearSession();
   window.fnbAuth.clearPAT();

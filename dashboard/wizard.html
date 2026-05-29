@@ -140,11 +140,17 @@
 <body>
 
 <div class="wrap">
-  <div class="crumb">
-    <a href="./index.html">← Dashboard</a>
-    <span class="crumb-sep">/</span>
-    <span style="color:var(--text);">Crear proyecto nuevo</span>
+  <div class="crumb" style="display:flex;justify-content:space-between;align-items:center;">
+    <div>
+      <a href="./index.html">← Dashboard</a>
+      <span class="crumb-sep">/</span>
+      <span style="color:var(--text);">Crear proyecto nuevo</span>
+    </div>
+    <div id="apTglSlot"></div>
   </div>
+  <script>
+    if (window.fnbAppearance) window.fnbAppearance.injectToggle(document.getElementById('apTglSlot'));
+  </script>
 
   <div class="stepper" id="stepper">
     <div class="step-dot active" data-step="1"><div class="step-num">1</div><div class="step-label"><div class="step-name">Identidad</div><div class="step-sub">Paso 1</div></div></div>
@@ -191,7 +197,7 @@
     <div data-step-content="2" class="hidden">
       <h1>Plantilla de partida</h1>
       <p class="lede">Elige cómo arranca el proyecto. Podrás cambiar todos los datos después.</p>
-      <div class="template-grid">
+      <div class="template-grid" id="tplGrid">
         <div class="tpl-card selected" data-tpl="vacio">
           <div class="tpl-icon">📄</div>
           <div class="tpl-name">Proyecto vacío</div>
@@ -200,12 +206,13 @@
         <div class="tpl-card" data-tpl="miramar">
           <div class="tpl-icon">🏨</div>
           <div class="tpl-name">Copiar Miramar</div>
-          <div class="tpl-desc">Duplica el piloto completo (13 eventos, 27 menús, 78 recetas, 7 dietas). Útil para empezar con catálogo y luego adaptar.</div>
+          <div class="tpl-desc">Duplica el piloto completo del Hotel Miramar (eventos, menús, recetas, dietas). Útil para empezar con catálogo y luego adaptar.</div>
         </div>
+        <!-- v5.1 · plantillas del marketplace inyectadas aquí -->
       </div>
       <div class="toast-info">
-        <strong>Importers (Excel · PDF · imágenes bulk)</strong> aterrizan en <strong>Fase 3.5</strong>.
-        En este wizard básico solo se copia plantilla o se parte vacío.
+        <strong>v5.1 · marketplace de plantillas activo.</strong>
+        Cada plantilla incluye espacios típicos del sector, eventos y un menú base que puedes editar luego en el editor.
       </div>
     </div>
 
@@ -378,10 +385,84 @@ async function validateStep1() {
 function selectTemplate(tpl) {
   wizard.data.template = tpl;
   $$('.tpl-card').forEach(el => el.classList.toggle('selected', el.dataset.tpl === tpl));
+  // Si la plantilla sugiere un tema específico, aplicarlo (el usuario puede cambiarlo en paso 3)
+  const tplData = MARKETPLACE_TPL.find(t => t.id === tpl);
+  if (tplData && tplData.tema_sugerido) {
+    wizard.data.tema = tplData.tema_sugerido;
+  }
+}
+
+// ── Marketplace de plantillas (v5.1) ──────────────────────
+let MARKETPLACE_TPL = [];   // cargado desde templates/index.json
+const TPL_CACHE = new Map(); // id → datos completos del template.json
+
+async function loadMarketplaceTemplates() {
+  try {
+    const idxRes = await fetch('../templates/index.json');
+    if (!idxRes.ok) return;
+    const idx = await idxRes.json();
+    MARKETPLACE_TPL = idx.templates || [];
+    const grid = $('#tplGrid');
+    if (!grid) return;
+    MARKETPLACE_TPL.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'tpl-card';
+      card.dataset.tpl = t.id;
+      card.innerHTML = '<div class="tpl-icon">' + escapeHtml(t.icon || '📦') + '</div>'
+        + '<div class="tpl-name">' + escapeHtml(t.nombre) + '</div>'
+        + '<div class="tpl-desc">' + escapeHtml(t.descripcion) + '</div>';
+      card.addEventListener('click', () => selectTemplate(t.id));
+      grid.appendChild(card);
+    });
+  } catch (e) {
+    console.warn('No se pudo cargar templates/index.json:', e);
+  }
+}
+
+async function buildFromMarketplaceTemplate(tplId) {
+  let tplData = TPL_CACHE.get(tplId);
+  if (!tplData) {
+    const res = await fetch('../templates/' + tplId + '/template.json');
+    if (!res.ok) throw new Error('No se pudo cargar template ' + tplId);
+    tplData = await res.json();
+    TPL_CACHE.set(tplId, tplData);
+  }
+  const empty = buildEmptyProject();
+  // Fusionar config heredando lo del template
+  Object.assign(empty.config, tplData.config || {});
+  empty.config.id = wizard.data.id;
+  empty.config.slug = wizard.data.id;
+  empty.config.nombre = wizard.data.name;
+  empty.config.categoria_establecimiento = wizard.data.categoria || empty.config.categoria_establecimiento;
+  empty.config.tema = wizard.data.tema || empty.config.tema;
+  // Establecimiento skeleton (espacios típicos del sector)
+  empty.establecimiento.nombre_comercial = wizard.data.name;
+  empty.establecimiento.razon_social = wizard.data.name;
+  if (wizard.data.ciudad) empty.establecimiento.direccion.ciudad = wizard.data.ciudad;
+  if (tplData.establecimiento_skeleton && tplData.establecimiento_skeleton.espacios) {
+    empty.establecimiento.espacios = tplData.establecimiento_skeleton.espacios;
+  }
+  // Eventos, menús
+  if (tplData.eventos) empty.eventos = tplData.eventos;
+  if (tplData.menus) empty.menus = tplData.menus;
+  // Recetas seed (fusionar por categoría)
+  if (tplData.recetas_seed) {
+    Object.entries(tplData.recetas_seed).forEach(([cat, list]) => {
+      if (!empty.recetas.categorias[cat]) empty.recetas.categorias[cat] = [];
+      empty.recetas.categorias[cat] = empty.recetas.categorias[cat].concat(list);
+    });
+  }
+  return empty;
 }
 
 function renderSummary() {
-  const tplLabel = wizard.data.template === 'miramar' ? 'Copiar Miramar (catálogo completo)' : 'Proyecto vacío (estructura mínima)';
+  let tplLabel;
+  if (wizard.data.template === 'miramar') tplLabel = 'Copiar Miramar (catálogo completo)';
+  else if (wizard.data.template === 'vacio') tplLabel = 'Proyecto vacío (estructura mínima)';
+  else {
+    const mp = MARKETPLACE_TPL.find(t => t.id === wizard.data.template);
+    tplLabel = mp ? (mp.icon + ' ' + mp.nombre) : wizard.data.template;
+  }
   const themeObj = THEMES.find(t => t.id === wizard.data.tema);
   const themeLabel = themeObj ? themeObj.name : wizard.data.tema;
   $('#summary').innerHTML = `
@@ -478,7 +559,10 @@ async function commitProject() {
   $('#btnNext').disabled = true;
   $('#btnNext').textContent = 'Generando…';
   try {
-    const project = wizard.data.template === 'miramar' ? await buildMiramarCopy() : buildEmptyProject();
+    let project;
+    if (wizard.data.template === 'miramar') project = await buildMiramarCopy();
+    else if (wizard.data.template === 'vacio') project = buildEmptyProject();
+    else project = await buildFromMarketplaceTemplate(wizard.data.template);
     if (!project || !project.config) throw new Error('No se pudo construir el proyecto');
 
     // Persistir SIEMPRE drafts locales primero (respaldo + fallback durante deploy)
@@ -631,6 +715,7 @@ $('#fName').addEventListener('input', () => {
 });
 
 refreshStepper();
+loadMarketplaceTemplates();
 </script>
 </body>
 </html>
