@@ -243,38 +243,60 @@
     <article class="stage">
       <div class="stage-num">2</div>
       <span class="stage-actor">Paco · Director</span>
-      <div class="stage-title">Configuración inicial</div>
-      <div class="stage-desc">Se rellenan los datos reales del establecimiento. Se conecta el catálogo de productos al economato del cliente.</div>
+      <div class="stage-title">Configuración inicial del establecimiento</div>
+      <div class="stage-desc">Se rellenan los datos reales del establecimiento. Se conecta el catálogo de productos al economato. Se publica la carta digital con su QR.</div>
       <ul class="stage-steps">
         <li><span class="ico">🏛️</span><span>Espacios y capacidades</span></li>
-        <li><span class="ico">📜</span><span>Menús, precios pax</span></li>
+        <li><span class="ico">📜</span><span>Menús · tipos de evento · precios pax</span></li>
         <li><span class="ico">📖</span><span>Recetario con escandallos</span></li>
         <li><span class="ico">📦</span><span>Productos (static/CSV/JSON/API)</span></li>
+        <li><span class="ico">📱</span><span>QR de carta pública · imprimible</span></li>
       </ul>
       <div class="branch">
-        <strong>Conectores externos:</strong> si el cliente usa Google Sheet, Drive o un endpoint propio del economato, se configura como source y la app refresca cada 24h.
+        <strong>Conectores externos:</strong> si el cliente usa Google Sheet, Drive o un endpoint propio del economato, se configura como source y la app refresca cada 24 h.
       </div>
     </article>
 
     <article class="stage">
       <div class="stage-num">3</div>
-      <span class="stage-actor">Director</span>
-      <div class="stage-title">Operación diaria</div>
-      <div class="stage-desc">El director del establecimiento usa el dashboard para presupuestar eventos, generar contratos y mantener la información viva.</div>
+      <span class="stage-actor">Cliente final (potencial)</span>
+      <div class="stage-title">Self-service · cliente configura su evento</div>
+      <div class="stage-desc">Un cliente interesado en celebrar (boda, comunión, evento de empresa) llega al cotizador público desde redes, Google o el QR del flyer. Configura su evento paso a paso y solicita presupuesto formal sin tener que llamar.</div>
       <ul class="stage-steps">
-        <li><span class="ico">📋</span><span>Presupuesto interactivo</span></li>
-        <li><span class="ico">📜</span><span>Contrato auto-rellenado</span></li>
-        <li><span class="ico">🍽️</span><span>Orden de servicio interna</span></li>
-        <li><span class="ico">💰</span><span>Calculadora de escandallos por receta</span></li>
-        <li><span class="ico">📊</span><span>Métricas · facturación · agenda</span></li>
+        <li><span class="ico">🍽️</span><span>Selecciona tipo de evento · espacio</span></li>
+        <li><span class="ico">🥂</span><span>Configura menú · bebida · extras · dietas</span></li>
+        <li><span class="ico">👥</span><span>Indica número de comensales</span></li>
+        <li><span class="ico">🧾</span><span>Ve total estimado en vivo (IVA incluido)</span></li>
+        <li><span class="ico">✉️</span><span>Solicita presupuesto formal</span></li>
       </ul>
+      <div class="branch">
+        <strong>Sin backend.</strong> Al pulsar «Solicitar», la app prepara un email con todo el detalle y lo abre en el cliente de email del usuario apuntando a la dirección del hotel. Como respaldo, copia el detalle al portapapeles y ofrece enviarlo por WhatsApp si el hotel tiene teléfono configurado.
+      </div>
     </article>
 
     <article class="stage">
       <div class="stage-num">4</div>
+      <span class="stage-actor">Director / comercial</span>
+      <div class="stage-title">Recepción y formalización</div>
+      <div class="stage-desc">El hotel recibe el email con la solicitud. El comercial entra al mismo cotizador en <code>?modo=interno</code> desde el dashboard, importa los datos del cliente y formaliza los documentos contractuales.</div>
+      <ul class="stage-steps">
+        <li><span class="ico">📨</span><span>Lee solicitud del cliente</span></li>
+        <li><span class="ico">📋</span><span>Abre cotizador en modo interno · ajusta detalles</span></li>
+        <li><span class="ico">📄</span><span>Genera contrato auto-rellenado</span></li>
+        <li><span class="ico">🍽️</span><span>Genera orden de servicio (sala + cocina)</span></li>
+        <li><span class="ico">💰</span><span>Revisa escandallos antes de firmar</span></li>
+        <li><span class="ico">📊</span><span>Ve agenda · ocupación · KPIs en métricas</span></li>
+      </ul>
+      <div class="branch">
+        <strong>Diferencia clave:</strong> el modo interno NO envía emails ni intenta «solicitar» — son herramientas internas del hotel. Sólo el modo público (sin parámetro) tiene el botón «Solicitar Presupuesto Formal».
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-num">5</div>
       <span class="stage-actor">Cliente final · Equipo de sala</span>
       <div class="stage-title">Día del servicio</div>
-      <div class="stage-desc">El comensal consulta la carta digital con su móvil. El equipo de sala consulta dietas y ocupación desde la PWA instalada.</div>
+      <div class="stage-desc">Los comensales consultan la carta digital con su móvil. El equipo de sala consulta dietas críticas y ocupación desde la PWA instalada.</div>
       <ul class="stage-steps">
         <li><span class="ico">📱</span><span>QR en mesa → carta pública</span></li>
         <li><span class="ico">🎗️</span><span>Pulseras por dieta · protocolos sala</span></li>
@@ -287,7 +309,7 @@
     </article>
 
     <article class="stage">
-      <div class="stage-num">5</div>
+      <div class="stage-num">6</div>
       <span class="stage-actor">Paco · Director</span>
       <div class="stage-title">Mantenimiento + iteración</div>
       <div class="stage-desc">Cambios en la carta, ajustes de precios, nuevos eventos. Cada modificación se publica al repo y se versiona. Si algo se rompe, <code>git revert</code> y vuelve a estar bien.</div>

@@ -448,7 +448,8 @@ async function loadProjectsList() {
           ${(piloto || dirtyBadge) ? `<div class="proj-badges-row">${piloto}${dirtyBadge}</div>` : ''}
         </div>
         <div class="proj-actions">
-          <a href="../core/pages/presupuesto-evento.html?proyecto=${encodeURIComponent(c.id)}" target="_blank" rel="noopener" title="Abrir frontend público">👁 Ver demo</a>
+          <a href="../core/pages/presupuesto-evento.html?proyecto=${encodeURIComponent(c.id)}" target="_blank" rel="noopener" title="Como lo ve el cliente final">👁 Público</a>
+          <a href="../core/pages/presupuesto-evento.html?proyecto=${encodeURIComponent(c.id)}&modo=interno" target="_blank" rel="noopener" title="Cotizador interno · comercial del hotel">🛠 Interno</a>
           <a href="editor.html?proyecto=${encodeURIComponent(c.id)}" title="Editor visual">✏️ Editar</a>
           <a href="metricas.html?proyecto=${encodeURIComponent(c.id)}" title="Métricas del proyecto">📊 Métricas</a>
         </div>

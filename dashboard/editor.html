@@ -395,7 +395,8 @@
     <span class="proj-pill" id="projPill">⏳ cargando…</span>
   </div>
   <div class="topbar-right">
-    <a id="linkPublic" class="btn" target="_blank" rel="noopener">👁 Ver público</a>
+    <a id="linkPublic" class="btn" target="_blank" rel="noopener" title="Como lo ve el cliente final">👁 Ver público</a>
+    <a id="linkInterno" class="btn" target="_blank" rel="noopener" title="Mismo cotizador en modo interno · sólo comercial del hotel">🛠 Cotizador interno</a>
     <button class="btn" id="btnLogout">Cerrar sesión</button>
   </div>
 </div>
@@ -2242,6 +2243,7 @@ window.addEventListener('beforeunload', (e) => {
 (async function boot() {
   $('#projPill').textContent = '⏳ ' + PROJECT_ID;
   $('#linkPublic').href = '../core/pages/presupuesto-evento.html?proyecto=' + encodeURIComponent(PROJECT_ID);
+  $('#linkInterno').href = '../core/pages/presupuesto-evento.html?proyecto=' + encodeURIComponent(PROJECT_ID) + '&modo=interno';
 
   // Cargar config para mostrar nombre · prioriza draft local sobre repo
   // (un proyecto recién creado vive solo en localStorage hasta que GitHub Pages despliegue)
