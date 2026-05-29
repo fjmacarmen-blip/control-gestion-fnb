@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Flujo de trabajo end-to-end de la plataforma F&B · visual interactivo.">
+<meta name="theme-color" content="#0d1117">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="core/css/dashboard-theme.css">
+<title>Flujo de trabajo · Plataforma F&B</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body {
+    background: var(--bg-base);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  .top {
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border-default);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .crumb { font-size: 13px; color: var(--text-soft); }
+  .crumb a { color: var(--text-soft); text-decoration: none; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb-sep { color: var(--border-default); margin: 0 8px; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h1 {
+    font-family: 'Inter', sans-serif; font-weight: 600;
+    font-size: clamp(32px, 4vw, 44px); letter-spacing: -.02em;
+    margin-bottom: 14px; line-height: 1.15;
+  }
+  .lede { color: var(--text-soft); font-size: 15px; max-width: 720px; margin-bottom: 50px; }
+
+  /* ── Diagrama de flujo ────────────────────────── */
+  .flow {
+    display: grid;
+    gap: 24px;
+    margin-bottom: 50px;
+  }
+  .stage {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 16px;
+    padding: 24px 26px;
+    position: relative;
+  }
+  .stage:not(:last-child)::after {
+    content: '↓';
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 22px;
+    color: var(--accent);
+    background: var(--bg-base);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--accent);
+  }
+  .stage-num {
+    position: absolute;
+    top: -14px; left: 22px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+    box-shadow: 0 4px 12px rgba(52,211,153,.4);
+  }
+  .stage-title {
+    font-size: 18px; font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .stage-actor {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    background: var(--bg-elevated);
+    color: var(--info);
+    padding: 3px 10px; border-radius: 100px;
+    margin-bottom: 10px;
+  }
+  .stage-desc { color: var(--text-soft); font-size: 13px; margin-bottom: 14px; }
+  .stage-steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 8px;
+  }
+  .stage-steps li {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .stage-steps li .ico { font-size: 16px; flex-shrink: 0; }
+  .stage-steps li a { color: var(--accent); text-decoration: none; }
+  .stage-steps li a:hover { color: var(--accent-soft); }
+
+  /* ── Side flows ────────────────────────────── */
+  .branch {
+    background: var(--bg-elevated);
+    border-left: 3px solid var(--info);
+    padding: 14px 18px;
+    margin-top: 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--text-soft);
+  }
+  .branch strong { color: var(--info); }
+
+  /* ── Personas (actores) ───────────────────── */
+  .personas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+  .persona {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .persona-emoji { font-size: 36px; margin-bottom: 10px; line-height: 1; }
+  .persona-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .persona-role { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+  .persona-uses { font-size: 13px; color: var(--text-soft); line-height: 1.55; }
+  .persona-uses code { font-size: 11px; }
+
+  .section-title {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); margin: 60px 0 18px;
+    border-bottom: 1px solid var(--border-default); padding-bottom: 12px;
+  }
+
+  /* ── Resumen métrico ────────────────────── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .summary-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .summary-num { font-size: 28px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+  .summary-lbl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border-default);
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: center;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="crumb">
+    <a href="index.html">← Plataforma</a>
+    <span class="crumb-sep">/</span>
+    <span style="color:var(--text);">Flujo de trabajo</span>
+  </div>
+  <div id="apTglSlot"></div>
+</div>
+
+<main>
+  <div class="eyebrow">Flujo end-to-end · v5.1</div>
+  <h1>Cómo funciona la plataforma<br>de principio a fin</h1>
+  <p class="lede">
+    Desde que un cliente nuevo te pide un sistema hasta que sus camareros consultan dietas
+    en el móvil durante un banquete. Cada paso indica quién lo ejecuta, qué herramienta usa
+    y qué deja como resultado.
+  </p>
+
+  <div class="section-title">Quién interviene</div>
+  <div class="personas">
+    <div class="persona">
+      <div class="persona-emoji">👨‍💼</div>
+      <div class="persona-name">Paco · Administrador</div>
+      <div class="persona-role">Super-admin</div>
+      <div class="persona-uses">Crea proyectos, gestiona credenciales del cliente, importa datos heredados, despliega cambios al repo.</div>
+    </div>
+    <div class="persona">
+      <div class="persona-emoji">🧑‍💻</div>
+      <div class="persona-name">Director del establecimiento</div>
+      <div class="persona-role">Cliente · operación</div>
+      <div class="persona-uses">Edita menús, recetas, precios y configuración. Ve métricas. Publica cambios con un click.</div>
+    </div>
+    <div class="persona">
+      <div class="persona-emoji">🧑‍🍳</div>
+      <div class="persona-name">Jefe de sala / cocina</div>
+      <div class="persona-role">Operación diaria</div>
+      <div class="persona-uses">Consulta eventos del día, dietas críticas, ocupación de espacios desde el móvil. App instalable offline-first.</div>
+    </div>
+    <div class="persona">
+      <div class="persona-emoji">🍽️</div>
+      <div class="persona-name">Cliente final</div>
+      <div class="persona-role">Comensal</div>
+      <div class="persona-uses">Escanea el QR de la mesa y ve la carta con alérgenos. Sin login, sin app.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Flujo principal · de 0 a operativo</div>
+  <div class="flow">
+
+    <article class="stage">
+      <div class="stage-num">1</div>
+      <span class="stage-actor">Paco</span>
+      <div class="stage-title">Alta del proyecto</div>
+      <div class="stage-desc">Paco crea el espacio del nuevo cliente desde el wizard. Elige una plantilla del marketplace (cafetería, marisquería, hotel rural) o parte de vacío.</div>
+      <ul class="stage-steps">
+        <li><span class="ico">📝</span><span>4 pasos · identidad → plantilla → tema → confirmar</span></li>
+        <li><span class="ico">🎨</span><span>Tema sugerido según plantilla</span></li>
+        <li><span class="ico">☁</span><span>Commit al repo con PAT · 10 JSONs + budgets/</span></li>
+        <li><span class="ico">⏱</span><span>~3 minutos · proyecto vivo</span></li>
+      </ul>
+      <div class="branch">
+        <strong>Si el cliente entrega datos heredados</strong> (Excel de bodas, PDF de carta, fotos sin nombrar): Paco usa los importers en el editor para subirlos en bulk con auto-matching.
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-num">2</div>
+      <span class="stage-actor">Paco · Director</span>
+      <div class="stage-title">Configuración inicial</div>
+      <div class="stage-desc">Se rellenan los datos reales del establecimiento. Se conecta el catálogo de productos al economato del cliente.</div>
+      <ul class="stage-steps">
+        <li><span class="ico">🏛️</span><span>Espacios y capacidades</span></li>
+        <li><span class="ico">📜</span><span>Menús, precios pax</span></li>
+        <li><span class="ico">📖</span><span>Recetario con escandallos</span></li>
+        <li><span class="ico">📦</span><span>Productos (static/CSV/JSON/API)</span></li>
+      </ul>
+      <div class="branch">
+        <strong>Conectores externos:</strong> si el cliente usa Google Sheet, Drive o un endpoint propio del economato, se configura como source y la app refresca cada 24h.
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-num">3</div>
+      <span class="stage-actor">Director</span>
+      <div class="stage-title">Operación diaria</div>
+      <div class="stage-desc">El director del establecimiento usa el dashboard para presupuestar eventos, generar contratos y mantener la información viva.</div>
+      <ul class="stage-steps">
+        <li><span class="ico">📋</span><span>Presupuesto interactivo</span></li>
+        <li><span class="ico">📜</span><span>Contrato auto-rellenado</span></li>
+        <li><span class="ico">🍽️</span><span>Orden de servicio interna</span></li>
+        <li><span class="ico">💰</span><span>Calculadora de escandallos por receta</span></li>
+        <li><span class="ico">📊</span><span>Métricas · facturación · agenda</span></li>
+      </ul>
+    </article>
+
+    <article class="stage">
+      <div class="stage-num">4</div>
+      <span class="stage-actor">Cliente final · Equipo de sala</span>
+      <div class="stage-title">Día del servicio</div>
+      <div class="stage-desc">El comensal consulta la carta digital con su móvil. El equipo de sala consulta dietas y ocupación desde la PWA instalada.</div>
+      <ul class="stage-steps">
+        <li><span class="ico">📱</span><span>QR en mesa → carta pública</span></li>
+        <li><span class="ico">🎗️</span><span>Pulseras por dieta · protocolos sala</span></li>
+        <li><span class="ico">🏛️</span><span>Ocupación próximos 30 días</span></li>
+        <li><span class="ico">🧾</span><span>Eventos TPV en directo (cuando hay integración real)</span></li>
+      </ul>
+      <div class="branch">
+        <strong>Offline-first:</strong> tras la primera visita, la PWA sigue funcionando sin conexión. Datos cacheados con service worker.
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-num">5</div>
+      <span class="stage-actor">Paco · Director</span>
+      <div class="stage-title">Mantenimiento + iteración</div>
+      <div class="stage-desc">Cambios en la carta, ajustes de precios, nuevos eventos. Cada modificación se publica al repo y se versiona. Si algo se rompe, <code>git revert</code> y vuelve a estar bien.</div>
+      <ul class="stage-steps">
+        <li><span class="ico">✏️</span><span>Edit · auto-save localStorage</span></li>
+        <li><span class="ico">🔐</span><span>Re-verify password en destructivas</span></li>
+        <li><span class="ico">☁</span><span>Publicar · commit atómico</span></li>
+        <li><span class="ico">↩</span><span>Versionado git · cero pérdida</span></li>
+      </ul>
+    </article>
+
+  </div>
+
+  <div class="section-title">Capas técnicas en una mirada</div>
+  <div class="summary-grid">
+    <div class="summary-card"><div class="summary-num">5</div><div class="summary-lbl">HTMLs públicos</div></div>
+    <div class="summary-card"><div class="summary-num">4</div><div class="summary-lbl">HTMLs dashboard</div></div>
+    <div class="summary-card"><div class="summary-num">14</div><div class="summary-lbl">Módulos JS</div></div>
+    <div class="summary-card"><div class="summary-num">3</div><div class="summary-lbl">Proyectos demo</div></div>
+    <div class="summary-card"><div class="summary-num">3</div><div class="summary-lbl">Plantillas marketplace</div></div>
+    <div class="summary-card"><div class="summary-num">3</div><div class="summary-lbl">ADRs documentadas</div></div>
+    <div class="summary-card"><div class="summary-num">59</div><div class="summary-lbl">Tests CI</div></div>
+    <div class="summary-card"><div class="summary-num">0 €</div><div class="summary-lbl">Coste mensual</div></div>
+  </div>
+
+  <footer>
+    Plataforma F&B v5.1 · <a href="docs/RESUMEN-EJECUTIVO.md">Resumen ejecutivo</a> ·
+    <a href="docs/DETALLE-PROYECTO.md">Detalle técnico</a> ·
+    <a href="docs/COMERCIALIZACION.md">Plan de comercialización</a> ·
+    <a href="test-checklist.html">Checklist de pruebas</a>
+  </footer>
+</main>
+
+<script src="core/js/appearance.js"></script>
+<script>
+  if (window.fnbAppearance) window.fnbAppearance.injectToggle(document.getElementById('apTglSlot'));
+</script>
+</body>
+</html>

@@ -204,6 +204,55 @@
   }
   .proj-bar select:focus { outline: none; border-color: var(--accent); }
 
+  /* ── TPV log ─────────────────────────────────────── */
+  .tpv-toolbar {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .tpv-btn {
+    flex: 1; min-width: 120px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-family: inherit; font-size: 13px;
+    cursor: pointer; min-height: 44px;
+  }
+  .tpv-btn.primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--bg-base); font-weight: 600; border-color: transparent;
+  }
+  .tpv-status {
+    font-size: 11px; color: var(--text-muted);
+    margin-bottom: 14px; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .tpv-event {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    border-left: 3px solid var(--accent);
+  }
+  .tpv-event.cerrado { border-left-color: var(--info); }
+  .tpv-event.comanda { border-left-color: var(--warning); }
+  .tpv-event.liberada { border-left-color: var(--text-muted); }
+  .tpv-event-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 4px;
+  }
+  .tpv-event-type {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+  }
+  .tpv-event.cerrado .tpv-event-type { color: var(--info); }
+  .tpv-event.comanda .tpv-event-type { color: var(--warning); }
+  .tpv-event.liberada .tpv-event-type { color: var(--text-muted); }
+  .tpv-event-time { font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .tpv-event-body { color: var(--text); font-size: 13px; line-height: 1.4; }
+
   /* ── Tablet ───────────────────────────────────────── */
   @media (min-width: 768px) {
     main { max-width: 720px; margin: 0 auto; padding: 28px 24px 120px; }
@@ -228,6 +277,7 @@
     <button class="tab is-active" data-tab="hoy" role="tab"><span class="tab-ico">📅</span>Hoy</button>
     <button class="tab" data-tab="dietas" role="tab"><span class="tab-ico">🎗️</span>Dietas</button>
     <button class="tab" data-tab="espacios" role="tab"><span class="tab-ico">🏛️</span>Espacios</button>
+    <button class="tab" data-tab="tpv" role="tab"><span class="tab-ico">🧾</span>TPV</button>
   </nav>
 
   <main id="content">
@@ -242,6 +292,7 @@
 <script src="core/js/theme.js"></script>
 <script src="core/js/loader.js"></script>
 <script src="core/js/metrics.js"></script>
+<script src="core/js/tpv-connector.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -341,6 +392,82 @@ function render() {
   if (currentTab === 'hoy') return renderHoy(main);
   if (currentTab === 'dietas') return renderDietas(main);
   if (currentTab === 'espacios') return renderEspacios(main);
+  if (currentTab === 'tpv') return renderTPV(main);
+}
+
+// ── TPV (simulator) ─────────────────────────
+let tpvConnector = null;
+let tpvLog = [];
+
+function renderTPV(root) {
+  root.innerHTML = `
+    <div class="section-title">Eventos TPV en directo (simulador)</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;line-height:1.5;">
+      Lanza un escenario y verás los eventos que llegarían del TPV en tiempo real.
+      Útil para entrenar al equipo de sala antes del primer servicio.
+      <a href="docs/adr/013-tpv-connectors.md" style="color:var(--accent);">ADR 013</a>.
+    </div>
+    <div class="tpv-toolbar">
+      <button class="tpv-btn primary" data-tpv="comida_normal">▶ Comida normal</button>
+      <button class="tpv-btn primary" data-tpv="evento_grande">▶ Evento grande</button>
+      <button class="tpv-btn" data-tpv="clear">✕ Limpiar</button>
+    </div>
+    <div class="tpv-status" id="tpvStatus">Inactivo · pulsa un escenario</div>
+    <div id="tpvLog"></div>
+  `;
+  $$('[data-tpv]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const scn = btn.dataset.tpv;
+      if (scn === 'clear') { tpvLog = []; renderTpvLog(); $('#tpvStatus').textContent = 'Log limpio'; return; }
+      startTpvScenario(scn);
+    });
+  });
+  renderTpvLog();
+}
+
+function startTpvScenario(scenarioId) {
+  if (tpvConnector) tpvConnector.stop();
+  tpvConnector = window.fnbTPV.createConnector('simulator');
+  const EVENTS = ['ticket_abierto', 'comanda_enviada', 'ticket_cerrado', 'mesa_liberada'];
+  EVENTS.forEach(ev => tpvConnector.on(ev, (e) => {
+    tpvLog.unshift(e);
+    if (tpvLog.length > 20) tpvLog.pop();
+    renderTpvLog();
+  }));
+  const count = tpvConnector.simulate(scenarioId);
+  $('#tpvStatus').textContent = '▶ Escenario «' + scenarioId + '» · ' + count + ' eventos programados';
+}
+
+function renderTpvLog() {
+  const root = $('#tpvLog');
+  if (!root) return;
+  if (!tpvLog.length) {
+    root.innerHTML = '<div class="empty" style="padding:40px 20px;"><div class="empty-icon">📡</div><div class="empty-text">Sin eventos todavía.</div></div>';
+    return;
+  }
+  const labels = {
+    ticket_abierto: 'TICKET ABIERTO',
+    comanda_enviada: 'COMANDA',
+    ticket_cerrado: 'TICKET CERRADO',
+    mesa_liberada: 'MESA LIBERADA',
+  };
+  const cls = { ticket_abierto: '', comanda_enviada: 'comanda', ticket_cerrado: 'cerrado', mesa_liberada: 'liberada' };
+  root.innerHTML = tpvLog.map(e => {
+    const time = e.ts ? new Date(e.ts).toLocaleTimeString('es-ES') : '—';
+    let body = 'Mesa <strong>' + escapeHtml(String(e.mesa || '—')) + '</strong>';
+    if (e.camarero) body += ' · ' + escapeHtml(e.camarero);
+    if (e.total != null) body += ' · <strong>' + e.total + ' €</strong>';
+    if (e.total_estimado != null) body += ' · est. ' + e.total_estimado + ' €';
+    if (e.items && Array.isArray(e.items)) body += ' · ' + escapeHtml(e.items.join(', '));
+    else if (e.items != null) body += ' · ' + e.items + ' items';
+    if (e.propina) body += ' · propina ' + e.propina + ' €';
+    return '<div class="tpv-event ' + (cls[e.type] || '') + '">'
+      + '<div class="tpv-event-head">'
+      + '<span class="tpv-event-type">' + (labels[e.type] || e.type) + '</span>'
+      + '<span class="tpv-event-time">' + time + '</span></div>'
+      + '<div class="tpv-event-body">' + body + '</div>'
+      + '</div>';
+  }).join('');
 }
 
 function diasRestantes(iso) {

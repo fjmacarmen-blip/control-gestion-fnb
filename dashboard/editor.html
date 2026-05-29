@@ -445,6 +445,7 @@
           <div class="section-sub">Datos legales, contacto y espacios disponibles del hotel.</div>
         </div>
         <div class="section-actions">
+          <button class="btn" data-action="generate-qr" title="Generar QR de la carta pública">📱 QR carta</button>
           <button class="btn" data-action="reset-establecimiento" title="Descartar cambios locales">↩ Descartar</button>
           <button class="btn primary" data-action="save-establecimiento" disabled>💾 Guardar borrador</button>
           <button class="btn" data-action="publish-establecimiento" title="Commit del borrador local al repo · requiere PAT">☁ Publicar</button>
@@ -521,6 +522,7 @@
           <div class="section-sub">Recetas con escandallo, alérgenos y pasos. Agrupadas por categoría.</div>
         </div>
         <div class="section-actions">
+          <button class="btn" data-action="show-escandallos" title="Calcular coste real y PVP sugerido por receta">💰 Escandallos</button>
           <button class="btn" data-action="import-recetas" title="Importar desde Excel/CSV">📥 Excel/CSV</button>
           <button class="btn" data-action="import-pdf-recetas" title="Importar desde PDF (copy-paste asistido)">📄 PDF</button>
           <button class="btn" data-action="import-imgs-recetas" title="Subir fotos en bulk con auto-matching">🖼 Imágenes</button>
@@ -621,6 +623,48 @@
   </div>
 </div>
 
+<!-- ─── MODAL QR (v5.1) ────────────────────────── -->
+<div class="modal-overlay" id="qrOverlay">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-head">
+      <div class="modal-title">📱 QR de la carta pública</div>
+      <button class="btn" data-action="qr-close">✕</button>
+    </div>
+    <div class="modal-body" id="qrBody" style="text-align:center;">
+      <div style="color:var(--text-soft);font-size:13px;margin-bottom:14px;">
+        Apunta a la carta pública del proyecto. Imprímelo en las mesas o en flyers.
+      </div>
+      <div id="qrPreview" style="background:#fff;padding:18px;border-radius:14px;display:inline-block;min-height:260px;min-width:260px;"></div>
+      <div id="qrUrl" style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:14px;word-break:break-all;"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-action="qr-close">Cerrar</button>
+      <button class="btn primary" data-action="qr-download">⬇ Descargar SVG</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MODAL ESCANDALLOS (v5.1) ───────────────── -->
+<div class="modal-overlay" id="escOverlay">
+  <div class="modal" style="max-width:1100px;max-height:88vh;">
+    <div class="modal-head">
+      <div class="modal-title">💰 Calculadora de escandallos</div>
+      <button class="btn" data-action="escandallos-close">✕</button>
+    </div>
+    <div class="modal-body" id="escBody" style="overflow:auto;">
+      <div style="color:var(--text-soft);font-size:13px;margin-bottom:14px;line-height:1.6;">
+        Cruza las recetas con el catálogo de productos. Calcula coste materia prima por ración,
+        % escandallo objetivo por categoría y PVP recomendado sin IVA.
+        Las recetas sin match con el catálogo aparecen marcadas para revisar.
+      </div>
+      <div id="escContent"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-action="escandallos-close">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <!-- ─── MODAL IMPORTER IMAGES ──────────────────── -->
 <div class="modal-overlay" id="imgOverlay">
   <div class="modal" style="max-width:1100px;height:88vh;">
@@ -700,6 +744,8 @@
 <script src="../core/js/importer-pdf.js"></script>
 <script src="../core/js/importer-images.js"></script>
 <script src="../core/js/productos-connector.js"></script>
+<script src="../core/js/escandallos.js"></script>
+<script src="../core/js/qr-gen.js"></script>
 <script src="../core/js/editor-core.js"></script>
 <script>
 'use strict';
@@ -2058,8 +2104,123 @@ document.addEventListener('click', (e) => {
       else deleteRecetaModal();
       break;
     }
+    // v5.1 · integraciones
+    case 'generate-qr':       openQrModal(); break;
+    case 'qr-close':          closeQrModal(); break;
+    case 'qr-download':       downloadCurrentQr(); break;
+    case 'show-escandallos':  openEscandallosModal(); break;
+    case 'escandallos-close': closeEscandallosModal(); break;
   }
 });
+
+// ══════════════════════════════════════════════
+// v5.1 · QR carta pública
+// ══════════════════════════════════════════════
+let currentQrSvg = null;
+async function openQrModal() {
+  $('#qrOverlay').classList.add('open');
+  $('#qrPreview').innerHTML = '<div style="color:#888;padding:80px 20px;">Generando…</div>';
+  $('#qrUrl').textContent = '';
+  try {
+    const url = window.fnbQR.buildPublicMenuUrl(PROJECT_ID);
+    const svg = await window.fnbQR.generateQR(url, { size: 256, level: 'M' });
+    currentQrSvg = svg;
+    $('#qrPreview').innerHTML = svg;
+    $('#qrUrl').textContent = url;
+  } catch (e) {
+    $('#qrPreview').innerHTML = '<div style="color:#ff8a8a;padding:80px 20px;">Error: ' + escapeHtml(e.message) + '</div>';
+  }
+}
+function closeQrModal() { $('#qrOverlay').classList.remove('open'); currentQrSvg = null; }
+function downloadCurrentQr() {
+  if (!currentQrSvg) return;
+  window.fnbQR.downloadQR(currentQrSvg, 'qr-carta-' + PROJECT_ID + '.svg');
+}
+
+// ══════════════════════════════════════════════
+// v5.1 · Escandallos
+// ══════════════════════════════════════════════
+async function openEscandallosModal() {
+  $('#escOverlay').classList.add('open');
+  $('#escContent').innerHTML = '<div style="color:var(--text-muted);padding:40px 20px;text-align:center;">Calculando…</div>';
+  // Carga productos del proyecto (cache o repo)
+  let prodItems = [];
+  try {
+    const p = await window.fnbProductos.loadProductos(PROJECT_ID);
+    prodItems = p.items || [];
+  } catch (e) {
+    $('#escContent').innerHTML = '<div style="color:var(--danger);padding:20px;">No se pudo cargar el catálogo: ' + escapeHtml(e.message) + '</div>';
+    return;
+  }
+  if (!prodItems.length) {
+    $('#escContent').innerHTML = '<div style="color:var(--warning);padding:20px;">El catálogo de productos está vacío. Configura productos antes de calcular escandallos.</div>';
+    return;
+  }
+  const recetasData = state.data.recetas;
+  if (!recetasData || !recetasData.categorias) {
+    $('#escContent').innerHTML = '<div style="color:var(--warning);padding:20px;">No hay recetas cargadas.</div>';
+    return;
+  }
+  const summary = window.fnbEscandallos.summarizeProject(recetasData, prodItems);
+  renderEscandallosSummary(summary);
+}
+function closeEscandallosModal() { $('#escOverlay').classList.remove('open'); }
+
+function renderEscandallosSummary(summary) {
+  const totalRows = Object.values(summary.categorias).reduce((a, c) => a + c.recetas.length, 0);
+  const sinMatchPct = totalRows ? Math.round((summary.total.sinMatch / totalRows) * 100) : 0;
+  let html = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px;">
+      <div style="background:var(--bg-elevated);padding:14px;border-radius:10px;">
+        <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);">Recetas</div>
+        <div style="font-size:24px;font-weight:600;color:var(--accent);">${summary.total.recetas}</div>
+      </div>
+      <div style="background:var(--bg-elevated);padding:14px;border-radius:10px;">
+        <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);">Coste medio/ración</div>
+        <div style="font-size:24px;font-weight:600;color:var(--accent);">${summary.total.costeMedio.toFixed(2)} €</div>
+      </div>
+      <div style="background:var(--bg-elevated);padding:14px;border-radius:10px;">
+        <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);">Sin match</div>
+        <div style="font-size:24px;font-weight:600;color:${sinMatchPct > 30 ? 'var(--warning)' : 'var(--text)'};">${summary.total.sinMatch} <span style="font-size:13px;color:var(--text-muted);">ingredientes</span></div>
+      </div>
+    </div>
+  `;
+  html += '<div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Los productos del catálogo se comparan con los ingredientes por similitud de nombre. % escandallo objetivo viene del sector (entrantes 30%, postres 22%, etc.).</div>';
+
+  Object.entries(summary.categorias).forEach(([cat, payload]) => {
+    if (!payload.recetas.length) return;
+    html += '<h3 style="margin-top:24px;margin-bottom:8px;color:var(--text);font-size:14px;text-transform:uppercase;letter-spacing:1.5px;">'
+      + escapeHtml(cat) + ' <span style="font-weight:400;color:var(--text-muted);font-size:11px;">· objetivo ' + payload.target + '%</span></h3>';
+    html += '<table class="edit-table" style="margin-bottom:8px;"><thead><tr>'
+      + '<th>Receta</th>'
+      + '<th style="text-align:right;">Coste/ración</th>'
+      + '<th style="text-align:right;">PVP sugerido</th>'
+      + '<th style="text-align:center;">Cobertura</th>'
+      + '<th style="text-align:right;">Sin match</th>'
+      + '</tr></thead><tbody>';
+    payload.recetas.forEach(r => {
+      const covColor = r.coverage >= 80 ? 'var(--accent)' : r.coverage >= 50 ? 'var(--warning)' : 'var(--danger)';
+      html += '<tr>'
+        + '<td>' + escapeHtml(r.n || '—') + '</td>'
+        + '<td style="text-align:right;font-variant-numeric:tabular-nums;">' + r.perRation.toFixed(2) + ' €</td>'
+        + '<td style="text-align:right;font-variant-numeric:tabular-nums;color:var(--accent);">' + r.pvpSugerido.toFixed(2) + ' €</td>'
+        + '<td style="text-align:center;color:' + covColor + ';font-weight:500;">' + r.coverage + '%</td>'
+        + '<td style="text-align:right;color:var(--text-muted);">' + r.unmatched.length + '</td>'
+        + '</tr>';
+    });
+    html += '</tbody></table>';
+  });
+  $('#escContent').innerHTML = html;
+}
+
+// ══════════════════════════════════════════════
+// v5.1 · Light/dark toggle en topbar
+// ══════════════════════════════════════════════
+(function injectAppearanceToggle() {
+  const slot = document.querySelector('#btnLogout');
+  if (!slot || !window.fnbAppearance) return;
+  window.fnbAppearance.injectToggle(slot.parentElement);
+})();
 
 $('#btnLogout').addEventListener('click', () => {
   window.fnbAuth.clearSession();

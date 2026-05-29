@@ -593,3 +593,137 @@ Cuando arranques sesión nueva para implementar:
 Esto le da a la sesión nueva un anclaje fuerte (este documento) y un alcance acotado (una sola fase), evitando que se desvíe.
 
 **Cuidado especial con la Fase 3.5** (importers): es donde más fácil se «escapa» el alcance. Cada importer (Excel, PDF, imágenes) es UNA sesión separada. No mezclar.
+
+---
+
+## 15 · Addendum v4.14 → v5.1 (estado real tras múltiples sesiones)
+
+Este apartado actualiza el documento original con todo lo ejecutado entre v4.1 y v5.1. La sección 13 hablaba de fases planificadas; ésta cuenta qué quedó construido.
+
+### 15.1 · Capas funcionales construidas
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              CAPA DE PRESENTACIÓN                           │
+├──────────────┬──────────────┬──────────────┬───────────────┤
+│ Landing      │ Dashboard    │ Frontend     │ Vista pública │
+│ /index.html  │ /dashboard/  │ público      │ /sala-movil   │
+│              │  · index     │  · presup    │ /carta-pub    │
+│              │  · editor    │  · recetario │  (PWA)        │
+│              │  · wizard    │  · contrato  │               │
+│              │  · métricas  │  · orden     │               │
+└──────────────┴──────────────┴──────────────┴───────────────┘
+        │              │              │              │
+        ▼              ▼              ▼              ▼
+┌─────────────────────────────────────────────────────────────┐
+│              CAPA DE MOTORES (core/js/)                     │
+├─────────────────────────────────────────────────────────────┤
+│  loader · auth · github-api · editor-core · theme           │
+│  metrics · importer-excel · importer-pdf · importer-images  │
+│  productos-connector · tpv-connector · escandallos · qr-gen │
+│  appearance                                                  │
+└─────────────────────────────────────────────────────────────┘
+        │              │              │              │
+        ▼              ▼              ▼              ▼
+┌─────────────────────────────────────────────────────────────┐
+│              CAPA DE DATOS (estática)                       │
+├──────────────────┬─────────────────────┬───────────────────┤
+│ projects/<id>/   │ templates/<id>/     │ dashboard/        │
+│  · 10 JSON       │  · template.json    │  · auth.json      │
+│  · budgets/      │ (cafetería,         │                   │
+│                  │  marisquería,       │                   │
+│                  │  hotel-rural)       │                   │
+└──────────────────┴─────────────────────┴───────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│              CAPA DE INTEGRACIÓN EXTERNA                    │
+├─────────────────────────────────────────────────────────────┤
+│ GitHub REST API  · publicación atómica                      │
+│ Productos        · static/csv-url/json-url/api (ADR 012)    │
+│ TPV              · simulator/csv-poll/glop/tickbase (ADR 013)│
+│ Pollinations.ai  · generación de fotos de plato             │
+│ Service worker   · offline-first PWA                        │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 15.2 · ADRs aceptados
+
+| ADR | Tema | Estado |
+| --- | --- | --- |
+| 011 | PAT en sessionStorage + modelo de amenaza | Aceptado v4.5.1 |
+| 012 | Conectores de productos · 4 niveles | Aceptado v4.11 |
+| 013 | Conectores TPV de sala · simulator/csv-poll/api | Aceptado parcial v5.0 |
+
+### 15.3 · Recorrido cronológico real
+
+| Versión | Hito |
+| --- | --- |
+| v4.1 | Externalización a JSON · multi-tenant routing |
+| v4.2 | Reorganización a `/core/pages/` · landing en raíz |
+| v4.3 | Dashboard MVP · auth.json · soft auth |
+| v4.4 | Editor visual · 3 secciones · wizard básico |
+| v4.5 | 5 temas visuales · repaleta dashboard slate+emerald |
+| v4.5.1 | Hardening seguridad · rotación credenciales · ADR 011 |
+| v4.5.2 | Cache compartida config · quota check · validación tema |
+| v4.6 | GitHub API wrapper · publicación atómica |
+| v4.7 | Wizard commits multi-archivo |
+| v4.8 | Re-verify password en destructivas · fresh-auth |
+| v4.9 | Métricas · 2 vistas · 18 presupuestos seed |
+| v4.10 | Importer Excel/CSV |
+| v4.11 | Conectores externos productos · ADR 012 |
+| v4.12 | Importer PDF · pdf.js lazy |
+| v4.13 | Importer imágenes · Pollinations · fix autoMatch |
+| v4.14 | Portfolio · Casa Lola demo · README · case study |
+| v4.15 | Cierre auditoría · SRI · CSP · CI · 59 tests |
+| v5.0 | Suite móvil · PWA · TPV · escandallos · QR · plantillas · light mode |
+| v5.1 | Integración UI · marketplace plantillas en wizard · TPV en sala · escandallos modal · QR descargable · toggle visible |
+
+### 15.4 · Lo que cambió respecto al plan original
+
+**Decisiones del documento que se mantuvieron tal cual:**
+- D1 multi-tenant un solo deploy ✓
+- D2 editor visual sin JSON expuesto ✓
+- D4 vanilla + JSON en repo ✓
+- D5 escritura vía GitHub API con PAT ✓
+- D7 modelo de seguridad client-side ✓
+- D8 importers obligatorios ✓
+
+**Decisiones que evolucionaron:**
+- **D10 starters nucleares** → se materializó como `templates/` marketplace en v5.1, no como simple lista de catálogos cargables.
+- **Imágenes** (D9) → añadido fallback Pollinations.ai cuando el usuario no aporta foto, no estaba en el plan original.
+- **TPV** → no estaba en el plan original. Aparece en v5.0 a petición explícita y queda con ADR 013.
+- **Escandallos** → estaban implícitos pero se construyeron como módulo aparte testable, no integrado solo en recetario.
+
+**Decisiones nuevas que no estaban:**
+- **PWA + service worker offline-first** (v5.0). El plan original no contemplaba app móvil instalable.
+- **Carta pública con QR descargable** (v5.0). No estaba; surge como subproducto de "carta digital móvil".
+- **Light mode global** (v5.0). No estaba; viene a complementar los 5 temas del frontend.
+- **CI con tests Node nativos** (v4.15). El plan no contemplaba CI; se añade tras la auditoría.
+
+### 15.5 · Estado de la superficie auditable (v5.1)
+
+- **2 248** LOC JS en `core/js/` (12 módulos)
+- **~14 000** LOC HTML (4 dashboards · 4 frontend · 4 público móvil + landings)
+- **3** proyectos demo · **3** templates marketplace · **2** ADRs
+- **0** dependencias npm en runtime · **8** CDN externos con SRI sha384 (1 ESM documentado sin SRI)
+- **59** tests Node nativos · 3 jobs CI verdes
+- **0 €** coste mensual de operación
+
+### 15.6 · Documentos vivos
+
+| Documento | Propósito |
+| --- | --- |
+| `README.md` | Tarjeta de visita pública del repo |
+| `docs/CASE-STUDY.md` | Narrativa del proyecto orientada a empleadores |
+| `docs/AUDITORIA-v4.14.md` | Informe técnico de la auditoría con plan de remediación |
+| `docs/DETALLE-PROYECTO.md` | Inventario funcional + arquitectónico exhaustivo (v5.1) |
+| `docs/RESUMEN-EJECUTIVO.md` | Síntesis 1-página para no-técnicos (v5.1) |
+| `docs/COMERCIALIZACION.md` | Propuesta go-to-market si decidimos sacar al mercado (v5.1) |
+| `flujo-trabajo.html` | Visual del flujo de trabajo end-to-end (v5.1) |
+| `test-checklist.html` | Checklist interactivo de QA (v5.1) |
+| `docs/adr/011-pat-sessionstorage.md` | ADR 011 |
+| `docs/adr/012-productos-conectores.md` | ADR 012 |
+| `docs/adr/013-tpv-connectors.md` | ADR 013 |
+
+Este documento (arquitectura-plataforma.md) **deja de actualizarse incrementalmente** a partir de v5.1. Los siguientes cambios se documentan via ADRs nuevos.
