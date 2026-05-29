@@ -1,6 +1,6 @@
 # Case Study · Plataforma multi-tenant de gestión F&B
 
-> Cómo un director hotelero con 30 años de oficio y cero formación en programación construyó una plataforma SaaS multi-tenant en 14 iteraciones, usando solo lo que sabía sobre el problema y un asistente de IA como copiloto.
+> Treinta años dirigiendo hoteles. Cero formación en programación. Y aun así, una plataforma multi-tenant en marcha que un director del sector puede instalar en su establecimiento. Esto es cómo salió adelante y por qué creo que tiene sentido.
 
 ---
 
@@ -18,10 +18,10 @@ Decidí construir la herramienta que me habría gustado tener.
 
 Antes de escribir una línea, me marqué cuatro límites duros:
 
-1. **Cero coste de infraestructura.** Si esto va a vivir como portfolio público, no puedo permitirme un servidor mensual. Tiene que correr en hosting gratis y escalar a cero cuando no hay tráfico.
-2. **Sin frameworks pesados.** No quería atarme a React/Vue/Angular sin saber por qué los necesitaba. Vanilla JS hasta que demuestre lo contrario.
-3. **Todo client-side.** Los datos del cliente no salen del navegador del cliente. Punto.
-4. **Versionado completo y restaurable.** Si alguien rompe algo, tiene que poder recuperarse desde git con un `git revert`. Nada de bases de datos opacas.
+1. Cero coste de infraestructura. Si esto va a vivir como portfolio público, no me puedo permitir un servidor mensual. Hosting gratis, y que escale a cero cuando no hay tráfico.
+2. Sin frameworks pesados. No quería atarme a React/Vue/Angular sin saber por qué los necesitaba. Vanilla JS hasta que se demuestre lo contrario.
+3. Todo client-side. Los datos del cliente no salen del navegador del cliente.
+4. Versionado completo y restaurable. Si alguien rompe algo, debe poder recuperarse desde git con un `git revert`. Nada de bases de datos opacas.
 
 ---
 
@@ -111,21 +111,23 @@ El wizard de alta permite elegir tema y previsualizar antes de confirmar. Cada c
 
 ## Qué aprendí
 
-**Que el conocimiento del dominio es la mitad del trabajo.** La diferencia entre un software de eventos genérico y uno útil está en detalles que solo conoces si has llevado el oficio: que las dietas especiales se gestionan con pulseras de colores en sala, que el escandallo de un plato no es solo coste de materia prima sino también de mermas, que el cliente firma el presupuesto con una señal del 15% normalmente. Eso lo lleva uno encima, no lo aprende un equipo de producto en seis meses de descubrimiento.
+Lo primero, conocer el oficio importa más de lo que parece. La diferencia entre un software de eventos genérico y uno que de verdad sirve está en detalles muy concretos: las dietas especiales se gestionan con pulseras de colores en sala, el escandallo de un plato no es solo coste de materia prima (hay mermas, hay decisiones de cocina), el cliente firma el presupuesto con una señal del 15% normalmente. Eso lo llevas encima tras años de hotel. No lo aprende un equipo de producto en seis meses de descubrimiento. Y se nota en cada esquina del producto.
 
-**Que la IA como copiloto cambia las reglas para los no-developers.** Hace cinco años, esta plataforma habría requerido un equipo. Hoy la he construido yo con Claude Code asistiendo. Yo decido qué hay que hacer y por qué (las decisiones que hay en cada ADR son mías, no del modelo); el modelo me ayuda a expresar esas decisiones en código que funciona. La parte difícil del software ya no es escribir las líneas: es saber qué problema merece la pena resolver.
+Después está el tema del copiloto. Hace cinco años, una plataforma así habría requerido un equipo. La construí solo, con Claude Code asistiendo. La división del trabajo es clara: yo decido qué hay que hacer y por qué — las decisiones de cada ADR son mías, no del modelo — y el modelo me ayuda a traducir esas decisiones en código que funciona. La parte difícil del software ya no es escribir las líneas. Es saber qué problema merece la pena resolver.
 
-**Que las restricciones duras simplifican.** "Cero coste de infraestructura" eliminó del mapa la mitad de las arquitecturas posibles antes de empezar. "Todo client-side" eliminó otra cuarta parte. Quedó un espacio muy estrecho de soluciones viables y, dentro de ese espacio, las decisiones se vuelven casi obvias.
+Tercera lección: las restricciones duras simplifican. "Cero coste de infraestructura" se cargó la mitad de las arquitecturas posibles antes de empezar. "Todo client-side" eliminó otra cuarta parte. Quedó un espacio muy estrecho de soluciones viables y, dentro de ahí, las decisiones se vuelven casi obvias. Cuando alguien te diga que el primer paso es "ver todas las opciones", desconfía.
 
-**Que el versionado completo es un superpoder.** Cada cambio en cada proyecto vive en un commit. Si un cliente borra una receta sin querer, `git revert` lo recupera. Si quiero ver cómo se publicaba la carta de Navidad de 2026, está ahí. Esto no es un feature; es la consecuencia natural de haber elegido git como base de datos.
+Y por último, lo de git. Cada cambio en cada proyecto vive en un commit. Si un cliente borra una receta sin querer, un `git revert` y de vuelta. Si quiero ver cómo se publicaba la carta de Navidad de 2026, está ahí. Esto no lo planeé como feature: salió solo por haber elegido git como base de datos.
 
 ---
 
 ## Qué viene
 
-- **v5.0** · app móvil offline-first para el equipo de sala (consultar dieta especial de la mesa 8 sin tener que abrir el editor)
-- **v5.1** · integración con TPVs hosteleros (Glop, TICKBASE, Pingüino)
-- **v5.2** · marketplace de plantillas por categoría de establecimiento (cafetería, asador, marisquería, hotel rural...)
+La siguiente versión (5.0) trae la app móvil offline-first para el equipo de sala — la idea es que el camarero pueda consultar la dieta de la mesa 8 sin tener que ir a buscar el portátil del jefe.
+
+Después, integración real con los TPVs hosteleros que se usan en España (Glop, TICKBASE, Pingüino). Hoy hay stubs documentados; tocará la primera implementación de verdad cuando llegue un cliente que use uno de ellos.
+
+Más adelante, un marketplace de plantillas por tipo de establecimiento: cafetería, asador, marisquería, hotel rural. La idea es que dar de alta un cliente nuevo no requiera empezar desde cero.
 
 ---
 

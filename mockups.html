@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Mockups visuales del producto · Plataforma F&B v5.3 · para portfolio y material comercial.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d1117">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Mockups · Plataforma F&B</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg-base: #0d1117;
+    --bg-surface: #161b22;
+    --bg-elev: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-soft: #8b949e;
+    --text-muted: #6e7681;
+    --accent: #34d399;
+    --accent-deep: #059669;
+    --info: #a78bfa;
+    --danger: #ef4444;
+    --warning: #fbbf24;
+  }
+  body {
+    background: var(--bg-base);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    padding: 40px 24px 80px;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+
+  /* ── Top ──────────────────────────────────────────── */
+  .top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px;
+  }
+  .crumb { font-size: 13px; color: var(--text-soft); }
+  .crumb a { color: var(--text-soft); text-decoration: none; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb-sep { color: var(--border); margin: 0 8px; }
+  .download-cta {
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    color: var(--bg-base);
+    padding: 9px 16px; border-radius: 8px;
+    font: 600 12px/1 'Inter', sans-serif;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .download-cta:hover { filter: brightness(1.1); }
+
+  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(32px, 4vw, 48px); font-weight: 600; letter-spacing: -.02em; margin-bottom: 14px; line-height: 1.1; }
+  .lede { color: var(--text-soft); font-size: 14px; max-width: 640px; margin-bottom: 50px; line-height: 1.7; }
+
+  /* ── Mockup grid ──────────────────────────────────── */
+  .mockup-section {
+    background: linear-gradient(180deg, var(--bg-surface), #1a2030);
+    border-radius: 24px;
+    padding: 60px 40px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .mockup-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(1000px 500px at 80% -100px, rgba(52,211,153,.08), transparent 60%),
+      radial-gradient(700px 400px at 10% 100%, rgba(167,139,250,.06), transparent 60%);
+    pointer-events: none;
+  }
+  .mockup-section > * { position: relative; z-index: 1; }
+  .ms-head { margin-bottom: 40px; text-align: center; max-width: 720px; margin-left: auto; margin-right: auto; }
+  .ms-tag {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px; font-weight: 600;
+  }
+  .ms-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(24px, 3vw, 36px); font-weight: 600; letter-spacing: -.01em; line-height: 1.15; margin-bottom: 10px; }
+  .ms-sub { color: var(--text-soft); font-size: 14px; max-width: 580px; margin: 0 auto; }
+
+  /* ── LAPTOP MOCKUP ────────────────────────────────── */
+  .laptop {
+    max-width: 900px; margin: 0 auto;
+    position: relative;
+  }
+  .laptop-screen {
+    background: #000;
+    border-radius: 14px 14px 4px 4px;
+    padding: 18px 18px 22px;
+    box-shadow:
+      0 50px 100px rgba(0,0,0,.6),
+      0 0 0 2px #1f2937,
+      0 0 0 4px #0f172a;
+  }
+  .laptop-display {
+    background: var(--bg-base);
+    border-radius: 6px;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    position: relative;
+  }
+  .laptop-base {
+    background: linear-gradient(180deg, #1f2937, #0f172a);
+    height: 18px;
+    border-radius: 0 0 14px 14px;
+    position: relative;
+    margin: 0 -20px;
+  }
+  .laptop-base::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 6px;
+    background: #0a0f1c;
+    border-radius: 0 0 8px 8px;
+  }
+
+  /* Dashboard interior */
+  .dash-topbar {
+    background: var(--bg-surface);
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .dash-brand { display: flex; align-items: center; gap: 10px; }
+  .dash-logo {
+    width: 24px; height: 24px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--bg-base);
+    font: 700 9px/1 'Inter';
+  }
+  .dash-title { font-size: 13px; font-weight: 600; }
+  .dash-sub { font-size: 9px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .dash-actions { display: flex; gap: 8px; }
+  .dash-btn { font-size: 10px; color: var(--text-soft); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; background: var(--bg-elev); }
+  .dash-btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-deep)); color: var(--bg-base); border-color: transparent; font-weight: 600; }
+  .dash-body { padding: 22px; }
+  .dash-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 20px;
+  }
+  .dash-h1 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; }
+  .dash-h1-sub { font-size: 11px; color: var(--text-soft); margin-top: 4px; }
+  .dash-cta {
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    color: var(--bg-base);
+    padding: 7px 14px; border-radius: 7px;
+    font: 600 10px/1 'Inter'; border: none;
+  }
+  .dash-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .dash-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .dash-card-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+  }
+  .dash-card-name { font-size: 12px; font-weight: 600; }
+  .dash-card-badge { font-size: 8px; padding: 2px 6px; border-radius: 100px; font-weight: 600; letter-spacing: .5px; }
+  .badge-piloto { background: rgba(52,211,153,.15); color: var(--accent); }
+  .badge-activo { background: rgba(167,139,250,.15); color: var(--info); }
+  .badge-demo { background: rgba(110,118,129,.15); color: var(--text-muted); }
+  .dash-card-meta { font-size: 9px; color: var(--text-muted); line-height: 1.5; }
+  .dash-card-actions { display: flex; gap: 4px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  .dash-card-actions a { font-size: 9px; color: var(--text-soft); padding: 3px 7px; border-radius: 4px; background: var(--bg-surface); border: 1px solid var(--border); }
+
+  /* ── PHONE MOCKUP ─────────────────────────────────── */
+  .phone-group {
+    display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  .phone {
+    width: 260px; height: 540px;
+    background: #000;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow: 0 40px 80px rgba(0,0,0,.6), 0 0 0 2px #1f2937;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .phone.tilt-left { transform: rotate(-3deg); }
+  .phone.tilt-right { transform: rotate(3deg); }
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: var(--bg-base);
+    border-radius: 25px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .phone-notch {
+    position: absolute;
+    top: 8px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 22px;
+    background: #000;
+    border-radius: 0 0 14px 14px;
+    z-index: 5;
+  }
+  .phone-statusbar {
+    padding: 14px 22px 8px;
+    display: flex; justify-content: space-between;
+    font-size: 10px; color: var(--text); font-weight: 600;
+  }
+  .phone-topbar {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .phone-topbar-brand { display: flex; align-items: center; gap: 8px; }
+  .phone-topbar-logo {
+    width: 26px; height: 26px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--bg-base); font: 700 9px/1 'Inter';
+  }
+  .phone-topbar-name { font-size: 12px; font-weight: 600; }
+  .phone-topbar-proj { font-size: 8px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+  .phone-online { background: rgba(52,211,153,.15); color: var(--accent); border: 1px solid rgba(52,211,153,.3); padding: 3px 7px; border-radius: 100px; font-size: 8px; font-weight: 600; }
+  .phone-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-base);
+  }
+  .phone-tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 9px; color: var(--text-soft); border-bottom: 2px solid transparent; }
+  .phone-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+  .phone-body { flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+  .section-lbl { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin: 4px 0 -2px; }
+  .ev-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 13px;
+  }
+  .ev-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .ev-title { font-size: 11px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .ev-ref { font-size: 8px; padding: 2px 7px; border-radius: 5px; background: rgba(52,211,153,.15); color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+  .ev-sub { font-size: 9px; color: var(--text-soft); margin-bottom: 7px; }
+  .ev-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding-top: 7px; border-top: 1px solid var(--border); font-size: 8.5px; }
+  .ev-meta dt { color: var(--text-muted); font-size: 7.5px; letter-spacing: .5px; text-transform: uppercase; }
+  .ev-meta dd { color: var(--text); font-weight: 500; }
+  .ev-pills { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+  .ev-pill { font-size: 8px; padding: 2px 7px; border-radius: 100px; font-weight: 600; }
+  .pill-cel { background: rgba(239,68,68,.15); color: var(--danger); }
+  .pill-veg { background: rgba(34,197,94,.15); color: #22c55e; }
+  .pill-sf { background: rgba(249,115,22,.15); color: #f97316; }
+
+  /* Carta variant */
+  .carta-hero {
+    text-align: center;
+    padding: 18px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-surface);
+  }
+  .carta-eyebrow { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
+  .carta-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600; line-height: 1.1; }
+  .carta-sub { font-size: 9px; color: var(--text-soft); margin-top: 3px; }
+
+  .menu-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .menu-card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; }
+  .menu-card-name { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 600; line-height: 1.15; }
+  .menu-card-price { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--accent); font-weight: 600; line-height: 1; }
+  .menu-card-price small { font-size: 8px; color: var(--text-muted); font-family: 'Inter'; font-weight: 400; }
+  .menu-card-desc { font-size: 9px; color: var(--text-soft); line-height: 1.45; }
+  .menu-card-section { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }
+  .menu-card-section-title { font-size: 7.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
+  .menu-card-items { font-size: 9px; color: var(--text); line-height: 1.5; }
+
+  /* ── TABLET COTIZADOR ─────────────────────────────── */
+  .tablet {
+    max-width: 720px; margin: 0 auto;
+    background: #000;
+    border-radius: 22px;
+    padding: 14px;
+    box-shadow: 0 40px 80px rgba(0,0,0,.6), 0 0 0 2px #1f2937;
+  }
+  .tablet-screen {
+    background: var(--bg-base);
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+  }
+  .cot-bar { background: var(--bg-surface); padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .cot-step { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
+  .cot-progress { width: 180px; height: 4px; background: var(--bg-elev); border-radius: 100px; overflow: hidden; }
+  .cot-progress-fill { width: 100%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-deep)); border-radius: 100px; }
+  .cot-body { flex: 1; padding: 22px 28px; display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+  .cot-main h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; margin-bottom: 5px; }
+  .cot-main p { font-size: 11px; color: var(--text-soft); margin-bottom: 16px; }
+  .cot-total-box { background: linear-gradient(135deg, rgba(52,211,153,.1), rgba(5,150,105,.04)); border: 1px solid rgba(52,211,153,.3); border-radius: 12px; padding: 18px; text-align: center; }
+  .cot-total-lbl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+  .cot-total-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 600; color: var(--accent); line-height: 1; }
+  .cot-total-pax { font-size: 9px; color: var(--text-muted); margin-top: 5px; }
+  .cot-side { display: flex; flex-direction: column; gap: 10px; }
+  .cot-line { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-soft); padding: 8px 0; border-bottom: 1px dashed var(--border); }
+  .cot-line span:last-child { color: var(--text); font-weight: 500; }
+  .cot-cta { background: linear-gradient(135deg, var(--accent), var(--accent-deep)); color: var(--bg-base); padding: 11px 16px; border-radius: 8px; font: 600 11px/1 'Inter'; text-align: center; margin-top: 8px; }
+
+  /* ── LOGO showcase ────────────────────────────────── */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .logo-card {
+    aspect-ratio: 1 / 1;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .logo-card-dark {
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+  }
+  .logo-card-light { background: #f8fafc; border: 1px solid #e2e8f0; }
+  .logo-card-emerald {
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  }
+  .logo-card-noir {
+    background: #000;
+  }
+  .logo-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 600;
+    letter-spacing: -2px;
+  }
+  .logo-card-dark .logo-mark { color: var(--accent); }
+  .logo-card-light .logo-mark { color: var(--accent-deep); }
+  .logo-card-emerald .logo-mark { color: var(--bg-base); }
+  .logo-card-noir .logo-mark { color: #fff; }
+  .logo-card-label {
+    position: absolute;
+    bottom: 12px; left: 14px;
+    font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: .7;
+  }
+  .logo-card-light .logo-card-label { color: #64748b; }
+  .logo-card-emerald .logo-card-label,
+  .logo-card-noir .logo-card-label { color: rgba(255,255,255,.5); }
+
+  /* ── Hero stack ───────────────────────────────────── */
+  .hero-stack {
+    position: relative;
+    height: 540px;
+    overflow: hidden;
+  }
+  .hero-stack .phone:nth-child(1) { position: absolute; left: 50%; bottom: 0; transform: translateX(-160%) rotate(-8deg); z-index: 1; }
+  .hero-stack .phone:nth-child(2) { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%) rotate(0deg); z-index: 3; }
+  .hero-stack .phone:nth-child(3) { position: absolute; left: 50%; bottom: 0; transform: translateX(60%) rotate(8deg); z-index: 1; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 720px) {
+    .laptop { transform: scale(.9); }
+    .phone-group { gap: 12px; }
+    .phone { transform: scale(.85); }
+    .hero-stack { display: none; }
+    .cot-body { grid-template-columns: 1fr; }
+  }
+
+  /* Print: cada sección en su página */
+  @media print {
+    body { background: #fff; padding: 0; color: #000; }
+    .top, .footer { display: none; }
+    .mockup-section { page-break-after: always; box-shadow: none; border: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="crumb">
+      <a href="index.html">← Plataforma</a>
+      <span class="crumb-sep">/</span>
+      <span style="color:var(--text);">Mockups visuales</span>
+    </div>
+    <button class="download-cta" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  </div>
+
+  <div class="eyebrow">v5.3 · material visual</div>
+  <h1>El producto, en imágenes.</h1>
+  <p class="lede">
+    Capturas renderizadas del dashboard, sala móvil, carta pública y cotizador, en marcos de
+    laptop, tablet y móvil. Listas para usar en pitch decks, LinkedIn, propuestas o el portfolio.
+    Pulsa imprimir para guardar como PDF y adjuntar a cualquier email.
+  </p>
+
+  <!-- ────────────────────────────────────────────────── -->
+  <!-- MOCKUP 1 · Hero stack con 3 móviles                  -->
+  <!-- ────────────────────────────────────────────────── -->
+  <section class="mockup-section">
+    <div class="ms-head">
+      <div class="ms-tag">Hero · 3 vistas móviles</div>
+      <div class="ms-title">La plataforma en el bolsillo</div>
+      <div class="ms-sub">Sala, cotizador y carta digital — tres perfiles de usuario, una sola plataforma.</div>
+    </div>
+
+    <div class="hero-stack">
+      <!-- Móvil 1 · Sala -->
+      <div class="phone tilt-left">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div class="phone-statusbar"><span>21:35</span><span>●●●</span></div>
+          <div class="phone-topbar">
+            <div class="phone-topbar-brand">
+              <div class="phone-topbar-logo">F&amp;B</div>
+              <div>
+                <div class="phone-topbar-name">Sala</div>
+                <div class="phone-topbar-proj">Miramar</div>
+              </div>
+            </div>
+            <span class="phone-online">● online</span>
+          </div>
+          <div class="phone-tabs">
+            <div class="phone-tab active">Hoy</div>
+            <div class="phone-tab">Dietas</div>
+            <div class="phone-tab">Espacios</div>
+            <div class="phone-tab">TPV</div>
+          </div>
+          <div class="phone-body">
+            <div class="section-lbl">Hoy</div>
+            <div class="ev-card">
+              <div class="ev-head">
+                <div class="ev-title">Familia Romero · Boda</div>
+                <div class="ev-ref">HOY</div>
+              </div>
+              <div class="ev-sub">Boda íntima</div>
+              <dl class="ev-meta">
+                <div><dt>Hora</dt><dd>20:30</dd></div>
+                <div><dt>Espacio</dt><dd>Salón Med.</dd></div>
+              </dl>
+              <div class="ev-pills">
+                <span class="ev-pill pill-cel">🌾 CEL 2</span>
+                <span class="ev-pill pill-veg">🌱 VEG 3</span>
+              </div>
+            </div>
+            <div class="ev-card">
+              <div class="ev-head">
+                <div class="ev-title">Banco Andalucía</div>
+                <div class="ev-ref" style="background: rgba(167,139,250,.15); color: var(--info);">2d</div>
+              </div>
+              <div class="ev-sub">Cena de empresa · 24 pax</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Móvil 2 · Sala (mismo, centrado, sin tilt) -->
+      <div class="phone">
+        <div class="phone-screen" style="background: var(--bg-surface);">
+          <div class="phone-notch"></div>
+          <div class="phone-statusbar"><span>14:20</span><span>●●●</span></div>
+          <div class="carta-hero">
+            <div class="carta-eyebrow">CARTA</div>
+            <div class="carta-name">Hotel Miramar<br>Dorado</div>
+            <div class="carta-sub">5★ Gran Lujo · Marbella</div>
+          </div>
+          <div class="phone-tabs" style="background: var(--bg-base);">
+            <div class="phone-tab active">Todos</div>
+            <div class="phone-tab">Sentado</div>
+            <div class="phone-tab">Cóctel</div>
+            <div class="phone-tab">Brunch</div>
+          </div>
+          <div class="phone-body" style="padding: 12px;">
+            <div class="menu-card">
+              <div class="menu-card-head">
+                <div class="menu-card-name">🌊 Menú Mediterráneo</div>
+                <div class="menu-card-price">48 €<small>/pax</small></div>
+              </div>
+              <div class="menu-card-desc">Selección del chef · 3 entrantes + principal + postre</div>
+              <div class="menu-card-section">
+                <div class="menu-card-section-title">Entrantes a compartir</div>
+                <div class="menu-card-items">· Salmorejo cordobés<br>· Boquerones en vinagre<br>· Tartar de atún rojo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Móvil 3 · Cotizador paso 7 -->
+      <div class="phone tilt-right">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div class="phone-statusbar"><span>11:48</span><span>●●●</span></div>
+          <div class="phone-topbar">
+            <div class="phone-topbar-brand">
+              <div class="phone-topbar-logo">F&amp;B</div>
+              <div>
+                <div class="phone-topbar-name">Cotizar evento</div>
+                <div class="phone-topbar-proj">Paso 7 de 7</div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-body">
+            <div class="section-lbl">Tu presupuesto</div>
+            <div class="cot-total-box" style="padding: 16px;">
+              <div class="cot-total-lbl">Inversión total estimada</div>
+              <div class="cot-total-num" style="font-size: 28px;">8 470 €</div>
+              <div class="cot-total-pax">88 pax · IVA incl.</div>
+            </div>
+            <div class="ev-card">
+              <div class="ev-head">
+                <div class="ev-title">Menú Lola · Boda íntima</div>
+              </div>
+              <div class="ev-sub">14 jun 2026 · 20:30 · Salón Mediterráneo</div>
+              <div class="ev-pills" style="margin-top: 10px;">
+                <span class="ev-pill pill-veg">🌱 VEG 3</span>
+                <span class="ev-pill pill-cel">🌾 CEL 2</span>
+              </div>
+            </div>
+            <div style="background: linear-gradient(135deg, var(--accent), var(--accent-deep)); color: var(--bg-base); padding: 12px; border-radius: 9px; text-align: center; font: 600 11px/1 'Inter'; margin-top: 6px;">
+              🎉 Solicitar Presupuesto Formal
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────── -->
+  <!-- MOCKUP 2 · Laptop con dashboard                      -->
+  <!-- ────────────────────────────────────────────────── -->
+  <section class="mockup-section">
+    <div class="ms-head">
+      <div class="ms-tag">Vista admin · Laptop</div>
+      <div class="ms-title">Panel de control del director</div>
+      <div class="ms-sub">Listado de proyectos multi-tenant, acciones rápidas, métricas resumidas. Login con bcrypt y sesión de 8 horas.</div>
+    </div>
+
+    <div class="laptop">
+      <div class="laptop-screen">
+        <div class="laptop-display">
+          <div class="dash-topbar">
+            <div class="dash-brand">
+              <div class="dash-logo">F&amp;B</div>
+              <div>
+                <div class="dash-title">Dashboard</div>
+                <div class="dash-sub">Super-admin</div>
+              </div>
+            </div>
+            <div class="dash-actions">
+              <button class="dash-btn">☀️ Claro</button>
+              <button class="dash-btn">Cerrar sesión</button>
+            </div>
+          </div>
+          <div class="dash-body">
+            <div class="dash-head">
+              <div>
+                <div class="dash-h1">Mis proyectos</div>
+                <div class="dash-h1-sub">3 establecimientos activos · último cambio hace 2 horas</div>
+              </div>
+              <button class="dash-cta">+ Nuevo proyecto</button>
+            </div>
+            <div class="dash-grid">
+              <div class="dash-card">
+                <div class="dash-card-head">
+                  <div class="dash-card-name">Miramar Dorado</div>
+                  <span class="dash-card-badge badge-piloto">PILOTO</span>
+                </div>
+                <div class="dash-card-meta">5★ Gran Lujo · Marbella<br>18 presupuestos · 78 recetas<br>Tema: navy-boutique</div>
+                <div class="dash-card-actions">
+                  <a>👁 Público</a>
+                  <a>🛠 Interno</a>
+                  <a>✏️ Editar</a>
+                  <a>📊 Métricas</a>
+                </div>
+              </div>
+              <div class="dash-card">
+                <div class="dash-card-head">
+                  <div class="dash-card-name">Casa Lola</div>
+                  <span class="dash-card-badge badge-activo">ACTIVO</span>
+                </div>
+                <div class="dash-card-meta">Mediterránea · Marbella<br>12 presupuestos · 27 recetas<br>Tema: mediterraneo</div>
+                <div class="dash-card-actions">
+                  <a>👁 Público</a>
+                  <a>🛠 Interno</a>
+                  <a>✏️ Editar</a>
+                  <a>📊 Métricas</a>
+                </div>
+              </div>
+              <div class="dash-card" style="opacity: .7;">
+                <div class="dash-card-head">
+                  <div class="dash-card-name">Proyecto Demo</div>
+                  <span class="dash-card-badge badge-demo">DEMO</span>
+                </div>
+                <div class="dash-card-meta">Esqueleto vacío<br>0 presupuestos · 0 recetas<br>Test de regresión</div>
+                <div class="dash-card-actions">
+                  <a>👁 Público</a>
+                  <a>✏️ Editar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────── -->
+  <!-- MOCKUP 3 · Tablet con cotizador                     -->
+  <!-- ────────────────────────────────────────────────── -->
+  <section class="mockup-section">
+    <div class="ms-head">
+      <div class="ms-tag">Cotizador self-service · Tablet</div>
+      <div class="ms-title">El cliente final se cotiza solo</div>
+      <div class="ms-sub">7 pasos. Precio en vivo. Al pulsar «Solicitar», abre email al hotel y copia el detalle al portapapeles. Sin backend.</div>
+    </div>
+
+    <div class="tablet">
+      <div class="tablet-screen">
+        <div class="cot-bar">
+          <div class="cot-step">Paso 6 de 7 · Datos</div>
+          <div class="cot-progress"><div class="cot-progress-fill" style="width: 85%;"></div></div>
+        </div>
+        <div class="cot-body">
+          <div class="cot-main">
+            <h2>Tu presupuesto</h2>
+            <p>Revisa el detalle y solicita la propuesta formal. Nuestro equipo se pondrá en contacto contigo en menos de 24 h.</p>
+            <div class="cot-total-box">
+              <div class="cot-total-lbl">Inversión total estimada</div>
+              <div class="cot-total-num">8 470 €</div>
+              <div class="cot-total-pax">88 comensales · IVA 10% incluido</div>
+            </div>
+          </div>
+          <div class="cot-side">
+            <div class="cot-line"><span>Tipo evento</span><span>Boda íntima</span></div>
+            <div class="cot-line"><span>Menú</span><span>Lola · 48€/pax</span></div>
+            <div class="cot-line"><span>Espacio</span><span>Salón Med.</span></div>
+            <div class="cot-line"><span>Fecha</span><span>14 jun 2026</span></div>
+            <div class="cot-line"><span>Dietas</span><span>5 especiales</span></div>
+            <div class="cot-cta">🎉 Solicitar Presupuesto</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────── -->
+  <!-- MOCKUP 4 · 2 móviles · Sala + Carta                  -->
+  <!-- ────────────────────────────────────────────────── -->
+  <section class="mockup-section">
+    <div class="ms-head">
+      <div class="ms-tag">Móvil · Dos perfiles</div>
+      <div class="ms-title">Sala vs. Cliente final</div>
+      <div class="ms-sub">A la izquierda, la app que el camarero instala en su móvil. A la derecha, la carta digital que el comensal escanea desde el QR de la mesa.</div>
+    </div>
+
+    <div class="phone-group">
+
+      <!-- Sala completa -->
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div class="phone-statusbar"><span>14:08</span><span>●●●</span></div>
+          <div class="phone-topbar">
+            <div class="phone-topbar-brand">
+              <div class="phone-topbar-logo">F&amp;B</div>
+              <div>
+                <div class="phone-topbar-name">Sala</div>
+                <div class="phone-topbar-proj">Miramar</div>
+              </div>
+            </div>
+            <span class="phone-online">● online</span>
+          </div>
+          <div class="phone-tabs">
+            <div class="phone-tab active">Hoy</div>
+            <div class="phone-tab">Dietas</div>
+            <div class="phone-tab">Espacios</div>
+            <div class="phone-tab">TPV</div>
+          </div>
+          <div class="phone-body">
+            <div class="section-lbl">Hoy · 14 jun</div>
+            <div class="ev-card">
+              <div class="ev-head">
+                <div class="ev-title">Familia Romero</div>
+                <div class="ev-ref">HOY</div>
+              </div>
+              <div class="ev-sub">Boda íntima · 88 pax</div>
+              <dl class="ev-meta">
+                <div><dt>Hora</dt><dd>20:30</dd></div>
+                <div><dt>Espacio</dt><dd>Salón Med.</dd></div>
+                <div><dt>Menú</dt><dd>Lola · 48€</dd></div>
+                <div><dt>Servicio</dt><dd>10 personas</dd></div>
+              </dl>
+              <div class="ev-pills">
+                <span class="ev-pill pill-cel">🌾 CEL 2</span>
+                <span class="ev-pill pill-veg">🌱 VEG 3</span>
+                <span class="ev-pill pill-sf">🌰 SF 1</span>
+              </div>
+            </div>
+            <div class="section-lbl">Próximos 7 días</div>
+            <div class="ev-card" style="opacity: .85;">
+              <div class="ev-head">
+                <div class="ev-title">Banco Andalucía · Cena</div>
+                <div class="ev-ref" style="background: rgba(167,139,250,.15); color: var(--info);">2d</div>
+              </div>
+              <div class="ev-sub">21:00 · Reservado · 24 pax</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carta -->
+      <div class="phone">
+        <div class="phone-screen" style="background: var(--bg-surface);">
+          <div class="phone-notch"></div>
+          <div class="phone-statusbar" style="color: #000; background: #fff;"><span>20:15</span><span>●●●</span></div>
+          <div class="carta-hero">
+            <div class="carta-eyebrow">CARTA</div>
+            <div class="carta-name">Hotel Miramar<br>Dorado</div>
+            <div class="carta-sub">5★ Gran Lujo · Marbella<br>Cocina mediterránea</div>
+          </div>
+          <div class="phone-tabs" style="background: var(--bg-base);">
+            <div class="phone-tab active">Todos</div>
+            <div class="phone-tab">Sentado</div>
+            <div class="phone-tab">Cóctel</div>
+            <div class="phone-tab">Brunch</div>
+          </div>
+          <div class="phone-body" style="padding: 12px;">
+            <div class="menu-card">
+              <div class="menu-card-head">
+                <div class="menu-card-name">🌊 Menú Mediterráneo</div>
+                <div class="menu-card-price">48 €<small>/pax</small></div>
+              </div>
+              <div class="menu-card-desc">Selección del chef · 3 entrantes + principal + postre</div>
+              <div class="menu-card-section">
+                <div class="menu-card-section-title">Entrantes</div>
+                <div class="menu-card-items">· Salmorejo cordobés<br>· Tartar de atún<br>· Carpaccio de pulpo</div>
+              </div>
+            </div>
+            <div class="menu-card" style="opacity: .9;">
+              <div class="menu-card-head">
+                <div class="menu-card-name">🐟 Menú Mar Esencial</div>
+                <div class="menu-card-price">32 €<small>/pax</small></div>
+              </div>
+              <div class="menu-card-desc">Pescado del día con postre artesano</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────── -->
+  <!-- MOCKUP 5 · Logo en 4 versiones                       -->
+  <!-- ────────────────────────────────────────────────── -->
+  <section class="mockup-section">
+    <div class="ms-head">
+      <div class="ms-tag">Marca · Logo</div>
+      <div class="ms-title">F&B sobre cuatro fondos</div>
+      <div class="ms-sub">El símbolo en sus cuatro variantes oficiales: oscuro/claro/esmeralda/negro. Listo para web, papel, app icon o redes.</div>
+    </div>
+
+    <div class="logo-grid">
+      <div class="logo-card logo-card-dark">
+        <span class="logo-mark">F&amp;B</span>
+        <span class="logo-card-label">dark · esmeralda</span>
+      </div>
+      <div class="logo-card logo-card-light">
+        <span class="logo-mark">F&amp;B</span>
+        <span class="logo-card-label">light · sobre claro</span>
+      </div>
+      <div class="logo-card logo-card-emerald">
+        <span class="logo-mark">F&amp;B</span>
+        <span class="logo-card-label">esmeralda · invertido</span>
+      </div>
+      <div class="logo-card logo-card-noir">
+        <span class="logo-mark">F&amp;B</span>
+        <span class="logo-card-label">monocromo · negro</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    Plataforma F&amp;B · v5.3 · <a href="index.html">volver al inicio</a> · <a href="pitch.html">pitch deck</a> · <a href="docs/pdf/">documentos PDF</a>
+  </div>
+</div>
+
+</body>
+</html>
