@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2001",
+  "generado": "2026-03-14T12:00:00Z",
+  "fechaEvento": "2026-04-03",
+  "horaInicio": "20:30",
+  "horaFin": "02:00",
+  "clientName": "Boda Marta y Pablo",
+  "eventType": {
+    "id": "aniv",
+    "name": "Aniversario",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "bl_eco",
+    "name": "Barra Casa Lola",
+    "ppax": 22
+  },
+  "espacio": "chefs_table",
+  "pt": 33,
+  "pn": 27,
+  "pi": 6,
+  "total": 594,
+  "iva": 59,
+  "totalConIva": 653,
+  "senial": 98,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 2,
+    "vegetariano": 2,
+    "celiaco": 1,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

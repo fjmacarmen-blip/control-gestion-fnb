@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2007",
+  "generado": "2026-05-19T16:00:00Z",
+  "fechaEvento": "2026-06-25",
+  "horaInicio": "20:30",
+  "horaFin": "02:00",
+  "clientName": "Familia López-Vega",
+  "eventType": {
+    "id": "aniv",
+    "name": "Aniversario",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "mar_eco",
+    "name": "Menú del Mar Esencial",
+    "ppax": 32
+  },
+  "espacio": "reservado_bodega",
+  "pt": 30,
+  "pn": 21,
+  "pi": 9,
+  "total": 672,
+  "iva": 67,
+  "totalConIva": 739,
+  "senial": 111,
+  "estado": "borrador",
+  "dietas": {
+    "vegano": 0,
+    "vegetariano": 0,
+    "celiaco": 1,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

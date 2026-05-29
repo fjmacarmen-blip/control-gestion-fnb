@@ -1,0 +1,85 @@
+{
+  "razon_social": "Casa Lola Marbella S.L.",
+  "nombre_comercial": "Restaurante Casa Lola",
+  "categoria": "Cocina mediterránea · 1 sol Repsol",
+  "nif": "B-29456789",
+  "direccion": {
+    "calle": "Paseo Marítimo 47",
+    "cp": "29602",
+    "ciudad": "Marbella",
+    "provincia": "Málaga",
+    "pais": "España"
+  },
+  "registro_turismo": "AR/MA/01923",
+  "contacto": {
+    "telefono": "+34 952 76 12 34",
+    "email": "reservas@casalola.es",
+    "web": "www.casalola.es"
+  },
+  "datos_legacy": {
+    "razon": "Casa Lola Marbella S.L.",
+    "nif": "B-29456789",
+    "direccion": "Paseo Marítimo 47, 29602 Marbella (Málaga)",
+    "registro": "Registro Turismo Andalucía: AR/MA/01923",
+    "telefono": "+34 952 76 12 34",
+    "email": "reservas@casalola.es"
+  },
+  "stats": {
+    "habitaciones": null,
+    "pax_max": 180,
+    "superficie_eventos_m2": 420,
+    "spa_m2": null,
+    "spa_cabinas": null
+  },
+  "espacios": [
+    {
+      "id": "salon_principal",
+      "nombre": "Salón Principal",
+      "superficie_m2": 180,
+      "capacidad_sentado": 100,
+      "capacidad_coctel": 140
+    },
+    {
+      "id": "terraza_mar",
+      "nombre": "Terraza Mar",
+      "superficie_m2": 120,
+      "capacidad_sentado": 70,
+      "capacidad_coctel": 100
+    },
+    {
+      "id": "reservado_bodega",
+      "nombre": "Reservado Bodega",
+      "superficie_m2": 35,
+      "capacidad_sentado": 20,
+      "capacidad_coctel": 30
+    },
+    {
+      "id": "chefs_table",
+      "nombre": "Chef's Table",
+      "superficie_m2": 25,
+      "capacidad_sentado": 10,
+      "capacidad_coctel": null
+    },
+    {
+      "id": "patio_jardin",
+      "nombre": "Patio Jardín",
+      "superficie_m2": 60,
+      "capacidad_sentado": 40,
+      "capacidad_coctel": 60
+    }
+  ],
+  "equipo_clave": [
+    {
+      "rol": "Chef ejecutivo",
+      "nombre": "Lola Romero"
+    },
+    {
+      "rol": "Jefe de sala",
+      "nombre": "—"
+    },
+    {
+      "rol": "Sommelier",
+      "nombre": "—"
+    }
+  ]
+}

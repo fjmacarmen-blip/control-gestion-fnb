@@ -1,0 +1,109 @@
+{
+  "_README": "Casa Lola usa Mercabarna como principal. En producción esto será csv-url del Sheet de Lola.",
+  "source": {
+    "type": "static",
+    "label": "Catálogo demo · Mercabarna + Lonja Málaga",
+    "url": null,
+    "lastSync": "2026-04-15",
+    "refreshHours": 24,
+    "columnMapping": {}
+  },
+  "items": [
+    {
+      "id": "aov-hojiblanca",
+      "nombre": "AOVE Hojiblanca DO Málaga",
+      "categoria": "aceites",
+      "unidad": "L",
+      "precio": 6.2,
+      "proveedor": "Cooperativa Antequera"
+    },
+    {
+      "id": "tomate-pera",
+      "nombre": "Tomate pera maduro",
+      "categoria": "verduras",
+      "unidad": "kg",
+      "precio": 1.4,
+      "proveedor": "Mercabarna"
+    },
+    {
+      "id": "queso-payoyo",
+      "nombre": "Queso Payoyo DOP",
+      "categoria": "lacteos",
+      "unidad": "kg",
+      "precio": 28,
+      "proveedor": "Cooperativa Grazalema"
+    },
+    {
+      "id": "gamba-roja",
+      "nombre": "Gamba roja de Málaga fresca",
+      "categoria": "pescados",
+      "unidad": "kg",
+      "precio": 78,
+      "proveedor": "Lonja Málaga"
+    },
+    {
+      "id": "atun-rojo",
+      "nombre": "Atún rojo del estrecho",
+      "categoria": "pescados",
+      "unidad": "kg",
+      "precio": 52,
+      "proveedor": "Lonja Tarifa"
+    },
+    {
+      "id": "solomillo-iberica",
+      "nombre": "Solomillo ternera ibérica",
+      "categoria": "carnes",
+      "unidad": "kg",
+      "precio": 45,
+      "proveedor": "Carnicería Andaluza"
+    },
+    {
+      "id": "secreto-iberico",
+      "nombre": "Secreto ibérico de bellota",
+      "categoria": "carnes",
+      "unidad": "kg",
+      "precio": 19.5,
+      "proveedor": "Salazones Guijuelo"
+    },
+    {
+      "id": "arroz-bomba",
+      "nombre": "Arroz bomba DO Valencia",
+      "categoria": "secos",
+      "unidad": "kg",
+      "precio": 4.8,
+      "proveedor": "Distribuidor Costa"
+    },
+    {
+      "id": "sal-trapani",
+      "nombre": "Sal Maldon en escamas",
+      "categoria": "secos",
+      "unidad": "kg",
+      "precio": 14,
+      "proveedor": "Distribuidor Gourmet"
+    },
+    {
+      "id": "jamon-bellota",
+      "nombre": "Jamón ibérico de bellota",
+      "categoria": "embutidos",
+      "unidad": "kg",
+      "precio": 64,
+      "proveedor": "Salazones Guijuelo"
+    },
+    {
+      "id": "limon-malaga",
+      "nombre": "Limón de Málaga",
+      "categoria": "verduras",
+      "unidad": "kg",
+      "precio": 1.2,
+      "proveedor": "Mercabarna"
+    },
+    {
+      "id": "aguacate-hass",
+      "nombre": "Aguacate Hass Costa Tropical",
+      "categoria": "verduras",
+      "unidad": "kg",
+      "precio": 3.8,
+      "proveedor": "La Caleta"
+    }
+  ]
+}

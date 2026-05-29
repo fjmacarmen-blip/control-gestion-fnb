@@ -1,0 +1,980 @@
+{
+  "categorias": {
+    "entremeses": [
+      {
+        "n": "Aceitunas Maceradas con Piel Cítrica",
+        "e": "🫒",
+        "g": "g4",
+        "sub": "Manzanilla aliñadas con limón y romero",
+        "prep": 5,
+        "coc": 0,
+        "rac": 4,
+        "dif": "Baja",
+        "mp": 0.85,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "200g",
+            "Aceituna manzanilla",
+            ""
+          ],
+          [
+            "1 ud",
+            "Limón",
+            "piel"
+          ],
+          [
+            "2g",
+            "Romero fresco",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Mezclar aceitunas con piel de limón y romero",
+          "Macerar 1h en aceite"
+        ]
+      },
+      {
+        "n": "Tosta de Tomate Aliñado y Atún",
+        "e": "🥖",
+        "g": "g7",
+        "sub": "Pan rústico tostado con bonito",
+        "prep": 8,
+        "coc": 3,
+        "rac": 4,
+        "dif": "Baja",
+        "mp": 2.1,
+        "alergen": "Gluten, Pescado, Sulfitos",
+        "ing": [
+          [
+            "4 rebanadas",
+            "Pan rústico",
+            ""
+          ],
+          [
+            "2 ud",
+            "Tomate aliñado",
+            ""
+          ],
+          [
+            "80g",
+            "Bonito en aceite",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Tostar pan",
+          "Cubrir con tomate aliñado",
+          "Coronar con bonito desmenuzado"
+        ]
+      },
+      {
+        "n": "Brocheta de Queso Payoyo con Uva",
+        "e": "🧀",
+        "g": "g7",
+        "sub": "Queso de la sierra de Cádiz con uva moscatel",
+        "prep": 5,
+        "coc": 0,
+        "rac": 6,
+        "dif": "Baja",
+        "mp": 1.45,
+        "alergen": "Lácteos",
+        "ing": [
+          [
+            "100g",
+            "Queso Payoyo",
+            "en dados"
+          ],
+          [
+            "12 ud",
+            "Uva moscatel",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Ensartar dados de queso y uva en palillos",
+          "Servir frío con un hilo de miel"
+        ]
+      },
+      {
+        "n": "Almendras Marcona Tostadas",
+        "e": "🥜",
+        "g": "g7",
+        "sub": "Tostadas con sal de Trapani",
+        "prep": 5,
+        "coc": 5,
+        "rac": 6,
+        "dif": "Baja",
+        "mp": 1.1,
+        "alergen": "Frutos secos",
+        "ing": [
+          [
+            "150g",
+            "Almendra Marcona",
+            ""
+          ],
+          [
+            "Sal en escamas",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Tostar en sartén seca 4-5 min",
+          "Salar al sacar"
+        ]
+      }
+    ],
+    "entrantes": [
+      {
+        "n": "Salmorejo Cordobés",
+        "e": "🍅",
+        "g": "g2",
+        "sub": "Crema espesa de tomate con jamón",
+        "prep": 10,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 1.8,
+        "alergen": "Gluten, Huevo",
+        "ing": [
+          [
+            "600g",
+            "Tomate pera",
+            "muy maduro"
+          ],
+          [
+            "150g",
+            "Pan telera",
+            "sin corteza"
+          ],
+          [
+            "100ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "30g",
+            "Jamón ibérico",
+            "virutas"
+          ]
+        ],
+        "pasos": [
+          "Triturar todo hasta crema",
+          "Refrigerar 2h",
+          "Servir con huevo rallado y jamón"
+        ]
+      },
+      {
+        "n": "Boquerones en Vinagre con AOVE",
+        "e": "🐟",
+        "g": "g3",
+        "sub": "Marinados con ajo picado",
+        "prep": 30,
+        "coc": 0,
+        "rac": 4,
+        "dif": "Media",
+        "mp": 2.4,
+        "alergen": "Pescado",
+        "ing": [
+          [
+            "240g",
+            "Boquerón fresco",
+            "limpio"
+          ],
+          [
+            "200ml",
+            "Vinagre Jerez",
+            ""
+          ],
+          [
+            "10g",
+            "Sal gorda",
+            ""
+          ],
+          [
+            "3 dientes",
+            "Ajo",
+            ""
+          ],
+          [
+            "20g",
+            "Perejil",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Limpiar y abrir en libro",
+          "Macerar 2h en vinagre y sal",
+          "Escurrir y cubrir con AOVE"
+        ]
+      },
+      {
+        "n": "Ensalada del Huerto con Queso Payoyo",
+        "e": "🥗",
+        "g": "g4",
+        "sub": "Brotes tiernos y queso de cabra",
+        "prep": 10,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 3.4,
+        "alergen": "Lácteos",
+        "ing": [
+          [
+            "80g",
+            "Brotes tiernos",
+            ""
+          ],
+          [
+            "60g",
+            "Queso Payoyo",
+            "en dados"
+          ],
+          [
+            "1ud",
+            "Aguacate",
+            ""
+          ],
+          [
+            "30ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "10ml",
+            "Vinagre Jerez",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Disponer brotes",
+          "Añadir queso y aguacate",
+          "Aliñar al servir"
+        ]
+      },
+      {
+        "n": "Carpaccio de Gamba Roja",
+        "e": "🦐",
+        "g": "g1",
+        "sub": "Gamba roja de Málaga con sal Maldon",
+        "prep": 15,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 8.2,
+        "alergen": "Crustáceos",
+        "ing": [
+          [
+            "120g",
+            "Gamba roja",
+            "pelada cruda"
+          ],
+          [
+            "30ml",
+            "AOVE",
+            ""
+          ],
+          [
+            "Sal Maldon",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Aplastar gambas entre film",
+          "Disponer en plato frío",
+          "Aliñar con AOVE y sal"
+        ]
+      },
+      {
+        "n": "Tartar de Atún Rojo con Yuzu",
+        "e": "🐟",
+        "g": "g3",
+        "sub": "Atún rojo del estrecho marcado",
+        "prep": 15,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 7.8,
+        "alergen": "Pescado, Soja, Sésamo",
+        "ing": [
+          [
+            "150g",
+            "Atún rojo fresco",
+            ""
+          ],
+          [
+            "10ml",
+            "Yuzu",
+            ""
+          ],
+          [
+            "20ml",
+            "Soja",
+            ""
+          ],
+          [
+            "Cebollino",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Picar atún a cuchillo",
+          "Marinar con yuzu y soja",
+          "Servir en plato frío"
+        ]
+      }
+    ],
+    "primeros": [
+      {
+        "n": "Arroz Negro con Sepia",
+        "e": "🦑",
+        "g": "g9",
+        "sub": "Tinta de calamar con alioli",
+        "prep": 20,
+        "coc": 35,
+        "rac": 2,
+        "dif": "Media",
+        "mp": 4.2,
+        "alergen": "Moluscos, Huevo",
+        "ing": [
+          [
+            "360g",
+            "Arroz bomba",
+            ""
+          ],
+          [
+            "400g",
+            "Sepia",
+            ""
+          ],
+          [
+            "4 sobres",
+            "Tinta calamar",
+            ""
+          ],
+          [
+            "1L",
+            "Fumet",
+            ""
+          ],
+          [
+            "Alioli",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sofreír cebolla y sepia",
+          "Añadir tinta y arroz",
+          "Cubrir con fumet · 18 min",
+          "Servir con alioli"
+        ]
+      },
+      {
+        "n": "Arroz Cremoso de Erizo y Gamba",
+        "e": "🍚",
+        "g": "g1",
+        "sub": "Carnaroli con erizo de mar",
+        "prep": 25,
+        "coc": 25,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 12,
+        "alergen": "Crustáceos, Moluscos, Lácteos",
+        "ing": [
+          [
+            "180g",
+            "Arroz carnaroli",
+            ""
+          ],
+          [
+            "80g",
+            "Erizo de mar",
+            ""
+          ],
+          [
+            "100g",
+            "Gamba roja",
+            "colas"
+          ],
+          [
+            "600ml",
+            "Fumet concentrado",
+            ""
+          ],
+          [
+            "40g",
+            "Mantequilla fría",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Nacarar arroz en mantequilla",
+          "Mojar con fumet caliente · 16 min",
+          "Mantecar con erizo en frío",
+          "Coronar con gamba"
+        ]
+      },
+      {
+        "n": "Paella Valenciana",
+        "e": "🥘",
+        "g": "g7",
+        "sub": "Tradicional con pollo y conejo",
+        "prep": 20,
+        "coc": 40,
+        "rac": 2,
+        "dif": "Media",
+        "mp": 3.8,
+        "alergen": "Ninguno",
+        "ing": [
+          [
+            "400g",
+            "Arroz bomba",
+            ""
+          ],
+          [
+            "400g",
+            "Pollo",
+            ""
+          ],
+          [
+            "300g",
+            "Conejo",
+            ""
+          ],
+          [
+            "150g",
+            "Judía ferraura",
+            ""
+          ],
+          [
+            "100g",
+            "Garrofón",
+            ""
+          ],
+          [
+            "1.2L",
+            "Caldo pollo",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Dorar pollo y conejo",
+          "Sofrito con tomate",
+          "Añadir arroz y caldo",
+          "18 min sin remover"
+        ]
+      },
+      {
+        "n": "Sopa Fría de Melón con Jamón",
+        "e": "🍈",
+        "g": "g6",
+        "sub": "Refrescante con menta",
+        "prep": 10,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 1.4,
+        "alergen": "Cerdo",
+        "ing": [
+          [
+            "400g",
+            "Melón",
+            ""
+          ],
+          [
+            "30g",
+            "Jamón ibérico",
+            ""
+          ],
+          [
+            "Menta fresca",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Triturar melón con menta",
+          "Refrigerar 2h",
+          "Servir con jamón"
+        ]
+      },
+      {
+        "n": "Crema de Calabaza y Coco",
+        "e": "🎃",
+        "g": "g2",
+        "sub": "Aterciopelada con jengibre",
+        "prep": 10,
+        "coc": 40,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 1.6,
+        "alergen": "Lácteos",
+        "ing": [
+          [
+            "400g",
+            "Calabaza",
+            ""
+          ],
+          [
+            "100ml",
+            "Leche coco",
+            ""
+          ],
+          [
+            "10g",
+            "Jengibre",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Asar calabaza 30 min a 200°C",
+          "Triturar con leche de coco",
+          "Servir caliente con AOVE"
+        ]
+      }
+    ],
+    "segundos": [
+      {
+        "n": "Lubina a la Sal",
+        "e": "🐠",
+        "g": "g3",
+        "sub": "Ritual de apertura en mesa",
+        "prep": 10,
+        "coc": 25,
+        "rac": 2,
+        "dif": "Baja",
+        "mp": 6.5,
+        "alergen": "Pescado, Huevo",
+        "ing": [
+          [
+            "1ud",
+            "Lubina 600g",
+            ""
+          ],
+          [
+            "2kg",
+            "Sal gruesa",
+            ""
+          ],
+          [
+            "2 claras",
+            "Huevo",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Mezclar sal con claras",
+          "Cubrir lubina con sal",
+          "Hornear 22 min a 220°C"
+        ]
+      },
+      {
+        "n": "Carabinero a la Brasa",
+        "e": "🦞",
+        "g": "g1",
+        "sub": "Beurre blanc y limón",
+        "prep": 8,
+        "coc": 5,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 14.5,
+        "alergen": "Crustáceos, Lácteos",
+        "ing": [
+          [
+            "2 ud",
+            "Carabinero",
+            ""
+          ],
+          [
+            "40g",
+            "Mantequilla fría",
+            ""
+          ],
+          [
+            "1 ud",
+            "Limón",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Asar a brasa 2 min por cara",
+          "Salsear con beurre blanc"
+        ]
+      },
+      {
+        "n": "Solomillo de Ternera Ibérica",
+        "e": "🥩",
+        "g": "g1",
+        "sub": "Con AOVE Hojiblanca",
+        "prep": 10,
+        "coc": 8,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 9.8,
+        "alergen": "Lácteos, Sulfitos",
+        "ing": [
+          [
+            "220g",
+            "Solomillo",
+            ""
+          ],
+          [
+            "80g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "Sal Maldon",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Sellar 2 min por cara",
+          "Reposar 3 min",
+          "Cortar y aliñar con AOVE"
+        ]
+      },
+      {
+        "n": "Pichón Asado con Cereza",
+        "e": "🦃",
+        "g": "g7",
+        "sub": "Salsa de cereza y remolacha asada",
+        "prep": 15,
+        "coc": 25,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 8,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "1 ud",
+            "Pichón",
+            ""
+          ],
+          [
+            "100g",
+            "Cereza",
+            ""
+          ],
+          [
+            "1 ud",
+            "Remolacha",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Asar pichón 20 min a 180°C",
+          "Salsa reducción de cereza",
+          "Servir con remolacha asada"
+        ]
+      },
+      {
+        "n": "Secreto Ibérico con Verduras",
+        "e": "🐷",
+        "g": "g7",
+        "sub": "A la brasa con verduras de temporada",
+        "prep": 8,
+        "coc": 10,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 5.6,
+        "alergen": "Ninguno",
+        "ing": [
+          [
+            "250g",
+            "Secreto ibérico",
+            ""
+          ],
+          [
+            "200g",
+            "Verduras temporada",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Asar secreto 4 min por cara",
+          "Asar verduras a la brasa",
+          "Servir conjuntamente"
+        ]
+      }
+    ],
+    "postres": [
+      {
+        "n": "Tarta de Queso La Viña",
+        "e": "🧀",
+        "g": "g2",
+        "sub": "Cremosa al estilo San Sebastián",
+        "prep": 15,
+        "coc": 45,
+        "rac": 6,
+        "dif": "Baja",
+        "mp": 1.6,
+        "alergen": "Lácteos, Huevo, Gluten",
+        "ing": [
+          [
+            "600g",
+            "Queso crema",
+            ""
+          ],
+          [
+            "200ml",
+            "Nata 35%",
+            ""
+          ],
+          [
+            "4 ud",
+            "Huevo",
+            ""
+          ],
+          [
+            "180g",
+            "Azúcar",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Batir todo",
+          "Hornear 40 min a 220°C",
+          "Enfriar y refrigerar 4h"
+        ]
+      },
+      {
+        "n": "Coulant de Chocolate",
+        "e": "🍫",
+        "g": "g5",
+        "sub": "Con helado de leche merengada",
+        "prep": 20,
+        "coc": 12,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 1.8,
+        "alergen": "Lácteos, Huevo, Gluten",
+        "ing": [
+          [
+            "100g",
+            "Chocolate 70%",
+            ""
+          ],
+          [
+            "80g",
+            "Mantequilla",
+            ""
+          ],
+          [
+            "2 ud",
+            "Huevo",
+            ""
+          ],
+          [
+            "Helado de leche merengada",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Fundir chocolate con mantequilla",
+          "Mezclar con huevos batidos",
+          "Hornear 12 min a 200°C"
+        ]
+      },
+      {
+        "n": "Crema Catalana Flameada",
+        "e": "🍮",
+        "g": "g7",
+        "sub": "Con costra de azúcar caramelizado",
+        "prep": 15,
+        "coc": 15,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 1.2,
+        "alergen": "Lácteos, Huevo, Gluten",
+        "ing": [
+          [
+            "4 yemas",
+            "Huevo",
+            ""
+          ],
+          [
+            "100g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "600ml",
+            "Leche",
+            ""
+          ],
+          [
+            "1 rama",
+            "Canela",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Infusionar leche con canela",
+          "Mezclar con yemas y azúcar",
+          "Espesar al fuego",
+          "Caramelizar al servir"
+        ]
+      },
+      {
+        "n": "Sorbete de Limón",
+        "e": "🍋",
+        "g": "g0",
+        "sub": "Artesano con piel rallada",
+        "prep": 10,
+        "coc": 0,
+        "rac": 2,
+        "dif": "Baja",
+        "mp": 0.9,
+        "alergen": "Ninguno",
+        "ing": [
+          [
+            "200ml",
+            "Zumo limón",
+            ""
+          ],
+          [
+            "100g",
+            "Azúcar",
+            ""
+          ],
+          [
+            "200ml",
+            "Agua",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Almíbar con agua y azúcar",
+          "Mezclar con zumo",
+          "Congelar removiendo cada 30 min"
+        ]
+      },
+      {
+        "n": "Texturas de Chocolate",
+        "e": "🍫",
+        "g": "g5",
+        "sub": "Mousse + ganache + cremoso",
+        "prep": 30,
+        "coc": 10,
+        "rac": 1,
+        "dif": "Alta",
+        "mp": 2.2,
+        "alergen": "Lácteos, Huevo, Gluten, Frutos secos",
+        "ing": [
+          [
+            "150g",
+            "Chocolate 70%",
+            ""
+          ],
+          [
+            "200ml",
+            "Nata",
+            ""
+          ],
+          [
+            "Avellana picada",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Tres preparaciones: mousse, ganache, cremoso",
+          "Montar en plato",
+          "Decorar con avellana"
+        ]
+      }
+    ],
+    "coctel": [
+      {
+        "n": "Tartar de Atún en Cucurucho",
+        "e": "🐟",
+        "g": "g3",
+        "sub": "Cucurucho crujiente de nori",
+        "prep": 15,
+        "coc": 0,
+        "rac": 20,
+        "dif": "Media",
+        "mp": 0.75,
+        "alergen": "Pescado, Soja",
+        "ing": [
+          [
+            "200g",
+            "Atún rojo",
+            ""
+          ],
+          [
+            "20 ud",
+            "Cucurucho nori",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Picar atún",
+          "Marinar con soja y sésamo",
+          "Rellenar cucuruchos"
+        ]
+      },
+      {
+        "n": "Buñuelo de Bacalao",
+        "e": "🐟",
+        "g": "g6",
+        "sub": "Crujiente por fuera · cremoso dentro",
+        "prep": 20,
+        "coc": 8,
+        "rac": 20,
+        "dif": "Media",
+        "mp": 0.4,
+        "alergen": "Pescado, Gluten",
+        "ing": [
+          [
+            "200g",
+            "Bacalao desalado",
+            ""
+          ],
+          [
+            "100g",
+            "Patata cocida",
+            ""
+          ],
+          [
+            "60g",
+            "Harina",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Triturar bacalao con patata",
+          "Formar buñuelos",
+          "Freír a 180°C · 3 min"
+        ]
+      },
+      {
+        "n": "Mini Brioche de Secreto",
+        "e": "🥖",
+        "g": "g5",
+        "sub": "Pulled secreto ibérico",
+        "prep": 20,
+        "coc": 0,
+        "rac": 20,
+        "dif": "Baja",
+        "mp": 0.6,
+        "alergen": "Gluten, Lácteos",
+        "ing": [
+          [
+            "20 ud",
+            "Mini brioche",
+            ""
+          ],
+          [
+            "200g",
+            "Secreto ibérico cocinado",
+            ""
+          ]
+        ],
+        "pasos": [
+          "Calentar brioches 2 min",
+          "Rellenar con secreto desmenuzado"
+        ]
+      }
+    ]
+  }
+}

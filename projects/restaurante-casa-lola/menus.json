@@ -1,0 +1,323 @@
+{
+  "paquetes": [
+    {
+      "id": "mar_eco",
+      "name": "Menú del Mar Esencial",
+      "ppax": 32,
+      "type": "sentado",
+      "badge": "badge-eco",
+      "icon": "🐟",
+      "desc": "Pescado del día + arroz seco + postre artesano",
+      "incl": "Pan · Agua · Vino casa",
+      "g": "g4",
+      "img": "plt:entrantes/gazpacho_andaluz.jpg",
+      "composition": {
+        "Entrante": [
+          "Salmorejo de tomate de la huerta",
+          "Ensalada del huerto con queso payoyo"
+        ],
+        "Principal": [
+          "Pescado del día con verduras al horno",
+          "Arroz seco de calabaza y secreto"
+        ],
+        "Postre": [
+          "Tarta de queso La Viña",
+          "Sorbete de limón"
+        ],
+        "Bodega": [
+          "Vino blanco DO Málaga",
+          "Vino tinto Ribera",
+          "Agua · Refrescos"
+        ]
+      }
+    },
+    {
+      "id": "mar_lol",
+      "name": "Menú Lola",
+      "ppax": 48,
+      "type": "sentado",
+      "badge": "badge-est",
+      "icon": "🌊",
+      "desc": "Selección de la chef · 3 entrantes + principal + postre",
+      "incl": "Pan · Agua · Maridaje básico",
+      "g": "g6",
+      "img": "plt:primeros/paella_valenciana.jpg",
+      "composition": {
+        "Aperitivo": [
+          "Aceitunas maceradas con piel cítrica",
+          "Tosta de tomate aliñado y atún"
+        ],
+        "Entrantes (a compartir)": [
+          "Boquerones en vinagre",
+          "Tartar de atún con aguacate",
+          "Croqueta de gamba roja"
+        ],
+        "Principales (1 a elegir)": [
+          "Arroz negro con sepia y alioli",
+          "Lubina a la sal · ración para compartir",
+          "Solomillo con AOVE Hojiblanca"
+        ],
+        "Postre": [
+          "Coulant de chocolate con helado de leche merengada",
+          "Crema catalana flameada en mesa"
+        ],
+        "Bodega": [
+          "Albariño DO Rías Baixas",
+          "Bentomiz Ariyanas DO Málaga",
+          "Rioja Crianza"
+        ]
+      }
+    },
+    {
+      "id": "mar_lux",
+      "name": "Menú Degustación 8 pasos",
+      "ppax": 75,
+      "type": "sentado",
+      "badge": "badge-lux",
+      "icon": "👑",
+      "desc": "Degustación + 6 maridajes",
+      "incl": "Maridaje · Sumiller · Café de origen",
+      "g": "g8",
+      "img": "plt:segundos/solomillo_rioja.jpg",
+      "composition": {
+        "Snacks": [
+          "Buñuelo de bacalao",
+          "Aceituna esférica",
+          "Cracker de pan tumaca"
+        ],
+        "Paso 1": [
+          "Tartar de atún rojo con yuzu"
+        ],
+        "Paso 2": [
+          "Sopa fría de melón con jamón ibérico"
+        ],
+        "Paso 3": [
+          "Carabinero a la brasa con beurre blanc"
+        ],
+        "Paso 4": [
+          "Arroz cremoso de erizo y gamba"
+        ],
+        "Paso 5": [
+          "Pichón asado con remolacha y salsa de cereza"
+        ],
+        "Paso 6": [
+          "Quesos de la sierra · maridaje generoso"
+        ],
+        "Paso 7": [
+          "Pre-postre · sorbete de albahaca"
+        ],
+        "Paso 8": [
+          "Texturas de chocolate y avellana"
+        ],
+        "Maridaje (6 vinos)": [
+          "Cava brut · Albariño · Verdejo · Rioja · PX · Mistela"
+        ]
+      }
+    },
+    {
+      "id": "ck_lola",
+      "name": "Cóctel Lola",
+      "ppax": 22,
+      "type": "coctel",
+      "badge": "badge-est",
+      "icon": "🍾",
+      "desc": "2h · 6 pinchos fríos · 4 calientes · barra de vinos del sur",
+      "incl": "Bartender · Cristalería",
+      "g": "g7",
+      "img": "evt:coctel.jpg",
+      "composition": {
+        "Duración y formato": [
+          "2 horas",
+          "De pie con mesas altas"
+        ],
+        "6 pinchos fríos": [
+          "Tartar de atún",
+          "Boquerón en vinagre con piparra",
+          "Brocheta manchego + uva",
+          "Carpaccio de gamba",
+          "Vasito de salmorejo",
+          "Aceituna esférica"
+        ],
+        "4 calientes": [
+          "Croqueta de gamba",
+          "Buñuelo de bacalao",
+          "Mini brioche de secreto",
+          "Tempura de verduras"
+        ],
+        "Bodega": [
+          "Albariño",
+          "Bentomiz DO Málaga",
+          "Cava brut",
+          "Refrescos premium"
+        ]
+      }
+    },
+    {
+      "id": "bru_med",
+      "name": "Brunch Mediterráneo",
+      "ppax": 28,
+      "type": "brunch",
+      "badge": "badge-est",
+      "icon": "🍳",
+      "desc": "Cava + huevos en estación + dulce y salado",
+      "incl": "Cava brut · Café especialidad · Smoothies",
+      "g": "g6",
+      "img": "evt:aniversario.jpg",
+      "composition": {
+        "Bebidas": [
+          "Cava brut continuo",
+          "Café · Tés Mariage",
+          "Zumos prensados en frío",
+          "Mimosa"
+        ],
+        "Estaciones": [
+          "Eggs Benedict",
+          "Tortillas a la carta",
+          "Pancakes con sirope"
+        ],
+        "Salado": [
+          "Salmón ahumado",
+          "Embutidos ibéricos",
+          "Tabla de quesos"
+        ],
+        "Dulce": [
+          "Croissants",
+          "Tartaletas frutos rojos",
+          "Bowl yogur granola"
+        ]
+      }
+    },
+    {
+      "id": "des_eje",
+      "name": "Desayuno Ejecutivo",
+      "ppax": 14,
+      "type": "desayuno",
+      "scope": "empresa",
+      "badge": "badge-est",
+      "icon": "☕",
+      "desc": "45 min · Self-service buffet con estación de huevos",
+      "incl": "Café especialidad · Zumos · Bollería",
+      "g": "g4",
+      "img": "plt:postres/torrijas_caramelizadas.jpg",
+      "composition": {
+        "Bebidas": [
+          "Café · Descafeinado · Cápsulas",
+          "Tés y infusiones",
+          "Zumo naranja natural"
+        ],
+        "Salado": [
+          "Tortilla francesa al momento",
+          "Bacon · Salchicha"
+        ],
+        "Dulce": [
+          "Bollería viennoise",
+          "Tostadas con AOVE y tomate",
+          "Fruta de temporada"
+        ]
+      }
+    },
+    {
+      "id": "cb_eje",
+      "name": "Coffee Break Casa Lola",
+      "ppax": 11,
+      "type": "coffee",
+      "scope": "empresa",
+      "badge": "badge-eco",
+      "icon": "🥯",
+      "desc": "30 min · Café + mini bocados dulces y salados",
+      "incl": "Reposición continua",
+      "g": "g4",
+      "img": "plt:postres/coulant_chocolate.jpg",
+      "composition": {
+        "Bebidas": [
+          "Café · Tés · Agua"
+        ],
+        "Salado": [
+          "Mini sandwiches gourmet",
+          "Quiche"
+        ],
+        "Dulce": [
+          "Mini magdalenas",
+          "Tartaletas"
+        ]
+      }
+    },
+    {
+      "id": "bl_eco",
+      "name": "Barra Casa Lola",
+      "ppax": 22,
+      "type": "barra_libre",
+      "badge": "badge-eco",
+      "icon": "🍺",
+      "desc": "3h · Cerveza · Vinos · Refrescos · Café",
+      "incl": "Camarero barra",
+      "g": "g6",
+      "img": "evt:coctel.jpg",
+      "composition": {
+        "Alcohólicas": [
+          "Cerveza Victoria · Cruzcampo",
+          "Vino tinto y blanco",
+          "Cava brut"
+        ],
+        "Sin alcohol": [
+          "Refrescos · Aguas con y sin gas",
+          "Zumos naturales"
+        ],
+        "Café": [
+          "Espresso · Descafeinado · Carajillo"
+        ]
+      }
+    },
+    {
+      "id": "mar_custom",
+      "name": "Menú a medida",
+      "ppax": 0,
+      "type": "sentado",
+      "badge": "badge-est",
+      "icon": "✏️",
+      "desc": "Configura tu menú con la chef en visita técnica",
+      "incl": "Personalizable",
+      "g": "g9",
+      "img": "plt:postres/tarta_queso_vina.jpg",
+      "composition": {
+        "Personalización completa": [
+          "La chef y tú diseñan el menú",
+          "Visita técnica al espacio"
+        ],
+        "Precio": [
+          "Calculado según ingredientes y elaboración"
+        ]
+      }
+    },
+    {
+      "id": "mar_glut",
+      "name": "Menú Sin Gluten",
+      "ppax": 42,
+      "type": "sentado",
+      "badge": "badge-pre",
+      "icon": "🌾",
+      "desc": "Cocina dedicada · Sin contaminación cruzada · 3 platos + postre",
+      "incl": "Pan SG · Cerveza sin gluten",
+      "g": "g4",
+      "img": "plt:entrantes/gazpacho_andaluz.jpg",
+      "composition": {
+        "Entrante SG": [
+          "Salmorejo cordobés sin pan",
+          "Ensalada del huerto"
+        ],
+        "Primero SG": [
+          "Arroz con verduras",
+          "Pescado del día al horno"
+        ],
+        "Postre SG": [
+          "Crema catalana",
+          "Sorbete"
+        ],
+        "Garantías": [
+          "Cocina dedicada protocolo APPCC",
+          "Personal formado en alergias"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "restaurante-casa-lola",
+  "slug": "restaurante-casa-lola",
+  "nombre": "Restaurante Casa Lola",
+  "categoria_establecimiento": "restaurante",
+  "es_piloto": false,
+  "es_template": false,
+  "locale": "es-ES",
+  "moneda": "EUR",
+  "tema": "mediterraneo",
+  "version_schema": "1.0.0",
+  "creado": "2026-04-15"
+}

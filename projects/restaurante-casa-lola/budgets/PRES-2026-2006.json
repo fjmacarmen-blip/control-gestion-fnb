@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2006",
+  "generado": "2026-05-20T16:00:00Z",
+  "fechaEvento": "2026-06-15",
+  "horaInicio": "20:30",
+  "horaFin": "02:00",
+  "clientName": "Banco Andalucía · Junta directiva",
+  "eventType": {
+    "id": "boda",
+    "name": "Boda íntima",
+    "category": "celebracion"
+  },
+  "menuPkg": {
+    "id": "mar_lol",
+    "name": "Menú Lola",
+    "ppax": 48
+  },
+  "espacio": "reservado_bodega",
+  "pt": 46,
+  "pn": 38,
+  "pi": 8,
+  "total": 1824,
+  "iva": 182,
+  "totalConIva": 2006,
+  "senial": 301,
+  "estado": "confirmado",
+  "dietas": {
+    "vegano": 3,
+    "vegetariano": 0,
+    "celiaco": 0,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}

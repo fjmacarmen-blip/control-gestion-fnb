@@ -1,0 +1,72 @@
+{
+  "categorias": [
+    {
+      "id": "celebracion",
+      "icon": "🎉",
+      "name": "Celebraciones privadas",
+      "desc": "Bodas íntimas, aniversarios, cumpleaños."
+    },
+    {
+      "id": "empresa",
+      "icon": "🏢",
+      "name": "Empresa",
+      "desc": "Cenas de equipo, presentaciones, comidas de negocio."
+    }
+  ],
+  "tipos": [
+    {
+      "id": "boda",
+      "category": "celebracion",
+      "icon": "💍",
+      "name": "Boda íntima",
+      "desc": "Banquete hasta 80 pax con cocina en directo",
+      "badge": "badge-pre",
+      "img": "boda.jpg"
+    },
+    {
+      "id": "aniv",
+      "category": "celebracion",
+      "icon": "🥂",
+      "name": "Aniversario",
+      "desc": "Cena especial con maridaje",
+      "badge": "badge-est",
+      "img": "aniversario.jpg"
+    },
+    {
+      "id": "cumple",
+      "category": "celebracion",
+      "icon": "🎂",
+      "name": "Cumpleaños",
+      "desc": "Menú degustación + tarta",
+      "badge": "badge-eco",
+      "img": "cumpleanos.jpg"
+    },
+    {
+      "id": "cena_negocios",
+      "category": "empresa",
+      "icon": "🤝",
+      "name": "Cena de negocios",
+      "desc": "Reservado privado + menú gastronómico",
+      "badge": "badge-pre",
+      "img": "reunion_directiva.jpg"
+    },
+    {
+      "id": "team",
+      "category": "empresa",
+      "icon": "🎯",
+      "name": "Equipo",
+      "desc": "Comida o cena de empresa hasta 100",
+      "badge": "badge-est",
+      "img": "team_building.jpg"
+    },
+    {
+      "id": "gala",
+      "category": "empresa",
+      "icon": "🎁",
+      "name": "Gala anual",
+      "desc": "Cena de gala con cóctel + menú",
+      "badge": "badge-lux",
+      "img": "gala_corporativa.jpg"
+    }
+  ]
+}

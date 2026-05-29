@@ -1,0 +1,113 @@
+{
+  "_README": "Manifest de presupuestos demo Casa Lola.",
+  "presupuestos": [
+    {
+      "ref": "PRES-2026-2000",
+      "fechaEvento": "2026-03-17",
+      "eventType": "boda",
+      "espacio": "chefs_table",
+      "pt": 66,
+      "totalConIva": 2042,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-2001",
+      "fechaEvento": "2026-04-03",
+      "eventType": "aniv",
+      "espacio": "chefs_table",
+      "pt": 33,
+      "totalConIva": 653,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-2002",
+      "fechaEvento": "2026-04-20",
+      "eventType": "cumple",
+      "espacio": "reservado_bodega",
+      "pt": 26,
+      "totalConIva": 278,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-2003",
+      "fechaEvento": "2026-05-06",
+      "eventType": "cena_negocios",
+      "espacio": "terraza_mar",
+      "pt": 44,
+      "totalConIva": 847,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-2004",
+      "fechaEvento": "2026-05-20",
+      "eventType": "team",
+      "espacio": "patio_jardin",
+      "pt": 40,
+      "totalConIva": 585,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-2005",
+      "fechaEvento": "2026-06-03",
+      "eventType": "gala",
+      "espacio": "terraza_mar",
+      "pt": 33,
+      "totalConIva": 678,
+      "estado": "borrador"
+    },
+    {
+      "ref": "PRES-2026-2006",
+      "fechaEvento": "2026-06-15",
+      "eventType": "boda",
+      "espacio": "reservado_bodega",
+      "pt": 46,
+      "totalConIva": 2006,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-2007",
+      "fechaEvento": "2026-06-25",
+      "eventType": "aniv",
+      "espacio": "reservado_bodega",
+      "pt": 30,
+      "totalConIva": 739,
+      "estado": "borrador"
+    },
+    {
+      "ref": "PRES-2026-2008",
+      "fechaEvento": "2026-07-08",
+      "eventType": "cumple",
+      "espacio": "reservado_bodega",
+      "pt": 49,
+      "totalConIva": 1113,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-2009",
+      "fechaEvento": "2026-07-22",
+      "eventType": "cena_negocios",
+      "espacio": "chefs_table",
+      "pt": 82,
+      "totalConIva": 6023,
+      "estado": "confirmado"
+    },
+    {
+      "ref": "PRES-2026-2010",
+      "fechaEvento": "2026-08-06",
+      "eventType": "team",
+      "espacio": "patio_jardin",
+      "pt": 50,
+      "totalConIva": 3795,
+      "estado": "borrador"
+    },
+    {
+      "ref": "PRES-2026-2011",
+      "fechaEvento": "2026-08-20",
+      "eventType": "gala",
+      "espacio": "patio_jardin",
+      "pt": 96,
+      "totalConIva": 4112,
+      "estado": "borrador"
+    }
+  ]
+}

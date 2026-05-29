@@ -1,0 +1,36 @@
+{
+  "ref": "PRES-2026-2011",
+  "generado": "2026-07-19T10:00:00Z",
+  "fechaEvento": "2026-08-20",
+  "horaInicio": "13:00",
+  "horaFin": "17:00",
+  "clientName": "Aniversario Plata",
+  "eventType": {
+    "id": "gala",
+    "name": "Gala anual",
+    "category": "empresa"
+  },
+  "menuPkg": {
+    "id": "mar_glut",
+    "name": "Menú Sin Gluten",
+    "ppax": 42
+  },
+  "espacio": "patio_jardin",
+  "pt": 96,
+  "pn": 89,
+  "pi": 7,
+  "total": 3738,
+  "iva": 374,
+  "totalConIva": 4112,
+  "senial": 0,
+  "estado": "borrador",
+  "dietas": {
+    "vegano": 2,
+    "vegetariano": 0,
+    "celiaco": 2,
+    "sinLactosa": 0,
+    "sinFrutos": 0,
+    "halal": 0,
+    "kosher": 0
+  }
+}
