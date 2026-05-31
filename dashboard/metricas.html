@@ -147,10 +147,160 @@
   .empty .icon { font-size: 42px; margin-bottom: 10px; opacity: .6; }
   .hidden { display: none !important; }
 
+  /* ─── Calendario (v5.6) ─────────────────────────── */
+  .cal-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .cal-nav { display: flex; align-items: center; gap: 6px; }
+  .cal-btn {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text);
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    font: 600 16px/1 var(--font-ui);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .cal-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .cal-btn.cal-today { width: auto; padding: 0 14px; font-size: 12px; }
+  .cal-select {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text);
+    padding: 7px 12px;
+    border-radius: 8px;
+    font: 500 12px/1 var(--font-ui);
+  }
+  .cal-legend {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    font-size: 11px; color: var(--text-muted);
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-default);
+  }
+  .cal-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+  .cal-legend-dot {
+    width: 10px; height: 10px; border-radius: 3px;
+    display: inline-block;
+  }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    background: var(--border-default);
+    padding: 1px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .cal-dow {
+    background: var(--bg-elevated);
+    text-align: center;
+    padding: 8px 4px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .cal-cell {
+    background: var(--bg-surface);
+    min-height: 84px;
+    padding: 6px 8px;
+    display: flex; flex-direction: column;
+    gap: 3px;
+    cursor: default;
+    position: relative;
+  }
+  .cal-cell.has-events { cursor: pointer; }
+  .cal-cell.has-events:hover { background: var(--bg-elevated); }
+  .cal-cell.out-month { opacity: .4; }
+  .cal-cell.is-today { background: rgba(52,211,153,.08); border: 1px solid var(--accent); padding: 5px 7px; }
+  .cal-cell.is-past .cal-day-num { opacity: .5; }
+  .cal-day-num {
+    font-size: 13px; font-weight: 500; color: var(--text);
+    margin-bottom: 2px;
+  }
+  .cal-cell.is-today .cal-day-num { color: var(--accent); font-weight: 700; }
+  .cal-event-pill {
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    color: var(--bg-base);
+    font-size: 9px; font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 3px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    line-height: 1.3;
+  }
+  .cal-event-pill.draft { background: var(--border-strong); color: var(--text); opacity: .7; }
+  .cal-event-more { font-size: 9px; color: var(--text-muted); padding: 1px 3px; }
+  .cal-cell.has-conflict { background: rgba(248,81,73,.08); }
+  .cal-hint {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 12px; text-align: center;
+  }
+
+  /* Modal detalle de día */
+  .cal-modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(10,12,20,.85);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .cal-modal-overlay.open { display: flex; }
+  .cal-modal {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 14px;
+    width: 100%; max-width: 580px;
+    max-height: 80vh;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .cal-modal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border-default);
+  }
+  .cal-modal-head h3 { font-size: 16px; text-transform: capitalize; }
+  .cal-modal-body { padding: 18px 22px; overflow-y: auto; }
+  .cal-modal-event {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .cal-modal-event.draft { border-left-color: var(--text-muted); opacity: .8; }
+  .cal-modal-event-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 4px;
+  }
+  .cal-modal-event-ref {
+    font-family: var(--font-mono); font-size: 10px;
+    background: var(--bg-base); padding: 2px 7px; border-radius: 4px;
+    color: var(--accent);
+  }
+  .cal-modal-event-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .cal-modal-event-meta { font-size: 12px; color: var(--text-soft); margin-top: 6px; line-height: 1.6; }
+  .cal-modal-empty {
+    text-align: center; padding: 30px 20px;
+    color: var(--text-muted); font-size: 13px;
+  }
+
   @media (max-width: 720px) {
     .agenda-row { grid-template-columns: 1fr; gap: 6px; }
     .agenda-pax, .agenda-amount { text-align: left; }
     .head { flex-direction: column; align-items: flex-start; }
+    .cal-cell { min-height: 60px; padding: 4px 5px; }
+    .cal-day-num { font-size: 11px; }
+    .cal-event-pill { font-size: 8px; padding: 1px 3px; }
+    .cal-toolbar { flex-direction: column; align-items: stretch; }
   }
 </style>
 </head>
@@ -183,6 +333,7 @@
   <div class="tabs">
     <div class="tab active" data-tab="presupuestos">📋 Presupuestos</div>
     <div class="tab" data-tab="agenda">📅 Agenda · próximos eventos</div>
+    <div class="tab" data-tab="calendario">🗓️ Calendario · disponibilidad</div>
   </div>
 
   <!-- TAB · PRESUPUESTOS -->
@@ -225,6 +376,40 @@
     </div>
   </div>
 
+  <!-- TAB · CALENDARIO (v5.6) -->
+  <div data-content="calendario" class="hidden">
+    <div class="card-block">
+      <div class="cal-toolbar">
+        <div class="cal-nav">
+          <button class="cal-btn" id="calPrev" aria-label="Mes anterior">‹</button>
+          <h3 id="calMonth" style="margin:0;font-size:18px;min-width:200px;text-align:center;text-transform:capitalize;">—</h3>
+          <button class="cal-btn" id="calNext" aria-label="Mes siguiente">›</button>
+          <button class="cal-btn cal-today" id="calToday">Hoy</button>
+        </div>
+        <div class="cal-filter">
+          <label style="font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);margin-right:8px;">Espacio:</label>
+          <select id="calSpaceFilter" class="cal-select">
+            <option value="all">Todos los espacios</option>
+          </select>
+        </div>
+      </div>
+      <div class="cal-legend" id="calLegend"></div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-hint">Pulsa un día con eventos para ver detalles.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ───── Modal detalle de día (v5.6) ────────────── -->
+<div class="cal-modal-overlay" id="calDayOverlay" onclick="closeCalDay(event)">
+  <div class="cal-modal" id="calDayModal" onclick="event.stopPropagation()">
+    <div class="cal-modal-head">
+      <h3 id="calDayTitle">—</h3>
+      <button class="cal-btn" onclick="closeCalDay()">✕</button>
+    </div>
+    <div class="cal-modal-body" id="calDayBody"></div>
+  </div>
 </div>
 
 <!-- Dependencias -->
@@ -284,8 +469,17 @@ $$('.tab').forEach(t => t.addEventListener('click', () => {
   state.budgets = await window.fnbMetrics.loadBudgets(PROJECT_ID);
   state.summary = window.fnbMetrics.summarizeBudgets(state.budgets);
 
+  // Cargar establecimiento para listar espacios disponibles
+  try {
+    const est = await fetch('../projects/' + PROJECT_ID + '/establecimiento.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null);
+    state.espacios = (est && est.espacios) || [];
+  } catch (e) {
+    state.espacios = [];
+  }
+
   renderPresupuestos();
   renderAgenda();
+  initCalendario();   // v5.6
 })();
 
 function renderPresupuestos() {
@@ -453,6 +647,143 @@ function renderAgenda() {
       </div>
     `).join('');
   }
+}
+
+// ══════════════════════════════════════════════════
+// v5.6 · Calendario y disponibilidad
+// ══════════════════════════════════════════════════
+let calCursor = new Date();
+calCursor.setDate(1);
+let calFilter = 'all';
+
+function initCalendario() {
+  // Llenar selector de espacios
+  const sel = $('#calSpaceFilter');
+  sel.innerHTML = '<option value="all">Todos los espacios</option>' +
+    state.espacios.map(e => '<option value="' + escapeHtml(e.id) + '">' + escapeHtml(e.nombre || e.id) + '</option>').join('');
+
+  // Leyenda con colores por espacio
+  const palette = ['#34d399', '#a78bfa', '#fbbf24', '#3b82f6', '#ec4899', '#22d3ee', '#f97316', '#8b5cf6'];
+  state.spaceColors = {};
+  state.espacios.forEach((e, i) => { state.spaceColors[e.id] = palette[i % palette.length]; });
+  const legendItems = [
+    '<span class="cal-legend-item"><span class="cal-legend-dot" style="background:var(--accent);"></span>Hoy</span>',
+    '<span class="cal-legend-item"><span class="cal-legend-dot" style="background:rgba(248,81,73,.6);"></span>Día ocupado</span>',
+    '<span class="cal-legend-item"><span class="cal-legend-dot" style="background:var(--border-strong);"></span>Borrador (no bloquea)</span>',
+  ];
+  $('#calLegend').innerHTML = legendItems.join('');
+
+  $('#calPrev').addEventListener('click', () => { calCursor.setMonth(calCursor.getMonth() - 1); renderCalendar(); });
+  $('#calNext').addEventListener('click', () => { calCursor.setMonth(calCursor.getMonth() + 1); renderCalendar(); });
+  $('#calToday').addEventListener('click', () => { calCursor = new Date(); calCursor.setDate(1); renderCalendar(); });
+  sel.addEventListener('change', () => { calFilter = sel.value; renderCalendar(); });
+
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const year = calCursor.getFullYear();
+  const month = calCursor.getMonth();
+  const filtered = calFilter === 'all'
+    ? state.budgets
+    : state.budgets.filter(b => b.espacio === calFilter);
+  const cal = window.fnbMetrics.buildMonthCalendar(year, month, filtered);
+  $('#calMonth').textContent = cal.monthName;
+
+  const dows = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+  let html = dows.map(d => '<div class="cal-dow">' + d + '</div>').join('');
+  cal.weeks.forEach(week => {
+    week.forEach(cell => {
+      const cls = [
+        'cal-cell',
+        cell.inMonth ? '' : 'out-month',
+        cell.isToday ? 'is-today' : '',
+        cell.isPast ? 'is-past' : '',
+        cell.events.length ? 'has-events' : '',
+        cell.events.length > 1 ? 'has-conflict' : '',
+      ].filter(Boolean).join(' ');
+
+      let pills = '';
+      const total = cell.events.length + cell.drafts.length;
+      const maxShow = 3;
+      cell.events.slice(0, maxShow).forEach(ev => {
+        const color = state.spaceColors[ev.espacio] || 'var(--accent)';
+        pills += '<div class="cal-event-pill" style="background:' + color + ';color:#0d1117;" title="' + escapeHtml(ev.clientName || '') + '">' + escapeHtml((ev.clientName || ev.ref || '').slice(0, 18)) + '</div>';
+      });
+      const draftsToShow = Math.max(0, maxShow - cell.events.length);
+      cell.drafts.slice(0, draftsToShow).forEach(d => {
+        pills += '<div class="cal-event-pill draft" title="borrador">' + escapeHtml((d.clientName || d.ref || '').slice(0, 18)) + '</div>';
+      });
+      if (total > maxShow) {
+        pills += '<div class="cal-event-more">+' + (total - maxShow) + ' más</div>';
+      }
+
+      html += '<div class="' + cls + '" data-iso="' + cell.iso + '">'
+        + '<div class="cal-day-num">' + cell.dayOfMonth + '</div>'
+        + pills
+        + '</div>';
+    });
+  });
+  $('#calGrid').innerHTML = html;
+
+  // Click handler para abrir modal de detalle
+  $$('#calGrid .cal-cell.has-events').forEach(cell => {
+    cell.addEventListener('click', () => openCalDay(cell.dataset.iso));
+  });
+}
+
+function openCalDay(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  const title = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  $('#calDayTitle').textContent = title;
+  const events = state.budgets.filter(b => b.fechaEvento === iso);
+  if (!events.length) {
+    $('#calDayBody').innerHTML = '<div class="cal-modal-empty">Sin eventos este día.</div>';
+  } else {
+    const confirmed = events.filter(e => e.estado === 'confirmado');
+    const drafts = events.filter(e => e.estado !== 'confirmado');
+    let html = '';
+    if (confirmed.length) {
+      html += '<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:600;">Confirmados (' + confirmed.length + ')</div>';
+      confirmed.forEach(e => html += renderEventDetail(e, false));
+    }
+    if (drafts.length) {
+      html += '<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin:14px 0 8px;font-weight:600;">Borradores (' + drafts.length + ')</div>';
+      drafts.forEach(e => html += renderEventDetail(e, true));
+    }
+    // Espacios libres ese día (informativo)
+    const ocupados = window.fnbMetrics.getOccupiedSpacesOnDate(iso, state.budgets);
+    const libres = state.espacios.filter(es => !ocupados.includes(es.id));
+    if (libres.length) {
+      html += '<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border-default);font-size:11px;color:var(--text-soft);">'
+        + '<strong style="color:var(--accent);">Espacios libres:</strong> '
+        + libres.map(l => escapeHtml(l.nombre || l.id)).join(' · ')
+        + '</div>';
+    }
+    $('#calDayBody').innerHTML = html;
+  }
+  $('#calDayOverlay').classList.add('open');
+}
+function closeCalDay(e) {
+  if (e && e.target && e.target.id !== 'calDayOverlay' && !e.currentTarget.classList.contains('cal-btn')) return;
+  $('#calDayOverlay').classList.remove('open');
+}
+window.closeCalDay = closeCalDay;
+
+function renderEventDetail(e, isDraft) {
+  const espacioName = (state.espacios.find(s => s.id === e.espacio) || {}).nombre || e.espacio || '—';
+  return '<div class="cal-modal-event' + (isDraft ? ' draft' : '') + '">'
+    + '<div class="cal-modal-event-head">'
+    + '<div class="cal-modal-event-name">' + escapeHtml(e.clientName || '—') + '</div>'
+    + '<span class="cal-modal-event-ref">' + escapeHtml(e.ref || '') + '</span>'
+    + '</div>'
+    + '<div class="cal-modal-event-meta">'
+    + (e.eventType ? escapeHtml(e.eventType.name) + ' · ' : '')
+    + (e.horaInicio ? e.horaInicio + (e.horaFin ? '-' + e.horaFin : '') + ' · ' : '')
+    + escapeHtml(espacioName) + ' · ' + (e.pt || 0) + ' pax'
+    + (e.totalConIva ? ' · <strong style="color:var(--accent);">' + window.fnbMetrics.formatEur(e.totalConIva) + '</strong>' : '')
+    + '</div>'
+    + '</div>';
 }
 
 // Toggle apariencia · v5.1 · i18n · v5.5

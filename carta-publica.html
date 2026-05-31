@@ -197,7 +197,14 @@
     <div class="hero-sub" id="heroSub"></div>
     <div class="hero-meta" id="heroMeta"></div>
     <div id="i18nSlotCarta" style="position:absolute;top:14px;right:14px;color:var(--text-soft);"></div>
+    <!-- v5.6 · link a disponibilidad -->
+    <div style="margin-top:18px;">
+      <a id="linkAvail" href="#" style="display:inline-flex;align-items:center;gap:7px;background:var(--bg-elevated);border:1px solid var(--border-default);color:var(--text);padding:9px 16px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:500;">🗓️ <span>Consultar disponibilidad</span></a>
+    </div>
   </header>
+  <script>
+    document.getElementById('linkAvail').href = 'disponibilidad-publica.html?proyecto=' + encodeURIComponent(new URLSearchParams(location.search).get('proyecto') || 'miramar');
+  </script>
 
   <main>
     <nav class="filters" id="filters" role="tablist"></nav>

@@ -982,7 +982,7 @@ body{
         <div class="form-group"><label>Email de contacto</label><input type="email" id="clientEmail" placeholder="email@ejemplo.com"></div>
       </div>
       <div class="form-row cols-3">
-        <div class="form-group"><label>Fecha del evento</label><input type="date" id="eventDate" oninput="updateSide()"></div>
+        <div class="form-group"><label>Fecha del evento</label><input type="date" id="eventDate" oninput="updateSide(); checkAvailability();"></div>
         <div class="form-group"><label>Hora de inicio</label><input type="time" id="eventTime" value="13:00"></div>
         <div class="form-group"><label>Duración estimada</label>
           <select id="eventDuration" oninput="updateSide()">
@@ -996,17 +996,15 @@ body{
       </div>
       <div class="form-row">
         <div class="form-group"><label>Espacio / Lugar previsto</label>
-          <select id="eventVenue" oninput="updateSide()">
-            <option value="interior">Interior (salón)</option>
-            <option value="terraza">Terraza / Exterior</option>
-            <option value="jardines">Jardines y piscina</option>
-            <option value="carpa">Carpa climatizada</option>
-            <option value="playa">Chiringuito / Playa</option>
-            <option value="otro">Otro (indicar en notas)</option>
+          <select id="eventVenue" oninput="updateSide(); checkAvailability();">
+            <option value="">Elige un espacio…</option>
           </select>
         </div>
         <div class="form-group"><label>Notas adicionales</label><textarea id="eventNotes" placeholder="Restricciones alimentarias, peticiones especiales, detalles de temática…"></textarea></div>
       </div>
+
+      <!-- v5.6 · Banner de disponibilidad -->
+      <div id="availabilityBanner" style="display:none;"></div>
 
       <div class="sub-title" style="margin-top:28px;">👥 Asistentes al evento</div>
       <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px;line-height:1.6;">
@@ -1415,6 +1413,7 @@ body{
 
 <script src="../js/theme.js"></script>
 <script src="../js/loader.js"></script>
+<script src="../js/metrics.js"></script>
 <script src="../js/ia-asistente.js"></script>
 <script>
 // ══════════════════════════════════════════════════
@@ -2574,6 +2573,11 @@ async function generateBudget() {
     document.getElementById('finalEmail')?.focus();
     return;
   }
+  // v5.6 · bloquear si hay conflicto de disponibilidad
+  if (window.__availabilityState__ && window.__availabilityState__.conflict) {
+    alert('⚠ El espacio elegido no está disponible en la fecha seleccionada. Mira las sugerencias en el paso 1 (Evento) y elige otra fecha u otro espacio antes de enviar la solicitud.');
+    return;
+  }
 
   const data = exportPresupuestoData();
   const ref = data.referencia;
@@ -2745,6 +2749,136 @@ function applyPresupModeUI() {
   }
 }
 
+// v5.6 · Disponibilidad
+window.__availabilityState__ = { espacios: [], budgets: [], conflict: false };
+
+async function loadAvailabilityData() {
+  const projId = new URLSearchParams(location.search).get('proyecto') || 'miramar';
+  try {
+    const proj = await window.loadProject(projId, { keys: ['establecimiento'] });
+    window.__availabilityState__.espacios = (proj.establecimiento && proj.establecimiento.espacios) || [];
+  } catch (e) {
+    window.__availabilityState__.espacios = [];
+  }
+  // Presupuestos confirmados que bloquean
+  if (window.fnbMetrics && window.fnbMetrics.loadBudgets) {
+    try {
+      window.__availabilityState__.budgets = await window.fnbMetrics.loadBudgets(projId);
+    } catch {
+      window.__availabilityState__.budgets = [];
+    }
+  }
+  fillEventVenueSelect();
+}
+
+function fillEventVenueSelect() {
+  const sel = document.getElementById('eventVenue');
+  if (!sel) return;
+  const espacios = window.__availabilityState__.espacios;
+  if (!espacios.length) {
+    // Fallback al listado genérico si el proyecto no tiene espacios definidos
+    sel.innerHTML = '<option value="">Elige un espacio…</option>'
+      + '<option value="interior">Interior (salón)</option>'
+      + '<option value="terraza">Terraza / Exterior</option>'
+      + '<option value="jardines">Jardines y piscina</option>'
+      + '<option value="otro">Otro (indicar en notas)</option>';
+    return;
+  }
+  sel.innerHTML = '<option value="">Elige un espacio…</option>'
+    + espacios.map(e =>
+        '<option value="' + escapeAttr(e.id) + '">' + escapeAttr(e.nombre || e.id) +
+        (e.capacidad_sentado ? ' · ' + e.capacidad_sentado + ' pax' : '') + '</option>'
+      ).join('')
+    + '<option value="otro">Otro (indicar en notas)</option>';
+}
+
+function escapeAttr(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function checkAvailability() {
+  const banner = document.getElementById('availabilityBanner');
+  const dateEl = document.getElementById('eventDate');
+  const venueEl = document.getElementById('eventVenue');
+  if (!banner || !dateEl || !venueEl) return;
+  const date = dateEl.value;
+  const espacioId = venueEl.value;
+  // No mostrar nada si faltan datos
+  if (!date || !espacioId || espacioId === 'otro') {
+    banner.style.display = 'none';
+    window.__availabilityState__.conflict = false;
+    return;
+  }
+  // Solo modo público comprueba; en modo interno no bloquea
+  if (typeof PRESUP_MODE !== 'undefined' && PRESUP_MODE === 'interno') {
+    banner.style.display = 'none';
+    window.__availabilityState__.conflict = false;
+    return;
+  }
+  const budgets = window.__availabilityState__.budgets;
+  const espacios = window.__availabilityState__.espacios;
+  if (!window.fnbMetrics || !window.fnbMetrics.isDayAvailable) {
+    banner.style.display = 'none';
+    return;
+  }
+  const available = window.fnbMetrics.isDayAvailable(date, espacioId, budgets);
+  if (available) {
+    banner.style.display = 'block';
+    banner.style.cssText = 'display:block;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.4);color:#34d399;padding:14px 18px;border-radius:10px;margin-top:14px;font-size:.88rem;line-height:1.6;';
+    const venueName = (espacios.find(e => e.id === espacioId) || {}).nombre || espacioId;
+    banner.innerHTML = '<strong>✓ Disponible.</strong> El espacio «' + escapeAttr(venueName) + '» está libre el ' + formatDateES(date) + '. Puedes continuar con tu presupuesto.';
+    window.__availabilityState__.conflict = false;
+  } else {
+    banner.style.display = 'block';
+    banner.style.cssText = 'display:block;background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.4);color:#f85149;padding:16px 20px;border-radius:10px;margin-top:14px;font-size:.88rem;line-height:1.65;';
+    const venueName = (espacios.find(e => e.id === espacioId) || {}).nombre || espacioId;
+    // Sugerencias: próximas fechas libres en este espacio + espacios libres en esa fecha
+    const nextDates = window.fnbMetrics.getNextAvailableDates(espacioId, budgets, 3, date);
+    const altSpaces = window.fnbMetrics.getAlternativeSpacesOnDate(
+      date,
+      espacios.map(e => e.id),
+      espacioId,
+      budgets
+    );
+    let html = '<strong>⚠ No disponible.</strong> El espacio «' + escapeAttr(venueName) + '» ya está reservado para el ' + formatDateES(date) + '.<br>';
+    html += '<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(248,81,73,.25);font-size:.82rem;color:var(--text);"><strong style="color:var(--gold);">Sugerencias:</strong></div>';
+    if (nextDates.length) {
+      html += '<div style="font-size:.82rem;margin-top:6px;color:var(--text-soft);">Próximas fechas libres en «' + escapeAttr(venueName) + '»: ';
+      html += nextDates.map(d => '<a href="#" onclick="pickDate(\'' + d + '\');return false;" style="color:var(--gold);text-decoration:underline;margin:0 4px;">' + formatDateES(d) + '</a>').join(' · ');
+      html += '</div>';
+    }
+    if (altSpaces.length) {
+      const altNames = altSpaces.slice(0, 3).map(id => {
+        const e = espacios.find(x => x.id === id);
+        return '<a href="#" onclick="pickVenue(\'' + id + '\');return false;" style="color:var(--gold);text-decoration:underline;margin:0 4px;">' + escapeAttr((e && e.nombre) || id) + '</a>';
+      });
+      html += '<div style="font-size:.82rem;margin-top:6px;color:var(--text-soft);">Otros espacios libres el ' + formatDateES(date) + ': ' + altNames.join(' · ') + '</div>';
+    }
+    if (!nextDates.length && !altSpaces.length) {
+      html += '<div style="font-size:.82rem;margin-top:6px;color:var(--text-soft);">Llámanos para encontrar una alternativa.</div>';
+    }
+    banner.innerHTML = html;
+    window.__availabilityState__.conflict = true;
+  }
+}
+
+function pickDate(iso) {
+  const el = document.getElementById('eventDate');
+  if (el) { el.value = iso; el.dispatchEvent(new Event('input')); }
+}
+function pickVenue(id) {
+  const el = document.getElementById('eventVenue');
+  if (el) { el.value = id; el.dispatchEvent(new Event('input')); }
+}
+function formatDateES(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
+window.checkAvailability = checkAvailability;
+window.pickDate = pickDate;
+window.pickVenue = pickVenue;
+
 (async () => {
   window.showLoadingBanner('Cargando catálogo de eventos y menús…');
   try {
@@ -2767,6 +2901,8 @@ function applyPresupModeUI() {
   updateSide();
   syncPaxInputs();
   applyPresupModeUI();
+  // v5.6 · cargar datos de disponibilidad (espacios + presupuestos confirmados)
+  await loadAvailabilityData();
   // Precargar contacto del hotel para el mailto (evita esperar al click)
   fetchHotelContact();
 

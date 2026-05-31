@@ -173,6 +173,151 @@
     } catch (e) { return iso; }
   }
 
+  // ══════════════════════════════════════════════════
+  // v5.6 · Disponibilidad y detección de conflictos
+  // ──────────────────────────────────────────────────
+  // Regla de negocio (definida con Paco · oficio hotelero):
+  //   Granularidad: día completo. Un evento confirmado bloquea el
+  //   espacio para todo el día. Borradores NO bloquean (solo
+  //   confirmados cuentan como reserva firme).
+  // ══════════════════════════════════════════════════
+
+  /**
+   * Devuelve los presupuestos CONFIRMADOS que ocupan un espacio en una fecha.
+   * @param {string} fechaISO   'YYYY-MM-DD'
+   * @param {string} espacioId  id del espacio (ej. 'salon_principal')
+   * @param {Array}  budgets    todos los presupuestos del proyecto
+   * @returns {Array} presupuestos en conflicto (vacío = libre)
+   */
+  function getBookingsForDateSpace(fechaISO, espacioId, budgets) {
+    if (!fechaISO || !espacioId || !Array.isArray(budgets)) return [];
+    return budgets.filter(b =>
+      b &&
+      b.estado === 'confirmado' &&
+      b.fechaEvento === fechaISO &&
+      b.espacio === espacioId
+    );
+  }
+
+  /**
+   * ¿El espacio está libre en la fecha indicada?
+   */
+  function isDayAvailable(fechaISO, espacioId, budgets) {
+    return getBookingsForDateSpace(fechaISO, espacioId, budgets).length === 0;
+  }
+
+  /**
+   * Para una fecha dada, devuelve la lista de espacios OCUPADOS (confirmados).
+   */
+  function getOccupiedSpacesOnDate(fechaISO, budgets) {
+    if (!fechaISO || !Array.isArray(budgets)) return [];
+    const set = new Set();
+    budgets.forEach(b => {
+      if (b && b.estado === 'confirmado' && b.fechaEvento === fechaISO && b.espacio) {
+        set.add(b.espacio);
+      }
+    });
+    return [...set];
+  }
+
+  /**
+   * Para un espacio dado, devuelve las próximas N fechas libres desde hoy
+   * (o desde fromISO si se indica).
+   * @returns {string[]} array de fechas ISO ordenadas
+   */
+  function getNextAvailableDates(espacioId, budgets, count, fromISO) {
+    count = count || 3;
+    const start = fromISO ? new Date(fromISO + 'T00:00:00') : new Date();
+    start.setHours(0,0,0,0);
+    const out = [];
+    let d = new Date(start);
+    let safety = 0;
+    while (out.length < count && safety < 365) {
+      const iso = d.toISOString().slice(0,10);
+      if (isDayAvailable(iso, espacioId, budgets)) out.push(iso);
+      d.setDate(d.getDate() + 1);
+      safety++;
+    }
+    return out;
+  }
+
+  /**
+   * Para una fecha dada, devuelve los espacios alternativos LIBRES.
+   * Útil para sugerir cuando el espacio elegido está ocupado.
+   * @param {string[]} espaciosTodos  array de ids de espacios del establecimiento
+   * @param {string}   espacioExcluir  id del espacio que NO interesa (el ocupado)
+   */
+  function getAlternativeSpacesOnDate(fechaISO, espaciosTodos, espacioExcluir, budgets) {
+    if (!fechaISO || !Array.isArray(espaciosTodos)) return [];
+    const ocupados = getOccupiedSpacesOnDate(fechaISO, budgets);
+    return espaciosTodos.filter(id => id !== espacioExcluir && !ocupados.includes(id));
+  }
+
+  /**
+   * Construye la matriz de un mes para renderizar calendario visual.
+   * Cada celda incluye: fecha ISO, día del mes, eventos confirmados,
+   * eventos borrador, indicador de si está en el mes pedido.
+   *
+   * Semana empieza en LUNES (convención europea).
+   *
+   * @param {number} year   2026
+   * @param {number} month  0-11 (enero=0)
+   * @param {Array}  budgets
+   * @returns {Object} { year, month, monthName, weeks: [[cell, ...], ...] }
+   */
+  function buildMonthCalendar(year, month, budgets) {
+    const first = new Date(year, month, 1);
+    const monthName = first.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+    // Día de la semana del primer día (0=domingo, ajustamos a lunes=0)
+    let firstDow = first.getDay() - 1;
+    if (firstDow < 0) firstDow = 6; // domingo → 6
+    // Cuántos días tiene el mes
+    const lastDay = new Date(year, month + 1, 0).getDate();
+    // Necesitamos rellenar 6 semanas (42 celdas) para layout estable
+    const cells = [];
+    // Días del mes anterior (gris)
+    const prevMonthLast = new Date(year, month, 0).getDate();
+    for (let i = firstDow - 1; i >= 0; i--) {
+      const day = prevMonthLast - i;
+      const d = new Date(year, month - 1, day);
+      cells.push(buildCell(d, false, budgets));
+    }
+    // Días del mes actual
+    for (let day = 1; day <= lastDay; day++) {
+      const d = new Date(year, month, day);
+      cells.push(buildCell(d, true, budgets));
+    }
+    // Rellenar hasta 42 celdas con mes siguiente
+    let nextDay = 1;
+    while (cells.length < 42) {
+      const d = new Date(year, month + 1, nextDay++);
+      cells.push(buildCell(d, false, budgets));
+    }
+    // Agrupar en semanas de 7
+    const weeks = [];
+    for (let i = 0; i < cells.length; i += 7) {
+      weeks.push(cells.slice(i, i + 7));
+    }
+    return { year, month, monthName, weeks };
+  }
+
+  function buildCell(dateObj, inMonth, budgets) {
+    const iso = dateObj.toISOString().slice(0,10);
+    const dayOfMonth = dateObj.getDate();
+    const today = new Date(); today.setHours(0,0,0,0);
+    const isToday = dateObj.getTime() === today.getTime();
+    const isPast = dateObj < today;
+    // Eventos
+    const all = (budgets || []).filter(b => b && b.fechaEvento === iso);
+    const confirmed = all.filter(b => b.estado === 'confirmado');
+    const drafts = all.filter(b => b.estado !== 'confirmado');
+    return {
+      iso, dayOfMonth, inMonth, isToday, isPast,
+      events: confirmed, drafts,
+      hasEvents: all.length > 0,
+    };
+  }
+
   window.fnbMetrics = {
     loadBudgets,
     summarizeBudgets,
@@ -183,5 +328,12 @@
     occupancyBySpace,
     formatEur,
     formatDate,
+    // v5.6 disponibilidad
+    getBookingsForDateSpace,
+    isDayAvailable,
+    getOccupiedSpacesOnDate,
+    getNextAvailableDates,
+    getAlternativeSpacesOnDate,
+    buildMonthCalendar,
   };
 })();
