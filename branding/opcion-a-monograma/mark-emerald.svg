@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Plataforma F&amp;B">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#g)"/>
+  <!-- Monograma F&B con tipografía serif geométrica -->
+  <g fill="#0d1117" font-family="Playfair Display, Georgia, serif" font-weight="700">
+    <!-- F -->
+    <text x="124" y="346" font-size="312" letter-spacing="-12">F</text>
+    <!-- Ampersand pequeño elevado, alineado al baseline de F -->
+    <text x="220" y="240" font-size="120" font-style="italic" font-weight="500" opacity="0.85">&amp;</text>
+    <!-- B -->
+    <text x="262" y="346" font-size="312" letter-spacing="-12">B</text>
+  </g>
+  <!-- Línea decorativa inferior que sugiere "base" / "mesa servida" -->
+  <rect x="124" y="386" width="288" height="6" rx="3" fill="#0d1117" opacity="0.75"/>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Plataforma F&amp;B">
+  <defs>
+    <linearGradient id="gc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#gc)"/>
+  <!-- Cucharón estilizado · forma curva orgánica que evoca servicio sin caer en cliché -->
+  <g fill="#0d1117">
+    <!-- Cabeza ovalada de la cucharilla · arriba a la derecha -->
+    <ellipse cx="324" cy="172" rx="62" ry="84"/>
+    <!-- Mango curvo descendente -->
+    <path d="M 286 226 Q 240 280 200 340 Q 175 380 156 392 Q 142 400 130 388 Q 119 376 128 360 Q 144 332 180 296 Q 232 240 286 226 Z"/>
+    <!-- Acento punto · "esencia / detalle del oficio" -->
+    <circle cx="160" cy="170" r="14" opacity="0.55"/>
+  </g>
+</svg>
