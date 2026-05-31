@@ -229,6 +229,7 @@
 
 <!-- Dependencias -->
 <script src="../core/js/appearance.js"></script>
+<script src="../core/js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js" integrity="sha384-qGFE4FIJLgCFuYs3nzg39XpCtvT5AZUhaBdjB3e1+vpKQa03AkyWOyBSFb9OcQ/g" crossorigin="anonymous"></script>
 <script src="../core/js/loader.js"></script>
@@ -454,10 +455,9 @@ function renderAgenda() {
   }
 }
 
-// Toggle apariencia · v5.1
-if (window.fnbAppearance) {
-  window.fnbAppearance.injectToggle($('#btnLogout').parentElement);
-}
+// Toggle apariencia · v5.1 · i18n · v5.5
+if (window.fnbAppearance) window.fnbAppearance.injectToggle($('#btnLogout').parentElement);
+if (window.fnbI18n) window.fnbI18n.injectSelector($('#btnLogout').parentElement);
 
 $('#btnLogout').addEventListener('click', () => {
   window.fnbAuth.clearSession();
