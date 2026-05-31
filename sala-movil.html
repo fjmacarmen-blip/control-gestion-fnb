@@ -266,18 +266,21 @@
     <div class="brand">
       <div class="brand-mark">F&B</div>
       <div class="brand-info">
-        <div class="brand-name">Sala</div>
-        <div class="brand-proj" id="brandProj">cargando…</div>
+        <div class="brand-name" data-i18n="sala.title">Sala</div>
+        <div class="brand-proj" id="brandProj" data-i18n="common.loading">cargando…</div>
       </div>
     </div>
-    <div id="connStatus" class="conn online">● online</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div id="i18nSlotSala"></div>
+      <div id="connStatus" class="conn online">● online</div>
+    </div>
   </header>
 
   <nav class="tabs" role="tablist">
-    <button class="tab is-active" data-tab="hoy" role="tab"><span class="tab-ico">📅</span>Hoy</button>
-    <button class="tab" data-tab="dietas" role="tab"><span class="tab-ico">🎗️</span>Dietas</button>
-    <button class="tab" data-tab="espacios" role="tab"><span class="tab-ico">🏛️</span>Espacios</button>
-    <button class="tab" data-tab="tpv" role="tab"><span class="tab-ico">🧾</span>TPV</button>
+    <button class="tab is-active" data-tab="hoy" role="tab"><span class="tab-ico">📅</span><span data-i18n="sala.tab_today">Hoy</span></button>
+    <button class="tab" data-tab="dietas" role="tab"><span class="tab-ico">🎗️</span><span data-i18n="sala.tab_diets">Dietas</span></button>
+    <button class="tab" data-tab="espacios" role="tab"><span class="tab-ico">🏛️</span><span data-i18n="sala.tab_spaces">Espacios</span></button>
+    <button class="tab" data-tab="tpv" role="tab"><span class="tab-ico">🧾</span><span data-i18n="sala.tab_tpv">TPV</span></button>
   </nav>
 
   <main id="content">
@@ -291,6 +294,7 @@
 
 <script src="core/js/theme.js"></script>
 <script src="core/js/loader.js"></script>
+<script src="core/js/i18n.js"></script>
 <script src="core/js/metrics.js"></script>
 <script src="core/js/tpv-connector.js"></script>
 <script>
@@ -649,6 +653,12 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW registration failed:', err));
   });
+}
+
+// ── i18n selector en topbar (v5.5) ──────
+if (window.fnbI18n) {
+  const slot = $('#i18nSlotSala');
+  if (slot) window.fnbI18n.injectSelector(slot);
 }
 
 // ── Boot ────────────────────────────────

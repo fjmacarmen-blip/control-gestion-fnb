@@ -264,7 +264,7 @@
   </div>
   <div class="nav-user">
     <span>Sesión: <span class="user-email" id="userEmail">—</span></span>
-    <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    <button class="btn-logout" id="btnLogout" data-i18n="nav.logout">Cerrar sesión</button>
   </div>
 </nav>
 
@@ -272,19 +272,19 @@
 <div id="loginView" class="login-wrap">
   <form class="login-card" id="loginForm" autocomplete="on">
     <div class="login-eyebrow">Plataforma F&amp;B</div>
-    <h1 class="login-title">Dashboard</h1>
-    <p class="login-lede">Acceso al panel de director. Soft auth client-side (ver ADR §3 D7).</p>
+    <h1 class="login-title" data-i18n="login.title">Dashboard</h1>
+    <p class="login-lede" data-i18n="login.subtitle">Acceso al panel de director. Soft auth client-side (ver ADR §3 D7).</p>
 
     <div class="field">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" autocomplete="email" required value="admin@miramar.dev">
+      <label for="email" data-i18n="login.email">Email</label>
+      <input type="email" id="email" name="email" autocomplete="email" required value="admin@miramar.dev" data-i18n-attr="placeholder:login.email_placeholder">
     </div>
     <div class="field">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" autocomplete="current-password" required>
+      <label for="password" data-i18n="login.password">Password</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required data-i18n-attr="placeholder:login.password_placeholder">
     </div>
 
-    <button type="submit" class="btn-primary" id="btnLogin">Acceder</button>
+    <button type="submit" class="btn-primary" id="btnLogin" data-i18n="login.submit">Acceder</button>
     <div class="login-error" id="loginError"></div>
 
     <div class="login-warn" role="alert">
@@ -301,10 +301,10 @@
 <div id="projectsView" class="projects-wrap hidden">
   <div class="projects-head">
     <div>
-      <h1 class="projects-title">Proyectos</h1>
-      <p class="projects-sub" id="projectsCount">Cargando…</p>
+      <h1 class="projects-title" data-i18n="dashboard.projects_title">Proyectos</h1>
+      <p class="projects-sub" id="projectsCount" data-i18n="common.loading">Cargando…</p>
     </div>
-    <a href="wizard.html" class="btn-new">➕ Nuevo proyecto</a>
+    <a href="wizard.html" class="btn-new" data-i18n="dashboard.new_project">➕ Nuevo proyecto</a>
   </div>
 
   <div class="projects-grid" id="projectsGrid">
@@ -320,6 +320,7 @@
 
 <!-- ─── DEPENDENCIAS ────────────────────────────────────── -->
 <script src="../core/js/appearance.js"></script>
+<script src="../core/js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js" integrity="sha384-qGFE4FIJLgCFuYs3nzg39XpCtvT5AZUhaBdjB3e1+vpKQa03AkyWOyBSFb9OcQ/g" crossorigin="anonymous"></script>
 <script src="../core/js/loader.js"></script>
 <script src="../core/js/auth.js"></script>
@@ -387,6 +388,10 @@ els.loginForm.addEventListener('submit', async (e) => {
 // Toggle apariencia · v5.1
 if (window.fnbAppearance) {
   window.fnbAppearance.injectToggle(els.btnLogout.parentElement);
+}
+// Selector idioma · v5.5
+if (window.fnbI18n) {
+  window.fnbI18n.injectSelector(els.btnLogout.parentElement);
 }
 
 els.btnLogout.addEventListener('click', () => {

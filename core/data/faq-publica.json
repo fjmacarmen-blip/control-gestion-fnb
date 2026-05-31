@@ -1,0 +1,121 @@
+{
+  "_README": "Preguntas frecuentes mostradas al cliente final en la carta pública. Cada proyecto puede sobrescribirlas con su propio projects/<id>/faq.json. Si no existe, se usa este genérico. Estructura: categorías (orden visual), items con q (pregunta) y a (respuesta en markdown plano). Hostelería real: las preguntas vienen de la experiencia de 30 años en sala y dirección.",
+  "version": "1.0",
+  "categorias": [
+    {
+      "id": "reservas",
+      "icon": "📅",
+      "nombre": "Reservas y disponibilidad",
+      "items": [
+        {
+          "q": "¿Cómo reservo una mesa o un evento?",
+          "a": "Si es para comer en el restaurante, llámanos por teléfono o usa la web. Si es para un evento privado (boda, cena de empresa, comunión), abre el cotizador desde el botón «Solicitar Presupuesto», configura tu evento y envíanos la solicitud. Te respondemos en menos de 24 h en días laborables."
+        },
+        {
+          "q": "¿Con cuánta antelación tengo que reservar para un evento?",
+          "a": "Recomendamos al menos 60 días para bodas y celebraciones grandes (40 pax o más), 15 días para cenas de empresa medianas, y 48 h para grupos pequeños. En temporada alta (mayo a octubre, Navidad) reserva con más margen."
+        },
+        {
+          "q": "¿Puedo modificar el número de comensales después de reservar?",
+          "a": "Sí, hasta 72 h antes del evento. Los cambios posteriores se aceptan pero el cargo se mantiene sobre el pax confirmado. Es un detalle que también afecta al banquete: las cocinas se preparan con días de antelación."
+        },
+        {
+          "q": "¿Hay señal o depósito?",
+          "a": "Sí. Para confirmar un evento pedimos una señal del 15 % del presupuesto total. El resto se liquida el día del evento o por transferencia 72 h antes."
+        }
+      ]
+    },
+    {
+      "id": "alergenos",
+      "icon": "⚠️",
+      "nombre": "Alérgenos y dietas especiales",
+      "items": [
+        {
+          "q": "¿Cómo gestionáis las alergias alimentarias?",
+          "a": "Tomamos las alergias muy en serio. Indícanos la alergia al hacer tu reserva y nuestra cocina prepara tu plato en zona separada para evitar contaminación cruzada. En sala, identificamos tu pedido con un sistema interno para que ningún camarero se equivoque al servir."
+        },
+        {
+          "q": "¿Tienen menú vegano, vegetariano, sin gluten?",
+          "a": "Sí. Disponemos de adaptaciones para las 7 dietas más habituales: vegano, vegetariano, celíaco (cocina sin gluten), sin lactosa, sin frutos secos, halal y kosher (con pre-aviso para esta última)."
+        },
+        {
+          "q": "¿Y si tengo una intolerancia poco común?",
+          "a": "Cuéntanosla con antelación. Si podemos adaptar la receta, lo hacemos. Si no podemos garantizarlo sin riesgo, te lo decimos honestamente para que decidas. Nunca te servimos nada que no podamos asegurar al 100 %."
+        },
+        {
+          "q": "¿Dónde encuentro la lista de alérgenos de cada plato?",
+          "a": "Cada receta del recetario lleva sus alérgenos declarados. Al final de esta carta hay un bloque rojo con los 14 alérgenos legalmente declarables. Si necesitas la información detallada de un plato concreto, pídela al equipo de sala."
+        }
+      ]
+    },
+    {
+      "id": "eventos",
+      "icon": "🎉",
+      "nombre": "Eventos y banquetes",
+      "items": [
+        {
+          "q": "¿Qué tipo de eventos organizáis?",
+          "a": "Bodas íntimas, comuniones y bautizos, cenas de empresa, presentaciones de producto, gala de fin de año, cumpleaños especiales, despedidas. Si tienes algo distinto en mente, cuéntanoslo: hemos hecho cosas raras."
+        },
+        {
+          "q": "¿Puedo personalizar el menú?",
+          "a": "Sí, completamente. Tenemos paquetes cerrados con precio fijo y también ofrecemos menús a medida. Para eventos personalizados hacemos una visita técnica y una prueba de menú gratuita si reservas el evento."
+        },
+        {
+          "q": "¿Qué incluye el precio por comensal?",
+          "a": "El precio por pax incluye comida, bebida del paquete elegido, servicio de sala, montaje y desmontaje básicos. Los extras (música, decoración floral, fotografía, dulces especiales, mantelería premium) se cotizan aparte y se ven con detalle en el cotizador."
+        },
+        {
+          "q": "¿Hay espacios privados disponibles?",
+          "a": "Sí. Disponemos de varios espacios según el tamaño del evento. Cada uno tiene su capacidad para sentado y para cóctel, indicada en la ficha del establecimiento."
+        }
+      ]
+    },
+    {
+      "id": "politica",
+      "icon": "📜",
+      "nombre": "Política y condiciones",
+      "items": [
+        {
+          "q": "¿Aceptáis tarjeta?",
+          "a": "Sí. Aceptamos todas las tarjetas habituales (Visa, MasterCard, American Express). También efectivo y transferencia previa para eventos."
+        },
+        {
+          "q": "¿Cuál es vuestra política de cancelación?",
+          "a": "Para mesas habituales, hasta 4 h antes sin cargo. Para eventos privados: hasta 30 días antes recuperas la señal completa. Entre 30 y 7 días, se descuenta el 50 %. Menos de 7 días, la señal queda como compensación por el bloqueo de fecha."
+        },
+        {
+          "q": "¿Está adaptado para movilidad reducida?",
+          "a": "Sí. Acceso adaptado, baño accesible y mesas con altura ajustable disponibles bajo petición."
+        },
+        {
+          "q": "¿Permitís llevar tarta o bebida de fuera?",
+          "a": "Tarta de celebración (boda, cumpleaños) sí, con un cargo simbólico por servicio de mesa. Bebidas externas no, salvo casos muy concretos que se acuerdan al firmar el evento."
+        }
+      ]
+    },
+    {
+      "id": "practicas",
+      "icon": "🪑",
+      "nombre": "Cuestiones prácticas",
+      "items": [
+        {
+          "q": "¿Hay parking?",
+          "a": "Depende del establecimiento. Algunos disponen de aparcamiento propio gratuito, otros tienen acuerdo con un parking cercano. Consulta los detalles en la ficha del establecimiento o pregunta al reservar."
+        },
+        {
+          "q": "¿Admitís mascotas?",
+          "a": "En terraza siempre. En interior depende del establecimiento. Mascotas guía siempre bienvenidas en cualquier zona."
+        },
+        {
+          "q": "¿Hay menú infantil?",
+          "a": "Sí. Disponemos de menú infantil adaptado en precio (50 % del adulto típicamente) y en raciones. También ofrecemos sillas altas y entretenimiento infantil para eventos."
+        },
+        {
+          "q": "¿Cuál es el código de vestimenta?",
+          "a": "Casual elegante en general. Para eventos especiales (galas, bodas) sigue las indicaciones del anfitrión. Si vienes de la playa, agradecemos camiseta y zapato cerrado en horario de cena."
+        }
+      ]
+    }
+  ]
+}

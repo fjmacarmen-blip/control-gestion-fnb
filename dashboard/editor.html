@@ -737,6 +737,7 @@
 
 <!-- ─── SCRIPTS ────────────────────────────────── -->
 <script src="../core/js/appearance.js"></script>
+<script src="../core/js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js" integrity="sha384-qGFE4FIJLgCFuYs3nzg39XpCtvT5AZUhaBdjB3e1+vpKQa03AkyWOyBSFb9OcQ/g" crossorigin="anonymous"></script>
 <script src="../core/js/loader.js"></script>
 <script src="../core/js/auth.js"></script>
@@ -2215,12 +2216,13 @@ function renderEscandallosSummary(summary) {
 }
 
 // ══════════════════════════════════════════════
-// v5.1 · Light/dark toggle en topbar
+// v5.1 · Light/dark toggle en topbar · v5.5 · i18n selector
 // ══════════════════════════════════════════════
-(function injectAppearanceToggle() {
+(function injectTopbarTools() {
   const slot = document.querySelector('#btnLogout');
-  if (!slot || !window.fnbAppearance) return;
-  window.fnbAppearance.injectToggle(slot.parentElement);
+  if (!slot) return;
+  if (window.fnbAppearance) window.fnbAppearance.injectToggle(slot.parentElement);
+  if (window.fnbI18n) window.fnbI18n.injectSelector(slot.parentElement);
 })();
 
 $('#btnLogout').addEventListener('click', () => {

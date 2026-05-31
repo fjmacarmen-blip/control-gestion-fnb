@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Diseña tu evento paso a paso · presupuesto interactivo con menús, bebidas, decoración y dietas especiales.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://image.pollinations.ai; connect-src 'self' https://text.pollinations.ai; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
 <title>Diseña tu Evento · Presupuesto Personalizado</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1413,6 +1415,7 @@ body{
 
 <script src="../js/theme.js"></script>
 <script src="../js/loader.js"></script>
+<script src="../js/ia-asistente.js"></script>
 <script>
 // ══════════════════════════════════════════════════
 // STATE
@@ -2766,6 +2769,18 @@ function applyPresupModeUI() {
   applyPresupModeUI();
   // Precargar contacto del hotel para el mailto (evita esperar al click)
   fetchHotelContact();
+
+  // v5.5 · Asistente IA: cargar catálogo e inyectar chat flotante
+  // Solo en modo público (no en interno) y si la lib está cargada
+  if (PRESUP_MODE !== 'interno' && window.fnbIA) {
+    try {
+      const projectIdForIA = new URLSearchParams(location.search).get('proyecto') || 'miramar';
+      await window.fnbIA.loadCatalog(projectIdForIA);
+      window.fnbIA.injectChatUI();
+    } catch (e) {
+      console.warn('[IA] No se pudo iniciar asistente:', e);
+    }
+  }
 })();
 </script>
 
