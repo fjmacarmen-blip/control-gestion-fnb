@@ -1138,6 +1138,14 @@ body{
         <div id="dishPanels"></div>
       </div>
 
+      <!-- v5.4 · Dulces y extras de celebración (movidos desde Animación) -->
+      <div class="sub-title" style="margin-top:36px;">🍰 Dulces & Extras de celebración</div>
+      <div class="nota-box" style="margin-bottom:14px;">
+        <strong>Complementos gastronómicos</strong> que acompañan al menú: tarta nupcial, candy bar, fuente de chocolate,
+        carrito de helados, copas de bienvenida y after-party snacks. Se facturan con el menú principal.
+      </div>
+      <div class="addon-grid" id="dulcesGrid"></div>
+
       <div id="coctelInfoBox" style="display:none;margin-top:28px;">
         <div class="sub-title">🥂 Detalle de la oferta · Cóctel de Pie</div>
         <div class="nota-box" style="border-color:var(--gold-border);background:var(--gold-dim);">
@@ -1283,12 +1291,13 @@ body{
       </div>
     </div>
 
-    <!-- ─── PASO 6: ANIMACIÓN & ENTRETENIMIENTO ─── -->
+    <!-- ─── PASO 6: ANIMACIÓN, SHOW & RECUERDOS ─── -->
+    <!-- v5.4 · Dulces eliminados de aquí · ahora viven en el paso 2 (Menú) -->
     <div class="step-section" id="step-6">
       <div class="step-head">
         <div class="step-eyebrow">Paso 6 de 7</div>
-        <h2>Animación & Entretenimiento</h2>
-        <p>Todo para que tus invitados disfruten sin parar. Música, show, actividades y recuerdos del evento.</p>
+        <h2>Animación, Show & Recuerdos</h2>
+        <p>Lo que tus invitados se llevan del evento. Música, espectáculo y el reportaje gráfico que perpetúa la noche.</p>
       </div>
 
       <div class="sub-title">🎵 Música y sonido</div>
@@ -1299,9 +1308,6 @@ body{
 
       <div class="sub-title">📸 Fotografía & Video</div>
       <div class="addon-grid" id="fotoGrid"></div>
-
-      <div class="sub-title">🍰 Dulces & Experiencias</div>
-      <div class="addon-grid" id="dulcesGrid"></div>
 
       <div class="step-nav">
         <button class="btn-prev" onclick="goStep(5)">← Atrás</button>
@@ -1650,9 +1656,14 @@ function pkgCard(item, selKey, grid) {
       ${hasComp ? `<button class="btn-composition" data-pkg-id="${item.id}">Ver composición ▾</button>` : ''}
     </div>`;
   card.onclick = (e) => {
-    if (e.target.classList.contains('btn-composition')) {
+    // v5.4 fix · usar closest() para detectar click en el botón
+    // (más robusto que e.target.classList.contains si el click cae en padding,
+    // pseudo-elementos o si hay nodos hijos en el futuro).
+    const compBtn = e.target.closest('.btn-composition');
+    if (compBtn) {
       e.stopPropagation();
-      showComposition(item.id);
+      const pkgId = compBtn.dataset.pkgId || item.id;
+      showComposition(pkgId);
       return;
     }
     document.querySelectorAll(`[id^="rc_${selKey}_"]`).forEach(c=>c.classList.remove('selected'));
@@ -2344,11 +2355,14 @@ function updateSide() {
       ...sel.floralExtras.map(f=>({n:f.name, v:fmtEur(f.price)})),
       ...sel.velasExtras.map(v=>({n:v.name, v:fmtEur(v.price)}))
     ]},
-    { title:'🎵 Animación', items: [
+    // v5.4 · dulces movidos a la sección Menú (coherente con su naturaleza gastronómica)
+    { title:'🍰 Dulces & Extras gastronómicos', items: [
+      ...sel.dulces.map(d=>({n:d.name, v:fmtEur(d.pp?d.price*pf:d.price)}))
+    ]},
+    { title:'🎵 Animación, show & recuerdos', items: [
       ...sel.musica.map(m=>({n:m.name, v:fmtEur(m.pp?m.price*pf:m.price)})),
       ...sel.show.map(s=>({n:s.name, v:fmtEur(s.pp?s.price*pf:s.price)})),
-      ...sel.foto.map(f=>({n:f.name, v:fmtEur(f.pp?f.price*pf:f.price)})),
-      ...sel.dulces.map(d=>({n:d.name, v:fmtEur(d.pp?d.price*pf:d.price)}))
+      ...sel.foto.map(f=>({n:f.name, v:fmtEur(f.pp?f.price*pf:f.price)}))
     ]},
   ];
 
@@ -2408,10 +2422,12 @@ function buildFinalSummary() {
       ...(dietasTotal() > 0 || dietas.otros ? [['🌿 Dietas especiales',
         (dietasResumen().join(' · ') || 'ver notas') + (dietas.otros ? ' · ' + dietas.otros : '')]] : []),
     ]},
+    // v5.4 · dulces movidos aquí (forman parte de la oferta gastronómica)
     { t:'🍽️ Gastronomía', rows: [
       ['Menú', sel.menuPkg?.name || '—'],
       ['Bebidas', sel.bebPkg?.name || '—'],
       ...sel.bebExtras.map(b=>[b.name, fmtEur(b.pp?b.price*pf:b.price)]),
+      ...sel.dulces.map(d=>['🍰 ' + d.name, fmtEur(d.pp?d.price*pf:d.price)]),
     ]},
     { t:'🪑 Montaje & Decoración', rows: [
       ['Configuración', sel.tablePkg?.name || '—'],
@@ -2419,11 +2435,10 @@ function buildFinalSummary() {
       ...sel.luzExtras.map(l=>[l.name, fmtEur(l.price)]),
       ...sel.montajeExtras.map(m=>[m.name, fmtEur(m.pp?m.price*pf:m.price)]),
     ]},
-    { t:'🎵 Entretenimiento', rows: [
+    { t:'🎵 Animación, show & recuerdos', rows: [
       ...sel.musica.map(m=>[m.name, fmtEur(m.price)]),
       ...sel.show.map(s=>[s.name, fmtEur(s.price)]),
       ...sel.foto.map(f=>[f.name, fmtEur(f.price)]),
-      ...sel.dulces.map(d=>[d.name, fmtEur(d.pp?d.price*pf:d.price)]),
     ]},
     { t:'💰 Desglose económico', rows: [
       ['Subtotal sin IVA', fmtEur(total)],
@@ -2501,19 +2516,26 @@ function buildPresupuestoTexto(data, ref) {
     dietasActivas.forEach(([k, n]) => lines.push('  · ' + k + ': ' + n));
     lines.push('');
   }
-  // Extras (resumen)
+  // Extras agrupados por categoría · v5.4 (dulces en Gastronomía, no en Animación)
   if (data.sel) {
-    const extras = [];
-    ['bebida', 'show', 'foto', 'dulces', 'decor', 'flores', 'velas', 'musica'].forEach(k => {
-      const v = data.sel[k];
-      if (Array.isArray(v) && v.length) v.forEach(it => extras.push(it.name));
-      else if (v && v.name) extras.push(v.name);
+    const cats = [
+      ['▸ GASTRONOMÍA ADICIONAL',  ['bebExtras', 'dulces']],
+      ['▸ MONTAJE Y DECORACIÓN',   ['luzExtras', 'montajeExtras', 'centroMesa', 'floralExtras', 'velasExtras']],
+      ['▸ ANIMACIÓN, SHOW Y RECUERDOS', ['musica', 'show', 'foto']],
+    ];
+    cats.forEach(([title, keys]) => {
+      const items = [];
+      keys.forEach(k => {
+        const v = data.sel[k];
+        if (Array.isArray(v) && v.length) v.forEach(it => items.push(it.name));
+        else if (v && v.name) items.push(v.name);
+      });
+      if (items.length) {
+        lines.push(title);
+        items.forEach(e => lines.push('  · ' + e));
+        lines.push('');
+      }
     });
-    if (extras.length) {
-      lines.push('▸ EXTRAS SELECCIONADOS');
-      extras.forEach(e => lines.push('  · ' + e));
-      lines.push('');
-    }
   }
   lines.push('▸ TOTAL ESTIMADO');
   lines.push('Subtotal sin IVA: ' + fmtEur(data.total));
