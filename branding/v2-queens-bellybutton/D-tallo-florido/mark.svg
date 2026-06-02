@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Queens Bellybutton · Q con tallo florido lateral">
+  <defs>
+    <radialGradient id="bgD" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#172950"/>
+      <stop offset="100%" stop-color="#0a1733"/>
+    </radialGradient>
+    <linearGradient id="goldD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="48%" stop-color="#c9a35c"/>
+      <stop offset="100%" stop-color="#8a682b"/>
+    </linearGradient>
+    <linearGradient id="stemD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9caf6f"/>
+      <stop offset="100%" stop-color="#5e6f3f"/>
+    </linearGradient>
+    <!-- Campanilla blanco-marfil con interior cálido · simula la luz que entra por la abertura inferior -->
+    <linearGradient id="bellD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fdf6e3"/>
+      <stop offset="60%" stop-color="#f3e6b9"/>
+      <stop offset="100%" stop-color="#d6b97a"/>
+    </linearGradient>
+    <linearGradient id="goldThinD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="100%" stop-color="#a87e35"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="600" rx="80" fill="url(#bgD)"/>
+
+  <!-- Corona -->
+  <g transform="translate(300 138)">
+    <rect x="-58" y="14" width="116" height="11" rx="2" fill="url(#goldD)"/>
+    <path d="M -58 16 L -38 -22 L -22 6 L 0 -34 L 22 6 L 38 -22 L 58 16 Z"
+          fill="url(#goldD)" stroke="#8a682b" stroke-width="0.6"/>
+    <circle cx="-38" cy="-22" r="4.5" fill="url(#goldD)"/>
+    <circle cx="0"   cy="-34" r="5.5" fill="url(#goldD)"/>
+    <circle cx="38"  cy="-22" r="4.5" fill="url(#goldD)"/>
+  </g>
+
+  <!-- Q monograma -->
+  <text x="300" y="395"
+        font-family="'Playfair Display','Cormorant Garamond',Georgia,serif"
+        font-size="320" font-weight="500"
+        text-anchor="middle" fill="url(#goldD)">Q</text>
+
+  <!-- Espiga florida ascendente · lateral derecho de la Q
+       7 campanillas alineadas en orden alterno como en la planta real -->
+  <g transform="translate(395 380)">
+    <!-- Tallo principal curvo, sube desde abajo derecha de la Q -->
+    <path d="M 0 0 Q 8 -40 14 -84 Q 18 -130 24 -178"
+          fill="none" stroke="url(#stemD)" stroke-width="2.4" stroke-linecap="round"/>
+    <!-- Pequeño tallo lateral para hoja suculenta en la base -->
+    <path d="M -2 -8 q 10 -2 18 4 q -6 6 -14 6 q -6 -2 -4 -10 z" fill="url(#stemD)" opacity="0.85"/>
+
+    <!-- 7 campanillas colgantes, alternando lados -->
+    <!-- Pedicelos (líneas finas que conectan flor con tallo) -->
+    <path d="M 5 -22  l -10 4"  stroke="url(#stemD)" stroke-width="1"/>
+    <path d="M 8 -42  l  10 -2" stroke="url(#stemD)" stroke-width="1"/>
+    <path d="M 11 -62 l -10 4"  stroke="url(#stemD)" stroke-width="1"/>
+    <path d="M 14 -84 l  10 -2" stroke="url(#stemD)" stroke-width="1"/>
+    <path d="M 17 -106 l -10 4" stroke="url(#stemD)" stroke-width="1"/>
+    <path d="M 20 -128 l  10 -2" stroke="url(#stemD)" stroke-width="1"/>
+    <path d="M 22 -150 l -10 4" stroke="url(#stemD)" stroke-width="1"/>
+
+    <!-- Campanillas: forma tubular con apertura inferior · estilo Umbilicus rupestris -->
+    <!-- Cada flor: elipse alargada con leve punta inferior + sombra fina dorada -->
+    <g stroke="#a87e35" stroke-width="0.5">
+      <path d="M -5 -18 q -3 5 -1 10 q 4 2 6 -1 q 1 -6 -1 -10 q -2 -1 -4 1 z" fill="url(#bellD)"/>
+      <path d="M 18 -38 q -3 5 -1 10 q 4 2 6 -1 q 1 -6 -1 -10 q -2 -1 -4 1 z" fill="url(#bellD)"/>
+      <path d="M 1 -58  q -3 5 -1 10 q 4 2 6 -1 q 1 -6 -1 -10 q -2 -1 -4 1 z" fill="url(#bellD)"/>
+      <path d="M 24 -80 q -3 5 -1 10 q 4 2 6 -1 q 1 -6 -1 -10 q -2 -1 -4 1 z" fill="url(#bellD)"/>
+      <path d="M 7 -102 q -3 5 -1 10 q 4 2 6 -1 q 1 -6 -1 -10 q -2 -1 -4 1 z" fill="url(#bellD)"/>
+      <path d="M 30 -124 q -3 5 -1 10 q 4 2 6 -1 q 1 -6 -1 -10 q -2 -1 -4 1 z" fill="url(#bellD)"/>
+      <path d="M 12 -146 q -3 5 -1 10 q 4 2 6 -1 q 1 -6 -1 -10 q -2 -1 -4 1 z" fill="url(#bellD)"/>
+    </g>
+
+    <!-- Brote sin abrir en el ápice -->
+    <ellipse cx="24" cy="-178" rx="2.2" ry="4" fill="url(#bellD)" stroke="#a87e35" stroke-width="0.5"/>
+  </g>
+
+  <line x1="220" y1="448" x2="380" y2="448" stroke="url(#goldThinD)" stroke-width="0.8"/>
+
+  <g font-family="'Cinzel','Cormorant Garamond',Georgia,serif" text-anchor="middle">
+    <text x="300" y="490" font-size="36" font-weight="500"
+          fill="url(#goldD)" letter-spacing="6">QUEENS</text>
+  </g>
+  <g font-family="Inter,system-ui,sans-serif" text-anchor="middle">
+    <text x="300" y="520" font-size="13" font-weight="500"
+          fill="#e8e6df" letter-spacing="6">BELLY BUTTON</text>
+    <text x="300" y="548" font-size="9" font-weight="500"
+          fill="#8aa5d6" letter-spacing="3.5">HOSPITALITY MANAGEMENT SOFTWARE</text>
+  </g>
+</svg>

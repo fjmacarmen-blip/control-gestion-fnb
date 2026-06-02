@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Master Logo · v5.9 Preview</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#06122e;color:#e8e6df;font-family:Inter,system-ui,sans-serif;padding:50px 20px;line-height:1.6}
+  .wrap{max-width:1100px;margin:0 auto}
+  h1{font-size:30px;font-weight:600;color:#e8cf8a;margin-bottom:12px;letter-spacing:1px}
+  h2{font-size:14px;font-weight:600;color:#c9a35c;margin-top:36px;margin-bottom:16px;letter-spacing:3px;text-transform:uppercase}
+  p{color:#b8c4dc;margin-bottom:8px;font-size:13.5px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-bottom:24px}
+  .card{background:rgba(255,255,255,.03);border:1px solid rgba(201,163,92,.18);border-radius:12px;padding:18px;text-align:center}
+  .card img,.card svg{display:block;margin:0 auto 10px;max-width:100%}
+  .card .label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6e7db5;font-weight:600}
+  .card .size{font-size:11px;color:#566935;font-family:'JetBrains Mono',monospace;margin-top:4px}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+  .vs > div{background:#0a1733;border:1px solid rgba(201,163,92,.2);border-radius:14px;padding:24px;text-align:center}
+  .vs h3{color:#e8cf8a;font-size:14px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;font-weight:600}
+  .vs img,.vs svg{max-width:300px;width:100%;height:auto;display:block;margin:0 auto}
+  hr{border:0;border-top:1px solid rgba(201,163,92,.15);margin:36px 0}
+  .browser-mock{background:#1a1a1a;border-radius:8px 8px 0 0;padding:8px 14px;font-family:Inter,sans-serif;font-size:11px;color:#888;display:flex;align-items:center;gap:6px;border:1px solid #333}
+  .browser-mock img{width:16px;height:16px;display:inline-block;margin:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Queens Bellybutton · master logo + favicon pack</h1>
+  <p>v5.9 · pipeline ejecutado · 9 archivos en branding/favicon/ + 7 en branding/master/ + SVG vectorizado experimental.</p>
+
+  <h2>Hero · imagen completa (uso landing, PDFs, pitch deck)</h2>
+  <div style="background:#0a1733;border-radius:14px;padding:30px;text-align:center;border:1px solid rgba(201,163,92,.18)">
+    <img src="queens-hero-1200.png" alt="Hero 1200" style="max-width:520px;width:100%;height:auto;display:block;margin:0 auto;border-radius:8px">
+    <div class="size" style="margin-top:14px">1200×1456 px · 720 KB · upscale BICUBIC 2.2x</div>
+  </div>
+
+  <h2>Isotipo cuadrado (base de favicon + PWA)</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="queens-isotipo-512.png" alt="512" width="140" height="140">
+      <div class="label">512 × 512</div>
+      <div class="size">PWA icon-512</div>
+    </div>
+    <div class="card">
+      <img src="queens-isotipo-192.png" alt="192" width="140" height="140">
+      <div class="label">192 × 192</div>
+      <div class="size">PWA icon-192</div>
+    </div>
+    <div class="card">
+      <img src="queens-isotipo-96.png" alt="96" width="96" height="96">
+      <div class="label">96 × 96</div>
+      <div class="size">UI / notif</div>
+    </div>
+    <div class="card">
+      <img src="../favicon/apple-touch-icon.png" alt="180" width="120" height="120">
+      <div class="label">180 × 180</div>
+      <div class="size">Apple touch</div>
+    </div>
+  </div>
+
+  <h2>Favicons pequeños · prueba real en pestaña</h2>
+  <p>Así se verán en la barra de pestañas del navegador (a tamaño real). Si la flor se pierde a 16 px, es lo esperado — por eso el <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:'JetBrains Mono',monospace;font-size:11px;">favicon.svg</code> usa la versión simplificada Q+corona (opción A pura).</p>
+
+  <div class="browser-mock">
+    <img src="../favicon/favicon-16x16.png" width="16" height="16" alt="16">
+    <span>Queens Bellybutton — Dashboard</span>
+  </div>
+  <div style="height:200px"></div>
+
+  <h2>Comparativa · PNG IA vs SVG vectorizado vs SVG fallback simplificado</h2>
+  <div class="vs">
+    <div>
+      <h3>PNG IA (imagen original)</h3>
+      <img src="queens-isotipo-512.png" alt="PNG IA">
+      <div class="size" style="margin-top:14px">PNG · 175 KB · rico, detallado</div>
+    </div>
+    <div>
+      <h3>SVG vectorizado (experimental)</h3>
+      <p style="color:#b8c4dc;font-size:13px;text-align:left">
+        Generado · <strong style="color:#e8cf8a">147 KB tras svgo</strong> · vtracer con splines.
+        El SVG es demasiado denso para mostrarlo aquí (~5000 paths) pero queda como
+        fichero editable para futuros usos donde necesites vectorial puro.
+      </p>
+      <p style="color:#566935;font-size:11px;font-family:'JetBrains Mono',monospace;margin-top:14px">
+        branding/master/queens-isotipo-vectorized.svg
+      </p>
+    </div>
+  </div>
+
+  <div class="vs">
+    <div>
+      <h3>SVG fallback simplificado (favicon)</h3>
+      <img src="../favicon/favicon.svg" alt="SVG fallback" style="max-width:200px">
+      <div class="size" style="margin-top:14px">SVG · 2 KB · solo Q+corona, legible a 16 px</div>
+    </div>
+    <div style="background:transparent;border:1px dashed rgba(201,163,92,.3)">
+      <h3>Cuándo se usa cada uno</h3>
+      <p style="text-align:left;font-size:12.5px;line-height:1.8">
+        <strong style="color:#e8cf8a">PNG IA</strong> · landing, hero, PDFs, pitch deck, app icon móvil<br>
+        <strong style="color:#e8cf8a">SVG vectorizado</strong> · uso editable, retina, impresión grande<br>
+        <strong style="color:#e8cf8a">SVG fallback</strong> · favicon de la pestaña del navegador (16/32 px)
+      </p>
+    </div>
+  </div>
+
+  <hr>
+  <p style="text-align:center;color:#566935;font-size:12px">Generado por scripts/process-master-logo.py + generate-favicon-pack.py + vectorize-master-logo.py · v5.9</p>
+</div>
+</body>
+</html>

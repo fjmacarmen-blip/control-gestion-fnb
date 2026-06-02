@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Queens Bellybutton · monograma puro">
+  <defs>
+    <!-- Navy de fondo con leve gradiente para dar profundidad -->
+    <radialGradient id="bgA" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#172950"/>
+      <stop offset="100%" stop-color="#0a1733"/>
+    </radialGradient>
+    <!-- Oro real con luz · 3 stops para volumen -->
+    <linearGradient id="goldA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="48%" stop-color="#c9a35c"/>
+      <stop offset="100%" stop-color="#8a682b"/>
+    </linearGradient>
+    <linearGradient id="goldThinA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="100%" stop-color="#a87e35"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="600" rx="80" fill="url(#bgA)"/>
+
+  <!-- Corona · 5 puntas con esferas en cada punta -->
+  <g transform="translate(300 138)">
+    <!-- Banda inferior de la corona -->
+    <rect x="-58" y="14" width="116" height="11" rx="2" fill="url(#goldA)"/>
+    <!-- Picos -->
+    <path d="M -58 16 L -38 -22 L -22 6 L 0 -34 L 22 6 L 38 -22 L 58 16 Z"
+          fill="url(#goldA)" stroke="#8a682b" stroke-width="0.6"/>
+    <!-- Esferas en las puntas -->
+    <circle cx="-38" cy="-22" r="4.5" fill="url(#goldA)"/>
+    <circle cx="0"   cy="-34" r="5.5" fill="url(#goldA)"/>
+    <circle cx="38"  cy="-22" r="4.5" fill="url(#goldA)"/>
+  </g>
+
+  <!-- Q monograma serif · usando text con Playfair Display para el rasgo editorial -->
+  <text x="300" y="395"
+        font-family="'Playfair Display', 'Cormorant Garamond', Georgia, serif"
+        font-size="320" font-weight="500"
+        text-anchor="middle" fill="url(#goldA)"
+        letter-spacing="0">Q</text>
+
+  <!-- Línea separadora fina -->
+  <line x1="220" y1="448" x2="380" y2="448" stroke="url(#goldThinA)" stroke-width="0.8"/>
+
+  <!-- Wordmark -->
+  <g font-family="'Cinzel','Cormorant Garamond',Georgia,serif" text-anchor="middle">
+    <text x="300" y="490" font-size="36" font-weight="500"
+          fill="url(#goldA)" letter-spacing="6">QUEENS</text>
+  </g>
+  <g font-family="Inter,system-ui,sans-serif" text-anchor="middle">
+    <text x="300" y="520" font-size="13" font-weight="500"
+          fill="#e8e6df" letter-spacing="6">BELLY BUTTON</text>
+    <text x="300" y="548" font-size="9" font-weight="500"
+          fill="#8aa5d6" letter-spacing="3.5">HOSPITALITY MANAGEMENT SOFTWARE</text>
+  </g>
+</svg>

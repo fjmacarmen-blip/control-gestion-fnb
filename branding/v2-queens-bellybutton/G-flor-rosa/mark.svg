@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Queens Bellybutton · Q con flor rosa y hojas (vectorial)">
+  <defs>
+    <radialGradient id="bgG" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#172950"/>
+      <stop offset="100%" stop-color="#0a1733"/>
+    </radialGradient>
+    <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="48%" stop-color="#c9a35c"/>
+      <stop offset="100%" stop-color="#8a682b"/>
+    </linearGradient>
+    <linearGradient id="goldThinG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="100%" stop-color="#a87e35"/>
+    </linearGradient>
+    <!-- Pétalo rosa con leve degradado · 3 stops para volumen sin parecer foto -->
+    <linearGradient id="petalG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#f5b0c2"/>
+      <stop offset="55%" stop-color="#d97a98"/>
+      <stop offset="100%" stop-color="#9c3f60"/>
+    </linearGradient>
+    <radialGradient id="centerG" cx="50%" cy="40%" r="55%">
+      <stop offset="0%"  stop-color="#fde9a6"/>
+      <stop offset="70%" stop-color="#d4a64a"/>
+      <stop offset="100%" stop-color="#7a5418"/>
+    </radialGradient>
+    <linearGradient id="leafG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9eb274"/>
+      <stop offset="100%" stop-color="#566935"/>
+    </linearGradient>
+    <linearGradient id="stemG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9caf6f"/>
+      <stop offset="100%" stop-color="#5e6f3f"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="600" rx="80" fill="url(#bgG)"/>
+
+  <!-- Corona · idéntica al resto del set -->
+  <g transform="translate(300 138)">
+    <rect x="-58" y="14" width="116" height="11" rx="2" fill="url(#goldG)"/>
+    <path d="M -58 16 L -38 -22 L -22 6 L 0 -34 L 22 6 L 38 -22 L 58 16 Z"
+          fill="url(#goldG)" stroke="#8a682b" stroke-width="0.6"/>
+    <circle cx="-38" cy="-22" r="4.5" fill="url(#goldG)"/>
+    <circle cx="0"   cy="-34" r="5.5" fill="url(#goldG)"/>
+    <circle cx="38"  cy="-22" r="4.5" fill="url(#goldG)"/>
+  </g>
+
+  <!-- Q monograma -->
+  <text x="300" y="395"
+        font-family="'Playfair Display','Cormorant Garamond',Georgia,serif"
+        font-size="320" font-weight="500"
+        text-anchor="middle" fill="url(#goldG)">Q</text>
+
+  <!-- Hojas redondas a la izquierda · Umbilicus suculenta (3 hojas en racimo basal) -->
+  <g transform="translate(208 388)">
+    <!-- Tallito conector hacia la Q -->
+    <path d="M 48 -4 Q 30 -2 18 0" stroke="url(#stemG)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+
+    <!-- Hoja grande central -->
+    <g>
+      <ellipse cx="0" cy="0" rx="22" ry="15" fill="url(#leafG)"/>
+      <!-- Nervadura central -->
+      <path d="M -18 0 L 18 0" stroke="#3e4a26" stroke-width="0.6" opacity="0.55"/>
+      <!-- Indentación de ombligo central característica -->
+      <circle cx="0" cy="0" r="3.6" fill="#3e4a26" opacity="0.55"/>
+      <circle cx="0" cy="0" r="1.6" fill="#9eb274"/>
+    </g>
+
+    <!-- Hoja superior izquierda -->
+    <g transform="translate(-28 -12) rotate(-20)">
+      <ellipse cx="0" cy="0" rx="17" ry="11" fill="url(#leafG)" opacity="0.92"/>
+      <circle cx="0" cy="0" r="2.8" fill="#3e4a26" opacity="0.5"/>
+    </g>
+
+    <!-- Hoja inferior izquierda -->
+    <g transform="translate(-18 18) rotate(20)">
+      <ellipse cx="0" cy="0" rx="15" ry="10" fill="url(#leafG)" opacity="0.85"/>
+      <circle cx="0" cy="0" r="2.4" fill="#3e4a26" opacity="0.45"/>
+    </g>
+  </g>
+
+  <!-- Flor rosa a la derecha · crisantemo estilizado de 12 pétalos en 2 capas -->
+  <g transform="translate(390 360)">
+    <!-- Tallito conector -->
+    <path d="M -18 -6 Q -8 -2 0 0" stroke="url(#stemG)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+
+    <!-- Capa exterior · 12 pétalos rotados -->
+    <g>
+      <g>
+        <path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/>
+      </g>
+      <g transform="rotate(30)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(60)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(90)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(120)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(150)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(180)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(210)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(240)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(270)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(300)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+      <g transform="rotate(330)"><path d="M 0 -22 Q -5 -12 0 -2 Q 5 -12 0 -22 Z" fill="url(#petalG)" stroke="#7a2e4a" stroke-width="0.4"/></g>
+    </g>
+
+    <!-- Capa interior · 8 pétalos más pequeños, rotados 15° para alternar con la exterior -->
+    <g transform="rotate(15)" opacity="0.93">
+      <g><path d="M 0 -14 Q -3 -7 0 -1 Q 3 -7 0 -14 Z" fill="#e692a8" stroke="#7a2e4a" stroke-width="0.3"/></g>
+      <g transform="rotate(45)"><path d="M 0 -14 Q -3 -7 0 -1 Q 3 -7 0 -14 Z" fill="#e692a8" stroke="#7a2e4a" stroke-width="0.3"/></g>
+      <g transform="rotate(90)"><path d="M 0 -14 Q -3 -7 0 -1 Q 3 -7 0 -14 Z" fill="#e692a8" stroke="#7a2e4a" stroke-width="0.3"/></g>
+      <g transform="rotate(135)"><path d="M 0 -14 Q -3 -7 0 -1 Q 3 -7 0 -14 Z" fill="#e692a8" stroke="#7a2e4a" stroke-width="0.3"/></g>
+      <g transform="rotate(180)"><path d="M 0 -14 Q -3 -7 0 -1 Q 3 -7 0 -14 Z" fill="#e692a8" stroke="#7a2e4a" stroke-width="0.3"/></g>
+      <g transform="rotate(225)"><path d="M 0 -14 Q -3 -7 0 -1 Q 3 -7 0 -14 Z" fill="#e692a8" stroke="#7a2e4a" stroke-width="0.3"/></g>
+      <g transform="rotate(270)"><path d="M 0 -14 Q -3 -7 0 -1 Q 3 -7 0 -14 Z" fill="#e692a8" stroke="#7a2e4a" stroke-width="0.3"/></g>
+      <g transform="rotate(315)"><path d="M 0 -14 Q -3 -7 0 -1 Q 3 -7 0 -14 Z" fill="#e692a8" stroke="#7a2e4a" stroke-width="0.3"/></g>
+    </g>
+
+    <!-- Centro de la flor · ojo dorado -->
+    <circle cx="0" cy="0" r="7" fill="url(#centerG)" stroke="#7a5418" stroke-width="0.5"/>
+    <circle cx="-1.5" cy="-1.5" r="2" fill="#fde9a6" opacity="0.7"/>
+  </g>
+
+  <line x1="220" y1="448" x2="380" y2="448" stroke="url(#goldThinG)" stroke-width="0.8"/>
+
+  <g font-family="'Cinzel','Cormorant Garamond',Georgia,serif" text-anchor="middle">
+    <text x="300" y="490" font-size="36" font-weight="500"
+          fill="url(#goldG)" letter-spacing="6">QUEENS</text>
+  </g>
+  <g font-family="Inter,system-ui,sans-serif" text-anchor="middle">
+    <text x="300" y="520" font-size="13" font-weight="500"
+          fill="#e8e6df" letter-spacing="6">BELLY BUTTON</text>
+    <text x="300" y="548" font-size="9" font-weight="500"
+          fill="#8aa5d6" letter-spacing="3.5">HOSPITALITY MANAGEMENT SOFTWARE</text>
+  </g>
+</svg>

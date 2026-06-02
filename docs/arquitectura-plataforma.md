@@ -1,4 +1,4 @@
-# Plataforma F&B · Arquitectura multi-tenant
+# Queens Bellybutton · Arquitectura multi-tenant
 
 > Documento de diseño · v1.0 · 27-mayo-2026
 > Cambio de visión del producto: de **app a medida** a **plataforma de creación de apps F&B**.

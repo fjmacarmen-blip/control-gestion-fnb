@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Queens Bellybutton · monograma con ombligo central">
+  <defs>
+    <radialGradient id="bgC" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#172950"/>
+      <stop offset="100%" stop-color="#0a1733"/>
+    </radialGradient>
+    <linearGradient id="goldC" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="48%" stop-color="#c9a35c"/>
+      <stop offset="100%" stop-color="#8a682b"/>
+    </linearGradient>
+    <radialGradient id="ombligoC" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#f5e3ac"/>
+      <stop offset="55%" stop-color="#c9a35c"/>
+      <stop offset="100%" stop-color="#6f5220"/>
+    </radialGradient>
+    <linearGradient id="goldThinC" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="100%" stop-color="#a87e35"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="600" rx="80" fill="url(#bgC)"/>
+
+  <!-- Corona -->
+  <g transform="translate(300 138)">
+    <rect x="-58" y="14" width="116" height="11" rx="2" fill="url(#goldC)"/>
+    <path d="M -58 16 L -38 -22 L -22 6 L 0 -34 L 22 6 L 38 -22 L 58 16 Z"
+          fill="url(#goldC)" stroke="#8a682b" stroke-width="0.6"/>
+    <circle cx="-38" cy="-22" r="4.5" fill="url(#goldC)"/>
+    <circle cx="0"   cy="-34" r="5.5" fill="url(#goldC)"/>
+    <circle cx="38"  cy="-22" r="4.5" fill="url(#goldC)"/>
+  </g>
+
+  <!-- Q monograma -->
+  <text x="300" y="395"
+        font-family="'Playfair Display','Cormorant Garamond',Georgia,serif"
+        font-size="320" font-weight="500"
+        text-anchor="middle" fill="url(#goldC)">Q</text>
+
+  <!-- Ombligo central · pequeño orbe luminoso dentro del óvalo de la Q -->
+  <!-- Brillo ténue alrededor -->
+  <circle cx="297" cy="292" r="26" fill="url(#ombligoC)" opacity="0.18"/>
+  <!-- Punto central sólido -->
+  <circle cx="297" cy="292" r="12" fill="url(#ombligoC)"/>
+  <!-- Anillo fino -->
+  <circle cx="297" cy="292" r="18" fill="none" stroke="#c9a35c" stroke-width="1" opacity="0.55"/>
+
+  <line x1="220" y1="448" x2="380" y2="448" stroke="url(#goldThinC)" stroke-width="0.8"/>
+
+  <g font-family="'Cinzel','Cormorant Garamond',Georgia,serif" text-anchor="middle">
+    <text x="300" y="490" font-size="36" font-weight="500"
+          fill="url(#goldC)" letter-spacing="6">QUEENS</text>
+  </g>
+  <g font-family="Inter,system-ui,sans-serif" text-anchor="middle">
+    <text x="300" y="520" font-size="13" font-weight="500"
+          fill="#e8e6df" letter-spacing="6">BELLY BUTTON</text>
+    <text x="300" y="548" font-size="9" font-weight="500"
+          fill="#8aa5d6" letter-spacing="3.5">HOSPITALITY MANAGEMENT SOFTWARE</text>
+  </g>
+</svg>

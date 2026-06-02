@@ -3,21 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Plataforma SaaS multi-tenant de gestión de eventos y banquetes para hoteles y restaurantes. Sin frameworks, GitHub Pages, importadores Excel/PDF/imágenes y conectores a economatos externos.">
+<meta name="description" content="Queens Bellybutton · plataforma SaaS multi-tenant de gestión hostelera. Presupuestos, sala, cocina y cliente en un solo lugar. Sin frameworks, GitHub Pages, importadores y conectores externos.">
 <meta name="author" content="Francisco Javier Martínez Alba">
-<meta name="theme-color" content="#0d1117">
 <meta property="og:type"        content="website">
-<meta property="og:title"       content="Control de Gestión F&B · Plataforma multi-tenant">
+<meta property="og:title"       content="Queens Bellybutton · Hospitality Management Software">
 <meta property="og:description" content="Plataforma multi-tenant para hoteles y restaurantes. Vanilla JS, GitHub Pages, importadores y conectores externos.">
 <meta property="og:url"         content="https://fjmacarmen-blip.github.io/control-gestion-fnb/">
-<meta property="og:site_name"   content="Control de Gestión F&B">
+<meta property="og:site_name"   content="Queens Bellybutton">
 <meta property="og:locale"      content="es_ES">
 <meta name="twitter:card"       content="summary_large_image">
-<meta name="twitter:title"      content="Control de Gestión F&B · Plataforma multi-tenant">
+<meta name="twitter:title"      content="Queens Bellybutton · Hospitality Management Software">
 <meta name="twitter:description" content="SaaS de eventos para hoteles · vanilla JS · GitHub Pages · construido por un director hotelero.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
 <link rel="canonical" href="https://fjmacarmen-blip.github.io/control-gestion-fnb/">
-<title>Plataforma F&B · Control de Gestión</title>
+<title>Queens Bellybutton · Hospitality Management Software</title>
+
+<!-- Queens Bellybutton favicon block v5.9 -->
+<link rel="icon" type="image/svg+xml" href="branding/favicon/favicon.svg">
+<link rel="icon" type="image/x-icon" href="branding/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="branding/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="branding/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="branding/favicon/apple-touch-icon.png">
+<meta name="theme-color" content="#0a1733">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Queens Bellybutton">
+<!-- /Queens Bellybutton favicon block -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="core/css/dashboard-theme.css">
@@ -45,16 +56,12 @@
   }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand-mark {
-    width: 38px; height: 38px;
+    width: 44px; height: 44px;
     border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
-    color: var(--bg-base);
-    font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px;
-    letter-spacing: -.5px;
-    box-shadow: 0 6px 18px rgba(52,211,153,.25);
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(10,23,51,.45);
   }
+  .brand-mark img { width: 100%; height: 100%; display: block; object-fit: cover; }
   .brand-text { display: flex; flex-direction: column; }
   .brand-title { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
   .brand-sub { font-size: 10px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
@@ -176,21 +183,22 @@
 
 <nav class="nav">
   <div class="brand">
-    <div class="brand-mark">F&amp;B</div>
+    <div class="brand-mark"><img src="branding/favicon/icon-192.png" alt="Queens Bellybutton" width="44" height="44"></div>
     <div class="brand-text">
-      <div class="brand-title">Plataforma F&amp;B</div>
-      <div class="brand-sub">Control de gestión · multi-tenant</div>
+      <div class="brand-title">Queens Bellybutton</div>
+      <div class="brand-sub">Hospitality Management Software</div>
     </div>
   </div>
-  <div class="nav-version">v5.7</div>
+  <div class="nav-version">v5.9</div>
 </nav>
 
 <main>
   <div class="wrap">
     <div class="hero">
+      <img src="branding/master/queens-hero-1200.png" alt="Queens Bellybutton · Hospitality Management Software" loading="eager" style="max-width:420px;width:100%;height:auto;display:block;margin:0 auto 28px;border-radius:14px;box-shadow:0 30px 80px rgba(10,23,51,.55);">
       <div class="eyebrow">Hotel · Restauración · Catering · Eventos</div>
-      <h1>Construye apps F&amp;B<br><em>a medida</em> para cada establecimiento</h1>
-      <p class="lede">Plataforma de creación y mantenimiento de aplicaciones de gestión gastronómica. El Hotel Miramar Dorado es el proyecto piloto y template de referencia.</p>
+      <h1>El centro alrededor del cual gira <em>todo tu negocio</em></h1>
+      <p class="lede">Plataforma multi-tenant para crear y mantener aplicaciones de gestión hostelera. Presupuestos, sala, cocina y cliente en un solo lugar. El Hotel Miramar Dorado es el proyecto piloto y template de referencia.</p>
     </div>
 
     <div class="cards">

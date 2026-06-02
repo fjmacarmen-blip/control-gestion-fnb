@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Página pública del evento · información para invitados">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://image.pollinations.ai; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+<title>Evento · Queens Bellybutton</title>
+
+<!-- Queens Bellybutton favicon block v5.9 -->
+<link rel="icon" type="image/svg+xml" href="branding/favicon/favicon.svg">
+<link rel="icon" type="image/x-icon" href="branding/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="branding/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="branding/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="branding/favicon/apple-touch-icon.png">
+<meta name="theme-color" content="#0a1733">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Queens Bellybutton">
+<!-- /Queens Bellybutton favicon block -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1733;
+    --navy-light: #172950;
+    --gold: #c9a35c;
+    --gold-light: #e8cf8a;
+    --gold-deep: #8a682b;
+    --text: #e8e6df;
+    --text-soft: #b8c4dc;
+    --text-muted: #8aa5d6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100vh; background: var(--navy); color: var(--text); font-family: Inter, system-ui, sans-serif; line-height: 1.6; }
+  body { background: radial-gradient(ellipse at top, var(--navy-light) 0%, var(--navy) 60%); padding: 40px 20px; }
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  /* Header */
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 40px; padding-bottom: 24px;
+    border-bottom: 1px solid rgba(201,163,92,.2);
+  }
+  .brand img { width: 50px; height: 50px; border-radius: 11px; box-shadow: 0 6px 18px rgba(10,23,51,.4); }
+  .brand-text { display: flex; flex-direction: column; }
+  .brand-name { font-family: Cinzel, serif; font-weight: 600; font-size: 20px; color: var(--gold-light); letter-spacing: 1px; }
+  .brand-sub { font-size: 10px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+
+  /* Hero */
+  .hero { text-align: center; margin-bottom: 48px; }
+  .hero .eyebrow {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: Cinzel, serif; font-weight: 500;
+    font-size: clamp(28px, 5vw, 42px); line-height: 1.15;
+    color: var(--gold-light); letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .hero .meta {
+    font-size: 14px; color: var(--text-soft); margin-top: 18px;
+  }
+  .hero .meta-item { display: inline-block; margin: 0 12px; }
+  .hero .meta-item strong { color: var(--text); }
+
+  /* Sections */
+  section {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(201,163,92,.18);
+    border-radius: 14px;
+    padding: 28px 26px;
+    margin-bottom: 24px;
+  }
+  section h2 {
+    font-family: Cinzel, serif; font-size: 20px; font-weight: 500;
+    color: var(--gold-light); letter-spacing: 1.5px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed rgba(201,163,92,.2);
+    display: flex; align-items: center; gap: 12px;
+  }
+  section h2 .icon { font-size: 22px; }
+
+  /* Programa */
+  .programa { display: flex; flex-direction: column; gap: 12px; }
+  .programa-item { display: flex; gap: 16px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+  .programa-item:last-child { border-bottom: 0; }
+  .programa-hora { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 14px; min-width: 70px; font-weight: 600; }
+  .programa-act { color: var(--text); font-size: 14.5px; }
+
+  /* Seating · grid de mesas */
+  .seating { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+  .mesa {
+    background: rgba(201,163,92,.08);
+    border: 1px solid rgba(201,163,92,.3);
+    border-radius: 10px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .mesa-num { font-family: Cinzel, serif; color: var(--gold-light); font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .mesa-nombre { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+  .mesa-sillas { color: var(--gold); font-size: 11px; margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
+
+  /* Menu */
+  .menu-paquete {
+    background: rgba(255,255,255,.02); border-radius: 10px; padding: 16px 18px;
+    border-left: 3px solid var(--gold);
+  }
+  .menu-name { font-family: Cinzel, serif; font-size: 17px; color: var(--gold-light); font-weight: 500; margin-bottom: 6px; }
+  .menu-precio { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+  /* Info invitados */
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .info-item { background: rgba(255,255,255,.02); padding: 14px 16px; border-radius: 10px; }
+  .info-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-weight: 600; }
+  .info-value { font-size: 14px; color: var(--text); }
+
+  /* Footer */
+  footer {
+    text-align: center; margin-top: 40px;
+    font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  /* Error */
+  .error {
+    background: rgba(248,81,73,.1);
+    border: 1px solid rgba(248,81,73,.35);
+    color: #f87171;
+    padding: 18px 22px; border-radius: 12px;
+    margin: 40px 0; text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .hero .meta-item { display: block; margin: 6px 0; }
+    section { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="root">
+  <div class="brand">
+    <img src="branding/favicon/icon-192.png" alt="Queens Bellybutton">
+    <div class="brand-text">
+      <div class="brand-name">Queens Bellybutton</div>
+      <div class="brand-sub">Hospitality · Evento privado</div>
+    </div>
+  </div>
+  <div id="content">
+    <p style="text-align:center;color:var(--text-muted);padding:60px 0;">Cargando información del evento…</p>
+  </div>
+  <footer>
+    Hospitality Management Software · Queens Bellybutton
+  </footer>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ─── Helpers ──────────────────────────────────────────────────────
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
+  function getParam(name) {
+    const p = new URLSearchParams(location.search);
+    return p.get(name);
+  }
+  function formatFecha(iso) {
+    if (!iso) return '—';
+    try {
+      const d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('es-ES', { day:'numeric', month:'long', year:'numeric' });
+    } catch { return iso; }
+  }
+  function showError(msg) {
+    document.getElementById('content').innerHTML = '<div class="error">' + escapeHtml(msg) + '</div>';
+  }
+
+  // ─── Carga del evento ────────────────────────────────────────────
+  async function loadEvento() {
+    const proyecto = getParam('proyecto');
+    const id = getParam('id');
+    if (!proyecto || !id) {
+      showError('Falta información del evento. Asegúrate de usar el enlace o el QR que te facilitaron.');
+      return;
+    }
+    // Validar formato (solo ids seguros)
+    if (!/^[a-z0-9_-]+$/i.test(proyecto) || !/^[A-Z0-9_-]+$/i.test(id)) {
+      showError('Identificador de evento no válido.');
+      return;
+    }
+    try {
+      const r = await fetch('projects/' + encodeURIComponent(proyecto) + '/budgets/' + encodeURIComponent(id) + '.json', { cache: 'no-store' });
+      if (!r.ok) {
+        showError('Evento no encontrado o aún no publicado.');
+        return;
+      }
+      const evento = await r.json();
+      render(evento);
+    } catch (e) {
+      showError('No se pudo cargar la información del evento: ' + e.message);
+    }
+  }
+
+  // ─── Render ──────────────────────────────────────────────────────
+  function render(evento) {
+    const pax = evento.pt || evento.pn || 0;
+    const ep = evento.evento_publico || {};   // opcional, extensión v5.9
+
+    const horarioDefault = [
+      { hora: evento.horaInicio || '13:00', actividad: 'Recepción y cóctel de bienvenida' },
+      { hora: incHora(evento.horaInicio || '13:00', 1), actividad: 'Servicio de comida principal' },
+      { hora: incHora(evento.horaInicio || '13:00', 3), actividad: 'Café, postres y sobremesa' },
+      { hora: evento.horaFin || '20:00', actividad: 'Despedida' },
+    ];
+    const programa = (ep.programa && ep.programa.length) ? ep.programa : horarioDefault;
+
+    const html = `
+      <div class="hero">
+        <div class="eyebrow">${escapeHtml(evento.eventType && evento.eventType.name || 'Evento privado')}</div>
+        <h1>${escapeHtml(evento.clientName || 'Su evento')}</h1>
+        <div class="meta">
+          <span class="meta-item">📅 <strong>${escapeHtml(formatFecha(evento.fechaEvento))}</strong></span>
+          <span class="meta-item">🕐 <strong>${escapeHtml(evento.horaInicio || '—')} – ${escapeHtml(evento.horaFin || '—')}</strong></span>
+          <span class="meta-item">👥 <strong>${pax} comensales</strong></span>
+        </div>
+      </div>
+
+      ${renderMenu(evento)}
+      ${renderPrograma(programa)}
+      ${renderSeating(ep.seating)}
+      ${renderInfoInvitados(ep.info_invitados)}
+    `;
+    document.getElementById('content').innerHTML = html;
+  }
+
+  function incHora(hora, horasMas) {
+    if (!hora || !/^\d{1,2}:\d{2}$/.test(hora)) return hora;
+    const [h, m] = hora.split(':').map(Number);
+    const total = (h + horasMas) % 24;
+    return String(total).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+  }
+
+  function renderMenu(evento) {
+    if (!evento.menuPkg) return '';
+    return `
+      <section>
+        <h2><span class="icon">🍽️</span>Menú del evento</h2>
+        <div class="menu-paquete">
+          <div class="menu-name">${escapeHtml(evento.menuPkg.name)}</div>
+          <div class="menu-precio">${evento.menuPkg.ppax || '—'} € por comensal</div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderPrograma(programa) {
+    if (!programa || !programa.length) return '';
+    return `
+      <section>
+        <h2><span class="icon">🕐</span>Programa del día</h2>
+        <div class="programa">
+          ${programa.map(p => `
+            <div class="programa-item">
+              <div class="programa-hora">${escapeHtml(p.hora || '—')}</div>
+              <div class="programa-act">${escapeHtml(p.actividad || '—')}</div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderSeating(seating) {
+    if (!seating || !seating.length) {
+      // Placeholder cuando aún no hay seating definido
+      return `
+        <section>
+          <h2><span class="icon">🪑</span>Distribución de mesas</h2>
+          <p style="color:var(--text-muted);font-size:13px;text-align:center;padding:20px 0;">
+            La distribución de mesas se publicará 48 h antes del evento.
+          </p>
+        </section>
+      `;
+    }
+    return `
+      <section>
+        <h2><span class="icon">🪑</span>Distribución de mesas</h2>
+        <div class="seating">
+          ${seating.map(m => `
+            <div class="mesa">
+              <div class="mesa-num">Mesa ${escapeHtml(String(m.mesa || ''))}</div>
+              <div class="mesa-nombre">${escapeHtml(m.nombre || '')}</div>
+              <div class="mesa-sillas">${m.sillas || (m.invitados && m.invitados.length) || 0} asientos</div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderInfoInvitados(info) {
+    const i = info || {};
+    const items = [
+      { label: 'Código de vestimenta', value: i.dress_code },
+      { label: 'Aparcamiento', value: i.parking },
+      { label: 'Contacto', value: i.contacto },
+      { label: 'Notas', value: i.notas },
+    ].filter(x => x.value);
+    if (!items.length) return '';
+    return `
+      <section>
+        <h2><span class="icon">ℹ️</span>Información para invitados</h2>
+        <div class="info-grid">
+          ${items.map(it => `
+            <div class="info-item">
+              <div class="info-label">${escapeHtml(it.label)}</div>
+              <div class="info-value">${escapeHtml(it.value)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  loadEvento();
+})();
+</script>
+
+</body>
+</html>

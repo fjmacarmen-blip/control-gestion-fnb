@@ -4,13 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Checklist interactivo de QA · marca OK/error · genera prompt de reparaciones.">
-<meta name="theme-color" content="#0d1117">
 <meta name="robots" content="noindex">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="core/css/dashboard-theme.css">
-<title>Checklist de pruebas · Plataforma F&B</title>
+<title>Checklist de pruebas · Queens Bellybutton</title>
+
+<!-- Queens Bellybutton favicon block v5.9 -->
+<link rel="icon" type="image/svg+xml" href="branding/favicon/favicon.svg">
+<link rel="icon" type="image/x-icon" href="branding/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="branding/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="branding/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="branding/favicon/apple-touch-icon.png">
+<meta name="theme-color" content="#0a1733">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Queens Bellybutton">
+<!-- /Queens Bellybutton favicon block -->
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { min-height: 100%; }
@@ -85,6 +96,42 @@
   .filter-btn:hover { color: var(--text); }
   .filter-btn.is-active { background: var(--accent); color: var(--bg-base); border-color: var(--accent); font-weight: 600; }
   .filter-info { margin-left: auto; font-size: 11px; color: var(--text-muted); align-self: center; }
+
+  /* ── Cabecera de nivel (v5.9) ────────── */
+  .level-head {
+    margin: 32px 0 18px;
+    padding: 22px 24px 20px;
+    background: linear-gradient(135deg, rgba(10,23,51,.6) 0%, rgba(10,23,51,.3) 100%);
+    border: 1px solid rgba(201,163,92,.25);
+    border-radius: 14px;
+    border-left: 4px solid var(--accent);
+  }
+  .level-head[data-level="cliente"]  { border-left-color: #34d399; }
+  .level-head[data-level="usuario"]  { border-left-color: #60a5fa; }
+  .level-head[data-level="director"] { border-left-color: #c9a35c; }
+  .level-head[data-level="admin"]    { border-left-color: #f472b6; }
+  .level-head:first-child { margin-top: 0; }
+  .level-title {
+    font-size: 22px; font-weight: 600; color: #e8cf8a;
+    font-family: var(--font-display, 'Cinzel', serif);
+    letter-spacing: -.01em;
+    margin-bottom: 4px;
+  }
+  .level-sub {
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 10px;
+  }
+  .level-desc {
+    font-size: 13.5px; line-height: 1.6; color: var(--text-soft);
+    max-width: 760px; margin-bottom: 12px;
+  }
+  .level-stats {
+    display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
+    font-size: 12px; font-family: 'JetBrains Mono', monospace;
+  }
+  .level-stats .ok  { color: #34d399; }
+  .level-stats .err { color: #f87171; }
+  .level-stats .pend { color: var(--text-muted); }
 
   /* ── Bloque ───────────────────────────── */
   .block {
@@ -267,7 +314,7 @@
 </div>
 
 <main>
-  <div class="eyebrow">Plataforma F&B v5.1 · checklist interactivo</div>
+  <div class="eyebrow">Queens Bellybutton v5.1 · checklist interactivo</div>
   <h1>Prueba cada función<br>y marca lo que falle</h1>
   <p class="lede">
     Cada bloque agrupa funciones relacionadas. Marca cada test con <strong>✓ OK</strong> o <strong>✗ Error</strong>.
@@ -727,6 +774,68 @@ const BLOCKS = [
 ];
 
 // ─────────────────────────────────────────────────────
+// v5.9 · Niveles de usuario · agrupacion del checklist
+// El checklist completo se ve siempre, pero se agrupa
+// visualmente segun quien deba pasar cada test:
+//   - cliente   · cliente final (publico, sin login)
+//   - usuario   · usuario interno (sala, sin admin)
+//   - director  · director del establecimiento (gestiona SU proyecto)
+//   - admin     · super-admin (gestiona TODOS los proyectos)
+// ─────────────────────────────────────────────────────
+const LEVELS = [
+  {
+    id: 'cliente',
+    title: '👥  Cliente final',
+    sub: 'Publico · sin login · acceso vía URL o QR',
+    desc: 'Lo que cualquier invitado a un evento, comensal de restaurante o cliente que pide presupuesto debe poder hacer SIN crear cuenta. Si algo aqui falla, el cliente final no puede usar el producto.',
+  },
+  {
+    id: 'usuario',
+    title: '🍽️  Usuario interno · sala',
+    sub: 'Equipo operativo · PWA movil · sin admin',
+    desc: 'Lo que el equipo de sala usa cada turno: ver eventos del dia, dietas criticas, simulador TPV. Acceso por dispositivo movil instalado como PWA.',
+  },
+  {
+    id: 'director',
+    title: '👔  Director del establecimiento',
+    sub: 'Gestiona SU proyecto · dashboard + métricas',
+    desc: 'Lo que un director hotelero hace con su establecimiento: edita menus y recetas, calcula escandallos, ve métricas, envia presupuestos, consulta calendario. Acceso al dashboard con login.',
+  },
+  {
+    id: 'admin',
+    title: '🛡️  Super-admin',
+    sub: 'Gestiona TODOS los proyectos · alta, baja, seguridad',
+    desc: 'Lo que solo el administrador de la plataforma hace: dar de alta proyectos nuevos, importar datos heredados de clientes, configurar conectores externos, gestionar PAT y backups, revisar seguridad.',
+  },
+];
+
+// Mapping bloque -> nivel
+const LEVEL_MAP = {
+  b1:  'admin',     // Acceso y autenticacion
+  b2:  'admin',     // Lista de proyectos y navegacion
+  b3:  'director',  // Editor visual
+  b4:  'admin',     // Wizard creacion + plantillas
+  b5:  'director',  // Importadores
+  b6:  'director',  // Conectores externos productos/TPV
+  b7:  'director',  // Metricas y agenda
+  b8:  'usuario',   // Sala movil PWA
+  b9:  'cliente',   // Carta publica + QR
+  b10: 'director',  // Calculadora escandallos
+  b11: 'director',  // Apariencia light/dark
+  b12: 'cliente',   // Cotizador publico
+  b13: 'director',  // Cotizador interno
+  b14: 'director',  // Acceso al cotizador desde dashboard
+  b15: 'cliente',   // Resto del frontend publico
+  b16: 'cliente',   // Calendario y disponibilidad
+  b17: 'admin',     // Seguridad y robustez
+  b18: 'cliente',   // FAQ publica
+  b19: 'cliente',   // Asistente IA
+  b20: 'cliente',   // Idiomas
+  b21: 'admin',     // Material comercial
+};
+BLOCKS.forEach(b => { b.level = LEVEL_MAP[b.id] || 'admin'; });
+
+// ─────────────────────────────────────────────────────
 // STATE
 // ─────────────────────────────────────────────────────
 const STORAGE_KEY = 'fnb_qa_state_v1';
@@ -767,39 +876,72 @@ function escapeHtml(s) {
 function renderBlocks() {
   const root = $('#blocksRoot');
   root.innerHTML = '';
-  BLOCKS.forEach((block, idx) => {
-    const okCount = block.tests.filter(t => (state[t.id] && state[t.id].status) === 'ok').length;
-    const errCount = block.tests.filter(t => (state[t.id] && state[t.id].status) === 'err').length;
-    const pendCount = block.tests.length - okCount - errCount;
-    // Filtro · si el bloque entero queda sin tests visibles, ocultarlo
-    const visibleTests = block.tests.filter(t => matchesFilter(t));
-    if (!visibleTests.length && currentFilter !== 'all') return;
-    const isOpen = state['__open_' + block.id] !== false;
-    const div = document.createElement('article');
-    div.className = 'block' + (isOpen ? ' is-open' : '');
-    div.dataset.blockId = block.id;
-    div.innerHTML = `
-      <div class="block-head" data-action="toggle-block">
-        <div class="block-title-wrap">
-          <div class="block-num">${idx + 1}</div>
-          <div>
-            <div class="block-title">${escapeHtml(block.title)}</div>
-            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${block.tests.length} test${block.tests.length === 1 ? '' : 's'}</div>
-          </div>
-        </div>
-        <div class="block-status">
-          <span class="ok">✓ ${okCount}</span>
-          <span class="err">✗ ${errCount}</span>
-          <span class="pend">○ ${pendCount}</span>
-          <span class="block-chev">▼</span>
-        </div>
-      </div>
-      <div class="block-body">
-        <div class="block-desc">${block.desc}</div>
-        ${visibleTests.map(t => renderTest(t)).join('')}
+  // v5.9 · agrupar bloques por nivel de usuario para insertar cabeceras
+  let blockCounter = 0;
+  LEVELS.forEach(level => {
+    const blocksOfLevel = BLOCKS.filter(b => b.level === level.id);
+    if (!blocksOfLevel.length) return;
+    // Calcular si algun bloque de este nivel tiene tests visibles segun filtro
+    const anyVisible = blocksOfLevel.some(b => b.tests.some(matchesFilter));
+    if (!anyVisible && currentFilter !== 'all') return;
+
+    // Cabecera del nivel
+    const totalTests = blocksOfLevel.reduce((s, b) => s + b.tests.length, 0);
+    const okLevel = blocksOfLevel.reduce((s, b) =>
+      s + b.tests.filter(t => (state[t.id] && state[t.id].status) === 'ok').length, 0);
+    const errLevel = blocksOfLevel.reduce((s, b) =>
+      s + b.tests.filter(t => (state[t.id] && state[t.id].status) === 'err').length, 0);
+    const pendLevel = totalTests - okLevel - errLevel;
+    const header = document.createElement('header');
+    header.className = 'level-head';
+    header.dataset.level = level.id;
+    header.innerHTML = `
+      <div class="level-title">${level.title}</div>
+      <div class="level-sub">${escapeHtml(level.sub)}</div>
+      <div class="level-desc">${escapeHtml(level.desc)}</div>
+      <div class="level-stats">
+        <span class="ok">✓ ${okLevel}</span>
+        <span class="err">✗ ${errLevel}</span>
+        <span class="pend">○ ${pendLevel}</span>
+        <span style="color:var(--text-muted);font-size:11px;letter-spacing:1.5px;">${blocksOfLevel.length} bloque${blocksOfLevel.length === 1 ? '' : 's'} · ${totalTests} tests</span>
       </div>
     `;
-    root.appendChild(div);
+    root.appendChild(header);
+
+    blocksOfLevel.forEach(block => {
+      blockCounter++;
+      const okCount = block.tests.filter(t => (state[t.id] && state[t.id].status) === 'ok').length;
+      const errCount = block.tests.filter(t => (state[t.id] && state[t.id].status) === 'err').length;
+      const pendCount = block.tests.length - okCount - errCount;
+      const visibleTests = block.tests.filter(t => matchesFilter(t));
+      if (!visibleTests.length && currentFilter !== 'all') return;
+      const isOpen = state['__open_' + block.id] !== false;
+      const div = document.createElement('article');
+      div.className = 'block' + (isOpen ? ' is-open' : '');
+      div.dataset.blockId = block.id;
+      div.innerHTML = `
+        <div class="block-head" data-action="toggle-block">
+          <div class="block-title-wrap">
+            <div class="block-num">${blockCounter}</div>
+            <div>
+              <div class="block-title">${escapeHtml(block.title)}</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${block.tests.length} test${block.tests.length === 1 ? '' : 's'}</div>
+            </div>
+          </div>
+          <div class="block-status">
+            <span class="ok">✓ ${okCount}</span>
+            <span class="err">✗ ${errCount}</span>
+            <span class="pend">○ ${pendCount}</span>
+            <span class="block-chev">▼</span>
+          </div>
+        </div>
+        <div class="block-body">
+          <div class="block-desc">${block.desc}</div>
+          ${visibleTests.map(t => renderTest(t)).join('')}
+        </div>
+      `;
+      root.appendChild(div);
+    });
   });
   refreshStats();
 }
@@ -918,7 +1060,7 @@ function buildPrompt() {
   const ok = getStat('ok'), err = getStat('err'), pend = getStat('pend'), total = getTotalTests();
   const fecha = new Date().toLocaleString('es-ES');
 
-  let txt = '# Reporte de QA · Plataforma F&B v5.1\n';
+  let txt = '# Reporte de QA · Queens Bellybutton v5.1\n';
   txt += '_Generado_: ' + fecha + '\n\n';
   txt += '## Resumen\n';
   txt += '- Total tests: **' + total + '**\n';

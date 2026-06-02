@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 280" width="1000" height="280" role="img" aria-label="Queens Bellybutton · horizontal H">
+  <defs>
+    <linearGradient id="bgHH" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0e1c3f"/>
+      <stop offset="100%" stop-color="#0a1733"/>
+    </linearGradient>
+    <linearGradient id="goldHH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="48%" stop-color="#c9a35c"/>
+      <stop offset="100%" stop-color="#8a682b"/>
+    </linearGradient>
+    <linearGradient id="petalHH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#f5b0c2"/>
+      <stop offset="55%" stop-color="#d97a98"/>
+      <stop offset="100%" stop-color="#9c3f60"/>
+    </linearGradient>
+    <radialGradient id="centerHH" cx="50%" cy="40%" r="55%">
+      <stop offset="0%"  stop-color="#fde9a6"/>
+      <stop offset="70%" stop-color="#d4a64a"/>
+    </radialGradient>
+    <linearGradient id="leafHH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9eb274"/>
+      <stop offset="100%" stop-color="#566935"/>
+    </linearGradient>
+    <linearGradient id="stemHH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9caf6f"/>
+      <stop offset="100%" stop-color="#5e6f3f"/>
+    </linearGradient>
+    <linearGradient id="bellHH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fdf6e3"/>
+      <stop offset="60%" stop-color="#f3e6b9"/>
+      <stop offset="100%" stop-color="#d6b97a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="280" fill="url(#bgHH)"/>
+
+  <g transform="translate(140 158)">
+    <g transform="translate(0 -98)">
+      <rect x="-32" y="8" width="64" height="6" rx="1.5" fill="url(#goldHH)"/>
+      <path d="M -32 9 L -21 -12 L -12 4 L 0 -19 L 12 4 L 21 -12 L 32 9 Z" fill="url(#goldHH)"/>
+      <circle cx="-21" cy="-12" r="2.5" fill="url(#goldHH)"/>
+      <circle cx="0"   cy="-19" r="3"   fill="url(#goldHH)"/>
+      <circle cx="21"  cy="-12" r="2.5" fill="url(#goldHH)"/>
+    </g>
+    <text x="0" y="42"
+          font-family="'Playfair Display','Cormorant Garamond',Georgia,serif"
+          font-size="200" font-weight="500"
+          text-anchor="middle" fill="url(#goldHH)">Q</text>
+
+    <!-- Flor izquierda -->
+    <g transform="translate(-50 20)">
+      <ellipse cx="-14" cy="6" rx="9" ry="6" fill="url(#leafHH)" opacity="0.85"/>
+      <g>
+        <g><path d="M 0 -13 Q -3 -7 0 -1 Q 3 -7 0 -13 Z" fill="url(#petalHH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+        <g transform="rotate(45)"><path d="M 0 -13 Q -3 -7 0 -1 Q 3 -7 0 -13 Z" fill="url(#petalHH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+        <g transform="rotate(90)"><path d="M 0 -13 Q -3 -7 0 -1 Q 3 -7 0 -13 Z" fill="url(#petalHH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+        <g transform="rotate(135)"><path d="M 0 -13 Q -3 -7 0 -1 Q 3 -7 0 -13 Z" fill="url(#petalHH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+        <g transform="rotate(180)"><path d="M 0 -13 Q -3 -7 0 -1 Q 3 -7 0 -13 Z" fill="url(#petalHH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+        <g transform="rotate(225)"><path d="M 0 -13 Q -3 -7 0 -1 Q 3 -7 0 -13 Z" fill="url(#petalHH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+        <g transform="rotate(270)"><path d="M 0 -13 Q -3 -7 0 -1 Q 3 -7 0 -13 Z" fill="url(#petalHH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+        <g transform="rotate(315)"><path d="M 0 -13 Q -3 -7 0 -1 Q 3 -7 0 -13 Z" fill="url(#petalHH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+      </g>
+      <circle cx="0" cy="0" r="4" fill="url(#centerHH)" stroke="#7a5418" stroke-width="0.4"/>
+    </g>
+
+    <!-- Campanillas derecha -->
+    <g transform="translate(58 22)">
+      <path d="M 0 0 Q 4 -22 8 -50 Q 12 -78 14 -106"
+            fill="none" stroke="url(#stemHH)" stroke-width="1.6" stroke-linecap="round"/>
+      <g stroke="#a87e35" stroke-width="0.4">
+        <path d="M -3 -10 q -2 3 -0.5 6.5 q 2.5 1.2 4 -0.5 q 0.5 -4 -1 -6.5 q -1.5 -0.5 -2.5 0.5 z" fill="url(#bellHH)"/>
+        <path d="M 11 -26 q -2 3 -0.5 6.5 q 2.5 1.2 4 -0.5 q 0.5 -4 -1 -6.5 q -1.5 -0.5 -2.5 0.5 z" fill="url(#bellHH)"/>
+        <path d="M 1 -42  q -2 3 -0.5 6.5 q 2.5 1.2 4 -0.5 q 0.5 -4 -1 -6.5 q -1.5 -0.5 -2.5 0.5 z" fill="url(#bellHH)"/>
+        <path d="M 14 -60 q -2 3 -0.5 6.5 q 2.5 1.2 4 -0.5 q 0.5 -4 -1 -6.5 q -1.5 -0.5 -2.5 0.5 z" fill="url(#bellHH)"/>
+        <path d="M 4 -78  q -2 3 -0.5 6.5 q 2.5 1.2 4 -0.5 q 0.5 -4 -1 -6.5 q -1.5 -0.5 -2.5 0.5 z" fill="url(#bellHH)"/>
+      </g>
+      <ellipse cx="14" cy="-106" rx="1.4" ry="2.6" fill="url(#bellHH)" stroke="#a87e35" stroke-width="0.4"/>
+    </g>
+  </g>
+
+  <g transform="translate(310 0)">
+    <text x="0" y="130"
+          font-family="'Cinzel','Cormorant Garamond',Georgia,serif"
+          font-size="56" font-weight="500"
+          fill="url(#goldHH)" letter-spacing="9">QUEENS</text>
+    <line x1="0" y1="148" x2="240" y2="148" stroke="#c9a35c" stroke-width="0.8" opacity="0.7"/>
+    <text x="0" y="174"
+          font-family="Inter,system-ui,sans-serif"
+          font-size="16" font-weight="500"
+          fill="#e8e6df" letter-spacing="9">BELLY BUTTON</text>
+    <text x="0" y="200"
+          font-family="Inter,system-ui,sans-serif"
+          font-size="10.5" font-weight="500"
+          fill="#8aa5d6" letter-spacing="4.5">HOSPITALITY MANAGEMENT SOFTWARE</text>
+  </g>
+</svg>

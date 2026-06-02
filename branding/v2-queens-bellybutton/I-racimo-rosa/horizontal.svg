@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 280" width="1000" height="280" role="img" aria-label="Queens Bellybutton · horizontal I">
+  <defs>
+    <linearGradient id="bgIH" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0e1c3f"/>
+      <stop offset="100%" stop-color="#0a1733"/>
+    </linearGradient>
+    <linearGradient id="goldIH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="48%" stop-color="#c9a35c"/>
+      <stop offset="100%" stop-color="#8a682b"/>
+    </linearGradient>
+    <linearGradient id="petalIH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#f5b0c2"/>
+      <stop offset="55%" stop-color="#d97a98"/>
+      <stop offset="100%" stop-color="#9c3f60"/>
+    </linearGradient>
+    <linearGradient id="petalIHsoft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#fbdde6"/>
+      <stop offset="60%" stop-color="#eaa0b6"/>
+    </linearGradient>
+    <radialGradient id="centerIH" cx="50%" cy="40%" r="55%">
+      <stop offset="0%"  stop-color="#fde9a6"/>
+      <stop offset="70%" stop-color="#d4a64a"/>
+    </radialGradient>
+    <linearGradient id="leafIH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9eb274"/>
+      <stop offset="100%" stop-color="#566935"/>
+    </linearGradient>
+    <linearGradient id="stemIH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9caf6f"/>
+      <stop offset="100%" stop-color="#5e6f3f"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="280" fill="url(#bgIH)"/>
+
+  <g transform="translate(140 158)">
+    <g transform="translate(0 -98)">
+      <rect x="-32" y="8" width="64" height="6" rx="1.5" fill="url(#goldIH)"/>
+      <path d="M -32 9 L -21 -12 L -12 4 L 0 -19 L 12 4 L 21 -12 L 32 9 Z" fill="url(#goldIH)"/>
+      <circle cx="-21" cy="-12" r="2.5" fill="url(#goldIH)"/>
+      <circle cx="0"   cy="-19" r="3"   fill="url(#goldIH)"/>
+      <circle cx="21"  cy="-12" r="2.5" fill="url(#goldIH)"/>
+    </g>
+    <text x="0" y="42"
+          font-family="'Playfair Display','Cormorant Garamond',Georgia,serif"
+          font-size="200" font-weight="500"
+          text-anchor="middle" fill="url(#goldIH)">Q</text>
+
+    <!-- Racimo lateral derecho -->
+    <g transform="translate(60 22)">
+      <path d="M 0 0 Q 4 -22 6 -50 Q 8 -78 8 -106"
+            fill="none" stroke="url(#stemIH)" stroke-width="1.4"/>
+      <ellipse cx="-2" cy="-2" rx="7" ry="4.5" fill="url(#leafIH)"/>
+
+      <!-- Flor pequeña abajo -->
+      <g transform="translate(2 -28)">
+        <g>
+          <g><path d="M 0 -6 Q -1.5 -3 0 -1 Q 1.5 -3 0 -6 Z" fill="url(#petalIHsoft)" stroke="#7a2e4a" stroke-width="0.25"/></g>
+          <g transform="rotate(60)"><path d="M 0 -6 Q -1.5 -3 0 -1 Q 1.5 -3 0 -6 Z" fill="url(#petalIHsoft)" stroke="#7a2e4a" stroke-width="0.25"/></g>
+          <g transform="rotate(120)"><path d="M 0 -6 Q -1.5 -3 0 -1 Q 1.5 -3 0 -6 Z" fill="url(#petalIHsoft)" stroke="#7a2e4a" stroke-width="0.25"/></g>
+          <g transform="rotate(180)"><path d="M 0 -6 Q -1.5 -3 0 -1 Q 1.5 -3 0 -6 Z" fill="url(#petalIHsoft)" stroke="#7a2e4a" stroke-width="0.25"/></g>
+          <g transform="rotate(240)"><path d="M 0 -6 Q -1.5 -3 0 -1 Q 1.5 -3 0 -6 Z" fill="url(#petalIHsoft)" stroke="#7a2e4a" stroke-width="0.25"/></g>
+          <g transform="rotate(300)"><path d="M 0 -6 Q -1.5 -3 0 -1 Q 1.5 -3 0 -6 Z" fill="url(#petalIHsoft)" stroke="#7a2e4a" stroke-width="0.25"/></g>
+        </g>
+        <circle cx="0" cy="0" r="2" fill="url(#centerIH)"/>
+      </g>
+
+      <!-- Flor mediana central -->
+      <g transform="translate(6 -58)">
+        <g>
+          <g><path d="M 0 -10 Q -2 -5 0 -1 Q 2 -5 0 -10 Z" fill="url(#petalIH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+          <g transform="rotate(45)"><path d="M 0 -10 Q -2 -5 0 -1 Q 2 -5 0 -10 Z" fill="url(#petalIH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+          <g transform="rotate(90)"><path d="M 0 -10 Q -2 -5 0 -1 Q 2 -5 0 -10 Z" fill="url(#petalIH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+          <g transform="rotate(135)"><path d="M 0 -10 Q -2 -5 0 -1 Q 2 -5 0 -10 Z" fill="url(#petalIH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+          <g transform="rotate(180)"><path d="M 0 -10 Q -2 -5 0 -1 Q 2 -5 0 -10 Z" fill="url(#petalIH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+          <g transform="rotate(225)"><path d="M 0 -10 Q -2 -5 0 -1 Q 2 -5 0 -10 Z" fill="url(#petalIH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+          <g transform="rotate(270)"><path d="M 0 -10 Q -2 -5 0 -1 Q 2 -5 0 -10 Z" fill="url(#petalIH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+          <g transform="rotate(315)"><path d="M 0 -10 Q -2 -5 0 -1 Q 2 -5 0 -10 Z" fill="url(#petalIH)" stroke="#7a2e4a" stroke-width="0.3"/></g>
+        </g>
+        <circle cx="0" cy="0" r="3" fill="url(#centerIH)"/>
+      </g>
+
+      <!-- Capullo arriba -->
+      <ellipse cx="8" cy="-94" rx="2" ry="3.4" fill="url(#petalIHsoft)" stroke="#7a2e4a" stroke-width="0.3"/>
+    </g>
+  </g>
+
+  <g transform="translate(310 0)">
+    <text x="0" y="130"
+          font-family="'Cinzel','Cormorant Garamond',Georgia,serif"
+          font-size="56" font-weight="500"
+          fill="url(#goldIH)" letter-spacing="9">QUEENS</text>
+    <line x1="0" y1="148" x2="240" y2="148" stroke="#c9a35c" stroke-width="0.8" opacity="0.7"/>
+    <text x="0" y="174"
+          font-family="Inter,system-ui,sans-serif"
+          font-size="16" font-weight="500"
+          fill="#e8e6df" letter-spacing="9">BELLY BUTTON</text>
+    <text x="0" y="200"
+          font-family="Inter,system-ui,sans-serif"
+          font-size="10.5" font-weight="500"
+          fill="#8aa5d6" letter-spacing="4.5">HOSPITALITY MANAGEMENT SOFTWARE</text>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-# Plan de comercialización · Plataforma F&B
+# Plan de comercialización · Queens Bellybutton
 
 > Propuesta razonada para sacar el producto al mercado.
 > Sin promesas, con números concretos y rutas alternativas según el apetito de Paco.
@@ -135,7 +135,7 @@ Tras 6 meses, decisión informada:
 ### Semana 1
 - [ ] Registrar dominio comercial corto (p.ej. `gestionfnb.es`, `cartahotel.es`)
 - [ ] Landing comercial simple en GitHub Pages bajo ese dominio (1 página · valor + demos + contacto)
-- [ ] Crear LinkedIn empresarial: «Plataforma F&B · gestión digital para hostelería»
+- [ ] Crear LinkedIn empresarial: «Queens Bellybutton · gestión digital para hostelería»
 
 ### Semana 2
 - [ ] Lista priorizada de 15 hoteles de la red de Paco · contactos directos
