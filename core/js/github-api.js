@@ -202,7 +202,11 @@
       });
       if (!res.ok) {
         const errBody = await res.text();
-        return { ok: false, status: res.status, error: 'HTTP ' + res.status + ' · ' + errBody.slice(0, 200) };
+        // v5.11 · fix M5 audit · sanitizar el body de GitHub antes de exponerlo.
+        // Aunque hoy todos los callers usan textContent, defensa en profundidad
+        // contra futuros usos con innerHTML.
+        const safe = String(errBody).replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c])).slice(0, 200);
+        return { ok: false, status: res.status, error: 'HTTP ' + res.status + ' · ' + safe };
       }
       const data = await res.json();
       return {

@@ -225,6 +225,19 @@
    * (o desde fromISO si se indica).
    * @returns {string[]} array de fechas ISO ordenadas
    */
+  /**
+   * v5.11 · helper toLocalISO · fix A3 audit v5.7+v5.10
+   * Devuelve YYYY-MM-DD en la zona horaria LOCAL del navegador
+   * (no UTC). Evita el bug clásico de toISOString() que en zonas
+   * negativas (LATAM) puede saltar al día anterior.
+   */
+  function toLocalISO(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + day;
+  }
+
   function getNextAvailableDates(espacioId, budgets, count, fromISO) {
     count = count || 3;
     const start = fromISO ? new Date(fromISO + 'T00:00:00') : new Date();
@@ -233,7 +246,7 @@
     let d = new Date(start);
     let safety = 0;
     while (out.length < count && safety < 365) {
-      const iso = d.toISOString().slice(0,10);
+      const iso = toLocalISO(d);   // v5.11 · timezone-safe
       if (isDayAvailable(iso, espacioId, budgets)) out.push(iso);
       d.setDate(d.getDate() + 1);
       safety++;
@@ -302,7 +315,7 @@
   }
 
   function buildCell(dateObj, inMonth, budgets) {
-    const iso = dateObj.toISOString().slice(0,10);
+    const iso = toLocalISO(dateObj);   // v5.11 · timezone-safe (fix A3)
     const dayOfMonth = dateObj.getDate();
     const today = new Date(); today.setHours(0,0,0,0);
     const isToday = dateObj.getTime() === today.getTime();

@@ -61,10 +61,30 @@
     return localStorage.getItem(dirtyKey(projectId, sectionKey)) !== null;
   }
 
+  // v5.11 · fix A5 audit · TTL drafts (7 días).
+  // Antes los drafts persistían INDEFINIDAMENTE en localStorage. Ordenador
+  // compartido en recepción del hotel = siguiente usuario veía datos
+  // económicos del anterior. Ahora los drafts viejos se descartan al leer.
+  const DRAFT_TTL_MS = 7 * 24 * 60 * 60 * 1000;  // 7 días
+
   function loadDraft(projectId, sectionKey) {
     try {
       const raw = localStorage.getItem(draftKey(projectId, sectionKey));
       if (!raw) return null;
+      // Comprobar TTL · si el dirty (timestamp) es viejo, descartar draft
+      const dirty = localStorage.getItem(dirtyKey(projectId, sectionKey));
+      if (dirty) {
+        try {
+          const ageMs = Date.now() - new Date(dirty).getTime();
+          if (ageMs > DRAFT_TTL_MS) {
+            console.info('[editor-core] Draft ' + sectionKey + ' expirado (>' +
+              Math.round(ageMs / 86400000) + ' días). Descartando.');
+            localStorage.removeItem(draftKey(projectId, sectionKey));
+            localStorage.removeItem(dirtyKey(projectId, sectionKey));
+            return null;
+          }
+        } catch (e) { /* timestamp ilegible · seguimos con el draft */ }
+      }
       return JSON.parse(raw);
     } catch (e) {
       console.error('loadDraft parse error:', e);
