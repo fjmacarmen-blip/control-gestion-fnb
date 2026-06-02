@@ -93,12 +93,37 @@
   }
 
   /**
-   * v5.9 · Construye URL absoluta de la página pública de un evento concreto.
-   * Reutiliza la resolución de basePath de buildPublicMenuUrl y añade &id=<eventId>.
+   * v5.10 · Construye URL absoluta de la página pública de un evento concreto.
+   * Usa hash determinista para evitar enumeración trivial de IDs PRES-2026-NNNN.
+   * El hash no es criptográficamente seguro (todo el código es público) pero
+   * impide que un atacante "pruebe ID por ID" en la URL pública.
+   * El sanitizado de campos económicos privados se hace en evento-publica.html.
+   *
+   * Reutiliza la resolución de basePath de buildPublicMenuUrl y añade &h=<hash>.
+   * @returns Promise<string> URL absoluta con hash
    */
-  function buildEventUrl(projectId, eventId) {
+  async function buildEventUrl(projectId, eventId) {
     const base = buildPublicMenuUrl(projectId, { page: 'evento-publica.html' });
-    return base + '&id=' + encodeURIComponent(eventId);
+    const hash = await hashEventId(projectId, eventId);
+    return base + '&h=' + encodeURIComponent(hash);
+  }
+
+  // v5.10 · "Sal" constante del proyecto (público pero hace falta conocerla
+  // para enumerar URLs · está en el bundle por diseño, no es secret).
+  const URL_HASH_SALT = 'qbb-public-event-2026-v1';
+
+  /**
+   * Genera hash hex de 16 chars de SHA-256(projectId + ':' + eventId + ':' + salt).
+   * Determinista: mismo input → mismo hash. Si se filtran los IDs internos,
+   * el hash se puede regenerar; es por diseño. Lo que sí evita es el
+   * "raspar" la URL pública enumerando ?id=PRES-2026-1001..PRES-2026-9999.
+   */
+  async function hashEventId(projectId, eventId) {
+    const text = String(projectId) + ':' + String(eventId) + ':' + URL_HASH_SALT;
+    const bytes = new TextEncoder().encode(text);
+    const buf = await crypto.subtle.digest('SHA-256', bytes);
+    const arr = Array.from(new Uint8Array(buf));
+    return arr.map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
   }
 
   function downloadQR(svgString, filename) {
@@ -118,6 +143,7 @@
     generateQR,
     buildPublicMenuUrl,
     buildEventUrl,
+    hashEventId,
     downloadQR,
   };
 })();

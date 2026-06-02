@@ -2,5 +2,12 @@ User-agent: *
 Allow: /
 Disallow: /dashboard/
 Disallow: /scripts/
+Disallow: /projects/
+Disallow: /docs/
+Disallow: /templates-comerciales/
+Disallow: /branding/master/
+Disallow: /branding/v2-queens-bellybutton/
+Disallow: /test-checklist.html
+Disallow: /mockups.html
 
 Sitemap: https://fjmacarmen-blip.github.io/control-gestion-fnb/sitemap.xml

@@ -5,4 +5,29 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://fjmacarmen-blip.github.io/control-gestion-fnb/pitch.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fjmacarmen-blip.github.io/control-gestion-fnb/flujo-trabajo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fjmacarmen-blip.github.io/control-gestion-fnb/carta-publica.html?proyecto=miramar</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://fjmacarmen-blip.github.io/control-gestion-fnb/carta-publica.html?proyecto=restaurante-casa-lola</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://fjmacarmen-blip.github.io/control-gestion-fnb/disponibilidad-publica.html?proyecto=miramar</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>

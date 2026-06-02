@@ -1,38 +1,48 @@
 /* ───────────────────────────────────────────────────────────────
- * Dashboard theme · Plataforma F&B
+ * Dashboard theme · Queens Bellybutton
  * --------------------------------------------------------------
- * Paleta propia del panel de control del director. Deliberadamente
- * DISTINTA de los temas del frontend público (navy-boutique, etc.):
- * el dashboard es la herramienta interna, no el escaparate del cliente.
+ * v5.10 · refit completo a navy + oro + champaña (paleta master v5.9)
+ * que reemplaza el slate + emerald heredado (Linear/Vercel look).
  *
- * Inspiración: Linear / Stripe / Vercel — slate dark + esmeralda.
- * Tipografía: Inter (UI) + JetBrains Mono (code).
+ * Paleta master:
+ *   - Navy profundo  #0a1733 (fondo de página)
+ *   - Navy elevado   #0f1f42 (sidebar, nav)
+ *   - Navy card      #15295a (cards, modales)
+ *   - Oro            #c9a35c (acento principal, CTA, brand)
+ *   - Oro claro      #e8cf8a (highlights, accents soft)
+ *   - Champaña       #f4ead7 (texto principal sobre navy · mejor que blanco puro)
+ *   - Violeta        #a78bfa (mantenido como info / chips secundarios)
+ *
+ * Tipografía:
+ *   - Cinzel        para títulos display (h1/h2 en hero · marca)
+ *   - Inter         para UI · cuerpo · botones
+ *   - JetBrains Mono para code, refs, sha, datos
  * ───────────────────────────────────────────────────────────────
  */
 
 :root {
-  /* ── Superficies ───────────────────────────────── */
-  --bg-base:        #0d1117;   /* fondo de página */
-  --bg-surface:     #161b22;   /* sidebar, nav */
-  --bg-elevated:    #21262d;   /* cards, inputs */
-  --bg-elevated-2:  #30363d;   /* hover, modales */
-  --bg-overlay:     rgba(13,17,23,.78);
+  /* ── Superficies · escala navy ─────────────────── */
+  --bg-base:        #0a1733;   /* fondo de página */
+  --bg-surface:     #0f1f42;   /* sidebar, nav, tarjetas de fondo */
+  --bg-elevated:    #15295a;   /* cards, inputs */
+  --bg-elevated-2:  #1f3768;   /* hover, modales */
+  --bg-overlay:     rgba(10,23,51,.78);
 
   /* ── Bordes ────────────────────────────────────── */
-  --border-default: #30363d;
-  --border-strong:  #484f58;
+  --border-default: #1f3768;
+  --border-strong:  #34528a;
 
-  /* ── Texto ─────────────────────────────────────── */
-  --text:           #e6edf3;
-  --text-soft:      #8b949e;
-  --text-muted:     #6e7681;
-  --text-inverse:   #0d1117;
+  /* ── Texto · escala champaña sobre navy ────────── */
+  --text:           #f4ead7;   /* champaña suave, mejor que blanco puro */
+  --text-soft:      #b8c4dc;
+  --text-muted:     #8aa5d6;
+  --text-inverse:   #0a1733;
 
-  /* ── Acentos · esmeralda (acción principal) ────── */
-  --accent:         #34d399;
-  --accent-soft:    #6ee7b7;
-  --accent-deep:    #059669;
-  --accent-glow:    rgba(52,211,153,.18);
+  /* ── Acento principal · oro (CTA, brand, focus) ── */
+  --accent:         #c9a35c;
+  --accent-soft:    #e8cf8a;
+  --accent-deep:    #8a682b;
+  --accent-glow:    rgba(201,163,92,.20);
 
   /* ── Acento secundario · violeta (info / chips) ── */
   --info:           #a78bfa;
@@ -44,13 +54,13 @@
   --warning-glow:   rgba(251,191,36,.15);
   --danger:         #f85149;
   --danger-glow:    rgba(248,81,73,.15);
-  --success:        #3fb950;
-  --success-glow:   rgba(63,185,80,.15);
+  --success:        #6ee7b7;     /* mantenido verde-suave para success · contraste sobre navy */
+  --success-glow:   rgba(110,231,183,.15);
 
   /* ── Tipografía ────────────────────────────────── */
   --font-ui:        'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono:      'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-display:   'Inter', system-ui, sans-serif;
+  --font-display:   'Cinzel', 'Playfair Display', Georgia, serif;
 
   /* ── Geometría ─────────────────────────────────── */
   --radius-sm:      6px;
@@ -66,28 +76,28 @@
 }
 
 /* ── Modo claro · v5.0 (data-appearance="light") ────────────────
- * Override de superficies, bordes y texto. Acentos esmeralda/violeta
- * se ajustan para mantener contraste AA contra fondo claro.
+ * Override coherente con la marca: fondo crema champaña + oro deep como acento.
+ * Mantiene contraste WCAG AA mínimo.
  */
 [data-appearance="light"] {
-  --bg-base:        #f8fafc;
+  --bg-base:        #faf6ec;   /* crema champaña muy clara */
   --bg-surface:     #ffffff;
-  --bg-elevated:    #f1f5f9;
-  --bg-elevated-2:  #e2e8f0;
-  --bg-overlay:     rgba(15,23,42,.45);
+  --bg-elevated:    #f3ecda;
+  --bg-elevated-2:  #e8dcbf;
+  --bg-overlay:     rgba(10,23,51,.45);
 
-  --border-default: #e2e8f0;
-  --border-strong:  #cbd5e1;
+  --border-default: #e8dcbf;
+  --border-strong:  #c9a35c;
 
-  --text:           #0f172a;
-  --text-soft:      #475569;
-  --text-muted:     #64748b;
+  --text:           #2b1d0a;   /* marrón profundo, mejor que negro puro sobre crema */
+  --text-soft:      #5b4a2f;
+  --text-muted:     #8a7551;
   --text-inverse:   #ffffff;
 
-  --accent:         #059669;
-  --accent-soft:    #10b981;
-  --accent-deep:    #047857;
-  --accent-glow:    rgba(5,150,105,.16);
+  --accent:         #8a682b;   /* oro deep para asegurar contraste contra fondo claro */
+  --accent-soft:    #c9a35c;
+  --accent-deep:    #5a4416;
+  --accent-glow:    rgba(138,104,43,.18);
 
   --info:           #7c3aed;
   --info-soft:      #8b5cf6;
@@ -100,16 +110,16 @@
   --success:        #16a34a;
   --success-glow:   rgba(22,163,74,.14);
 
-  --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
-  --shadow-md: 0 4px 12px rgba(15,23,42,.08);
-  --shadow-lg: 0 12px 32px rgba(15,23,42,.12);
+  --shadow-sm: 0 1px 2px rgba(43,29,10,.06);
+  --shadow-md: 0 4px 12px rgba(43,29,10,.08);
+  --shadow-lg: 0 12px 32px rgba(43,29,10,.12);
 }
 
 /* ── Reset base coherente ──────────────────────────── */
 html, body { background: var(--bg-base); color: var(--text); }
 body { font-family: var(--font-ui); font-size: 14px; -webkit-font-smoothing: antialiased; }
-a { color: var(--accent); }
-a:hover { color: var(--accent-soft); }
+a { color: var(--accent-soft); }
+a:hover { color: var(--accent); }
 code { font-family: var(--font-mono); font-size: .92em; background: var(--bg-elevated); padding: 2px 5px; border-radius: 4px; color: var(--accent-soft); }
 
 /* Toggle de apariencia · hover state */

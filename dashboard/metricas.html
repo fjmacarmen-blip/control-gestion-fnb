@@ -672,12 +672,13 @@ function renderAgenda() {
   }
 }
 
-// v5.9 · Modal QR para evento público
+// v5.9 + v5.10 · Modal QR para evento público (con hash · fix C1 GDPR)
 async function openEventoQRModal(eventId) {
   if (!eventId) return;
   const prev = document.getElementById('__eventoQrModal__');
   if (prev) prev.remove();
-  const url = window.fnbQR.buildEventUrl(PROJECT_ID, eventId);
+  // v5.10: buildEventUrl ahora es async (genera hash SHA-256)
+  const url = await window.fnbQR.buildEventUrl(PROJECT_ID, eventId);
   const overlay = document.createElement('div');
   overlay.id = '__eventoQrModal__';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,17,23,.85);backdrop-filter:blur(6px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Inter,sans-serif;';
