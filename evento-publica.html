@@ -295,9 +295,9 @@
         <div class="eyebrow">${escapeHtml(evento.eventType && evento.eventType.name || 'Evento privado')}</div>
         <h1>${escapeHtml(evento.tituloPublico || 'Su evento')}</h1>
         <div class="meta">
-          <span class="meta-item">📅 <strong>${escapeHtml(formatFecha(evento.fechaEvento))}</strong></span>
-          <span class="meta-item">🕐 <strong>${escapeHtml(evento.horaInicio || '—')} – ${escapeHtml(evento.horaFin || '—')}</strong></span>
-          <span class="meta-item">👥 <strong>${pax} comensales</strong></span>
+          <span class="meta-item"><span aria-hidden="true">📅</span> <strong>${escapeHtml(formatFecha(evento.fechaEvento))}</strong></span>
+          <span class="meta-item"><span aria-hidden="true">🕐</span> <strong>${escapeHtml(evento.horaInicio || '—')} – ${escapeHtml(evento.horaFin || '—')}</strong></span>
+          <span class="meta-item"><span aria-hidden="true">👥</span> <strong>${pax} comensales</strong></span>
         </div>
       </div>
 

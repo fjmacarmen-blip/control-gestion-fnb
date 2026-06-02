@@ -214,10 +214,11 @@
   }
   function mdToHtml(text) {
     let html = escapeHtml(text);
-    // Bold **txt**
+    // Bold **txt** primero (consume las dobles)
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    // Italic *txt*
-    html = html.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+    // Italic *txt* después · v5.11 sin lookbehind para Safari < 16.4 (fix M3 audit)
+    // Como ya quitamos los **, los * restantes son inequívocamente italic
+    html = html.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
     // Listas - item / * item
     html = html.replace(/^(\s*)[-*]\s+(.+)$/gm, '$1<li>$2</li>');
     html = html.replace(/(<li>[\s\S]*?<\/li>(?:\n<li>[\s\S]*?<\/li>)*)/g, '<ul>$1</ul>');

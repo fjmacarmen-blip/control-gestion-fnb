@@ -133,14 +133,19 @@
   }
 
   // ── Cambio de idioma ─────────────────────────────
+  // v5.11 · fix A4 audit · guard contra race-conditions en clicks ES→EN→ES rápidos.
+  // Solo aplica el setLocale si NADIE más ha llamado setLocale después de él.
+  let _localeRequestId = 0;
   async function setLocale(loc) {
     if (!SUPPORTED.includes(loc)) loc = DEFAULT;
+    const myReq = ++_localeRequestId;
     currentLocale = loc;
     try { localStorage.setItem(STORAGE_KEY, loc); } catch {}
     await loadLocale(loc);
     if (loc !== DEFAULT) await loadLocale(DEFAULT); // pre-cargar fallback
+    // Si mientras descargábamos llegó otra petición, abandonamos esta
+    if (myReq !== _localeRequestId) return;
     applyTo();
-    // Disparar evento + callbacks
     listeners.forEach(cb => { try { cb(loc); } catch (e) { console.error('[i18n]', e); } });
     window.dispatchEvent(new CustomEvent('i18n:change', { detail: { locale: loc } }));
   }

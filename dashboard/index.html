@@ -105,7 +105,8 @@
   .field input:focus { outline: none; border-color: var(--accent); }
   .btn-primary {
     width: 100%;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    /* v5.11 · color sólido oro · sin gradient AI (audit recomienda boutique sólido) */
+    background: var(--accent);
     color: var(--bg-base);
     border: none;
     padding: 13px;
@@ -294,7 +295,7 @@
     </div>
 
     <button type="submit" class="btn-primary" id="btnLogin" data-i18n="login.submit">Acceder</button>
-    <div class="login-error" id="loginError"></div>
+    <div class="login-error" id="loginError" role="alert" aria-live="polite"></div>
 
     <div class="login-warn" role="alert">
       ⚠ <strong>Sesión soft (sin servidor).</strong> El hash bcrypt vive en <code>auth.json</code> público.

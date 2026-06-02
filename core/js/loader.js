@@ -29,7 +29,16 @@
       const params = new URLSearchParams(window.location.search);
       const raw = params.get('proyecto');
       if (!raw) return DEFAULT_PROJECT_ID;
-      return VALID_ID_RE.test(raw) ? raw : DEFAULT_PROJECT_ID;
+      if (VALID_ID_RE.test(raw)) return raw;
+      // v5.11 · fix M4 audit · NO caer silenciosamente al default.
+      // Avisar en consola para que el dev/cliente sepa que el id es inválido
+      // y se está cargando otra cosa. Un cliente típico no se daba cuenta
+      // y pensaba estar editando "../foo" cuando tocaba miramar.
+      console.warn(
+        '[fnb-loader] Project id "' + raw + '" no válido. Cargando proyecto por defecto "' +
+        DEFAULT_PROJECT_ID + '". Los ids válidos solo contienen [a-z0-9_-].'
+      );
+      return DEFAULT_PROJECT_ID;
     } catch (e) {
       return DEFAULT_PROJECT_ID;
     }

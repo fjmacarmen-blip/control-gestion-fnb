@@ -37,10 +37,8 @@
   html, body { height: 100%; }
   body {
     min-height: 100vh;
-    background:
-      radial-gradient(1200px 600px at 70% -200px, rgba(52,211,153,.08), transparent 60%),
-      radial-gradient(900px 500px at 10% 0%, rgba(167,139,250,.06), transparent 60%),
-      var(--bg-base);
+    /* v5.11 · gradientes radiales decorativos eliminados (fix audit "look Vercel 2023") */
+    background: var(--bg-base);
     display: flex;
     flex-direction: column;
   }
@@ -197,8 +195,8 @@
     <div class="hero">
       <img src="branding/master/queens-hero-1200.png" alt="Queens Bellybutton · Hospitality Management Software" loading="eager" style="max-width:420px;width:100%;height:auto;display:block;margin:0 auto 28px;border-radius:14px;box-shadow:0 30px 80px rgba(10,23,51,.55);">
       <div class="eyebrow">Hotel · Restauración · Catering · Eventos</div>
-      <h1>El centro alrededor del cual gira <em>todo tu negocio</em></h1>
-      <p class="lede">Plataforma multi-tenant para crear y mantener aplicaciones de gestión hostelera. Presupuestos, sala, cocina y cliente en un solo lugar. El Hotel Miramar Dorado es el proyecto piloto y template de referencia.</p>
+      <h1>Gestión hostelera <em>sin frameworks</em>, con datos del cliente.</h1>
+      <p class="lede">Presupuestos, sala, cocina y carta digital en un solo lugar. Vive en GitHub Pages, sin servidor ni hospedaje. Hecho por un director hotelero con 30 años de oficio. El Hotel Miramar Dorado es el proyecto piloto.</p>
     </div>
 
     <div class="cards">
