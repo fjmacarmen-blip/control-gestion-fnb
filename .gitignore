@@ -43,3 +43,12 @@ secrets.json
 .local-credentials.txt
 mockups/screenshot-*.png
 .test/
+
+# ── npm + Playwright (v5.8 · B2 tests E2E) ──
+node_modules/
+playwright-report/
+test-results/
+.playwright/
+
+# ── Claude Code launch config (local-only) ──
+.claude/

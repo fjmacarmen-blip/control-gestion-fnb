@@ -29,14 +29,51 @@
 
   const POLLINATIONS_URL = 'https://text.pollinations.ai/';
   const STORAGE_KEY = 'fnb_ia_chat';
+  // v5.8 · I4 (cierre A1+A2 del code-review v5.7):
+  //   El system prompt se construía DOS veces por turno (una en ask(),
+  //   otra en sendMessage()) y, peor, cada vez completo. Cacheamos.
+  //   El histórico se enviaba ENTERO cada turno (hasta 20 mensajes).
+  //   Recortamos a últimos N turnos para limitar payload sin perder
+  //   coherencia conversacional inmediata.
+  const MAX_HISTORY_TURNS = 10;   // 5 user + 5 assistant entrelazados
 
   let catalog = null;
   let projectId = null;
   let history = [];
   let chatOpen = false;
   let isLoading = false;
+  let _cachedSystemPrompt = null;     // string cacheado
+  let _cachedCatalogRef   = null;     // referencia al catalog que generó el cache
 
   // ── Construcción del system prompt ─────────────────
+  // v5.8 · cache: se reconstruye sólo si el catalog actual difiere del
+  // que se usó para generar el cache. Esto evita N reconstrucciones en
+  // sesiones largas donde el catálogo no cambia.
+  function getSystemPrompt() {
+    if (_cachedSystemPrompt && _cachedCatalogRef === catalog) return _cachedSystemPrompt;
+    _cachedSystemPrompt = buildSystemPrompt();
+    _cachedCatalogRef = catalog;
+    return _cachedSystemPrompt;
+  }
+
+  function invalidateSystemPromptCache() {
+    _cachedSystemPrompt = null;
+    _cachedCatalogRef = null;
+  }
+
+  // v5.8 · centralizado: arma el array `messages` para la llamada,
+  // limitando histórico a MAX_HISTORY_TURNS. Antes este código vivía
+  // duplicado en ask() y sendMessage().
+  function buildRequestMessages(extraUserMessage) {
+    const trimmed = history.slice(-MAX_HISTORY_TURNS);
+    const messages = [
+      { role: 'system', content: getSystemPrompt() },
+      ...trimmed.map(h => ({ role: h.role, content: h.content })),
+    ];
+    if (extraUserMessage) messages.push({ role: 'user', content: extraUserMessage });
+    return messages;
+  }
+
   function buildSystemPrompt() {
     if (!catalog) return 'Eres el asistente del establecimiento. Aún no se ha cargado el catálogo.';
     const est = catalog.establecimiento || {};
@@ -99,6 +136,7 @@
       console.warn('[fnbIA] Error cargando catálogo:', e);
       catalog = null;
     }
+    invalidateSystemPromptCache();   // catalog cambió → reconstruir en próximo turno
   }
 
   // ── Llamada a Pollinations text ────────────────────
@@ -139,11 +177,7 @@
     if (isLoading) return null;
     isLoading = true;
 
-    const messages = [
-      { role: 'system', content: buildSystemPrompt() },
-      ...history.map(h => ({ role: h.role, content: h.content })),
-      { role: 'user', content: userMessage },
-    ];
+    const messages = buildRequestMessages(userMessage);
 
     try {
       const reply = await callPollinations(messages);
@@ -420,10 +454,8 @@
 
     try {
       isLoading = true;
-      const messages = [
-        { role: 'system', content: buildSystemPrompt() },
-        ...history.map(h => ({ role: h.role, content: h.content })),
-      ];
+      // v5.8 · uses buildRequestMessages (cache + ventana de N turnos)
+      const messages = buildRequestMessages();
       const reply = await callPollinations(messages);
       history.push({ role: 'assistant', content: reply, ts: Date.now() });
       persistHistory();

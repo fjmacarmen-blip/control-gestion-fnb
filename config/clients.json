@@ -1,0 +1,8 @@
+[
+  {
+    "name": "demo-miramar",
+    "repo": "fjmacarmen-blip/control-gestion-fnb",
+    "backupRepo": "fjmacarmen-blip/control-gestion-fnb-backup",
+    "notes": "Repo de la plataforma multi-tenant. El propio repo del super-admin actúa como cliente cero para validar el workflow."
+  }
+]

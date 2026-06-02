@@ -1,0 +1,18 @@
+{
+  "name": "control-gestion-fnb",
+  "version": "5.8.0",
+  "private": true,
+  "description": "Plataforma multi-tenant de gestión F&B · Vanilla JS · GitHub Pages static · zero coste",
+  "scripts": {
+    "test": "node --test test/auto-match.test.js test/loader-validation.test.js test/escape-html.test.js test/escandallos.test.js test/tpv-connector.test.js test/qr-url.test.js test/availability.test.js",
+    "test:json": "node test/validate-jsons.js",
+    "test:html": "node test/check-security-headers.js",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:install": "playwright install --with-deps chromium",
+    "serve": "python -m http.server 8765"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}

@@ -1,0 +1,120 @@
+name: mirror-client-repos
+# ──────────────────────────────────────────────────────────────────
+# Blocker B3 · v5.8
+# Espejo nocturno de los repos de los clientes hacia un repo backup
+# privado controlado por el super-admin. Si un cliente borra su cuenta
+# de GitHub o pierde acceso a su organización, sigue habiendo copia
+# íntegra (todos los branches y tags) en el backup.
+#
+# Cómo funciona:
+#   - El workflow lee la lista de repos cliente desde `config/clients.json`
+#     (formato JSON con [{ name, repo, backupRepo }]).
+#   - Por cada cliente: clone --mirror, push --mirror al backupRepo.
+#   - Usa el secret BACKUP_PAT (PAT del super-admin con scope `repo`
+#     sobre la org de backup).
+#
+# Triggers:
+#   - cron nightly 03:00 UTC (≈ 04:00/05:00 hora España según DST).
+#   - workflow_dispatch para ejecuciones manuales y test ad-hoc.
+#
+# Política de fallo:
+#   - El job continúa con los demás clientes aunque uno falle (matrix
+#     fail-fast: false). Si TODO el job falla, abre issue automática.
+# ──────────────────────────────────────────────────────────────────
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 03:00 UTC todos los días
+  workflow_dispatch:
+    inputs:
+      client_filter:
+        description: 'Solo respaldar este cliente (opcional, por name)'
+        required: false
+        default: ''
+
+jobs:
+  read-clients:
+    name: Leer config/clients.json
+    runs-on: ubuntu-latest
+    outputs:
+      clients: ${{ steps.parse.outputs.clients }}
+      count: ${{ steps.parse.outputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: parse
+        name: Parsear lista de clientes
+        run: |
+          if [ ! -f config/clients.json ]; then
+            echo "config/clients.json no existe — backup deshabilitado"
+            echo "clients=[]" >> $GITHUB_OUTPUT
+            echo "count=0" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          FILTER='${{ github.event.inputs.client_filter }}'
+          if [ -n "$FILTER" ]; then
+            CLIENTS=$(jq -c "[.[] | select(.name == \"$FILTER\")]" config/clients.json)
+          else
+            CLIENTS=$(jq -c '.' config/clients.json)
+          fi
+          COUNT=$(echo "$CLIENTS" | jq 'length')
+          echo "clients=$CLIENTS" >> $GITHUB_OUTPUT
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          echo "→ $COUNT clientes a respaldar"
+
+  mirror:
+    name: Mirror ${{ matrix.client.name }}
+    needs: read-clients
+    if: needs.read-clients.outputs.count != '0'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        client: ${{ fromJson(needs.read-clients.outputs.clients) }}
+    steps:
+      - name: Clonar mirror del repo cliente
+        env:
+          BACKUP_PAT: ${{ secrets.BACKUP_PAT }}
+        run: |
+          set -e
+          CLIENT_REPO='${{ matrix.client.repo }}'
+          BACKUP_REPO='${{ matrix.client.backupRepo }}'
+          echo "→ Mirror $CLIENT_REPO → $BACKUP_REPO"
+          # Clone con todas las refs (branches, tags) en modo bare
+          git clone --mirror "https://$BACKUP_PAT@github.com/$CLIENT_REPO.git" repo.git
+          cd repo.git
+          # Push espejo al backup (sobrescribe el remoto si difiere)
+          git push --mirror "https://$BACKUP_PAT@github.com/$BACKUP_REPO.git"
+          echo "✓ Backup OK · $(git rev-list --all --count) commits respaldados"
+
+      - name: Registrar timestamp del backup
+        if: success()
+        env:
+          BACKUP_PAT: ${{ secrets.BACKUP_PAT }}
+        run: |
+          # Touch fichero .last-backup en el backup para auditoría
+          TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "Backup OK · $TS · sha=$GITHUB_SHA" > /tmp/last-backup.txt
+          # Nota: no commiteamos el touch para no romper el mirror; el
+          # timestamp queda solo en los logs de Actions.
+          echo "✓ Timestamp: $TS"
+
+  notify-failure:
+    name: Notificar si falla el mirror
+    needs: [read-clients, mirror]
+    if: always() && needs.mirror.result == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Abrir issue de incidencia
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const today = new Date().toISOString().slice(0, 10);
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🔴 Mirror de backups falló · ${today}`,
+              body: `El workflow **mirror-client-repos** falló en la corrida de las 03:00 UTC.\n\n` +
+                    `**Acción requerida:** revisar logs en [Actions](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) y reejecutar manualmente desde "Run workflow".\n\n` +
+                    `Si el fallo es por PAT expirado, regenerar BACKUP_PAT en Settings → Secrets → Actions.`,
+              labels: ['ops', 'backup', 'priority:high'],
+            });

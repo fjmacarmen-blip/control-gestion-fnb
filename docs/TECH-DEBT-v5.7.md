@@ -21,6 +21,11 @@
 
 ## 🔴 Blockers para primer cliente real pagado
 
+> **STATUS update v5.8 (2026-06-02):** los 3 blockers han sido cerrados.
+> Ver [`TECH-DEBT-v5.8.md`](TECH-DEBT-v5.8.md) para el detalle del cierre.
+> Resumen: B1 → wizard guiado de PAT, B2 → 10 tests Playwright en CI,
+> B3 → workflow `mirror-client-repos.yml` con cron nightly.
+
 ### B1 · Onboarding asistido del PAT
 
 **Síntoma:** hoy el cliente tiene que crear su Personal Access Token de GitHub a mano siguiendo doc del ADR 011. Para un hostelero de 55 años eso es fricción inaceptable.

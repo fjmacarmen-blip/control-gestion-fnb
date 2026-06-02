@@ -378,6 +378,204 @@
     });
   }
 
+  // ── Wizard guiado de PAT · v5.8 (B1 blocker pre-piloto) ───────
+  /**
+   * Onboarding asistido del Personal Access Token. Sustituye al modal
+   * simple promptForPAT() en el primer uso del cliente. Tres pasos:
+   *
+   *   1. Bienvenida — explica qué es un PAT en una frase y por qué se
+   *      necesita. Sin jerga ("token", "scope") en primer plano.
+   *   2. Crear PAT — botón que abre github.com/settings/tokens/new con
+   *      la descripción y el scope `repo` pre-rellenados. El usuario
+   *      pulsa "Generate" en GitHub y vuelve a la pestaña.
+   *   3. Pegar y validar — input, validación real contra el repo (GET
+   *      /repos/owner/repo), guardado en sessionStorage si pasa.
+   *
+   * El modal recuerda el paso en el que está si el usuario lo cierra
+   * sin cancelar explícitamente (mediante sessionStorage clave fnb_pat_step).
+   *
+   * Diseño: el wizard NO obliga al usuario a leer un PDF, ni a ver un
+   * vídeo. Es la mínima cantidad de fricción que aún explica lo que
+   * está pasando.
+   *
+   * @returns Promise<{ok, pat?, error?, cancelled?}>
+   */
+  function promptForPATGuided(opts) {
+    opts = opts || {};
+    const STEP_KEY = 'fnb_pat_step';
+    return new Promise((resolve) => {
+      const prev = document.getElementById('__patWizard__');
+      if (prev) prev.remove();
+
+      const { owner, repo } = (window.fnbGitHub && window.fnbGitHub.getRepoIdentity)
+        ? window.fnbGitHub.getRepoIdentity()
+        : { owner: 'tu-cuenta', repo: 'tu-repo' };
+
+      // URL de GitHub con scope `repo` y descripción pre-rellenados.
+      // Acelera al usuario: sólo pulsa "Generate token" abajo en GitHub.
+      const patUrl = 'https://github.com/settings/tokens/new'
+        + '?scopes=repo'
+        + '&description=' + encodeURIComponent('Plataforma F&B · ' + repo);
+
+      let step = Number(sessionStorage.getItem(STEP_KEY) || 1);
+      if (step < 1 || step > 3) step = 1;
+
+      const overlay = document.createElement('div');
+      overlay.id = '__patWizard__';
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,17,23,.88);backdrop-filter:blur(8px);z-index:99998;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Inter,system-ui,sans-serif;';
+      overlay.innerHTML = `
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:16px;width:100%;max-width:560px;padding:30px 28px;box-shadow:0 28px 70px rgba(0,0,0,.65);color:#e6edf3;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+            <div style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#34d399;">Conectar con GitHub</div>
+            <div style="display:flex;gap:6px;" aria-label="Progreso">
+              <span class="__step__" data-i="1" style="width:22px;height:4px;border-radius:2px;background:#30363d;"></span>
+              <span class="__step__" data-i="2" style="width:22px;height:4px;border-radius:2px;background:#30363d;"></span>
+              <span class="__step__" data-i="3" style="width:22px;height:4px;border-radius:2px;background:#30363d;"></span>
+            </div>
+          </div>
+
+          <!-- PASO 1 · Bienvenida -->
+          <div class="__panel__" data-step="1" style="display:none;">
+            <h2 style="font-size:24px;font-weight:600;line-height:1.2;margin-bottom:10px;">Conecta esta plataforma con tu repositorio</h2>
+            <p style="font-size:14px;color:#8b949e;line-height:1.6;margin-bottom:16px;">
+              Para guardar tus cambios online, la plataforma necesita un permiso de GitHub.
+              Es como una llave personal que solo tú generas y que vive únicamente en este navegador.
+              Cuando cierres la pestaña, la llave desaparece.
+            </p>
+            <ul style="font-size:13px;color:#8b949e;line-height:1.7;padding-left:20px;margin-bottom:22px;">
+              <li>El proceso dura <strong style="color:#e6edf3;">menos de 2 minutos</strong>.</li>
+              <li>Lo haces <strong style="color:#e6edf3;">una sola vez por sesión</strong>.</li>
+              <li>Solo afecta a tu repo <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:'JetBrains Mono',monospace;font-size:11.5px;">${escapeText(owner)}/${escapeText(repo)}</code>, no a otros.</li>
+            </ul>
+            <div style="display:flex;gap:10px;justify-content:flex-end;">
+              <button class="__cancel__" style="padding:11px 19px;border-radius:8px;border:1px solid #30363d;background:#21262d;color:#8b949e;font:inherit;font-size:13px;cursor:pointer;">Ahora no</button>
+              <button class="__next__" style="padding:11px 22px;border-radius:8px;border:none;background:linear-gradient(135deg,#34d399 0%,#059669 100%);color:#0d1117;font:inherit;font-size:13px;font-weight:600;cursor:pointer;">Empezar →</button>
+            </div>
+          </div>
+
+          <!-- PASO 2 · Crear PAT -->
+          <div class="__panel__" data-step="2" style="display:none;">
+            <h2 style="font-size:24px;font-weight:600;line-height:1.2;margin-bottom:10px;">Crea la llave en GitHub</h2>
+            <p style="font-size:14px;color:#8b949e;line-height:1.6;margin-bottom:14px;">
+              Pulsa el botón. Se abre GitHub en otra pestaña con el formulario casi listo.
+              Solo tienes que <strong style="color:#e6edf3;">pulsar «Generate token» abajo del todo</strong>,
+              copiar el código verde que aparece, y volver aquí.
+            </p>
+            <div style="background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:16px 18px;margin-bottom:18px;">
+              <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#6e7681;margin-bottom:8px;">Lo que GitHub te preguntará</div>
+              <div style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:#c9d1d9;">
+                <div>· <strong style="color:#34d399;">Note:</strong> Plataforma F&amp;B · ${escapeText(repo)} <span style="color:#6e7681;">(ya rellenado)</span></div>
+                <div>· <strong style="color:#34d399;">Scopes:</strong> <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:'JetBrains Mono',monospace;font-size:11.5px;">repo</code> <span style="color:#6e7681;">(ya marcado)</span></div>
+                <div>· <strong style="color:#34d399;">Expiration:</strong> recomendado 30 días <span style="color:#6e7681;">(tú eliges)</span></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;">
+              <button class="__back__" style="padding:11px 16px;border-radius:8px;border:1px solid #30363d;background:transparent;color:#8b949e;font:inherit;font-size:13px;cursor:pointer;">← Atrás</button>
+              <div style="display:flex;gap:10px;">
+                <a class="__openGh__" href="${patUrl}" target="_blank" rel="noopener" style="padding:11px 22px;border-radius:8px;background:linear-gradient(135deg,#34d399 0%,#059669 100%);color:#0d1117;font:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;">Abrir GitHub ↗</a>
+                <button class="__next__" style="padding:11px 22px;border-radius:8px;border:1px solid #30363d;background:transparent;color:#e6edf3;font:inherit;font-size:13px;font-weight:600;cursor:pointer;">Ya tengo el código →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 3 · Pegar y validar -->
+          <div class="__panel__" data-step="3" style="display:none;">
+            <h2 style="font-size:24px;font-weight:600;line-height:1.2;margin-bottom:10px;">Pega el código aquí</h2>
+            <p style="font-size:14px;color:#8b949e;line-height:1.6;margin-bottom:14px;">
+              Pega el token que GitHub te ha mostrado (empieza por <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:'JetBrains Mono',monospace;font-size:11px;">ghp_</code>
+              o <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:'JetBrains Mono',monospace;font-size:11px;">github_pat_</code>).
+              Lo validamos contra tu repo antes de guardarlo.
+            </p>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+              <label style="font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#6e7681;">Token de acceso</label>
+              <input type="password" class="__input__" autocomplete="off" spellcheck="false" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" style="background:#21262d;border:1px solid #30363d;color:#e6edf3;padding:11px 14px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:13px;">
+              <div style="font-size:11px;color:#6e7681;display:flex;justify-content:space-between;">
+                <span>Pega solo el código, sin espacios al inicio o final.</span>
+                <label style="display:flex;gap:6px;align-items:center;cursor:pointer;"><input type="checkbox" class="__show__"> mostrar</label>
+              </div>
+            </div>
+            <div class="__err__" style="display:none;background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.35);color:#f85149;padding:10px 13px;border-radius:8px;font-size:12.5px;margin-bottom:14px;line-height:1.5;"></div>
+            <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;">
+              <button class="__back__" style="padding:11px 16px;border-radius:8px;border:1px solid #30363d;background:transparent;color:#8b949e;font:inherit;font-size:13px;cursor:pointer;">← Atrás</button>
+              <button class="__ok__" style="padding:11px 22px;border-radius:8px;border:none;background:linear-gradient(135deg,#34d399 0%,#059669 100%);color:#0d1117;font:inherit;font-size:13px;font-weight:600;cursor:pointer;">Validar y guardar</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+
+      const panels = overlay.querySelectorAll('.__panel__');
+      const steps = overlay.querySelectorAll('.__step__');
+      const input = overlay.querySelector('.__input__');
+      const showCb = overlay.querySelector('.__show__');
+      const err = overlay.querySelector('.__err__');
+      const okBtn = overlay.querySelector('.__ok__');
+
+      function render() {
+        panels.forEach(p => { p.style.display = Number(p.dataset.step) === step ? '' : 'none'; });
+        steps.forEach(s => {
+          const i = Number(s.dataset.i);
+          s.style.background = i === step ? '#34d399' : (i < step ? '#0d4f3c' : '#30363d');
+        });
+        sessionStorage.setItem(STEP_KEY, String(step));
+        if (step === 3) setTimeout(() => input && input.focus(), 60);
+      }
+      render();
+
+      function close(result) {
+        sessionStorage.removeItem(STEP_KEY);
+        overlay.remove();
+        resolve(result);
+      }
+      function fail(msg) {
+        if (!err) return;
+        err.textContent = msg;
+        err.style.display = '';
+        okBtn.disabled = false;
+        okBtn.textContent = 'Validar y guardar';
+      }
+
+      overlay.querySelectorAll('.__next__').forEach(btn => {
+        btn.addEventListener('click', () => { step++; if (step > 3) step = 3; render(); });
+      });
+      overlay.querySelectorAll('.__back__').forEach(btn => {
+        btn.addEventListener('click', () => { step--; if (step < 1) step = 1; render(); });
+      });
+      overlay.querySelectorAll('.__cancel__').forEach(btn => {
+        btn.addEventListener('click', () => close({ ok: false, cancelled: true }));
+      });
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close({ ok: false, cancelled: true });
+      });
+      if (showCb) showCb.addEventListener('change', () => { input.type = showCb.checked ? 'text' : 'password'; });
+
+      if (okBtn) {
+        okBtn.addEventListener('click', async () => {
+          const value = (input.value || '').trim();
+          if (!value) { fail('Pega el token primero'); return; }
+          if (!/^(ghp_|github_pat_)[A-Za-z0-9_-]{20,}$/.test(value)) {
+            fail('El formato no coincide. Debe empezar por ghp_ o github_pat_…');
+            return;
+          }
+          okBtn.disabled = true; okBtn.textContent = 'Validando…';
+          setPAT(value);
+          if (window.fnbGitHub && window.fnbGitHub.validatePAT) {
+            const v = await window.fnbGitHub.validatePAT(value);
+            if (!v.ok) {
+              clearPAT();
+              fail(v.error || 'No válido — revisa que tenga el scope `repo` y que apunte a este repo.');
+              return;
+            }
+          }
+          close({ ok: true, pat: value });
+        });
+      }
+      if (input) {
+        input.addEventListener('keydown', (e) => { if (e.key === 'Enter') okBtn.click(); });
+      }
+    });
+  }
+
   // Exports
   window.fnbAuth = {
     hashPassword,
@@ -393,6 +591,7 @@
     clearFreshAuth,
     loginSuperAdmin,
     promptForPAT,
+    promptForPATGuided,
     promptPasswordAndExecute,
     SESSION_TTL_MS,
     FRESH_TTL_MS,

@@ -573,13 +573,11 @@ async function commitProject() {
     // Re-verificar password antes del commit masivo (skippeable si fresh <5min)
     const verifyResult = await window.fnbAuth.promptPasswordAndExecute(async () => {
 
-      // Si no hay PAT, ofrecer pegarlo. Si lo cancela → null para gestionar fallback.
+      // Si no hay PAT, lanzar wizard guiado de onboarding (v5.8 · B1).
+      // Si lo cancela → null para gestionar fallback.
       if (!window.fnbAuth.getPAT()) {
         $('#btnNext').textContent = 'Solicitando PAT…';
-        const r = await window.fnbAuth.promptForPAT({
-          title: 'Publicar al repo · necesita PAT',
-          description: 'Para crear <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">projects/' + escapeHtml(wizard.data.id) + '/</code> con sus 10 JSONs, necesitamos un PAT con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">repo</code>. Si cancelas, el proyecto queda como borrador local.'
-        });
+        const r = await window.fnbAuth.promptForPATGuided();
         if (!r.ok) return { ok: false, noPat: true };
       }
 

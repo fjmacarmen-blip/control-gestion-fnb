@@ -38,3 +38,27 @@ jobs:
           node-version: '20'
       - name: Smoke check (CSP + SRI present in dashboard HTMLs)
         run: node test/check-security-headers.js
+
+  e2e:
+    name: Playwright E2E (5 specs · flujo crítico)
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install npm deps
+        run: npm ci
+      - name: Install Playwright + system browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright tests
+        run: npx playwright test
+      - name: Upload HTML report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
