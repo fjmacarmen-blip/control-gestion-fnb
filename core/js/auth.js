@@ -235,7 +235,12 @@
       okBtn.addEventListener('click', async () => {
         const value = input.value.trim();
         if (!value) { fail('Pega el token primero'); return; }
-        if (!/^[A-Za-z0-9_-]{20,}$/.test(value)) { fail('Formato inválido (debe empezar por ghp_ o github_pat_…)'); return; }
+        // v5.10 · regex alineado con promptForPATGuided (auditoria A2):
+        // exige prefijo ghp_ o github_pat_ para evitar aceptar tokens basura
+        if (!/^(ghp_|github_pat_)[A-Za-z0-9_-]{20,}$/.test(value)) {
+          fail('Formato inválido (debe empezar por ghp_ o github_pat_…)');
+          return;
+        }
         okBtn.disabled = true; okBtn.textContent = 'Validando…';
         // Guardamos antes de validar para que fnbGitHub use este PAT en su check
         setPAT(value);

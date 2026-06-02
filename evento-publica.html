@@ -163,8 +163,10 @@
   'use strict';
 
   // ─── Helpers ──────────────────────────────────────────────────────
+  // v5.10 · escapeHtml incluye apóstrofe (fix A1 auditoría · evita XSS si
+  // un texto del JSON contiene `'` y se inyecta vía attributes/inline JS)
   function escapeHtml(s) {
-    return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
   function getParam(name) {
     const p = new URLSearchParams(location.search);
@@ -181,26 +183,94 @@
     document.getElementById('content').innerHTML = '<div class="error">' + escapeHtml(msg) + '</div>';
   }
 
+  // v5.10 · Hash determinista (mismo algoritmo que core/js/qr-gen.js).
+  // Aquí inline porque queremos cero dependencias en página pública.
+  const URL_HASH_SALT = 'qbb-public-event-2026-v1';
+  async function hashEventId(projectId, eventId) {
+    const text = String(projectId) + ':' + String(eventId) + ':' + URL_HASH_SALT;
+    const bytes = new TextEncoder().encode(text);
+    const buf = await crypto.subtle.digest('SHA-256', bytes);
+    const arr = Array.from(new Uint8Array(buf));
+    return arr.map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+  }
+
+  // v5.10 · CRÍTICO C1 · Sanitización del JSON antes de cualquier render/uso.
+  // Quita TODOS los campos económicos y de gestión interna · solo se conserva
+  // lo que un invitado a un evento debe poder ver (fecha, menú, programa,
+  // mesas, info pública). El navegador NUNCA debe llegar a tener `total`,
+  // `senial`, `clientName` interno, dietas detalladas, comisiones, etc.
+  const PUBLIC_FIELDS = new Set([
+    'ref', 'fechaEvento', 'horaInicio', 'horaFin',
+    'eventType', 'menuPkg', 'espacio', 'estado',
+    'pt',                       // pax total (público, OK · suma redondeada)
+    'evento_publico',           // bloque opcional explícitamente público
+  ]);
+  function sanitizeForPublic(raw) {
+    if (!raw || typeof raw !== 'object') return {};
+    const out = {};
+    for (const k of Object.keys(raw)) {
+      if (PUBLIC_FIELDS.has(k)) out[k] = raw[k];
+    }
+    // `clientName` es semi-privado (los invitados deben ver de quién es el
+    // evento). Lo conservamos PERO solo el primer apellido / nombre de
+    // pareja, no el detalle completo. Si el director quiere ocultarlo,
+    // puede definir `evento_publico.titulo_publico` y lo usamos.
+    if (raw.evento_publico && raw.evento_publico.titulo_publico) {
+      out.tituloPublico = String(raw.evento_publico.titulo_publico);
+    } else if (raw.clientName) {
+      out.tituloPublico = String(raw.clientName);
+    }
+    return out;
+  }
+
   // ─── Carga del evento ────────────────────────────────────────────
   async function loadEvento() {
     const proyecto = getParam('proyecto');
-    const id = getParam('id');
-    if (!proyecto || !id) {
+    const idLegacy = getParam('id');     // v5.9 retro-compat
+    const hashParam = getParam('h');     // v5.10 hash (preferido)
+
+    if (!proyecto || (!idLegacy && !hashParam)) {
       showError('Falta información del evento. Asegúrate de usar el enlace o el QR que te facilitaron.');
       return;
     }
-    // Validar formato (solo ids seguros)
-    if (!/^[a-z0-9_-]+$/i.test(proyecto) || !/^[A-Z0-9_-]+$/i.test(id)) {
+    if (!/^[a-z0-9_-]+$/i.test(proyecto)) {
       showError('Identificador de evento no válido.');
       return;
     }
+    if (hashParam && !/^[a-f0-9]{16}$/i.test(hashParam)) {
+      showError('Identificador de evento no válido.');
+      return;
+    }
+    if (idLegacy && !/^[A-Z0-9_-]+$/i.test(idLegacy)) {
+      showError('Identificador de evento no válido.');
+      return;
+    }
+
     try {
-      const r = await fetch('projects/' + encodeURIComponent(proyecto) + '/budgets/' + encodeURIComponent(id) + '.json', { cache: 'no-store' });
+      // Caso 1 · llega ?h=<hash> → resolver hash → id real buscando en manifest
+      let eventId = idLegacy;
+      if (hashParam && !idLegacy) {
+        const mfRes = await fetch('projects/' + encodeURIComponent(proyecto) + '/budgets/index.json', { cache: 'no-store' });
+        if (!mfRes.ok) { showError('Manifest no disponible.'); return; }
+        const mf = await mfRes.json();
+        const presupuestos = (mf && mf.presupuestos) || [];
+        for (const p of presupuestos) {
+          if (!p.ref) continue;
+          const candidate = await hashEventId(proyecto, p.ref);
+          if (candidate === hashParam.toLowerCase()) { eventId = p.ref; break; }
+        }
+        if (!eventId) { showError('Evento no encontrado o aún no publicado.'); return; }
+      }
+
+      const r = await fetch('projects/' + encodeURIComponent(proyecto) + '/budgets/' + encodeURIComponent(eventId) + '.json', { cache: 'no-store' });
       if (!r.ok) {
         showError('Evento no encontrado o aún no publicado.');
         return;
       }
-      const evento = await r.json();
+      const rawEvento = await r.json();
+      // CRÍTICO · sanitizar antes de pasar el objeto a render() · nada de
+      // campos económicos/gestión llega al DOM ni queda referenciable
+      const evento = sanitizeForPublic(rawEvento);
       render(evento);
     } catch (e) {
       showError('No se pudo cargar la información del evento: ' + e.message);
@@ -223,7 +293,7 @@
     const html = `
       <div class="hero">
         <div class="eyebrow">${escapeHtml(evento.eventType && evento.eventType.name || 'Evento privado')}</div>
-        <h1>${escapeHtml(evento.clientName || 'Su evento')}</h1>
+        <h1>${escapeHtml(evento.tituloPublico || 'Su evento')}</h1>
         <div class="meta">
           <span class="meta-item">📅 <strong>${escapeHtml(formatFecha(evento.fechaEvento))}</strong></span>
           <span class="meta-item">🕐 <strong>${escapeHtml(evento.horaInicio || '—')} – ${escapeHtml(evento.horaFin || '—')}</strong></span>
