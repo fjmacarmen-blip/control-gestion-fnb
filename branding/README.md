@@ -4,7 +4,7 @@ Esta carpeta contiene propuestas de logo y assets de marca.
 
 ## Estado actual (v5.7)
 
-El logo activo en el producto es **texto «F&B» en degradado** (slate→emerald). Funciona pero no tiene empaque para usar como marca comercial seria. v5.7 introduce **3 propuestas alternativas** entre las que elegir.
+El logo activo en el producto es **texto «F&B» en degradado** (slate→emerald). Funciona pero no tiene empaque para usar como marca comercial seria. v5.7 introduce **4 propuestas alternativas** entre las que elegir (A · B · C diseño abstracto + D «Queen's Bellybutton», la marca con narrativa propia).
 
 ## Cómo verlas
 
@@ -29,6 +29,14 @@ Abre `branding/index.html` (o el link en la landing del proyecto cuando se añad
 - **Fuerza:** funciona muy bien en tamaños pequeños (favicon, app icon) · evita clichés
 - **Riesgo:** estéticamente más cercano a restaurante que a software · puede limitar percepción de «producto tecnológico»
 - **Mejor para:** identidad cálida · acercarse al hostelero como uno de los suyos
+
+### Opción D · Queen's Bellybutton · El ombligo de la reina
+- **Carácter:** simbólico, personal, narrativo · marca con historia propia
+- **Fuerza:** nombre memorable e irrepetible · arranca conversación · narrativa coherente (centro del negocio + planta resistente *Umbilicus rupestris* + expresión culinaria clásica)
+- **Riesgo:** requiere contar la historia las primeras veces · no transmite «F&B» literal a primera vista
+- **Mejor para:** posicionar como marca con alma · cuando puedes contar tu historia (web, pitch, demo)
+- **Símbolo:** corona de 3 puntos sutiles + anillo abierto (cordón umbilical, conexión) + punto central sólido (el núcleo, el ombligo)
+- **Origen del nombre:** email del proyecto `crisbellybutton@gmail.com` · *Umbilicus rupestris* (planta de muro que aguanta en lo difícil, paralelo a la filosofía cero-coste del producto) · expresión culinaria *«tener el ombligo de la reina»* = vino o plato perfectamente equilibrado
 
 ## Decisión pendiente
 
@@ -68,7 +76,10 @@ branding/
 ├── opcion-b-geometrico/
 │   ├── mark-emerald.svg
 │   └── horizontal-dark.svg
-└── opcion-c-cuchara-abstracta/
+├── opcion-c-cuchara-abstracta/
+│   ├── mark-emerald.svg
+│   └── horizontal-dark.svg
+└── opcion-d-ombligo-reina/
     ├── mark-emerald.svg
     └── horizontal-dark.svg
 ```

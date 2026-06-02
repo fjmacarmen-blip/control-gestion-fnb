@@ -1953,12 +1953,9 @@ async function publishSection(section) {
   // Re-verificar password (skippeable si sesión fresh <5min · ver ADR 011)
   await window.fnbAuth.promptPasswordAndExecute(async () => {
 
-    // Asegurar PAT (si no hay, pedirlo)
+    // Asegurar PAT con wizard guiado de onboarding (v5.8 · B1)
     if (!window.fnbAuth.getPAT()) {
-      const r = await window.fnbAuth.promptForPAT({
-        title: 'PAT necesario para publicar',
-        description: 'Para escribir <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">' + section + '.json</code> al repo necesitamos un Personal Access Token con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:JetBrains Mono,monospace;font-size:11px;">repo</code>. Vive solo en esta pestaña.'
-      });
+      const r = await window.fnbAuth.promptForPATGuided();
       if (!r.ok) {
         window.fnbEditor.showToast('Publicación cancelada · sin PAT', 'info');
         return { ok: false };

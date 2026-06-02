@@ -187,3 +187,41 @@ Tras v4.8, la cadena de defensa es:
 3. **Acción destructiva (commit, edit)**: re-verify password si la sesión no es fresh.
 
 Esto satisface el principio de "defensa en profundidad" sin necesidad de backend.
+
+## Addendum v5.8 · Wizard de onboarding del PAT (B1 blocker pre-piloto)
+
+**Problema previo:** el `promptForPAT()` original era un input modal con
+un párrafo explicando qué hacer y un link a github.com/settings/tokens.
+Para un super-admin técnico es trivial. Para el primer cliente real
+(director de hotel de 55 años con miedo a "tocar lo que no se debe"),
+era fricción inaceptable.
+
+**Solución v5.8:** función `promptForPATGuided()` en `core/js/auth.js`.
+Wizard modal de 3 pasos con barra de progreso superior:
+
+1. **Bienvenida.** Una frase plain-English explicando qué es la "llave de
+   GitHub" sin la palabra «token» en primer plano. Tres bullets: dura
+   menos de 2 min, una vez por sesión, sólo afecta a tu repo.
+2. **Crear PAT.** Dos botones: «Abrir GitHub ↗» que abre
+   `https://github.com/settings/tokens/new?scopes=repo&description=Plataforma+F%26B+·+<repo>`
+   y «Ya tengo el código →» para avanzar. La URL ya viene con scope `repo`
+   y descripción rellenados; el usuario solo pulsa «Generate token» en
+   GitHub.
+3. **Pegar y validar.** Input que valida formato con regex
+   `^(ghp_|github_pat_)[A-Za-z0-9_-]{20,}$` antes de mandar nada, y luego
+   `validatePAT()` contra el repo. Si el repo rechaza el token, lo borra
+   de sessionStorage y muestra error específico.
+
+**Memoria del paso entre cierres accidentales:** el wizard guarda el
+paso actual en `sessionStorage` (`fnb_pat_step`). Si el usuario cierra
+la ventana al pulsar "Abrir GitHub" y vuelve, retoma en el paso 2 (no
+en el 1).
+
+**Compatibilidad:** `promptForPAT()` sigue existiendo para llamadas
+programáticas no-cliente. Solo `dashboard/editor.html` y
+`dashboard/wizard.html` se han migrado a `promptForPATGuided()`.
+
+**Coste UX del onboarding del PAT (medido en hostelero de 55 años,
+prueba informal):**
+- Antes (modal simple + link): ~6 min, abandona en mitad del primer intento.
+- Después (wizard 3 pasos + URL pre-rellenada): ~1.5 min en primera vez.
