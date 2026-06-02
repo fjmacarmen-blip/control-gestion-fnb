@@ -1,4 +1,4 @@
-# Control de Gestión F&B · Plataforma multi-tenant
+# Queens Bellybutton · Plataforma multi-tenant
 
 [![GitHub Pages](https://img.shields.io/badge/demo-online-success?logo=github)](https://fjmacarmen-blip.github.io/control-gestion-fnb/)
 [![Stack](https://img.shields.io/badge/stack-vanilla%20JS-yellow?logo=javascript)](#stack)
@@ -15,7 +15,7 @@
 
 ## El problema
 
-En la mayoría de hoteles independientes y grupos pequeños, la gestión de eventos sigue viviendo en hojas de Excel sueltas, documentos Word con menús desactualizados y carpetas de PDFs que nadie sincroniza. Cada presupuesto se construye copiando otro anterior, los precios de economato se traen a mano y el escandallo real de cada plato es casi siempre una estimación.
+En la mayoría de hoteles independientes y grupos pequeños, la gestión de eventos vive repartida en varias herramientas que no se hablan entre sí: plantillas heredadas, documentos con menús desactualizados y carpetas de PDFs que nadie sincroniza. Cada presupuesto se construye copiando otro anterior, los precios de economato se traen a mano y el escandallo real de cada plato es casi siempre una estimación.
 
 Tras 30 años dirigiendo hoteles, decidí construir la herramienta que siempre eché de menos: una plataforma capaz de gestionar **múltiples establecimientos** con datos reales, importar lo que ya tienen los hoteles (Excel, PDF, fotos de carta) y conectarse al economato del cliente cuando ese economato exista.
 

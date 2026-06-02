@@ -3,13 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Pitch deck · Plataforma F&B · gestión digital para hostelería independiente.">
+<meta name="description" content="Pitch deck · Queens Bellybutton · gestión digital para hostelería independiente.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0d1117">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<title>Plataforma F&B · Pitch deck</title>
+<title>Queens Bellybutton · Pitch deck</title>
+
+<!-- Queens Bellybutton favicon block v5.9 -->
+<link rel="icon" type="image/svg+xml" href="branding/favicon/favicon.svg">
+<link rel="icon" type="image/x-icon" href="branding/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="branding/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="branding/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="branding/favicon/apple-touch-icon.png">
+<meta name="theme-color" content="#0a1733">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Queens Bellybutton">
+<!-- /Queens Bellybutton favicon block -->
 <style>
   /* ─── Design tokens ─────────────────────────────────────── */
   :root {
@@ -34,7 +45,10 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; overflow: hidden; background: var(--bg-base); color: var(--text); font-family: var(--font-ui); }
+  /* iOS Safari: 100% no incluye toolbar; usar dvh donde se soporte (Safari 15.4+) */
+  html, body { height: 100dvh; min-height: 100%; overflow: hidden; background: var(--bg-base); color: var(--text); font-family: var(--font-ui); }
+  /* En iOS, prevenir overscroll en body para que solo scrollee el slide activo */
+  body { overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; }
   body {
     background:
       radial-gradient(1400px 700px at 75% -200px, rgba(52,211,153,.07), transparent 60%),
@@ -56,7 +70,7 @@
   }
 
   /* ─── Slide container ────────────────────────────────────── */
-  .deck { position: relative; width: 100vw; height: 100vh; }
+  .deck { position: relative; width: 100vw; height: 100dvh; min-height: 100vh; }
   .slide {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
@@ -64,7 +78,11 @@
     opacity: 0; pointer-events: none;
     transform: translateX(40px);
     transition: opacity .4s ease, transform .4s ease;
+    /* iOS Safari necesita -webkit-overflow-scrolling para scroll touch suave;
+       overscroll-behavior:contain evita que el "rebote" de iOS pase al body */
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
   .slide.active {
     opacity: 1; pointer-events: auto;
@@ -83,14 +101,12 @@
   }
   .slide-meta .brand { display: flex; align-items: center; gap: 12px; }
   .brand-mark {
-    width: 26px; height: 26px;
-    border-radius: 7px;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
-    color: var(--bg-base);
-    font-weight: 700; font-size: 10px;
-    display: flex; align-items: center; justify-content: center;
-    letter-spacing: 0;
+    width: 40px; height: 40px;
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(10,23,51,.4);
   }
+  .brand-mark img { width: 100%; height: 100%; display: block; object-fit: cover; }
   .slide-meta .num { font-family: var(--font-mono); }
 
   /* ─── Typography ─────────────────────────────────────────── */
@@ -570,6 +586,18 @@
     .demo-slide, .two-col, .author-grid, .contact-grid { grid-template-columns: 1fr; gap: 24px; }
     .pricing { grid-template-columns: 1fr; }
   }
+
+  /* iPad portrait/landscape: padding más holgado pero scroll funcionando */
+  @media (min-width: 600px) and (max-width: 1180px) {
+    .slide { padding: 40px 48px 100px; }
+    /* Permitir explícitamente que el slide pueda crecer más allá del viewport y scrollear */
+    .slide { min-height: 100dvh; }
+  }
+
+  /* iOS Safari fix · touch scroll requiere altura mínima explícita en el child */
+  @supports (-webkit-touch-callout: none) {
+    .slide { -webkit-overflow-scrolling: touch; }
+  }
 </style>
 </head>
 <body>
@@ -583,7 +611,7 @@
   <!-- ============================================================ -->
   <section class="slide active">
     <div class="hero">
-      <div class="hero-eyebrow">Plataforma F&amp;B · v5.3</div>
+      <div class="hero-eyebrow">Queens Bellybutton · v5.3</div>
       <h1 class="title">Gestión digital<br>para la hostelería<br><em>independiente</em></h1>
       <p class="lede" style="margin: 0 auto;">
         Una herramienta construida por un hostelero, para hosteleros.
@@ -602,15 +630,15 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">02 · El problema</div>
     </div>
     <div class="eyebrow">Cómo se gestiona hoy un hotel mediano</div>
-    <h2 class="section">El Excel del <em>2011</em> sigue mandando.</h2>
+    <h2 class="section">Los datos están repartidos en <em>cinco sitios distintos</em>.</h2>
     <p class="lede">
       He pasado 30 años dentro del oficio. En el último hotel que dirigí, cada presupuesto de boda salía
-      de la misma plantilla Excel que un compañero construyó hace década y media. La carta vivía en
-      un Word con tres versiones simultáneas. Las recetas estaban en la libreta del jefe de cocina,
+      de una plantilla heredada que un compañero construyó hace década y media. La carta vivía en
+      un documento con tres versiones simultáneas. Las recetas estaban en la libreta del jefe de cocina,
       y los precios de economato había que pedirlos al proveedor por WhatsApp.
     </p>
     <div class="two-col">
@@ -642,7 +670,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">03 · El mercado</div>
     </div>
     <div class="eyebrow">Por qué lo que hay no resuelve esto</div>
@@ -680,7 +708,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">04 · La propuesta</div>
     </div>
     <div style="margin: auto 0; max-width: 920px;">
@@ -704,13 +732,13 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">05 · Demo · dashboard</div>
     </div>
     <div class="demo-slide">
       <div class="demo-side">
         <div class="eyebrow">Para el director</div>
-        <h2 class="section" style="font-size: clamp(28px, 3.5vw, 42px);">Un panel de control<br>en lugar de cinco hojas Excel.</h2>
+        <h2 class="section" style="font-size: clamp(28px, 3.5vw, 42px);">Un panel de control<br>donde todo converge.</h2>
         <ul class="demo-features">
           <li><strong>Lista de proyectos</strong> con badges de estado, métricas resumidas, último cambio</li>
           <li><strong>Acciones rápidas</strong> por establecimiento: editar, ver métricas, cotizador interno</li>
@@ -764,7 +792,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">06 · Demo · editor</div>
     </div>
     <div class="demo-slide">
@@ -824,7 +852,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">07 · Demo · cotizador</div>
     </div>
     <div class="demo-slide">
@@ -873,7 +901,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">08 · Demo · sala móvil</div>
     </div>
     <div class="demo-slide">
@@ -935,7 +963,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">09 · Demo · carta pública</div>
     </div>
     <div class="demo-slide">
@@ -997,7 +1025,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">10 · Diferencial</div>
     </div>
     <div class="eyebrow">Cinco cosas que no encontrarás en otro SaaS de eventos</div>
@@ -1026,7 +1054,7 @@
       <div class="card">
         <div class="card-num">05</div>
         <div class="card-title">Convive con el caos</div>
-        <div class="card-desc">Importadores que tragan ese Excel del 2011, los PDFs antiguos y las fotos sin nombrar. No exige limpieza previa.</div>
+        <div class="card-desc">Importadores que aceptan los ficheros heredados del cliente (Excel, PDF, fotos) sin pedirle que los limpie antes. Convive con el caos real.</div>
       </div>
     </div>
   </section>
@@ -1036,7 +1064,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">11 · Quién hay detrás</div>
     </div>
     <div class="author-grid">
@@ -1047,7 +1075,7 @@
         <p>
           Director hotelero en Algeciras durante toda mi trayectoria. He vivido la transformación de los
           hoteles independientes desde dentro: del libro de reservas en papel a los PMS, de la carta
-          manuscrita a Word, de los Excel sueltos a las TPVs cerradas que no se hablan.
+          manuscrita a Word, de las plantillas heredadas a las TPVs cerradas que no se hablan entre sí.
         </p>
         <p>
           Esta plataforma resuelve la herramienta que me hubiera gustado tener. La construí con asistencia
@@ -1066,7 +1094,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">12 · Precios</div>
     </div>
     <div class="eyebrow">Tarifa orientativa · 14 días de prueba gratis</div>
@@ -1127,7 +1155,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">13 · Clientes piloto</div>
     </div>
     <div class="eyebrow">Programa piloto · cupos limitados</div>
@@ -1161,7 +1189,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">14 · Cómo seguimos</div>
     </div>
     <div class="eyebrow">Si te ha interesado</div>
@@ -1203,7 +1231,7 @@
   <!-- ============================================================ -->
   <section class="slide">
     <div class="slide-meta">
-      <div class="brand"><div class="brand-mark">F&amp;B</div><span>Pitch deck</span></div>
+      <div class="brand"><div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div><span>Pitch deck</span></div>
       <div class="num">15 · Contacto</div>
     </div>
     <div class="contact">

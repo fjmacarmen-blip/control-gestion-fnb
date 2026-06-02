@@ -6,7 +6,19 @@
 <meta name="project-base" content="../">
 <meta name="description" content="KPIs y tendencias de presupuestos · ocupación de espacios · próximos eventos.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
-<title>Métricas · Dashboard F&B</title>
+<title>Métricas · Queens Bellybutton</title>
+
+<!-- Queens Bellybutton favicon block v5.9 -->
+<link rel="icon" type="image/svg+xml" href="../branding/favicon/favicon.svg">
+<link rel="icon" type="image/x-icon" href="../branding/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../branding/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../branding/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../branding/favicon/apple-touch-icon.png">
+<meta name="theme-color" content="#0a1733">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Queens Bellybutton">
+<!-- /Queens Bellybutton favicon block -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../core/css/dashboard-theme.css">
@@ -420,6 +432,7 @@
 <script src="../core/js/loader.js"></script>
 <script src="../core/js/auth.js"></script>
 <script src="../core/js/metrics.js"></script>
+<script src="../core/js/qr-gen.js"></script>
 <script>
 'use strict';
 
@@ -635,7 +648,12 @@ function renderAgenda() {
   if (!upcoming.length) {
     $('#agendaList').innerHTML = '<div class="empty" style="padding:20px;">Sin eventos próximos.</div>';
   } else {
-    $('#agendaList').innerHTML = upcoming.map(b => `
+    $('#agendaList').innerHTML = upcoming.map(b => {
+      const isConfirmado = b.estado === 'confirmado';
+      const qrBtn = isConfirmado
+        ? `<button class="btn-qr-evento" data-event-id="${escapeHtml(b.ref || '')}" title="Generar QR público para invitados al evento" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:var(--accent);padding:5px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;margin-top:6px;">🎫 QR evento</button>`
+        : '';
+      return `
       <div class="agenda-row estado-${b.estado}">
         <div class="agenda-date">${window.fnbMetrics.formatDate(b.fechaEvento)}</div>
         <div>
@@ -643,10 +661,57 @@ function renderAgenda() {
           <div class="agenda-meta">${escapeHtml(b.eventType.name)} · ${escapeHtml(b.espacio.replace(/_/g, ' '))} · ${escapeHtml(b.menuPkg.name)}</div>
         </div>
         <div class="agenda-pax">${b.pt} pax</div>
-        <div class="agenda-amount">${window.fnbMetrics.formatEur(b.totalConIva)}</div>
+        <div class="agenda-amount">${window.fnbMetrics.formatEur(b.totalConIva)}${qrBtn}</div>
       </div>
-    `).join('');
+    `;
+    }).join('');
+    // Handlers de QR (v5.9)
+    document.querySelectorAll('.btn-qr-evento').forEach(btn => {
+      btn.addEventListener('click', () => openEventoQRModal(btn.dataset.eventId));
+    });
   }
+}
+
+// v5.9 · Modal QR para evento público
+async function openEventoQRModal(eventId) {
+  if (!eventId) return;
+  const prev = document.getElementById('__eventoQrModal__');
+  if (prev) prev.remove();
+  const url = window.fnbQR.buildEventUrl(PROJECT_ID, eventId);
+  const overlay = document.createElement('div');
+  overlay.id = '__eventoQrModal__';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,17,23,.85);backdrop-filter:blur(6px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Inter,sans-serif;';
+  overlay.innerHTML = `
+    <div style="background:#161b22;border:1px solid rgba(201,163,92,.3);border-radius:14px;width:100%;max-width:480px;padding:28px 26px;box-shadow:0 24px 60px rgba(0,0,0,.6);color:#e6edf3;">
+      <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#c9a35c;margin-bottom:8px;">QR público del evento</div>
+      <h2 style="font-size:20px;font-weight:600;line-height:1.2;margin-bottom:8px;">${escapeHtml(eventId)}</h2>
+      <p style="font-size:12.5px;color:#8b949e;line-height:1.55;margin-bottom:18px;">
+        Comparte este QR con los invitados (en mesa, en invitación, por WhatsApp). Les llevará a una página móvil con menú, programa y distribución de mesas.
+      </p>
+      <div id="__eventoQrSlot__" style="background:#fff;padding:16px;border-radius:10px;display:flex;justify-content:center;margin-bottom:14px;">Generando…</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#8b949e;background:#0d1117;padding:8px 12px;border-radius:6px;word-break:break-all;margin-bottom:14px;">${escapeHtml(url)}</div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button id="__qrCopy__" style="padding:9px 16px;border-radius:7px;border:1px solid #30363d;background:#21262d;color:#8b949e;font:inherit;font-size:12px;cursor:pointer;">Copiar URL</button>
+        <button id="__qrDownload__" style="padding:9px 16px;border-radius:7px;border:none;background:linear-gradient(135deg,#34d399,#059669);color:#0d1117;font:inherit;font-size:12px;font-weight:600;cursor:pointer;">Descargar SVG</button>
+        <button id="__qrClose__" style="padding:9px 16px;border-radius:7px;border:1px solid #30363d;background:transparent;color:#8b949e;font:inherit;font-size:12px;cursor:pointer;">Cerrar</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  let svg = '';
+  try {
+    svg = await window.fnbQR.generateQR(url, { size: 220, level: 'M' });
+    document.getElementById('__eventoQrSlot__').innerHTML = svg;
+  } catch (e) {
+    document.getElementById('__eventoQrSlot__').innerHTML = '<span style="color:#f85149;font-size:12px;">Error generando QR: ' + escapeHtml(e.message) + '</span>';
+  }
+  document.getElementById('__qrCopy__').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(url); document.getElementById('__qrCopy__').textContent = '✓ Copiado'; } catch {}
+  });
+  document.getElementById('__qrDownload__').addEventListener('click', () => {
+    if (svg) window.fnbQR.downloadQR(svg, 'qr-evento-' + eventId + '.svg');
+  });
+  document.getElementById('__qrClose__').addEventListener('click', () => overlay.remove());
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
 }
 
 // ══════════════════════════════════════════════════

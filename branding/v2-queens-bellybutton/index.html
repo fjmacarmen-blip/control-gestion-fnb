@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Queens Bellybutton · 3 propuestas v2</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #06122e;
+    color: #e8e6df;
+    font-family: Inter, system-ui, sans-serif;
+    padding: 60px 20px;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 56px; }
+  header .kicker {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: #c9a35c; margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Cinzel', serif; font-weight: 500;
+    font-size: 38px; letter-spacing: 4px; color: #e8cf8a;
+    margin-bottom: 10px;
+  }
+  header p { color: #8aa5d6; font-size: 14px; max-width: 640px; margin: 0 auto; }
+
+  .opt {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(201,163,92,0.18);
+    border-radius: 18px;
+    padding: 36px 36px 30px;
+    margin-bottom: 32px;
+  }
+  .opt-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 24px; margin-bottom: 22px; flex-wrap: wrap;
+  }
+  .opt-num {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: #c9a35c; margin-bottom: 6px; font-weight: 600;
+  }
+  .opt-title {
+    font-family: 'Cinzel', serif; font-size: 24px; font-weight: 500;
+    color: #e8cf8a; letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .opt-desc { color: #b8c4dc; font-size: 13.5px; line-height: 1.7; max-width: 640px; }
+  .opt-desc strong { color: #e8cf8a; font-weight: 500; }
+  .opt-desc em { color: #c9a35c; font-style: italic; }
+  .opt-tag {
+    display: inline-block; background: rgba(201,163,92,0.1);
+    border: 1px solid rgba(201,163,92,0.35);
+    color: #e8cf8a; padding: 5px 12px; border-radius: 100px;
+    font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 600; white-space: nowrap;
+  }
+
+  .demo-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    margin-top: 12px;
+  }
+  .demo {
+    border-radius: 12px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .demo.dark { background: #0a1733; padding: 20px; min-height: 280px; }
+  .demo.light { background: #f5f1e8; padding: 20px; min-height: 280px; }
+  .demo.full { grid-column: 1 / -1; min-height: 220px; }
+  .demo img { width: 100%; height: auto; max-width: 100%; display: block; }
+  .demo.dark img.mark, .demo.light img.mark { max-width: 240px; height: 240px; width: 240px; }
+  .demo-label {
+    text-align: center; margin-top: 8px;
+    font-size: 10.5px; letter-spacing: 3px; text-transform: uppercase;
+    color: #6e7db5; font-weight: 500;
+  }
+  .demo-wrap { display: flex; flex-direction: column; }
+
+  .files {
+    margin-top: 18px; padding-top: 18px;
+    border-top: 1px dashed rgba(201,163,92,0.18);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 11.5px; color: #8aa5d6;
+  }
+  .files strong { color: #c9a35c; font-family: Inter, sans-serif; letter-spacing: 1px; font-size: 10.5px; text-transform: uppercase; }
+
+  footer {
+    text-align: center; margin-top: 56px;
+    padding: 28px; border: 1px dashed rgba(201,163,92,0.2); border-radius: 14px;
+    color: #b8c4dc; font-size: 13.5px; line-height: 1.7;
+  }
+  footer strong { color: #e8cf8a; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">v2 · Branding propuestas</div>
+  <h1>Queens Bellybutton</h1>
+  <p>Tres variaciones sobre el mismo lenguaje visual: <strong style="color:#e8cf8a;">navy profundo + oro real · Q monograma serif · corona discreta · tagline tipográfica espaciada</strong>. Misma paleta, misma tipografía, misma silueta. Cambia solo el detalle simbólico interior.</p>
+</header>
+
+<!-- ─── OPCIÓN A · Pura ─── -->
+<section class="opt">
+  <div class="opt-head">
+    <div>
+      <div class="opt-num">Opción A</div>
+      <div class="opt-title">Q monograma · pura</div>
+      <p class="opt-desc">
+        Solo la <strong>Q serif editorial</strong> coronada. Sin botánica, sin ombligo, sin distracción.
+        Es la versión más limpia y la que mejor escalará a <em>favicon 16×16</em>, <em>app icon móvil</em> y <em>firma de email</em>.
+        Si dudas, ésta. Cuando una marca tiene un nombre fuerte («Queens Bellybutton»), el logo no necesita gritar.
+      </p>
+    </div>
+    <span class="opt-tag">Versátil · escala bien</span>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-wrap">
+      <div class="demo dark"><img class="mark" src="A-pure/mark.svg" alt="Opción A · isotipo cuadrado"></div>
+      <div class="demo-label">Isotipo cuadrado</div>
+    </div>
+    <div class="demo-wrap">
+      <div class="demo dark"><img class="mark" src="A-pure/mark.svg" alt="Opción A · mismo isotipo"></div>
+      <div class="demo-label">Mismo isotipo · review</div>
+    </div>
+    <div class="demo-wrap" style="grid-column:1/-1;">
+      <div class="demo dark full"><img src="A-pure/horizontal.svg" alt="Opción A · horizontal"></div>
+      <div class="demo-label">Horizontal · headline + tagline</div>
+    </div>
+  </div>
+  <div class="files">
+    <strong>Archivos:</strong> v2-queens-bellybutton/A-pure/mark.svg · horizontal.svg
+  </div>
+</section>
+
+<!-- ─── OPCIÓN B · Botánica ─── -->
+<section class="opt">
+  <div class="opt-head">
+    <div>
+      <div class="opt-num">Opción B</div>
+      <div class="opt-title">Q monograma · con hojas</div>
+      <p class="opt-desc">
+        La misma Q coronada con <strong>una rama discreta de tres hojas</strong> saliendo de la cola hacia la izquierda.
+        Las hojas evocan <em>Umbilicus rupestris</em> · la planta de muro de monasterio que da nombre popular a «ombligo de la reina».
+        Más cálido y narrativo que A. <strong>Identidad con alma</strong> · funciona excepcionalmente en web y pitch deck.
+        En tamaños muy pequeños las hojas se simplifican o desaparecen sin perder reconocibilidad.
+      </p>
+    </div>
+    <span class="opt-tag">Cálido · narrativo</span>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-wrap">
+      <div class="demo dark"><img class="mark" src="B-botanica/mark.svg" alt="Opción B · isotipo botánico"></div>
+      <div class="demo-label">Isotipo · sobre navy</div>
+    </div>
+    <div class="demo-wrap">
+      <div class="demo light"><img class="mark" src="B-botanica/mark.svg" alt="Opción B · sobre claro"></div>
+      <div class="demo-label">Isotipo · sobre claro</div>
+    </div>
+    <div class="demo-wrap" style="grid-column:1/-1;">
+      <div class="demo dark full"><img src="B-botanica/horizontal.svg" alt="Opción B · horizontal"></div>
+      <div class="demo-label">Horizontal · tagline + hoja</div>
+    </div>
+  </div>
+  <div class="files">
+    <strong>Archivos:</strong> v2-queens-bellybutton/B-botanica/mark.svg · horizontal.svg
+  </div>
+</section>
+
+<!-- ─── OPCIÓN C · Ombligo ─── -->
+<section class="opt">
+  <div class="opt-head">
+    <div>
+      <div class="opt-num">Opción C</div>
+      <div class="opt-title">Q monograma · con ombligo</div>
+      <p class="opt-desc">
+        La Q coronada con un <strong>orbe luminoso pequeño dentro del óvalo</strong>: el ombligo literal del logo.
+        Es el guiño semántico más explícito al nombre. <em>«La Q tiene su propio ombligo»</em> · una metáfora visual fácil de explicar y difícil de olvidar.
+        El orbe se ve dorado-luz sobre navy, se mantiene visible incluso a tamaño favicon.
+        Más conceptual que A y B; ideal si quieres que la marca cuente su historia desde el primer instante.
+      </p>
+    </div>
+    <span class="opt-tag">Conceptual · memorable</span>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-wrap">
+      <div class="demo dark"><img class="mark" src="C-ombligo/mark.svg" alt="Opción C · isotipo ombligo"></div>
+      <div class="demo-label">Isotipo · ombligo dorado</div>
+    </div>
+    <div class="demo-wrap">
+      <div class="demo light"><img class="mark" src="C-ombligo/mark.svg" alt="Opción C · sobre claro"></div>
+      <div class="demo-label">Isotipo · sobre claro</div>
+    </div>
+    <div class="demo-wrap" style="grid-column:1/-1;">
+      <div class="demo dark full"><img src="C-ombligo/horizontal.svg" alt="Opción C · horizontal"></div>
+      <div class="demo-label">Horizontal · con orbe interior</div>
+    </div>
+  </div>
+  <div class="files">
+    <strong>Archivos:</strong> v2-queens-bellybutton/C-ombligo/mark.svg · horizontal.svg
+  </div>
+</section>
+
+<!-- ─── 3 NUEVAS OPCIONES CON FLORECILLAS DE Umbilicus rupestris ─── -->
+
+<div style="margin: 60px 0 36px; text-align:center;">
+  <div style="font-size:11px; letter-spacing:4px; text-transform:uppercase; color:#c9a35c; margin-bottom:10px;">Tres variaciones más · con flores de Umbilicus rupestris</div>
+  <h2 style="font-family:'Cinzel',serif; font-weight:500; font-size:26px; letter-spacing:3px; color:#e8cf8a;">Campanillas blancas en racimo</h2>
+  <p style="color:#8aa5d6; font-size:13px; max-width:660px; margin:10px auto 0; line-height:1.7;">
+    La planta real produce <em style="color:#fdf6e3;">espigas verticales con pequeñas flores tubulares colgantes</em>
+    color blanco-marfil cremoso. Son su firma botánica. Las incorporo en tres composiciones distintas.
+  </p>
+</div>
+
+<!-- ─── OPCIÓN D · Tallo florido lateral ─── -->
+<section class="opt">
+  <div class="opt-head">
+    <div>
+      <div class="opt-num">Opción D</div>
+      <div class="opt-title">Espiga florida lateral</div>
+      <p class="opt-desc">
+        Al lado derecho de la Q, un <strong>tallo vertical fino con siete campanillas alternadas</strong>
+        que ascienden hacia la corona. Botánicamente correcto: así florece la
+        <em>Umbilicus rupestris</em> en primavera, en las grietas de los muros.
+        Las flores son blanco-marfil con borde dorado fino · luce como joyería suspendida.
+        Composición vertical y aristocrática.
+      </p>
+    </div>
+    <span class="opt-tag">Botánica · vertical</span>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-wrap"><div class="demo dark"><img class="mark" src="D-tallo-florido/mark.svg" alt="Opción D · isotipo"></div><div class="demo-label">Isotipo · navy</div></div>
+    <div class="demo-wrap"><div class="demo light"><img class="mark" src="D-tallo-florido/mark.svg" alt="Opción D · sobre claro"></div><div class="demo-label">Isotipo · claro</div></div>
+    <div class="demo-wrap" style="grid-column:1/-1;"><div class="demo dark full"><img src="D-tallo-florido/horizontal.svg" alt="Opción D · horizontal"></div><div class="demo-label">Horizontal · espiga lateral</div></div>
+  </div>
+  <div class="files"><strong>Archivos:</strong> v2-queens-bellybutton/D-tallo-florido/mark.svg · horizontal.svg</div>
+</section>
+
+<!-- ─── OPCIÓN E · Abrazo florido ─── -->
+<section class="opt">
+  <div class="opt-head">
+    <div>
+      <div class="opt-num">Opción E</div>
+      <div class="opt-title">Abrazo florido</div>
+      <p class="opt-desc">
+        Un <strong>tallo florido que abraza la Q por la izquierda</strong>, naciendo de una hoja
+        suculenta basal (la planta entera, no solo la flor). Las campanillas alternan
+        <em>blanco-marfil y blanco-rosado</em> · un detalle muy real:
+        algunas Umbilicus tienen tintes rosa pálido cuando reciben más sol.
+        La composición es más envolvente que D · la planta no decora la Q, la sostiene.
+      </p>
+    </div>
+    <span class="opt-tag">Envolvente · narrativa</span>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-wrap"><div class="demo dark"><img class="mark" src="E-tallo-abrazo/mark.svg" alt="Opción E · isotipo"></div><div class="demo-label">Isotipo · navy</div></div>
+    <div class="demo-wrap"><div class="demo light"><img class="mark" src="E-tallo-abrazo/mark.svg" alt="Opción E · sobre claro"></div><div class="demo-label">Isotipo · claro</div></div>
+    <div class="demo-wrap" style="grid-column:1/-1;"><div class="demo dark full"><img src="E-tallo-abrazo/horizontal.svg" alt="Opción E · horizontal"></div><div class="demo-label">Horizontal · abrazo</div></div>
+  </div>
+  <div class="files"><strong>Archivos:</strong> v2-queens-bellybutton/E-tallo-abrazo/mark.svg · horizontal.svg</div>
+</section>
+
+<!-- ─── OPCIÓN F · Hojas + flores ─── -->
+<section class="opt">
+  <div class="opt-head">
+    <div>
+      <div class="opt-num">Opción F</div>
+      <div class="opt-title">Botánica completa · roseta + espiga</div>
+      <p class="opt-desc">
+        La <strong>planta entera</strong>: a la izquierda de la Q, las hojas redondas suculentas
+        con su característico ombligo central (la roseta basal). A la derecha,
+        la <strong>espiga florida</strong> ascendiendo. Esto es <em>Umbilicus rupestris</em> tal cual
+        crece en un muro de Algeciras, junto a la Q coronada.
+        La composición más rica y más explícita. Cuenta toda la historia botánica
+        en un solo símbolo.
+      </p>
+    </div>
+    <span class="opt-tag">Completa · simbólica</span>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-wrap"><div class="demo dark"><img class="mark" src="F-hojas-flores/mark.svg" alt="Opción F · isotipo"></div><div class="demo-label">Isotipo · navy</div></div>
+    <div class="demo-wrap"><div class="demo light"><img class="mark" src="F-hojas-flores/mark.svg" alt="Opción F · sobre claro"></div><div class="demo-label">Isotipo · claro</div></div>
+    <div class="demo-wrap" style="grid-column:1/-1;"><div class="demo dark full"><img src="F-hojas-flores/horizontal.svg" alt="Opción F · horizontal"></div><div class="demo-label">Horizontal · hojas + espiga</div></div>
+  </div>
+  <div class="files"><strong>Archivos:</strong> v2-queens-bellybutton/F-hojas-flores/mark.svg · horizontal.svg</div>
+</section>
+
+<!-- ─── 3 OPCIONES BASADAS EN LA IMAGEN DE REFERENCIA · vectorial profesional ─── -->
+
+<div style="margin: 70px 0 36px; text-align:center; padding-top:40px; border-top:1px solid rgba(201,163,92,0.18);">
+  <div style="font-size:11px; letter-spacing:4px; text-transform:uppercase; color:#c9a35c; margin-bottom:10px;">Recreación vectorial · sin look IA</div>
+  <h2 style="font-family:'Cinzel',serif; font-weight:500; font-size:26px; letter-spacing:3px; color:#e8cf8a;">Con flor rosa</h2>
+  <p style="color:#8aa5d6; font-size:13px; max-width:680px; margin:10px auto 0; line-height:1.7;">
+    Versión vectorial limpia de la imagen que enviaste. Los pétalos son <em style="color:#fdf6e3;">paths SVG individuales</em>
+    con gradientes controlados, no rendering foto-realista. Mantiene la elegancia editorial sin caer en el
+    «look generado por IA» (sombras dramáticas, perspectiva, reflejos).
+  </p>
+</div>
+
+<!-- G · Flor rosa principal -->
+<section class="opt" style="border-color:rgba(217,122,152,0.32);">
+  <div class="opt-head">
+    <div>
+      <div class="opt-num" style="color:#d97a98;">Opción G</div>
+      <div class="opt-title">Flor rosa central</div>
+      <p class="opt-desc">
+        <strong>Recreación vectorial de tu imagen de referencia.</strong> A la izquierda 3 hojas redondas
+        suculentas (con el ombligo botánico característico al centro de la hoja mayor); a la derecha
+        una <em>flor rosa abierta</em> de 12 pétalos en dos capas — rosa magenta exterior + rosa más claro interior — con centro dorado.
+        Composición simétrica, paleta de 5 colores, líneas claras. <strong>Esto es lo que pediste.</strong>
+      </p>
+    </div>
+    <span class="opt-tag" style="background:rgba(217,122,152,0.15);color:#f5b0c2;border-color:rgba(217,122,152,0.4);">La referencia · vectorial</span>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-wrap"><div class="demo dark"><img class="mark" src="G-flor-rosa/mark.svg" alt="G · isotipo"></div><div class="demo-label">Isotipo · navy</div></div>
+    <div class="demo-wrap"><div class="demo light"><img class="mark" src="G-flor-rosa/mark.svg" alt="G · sobre claro"></div><div class="demo-label">Isotipo · claro</div></div>
+    <div class="demo-wrap" style="grid-column:1/-1;"><div class="demo dark full"><img src="G-flor-rosa/horizontal.svg" alt="G · horizontal"></div><div class="demo-label">Horizontal</div></div>
+  </div>
+  <div class="files"><strong>Archivos:</strong> v2-queens-bellybutton/G-flor-rosa/mark.svg · horizontal.svg</div>
+</section>
+
+<!-- H · Flor + campanillas -->
+<section class="opt" style="border-color:rgba(217,122,152,0.25);">
+  <div class="opt-head">
+    <div>
+      <div class="opt-num" style="color:#d97a98;">Opción H</div>
+      <div class="opt-title">Flor rosa + espiga de campanillas</div>
+      <p class="opt-desc">
+        <strong>Mezcla la flor rosa que te gusta con la botánica real de la planta.</strong>
+        Izquierda: la flor rosa principal + 2 hojas suculentas (idéntica a G). Derecha: la espiga florida
+        ascendente con campanillas blanco-marfil — que es como <em>realmente</em> florece la Umbilicus rupestris.
+        Doble símbolo: lo aspiracional (flor rosa de la imagen) + lo verdadero (espiga botánica).
+      </p>
+    </div>
+    <span class="opt-tag" style="background:rgba(217,122,152,0.12);color:#f5b0c2;border-color:rgba(217,122,152,0.3);">Mixta · simbólica</span>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-wrap"><div class="demo dark"><img class="mark" src="H-flor-campanillas/mark.svg" alt="H · isotipo"></div><div class="demo-label">Isotipo · navy</div></div>
+    <div class="demo-wrap"><div class="demo light"><img class="mark" src="H-flor-campanillas/mark.svg" alt="H · sobre claro"></div><div class="demo-label">Isotipo · claro</div></div>
+    <div class="demo-wrap" style="grid-column:1/-1;"><div class="demo dark full"><img src="H-flor-campanillas/horizontal.svg" alt="H · horizontal"></div><div class="demo-label">Horizontal</div></div>
+  </div>
+  <div class="files"><strong>Archivos:</strong> v2-queens-bellybutton/H-flor-campanillas/mark.svg · horizontal.svg</div>
+</section>
+
+<!-- I · Racimo rosa -->
+<section class="opt" style="border-color:rgba(217,122,152,0.25);">
+  <div class="opt-head">
+    <div>
+      <div class="opt-num" style="color:#d97a98;">Opción I</div>
+      <div class="opt-title">Racimo de flores rosas</div>
+      <p class="opt-desc">
+        <strong>Tres flores rosas en racimo ascendente</strong> por el lado derecho de la Q,
+        de tamaños y tonos distintos (rosa intenso en el centro, rosa pálido arriba y abajo,
+        capullo cerrado en el extremo). Cuenta el paso del tiempo en una sola imagen: brote → flor → marchitez.
+        Las hojas redondas hacen de base. Composición rica pero estructurada · todo dentro de un solo tallo común.
+      </p>
+    </div>
+    <span class="opt-tag" style="background:rgba(217,122,152,0.12);color:#f5b0c2;border-color:rgba(217,122,152,0.3);">Racimo · narrativa</span>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-wrap"><div class="demo dark"><img class="mark" src="I-racimo-rosa/mark.svg" alt="I · isotipo"></div><div class="demo-label">Isotipo · navy</div></div>
+    <div class="demo-wrap"><div class="demo light"><img class="mark" src="I-racimo-rosa/mark.svg" alt="I · sobre claro"></div><div class="demo-label">Isotipo · claro</div></div>
+    <div class="demo-wrap" style="grid-column:1/-1;"><div class="demo dark full"><img src="I-racimo-rosa/horizontal.svg" alt="I · horizontal"></div><div class="demo-label">Horizontal</div></div>
+  </div>
+  <div class="files"><strong>Archivos:</strong> v2-queens-bellybutton/I-racimo-rosa/mark.svg · horizontal.svg</div>
+</section>
+
+<footer>
+  <strong>Cómo elegir entre las 9.</strong> A, B, C son las versiones <em>minimalistas</em>
+  (pura · hojas · ombligo). D, E, F son las <em>botánicas con flor</em> (espiga · abrazo · planta completa).
+  Mismo ADN, mismo navy + oro, misma Q coronada. Cuanto más bajamos en la lista, más historia cuenta el logo.
+  Pon mentalmente cada uno en (1) el favicon del navegador (¿se ve a 16×16 px?), (2) tu firma de email
+  (¿no recarga?), (3) la pantalla de un móvil (¿se entiende a primera vista?). La que mejor funcione
+  en los tres sitios es la correcta.
+</footer>
+
+</div>
+</body>
+</html>

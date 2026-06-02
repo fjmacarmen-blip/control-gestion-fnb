@@ -1,4 +1,4 @@
-# Detalle del proyecto · Plataforma F&B v5.1
+# Detalle del proyecto · Queens Bellybutton v5.1
 
 > Inventario completo del proyecto: qué hay, dónde está, cómo se relaciona.
 > Documento técnico de referencia. Para versión corta ver `RESUMEN-EJECUTIVO.md`.

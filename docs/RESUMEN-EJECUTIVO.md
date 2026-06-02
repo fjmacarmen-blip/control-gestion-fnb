@@ -1,11 +1,11 @@
-# Resumen ejecutivo · Plataforma F&B
+# Resumen ejecutivo · Queens Bellybutton
 
 > Una página, sin código.
 > Para leer en 3 minutos antes de tomar cualquier decisión sobre el proyecto.
 
 ## Qué es
 
-Una plataforma online para que hoteles y restaurantes gestionen su negocio de eventos y banquetes sin Excel suelto ni servidores caros. Cada cliente vive en su propio espacio dentro de la misma aplicación, con su identidad visual, sus menús, sus recetas y sus presupuestos.
+Una plataforma online para que hoteles y restaurantes gestionen su negocio de eventos y banquetes en un único centro de mando, sin servidores caros. Cada cliente vive en su propio espacio dentro de la misma aplicación, con su identidad visual, sus menús, sus recetas y sus presupuestos.
 
 ## Para quién
 
@@ -15,8 +15,8 @@ Hoteles independientes y pequeñas cadenas de 3 a 15 establecimientos. Restauran
 
 | Hoy | Con la plataforma |
 | --- | --- |
-| Excel de presupuestos heredado de hace 10 años | Editor visual con datos del establecimiento |
-| Cartas en Word desactualizadas | Carta digital pública con QR para las mesas |
+| Plantilla de presupuestos heredada y fragmentada | Editor visual unificado con datos del establecimiento |
+| Cartas desactualizadas en varias versiones | Carta digital pública con QR para las mesas |
 | Recetas en libreta del jefe de cocina | Recetario con escandallos y coste real |
 | Precios de economato por WhatsApp | Conexión directa al proveedor (CSV/API) |
 | Camareros consultando portátil para alérgenos | App móvil con pulseras de dieta en su bolsillo |
@@ -70,7 +70,7 @@ Cinco cosas la separan de cualquier SaaS de eventos al uso:
 2. No hay coste de infraestructura. Los clientes no pagan hospedaje.
 3. Los datos del cliente nunca salen de su navegador ni de su repositorio.
 4. Está versionada en git. Cualquier cambio se revierte con un click, no hay rollback opaco.
-5. Los importadores aceptan el caos real del cliente: ese Excel de 2011, los PDFs antiguos, las fotos sin nombrar.
+5. Los importadores aceptan el caos real del cliente: los ficheros heredados, los PDFs antiguos, las fotos sin nombrar consistente.
 
 ## Lo que falta para llevar al mercado
 
@@ -82,6 +82,6 @@ El plan de precios y el material de marketing no están decididos. Las opciones 
 
 ## Sobre si esto tiene mercado
 
-La hostelería independiente española mueve unos 50 000 millones de euros al año. Alrededor del 70 % sigue gestionando con Excel o con software local de hace una década. Nicho hay. La pregunta no es esa.
+La hostelería independiente española mueve unos 50 000 millones de euros al año. Alrededor del 70 % sigue gestionando con herramientas fragmentadas (plantillas heredadas, software local de hace una década, libreta de papel). Nicho hay. La pregunta no es esa.
 
 La pregunta real es si Paco quiere convertirse en vendedor de software o prefiere licenciarlo a alguien con red comercial. Ambas opciones están desarrolladas en el plan de comercialización.

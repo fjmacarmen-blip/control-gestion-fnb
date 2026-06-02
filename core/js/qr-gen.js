@@ -92,6 +92,15 @@
     return origin + basePath + targetPage + '?proyecto=' + encodeURIComponent(projectId);
   }
 
+  /**
+   * v5.9 · Construye URL absoluta de la página pública de un evento concreto.
+   * Reutiliza la resolución de basePath de buildPublicMenuUrl y añade &id=<eventId>.
+   */
+  function buildEventUrl(projectId, eventId) {
+    const base = buildPublicMenuUrl(projectId, { page: 'evento-publica.html' });
+    return base + '&id=' + encodeURIComponent(eventId);
+  }
+
   function downloadQR(svgString, filename) {
     const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -108,6 +117,7 @@
     ensureLibLoaded,
     generateQR,
     buildPublicMenuUrl,
+    buildEventUrl,
     downloadQR,
   };
 })();

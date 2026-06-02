@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 280" width="1000" height="280" role="img" aria-label="Queens Bellybutton · horizontal botánica">
+  <defs>
+    <linearGradient id="bgBH" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0e1c3f"/>
+      <stop offset="100%" stop-color="#0a1733"/>
+    </linearGradient>
+    <linearGradient id="goldBH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#e8cf8a"/>
+      <stop offset="48%" stop-color="#c9a35c"/>
+      <stop offset="100%" stop-color="#8a682b"/>
+    </linearGradient>
+    <linearGradient id="leafBH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a3b87b"/>
+      <stop offset="100%" stop-color="#5e6f3f"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="280" fill="url(#bgBH)"/>
+
+  <g transform="translate(140 158)">
+    <g transform="translate(0 -98)">
+      <rect x="-32" y="8" width="64" height="6" rx="1.5" fill="url(#goldBH)"/>
+      <path d="M -32 9 L -21 -12 L -12 4 L 0 -19 L 12 4 L 21 -12 L 32 9 Z" fill="url(#goldBH)"/>
+      <circle cx="-21" cy="-12" r="2.5" fill="url(#goldBH)"/>
+      <circle cx="0"   cy="-19" r="3"   fill="url(#goldBH)"/>
+      <circle cx="21"  cy="-12" r="2.5" fill="url(#goldBH)"/>
+    </g>
+    <text x="0" y="42"
+          font-family="'Playfair Display','Cormorant Garamond',Georgia,serif"
+          font-size="200" font-weight="500"
+          text-anchor="middle" fill="url(#goldBH)">Q</text>
+    <!-- Rama proporcional al tamaño horizontal -->
+    <g transform="translate(-34 30)" opacity="0.92">
+      <path d="M 0 0 Q -18 -12 -32 -22 Q -42 -30 -50 -24" fill="none" stroke="url(#leafBH)" stroke-width="1.4"/>
+      <path d="M -14 -10 Q -22 -20 -30 -14 Q -22 -6 -14 -10 Z" fill="url(#leafBH)"/>
+      <path d="M -30 -22 Q -42 -32 -54 -24 Q -44 -14 -30 -22 Z" fill="url(#leafBH)"/>
+    </g>
+  </g>
+
+  <g transform="translate(310 0)">
+    <text x="0" y="130"
+          font-family="'Cinzel','Cormorant Garamond',Georgia,serif"
+          font-size="56" font-weight="500"
+          fill="url(#goldBH)" letter-spacing="9">QUEENS</text>
+    <line x1="0" y1="148" x2="240" y2="148" stroke="#c9a35c" stroke-width="0.8" opacity="0.7"/>
+    <text x="0" y="174"
+          font-family="Inter,system-ui,sans-serif"
+          font-size="16" font-weight="500"
+          fill="#e8e6df" letter-spacing="9">BELLY BUTTON</text>
+    <text x="0" y="200"
+          font-family="Inter,system-ui,sans-serif"
+          font-size="10.5" font-weight="500"
+          fill="#8aa5d6" letter-spacing="4.5">HOSPITALITY MANAGEMENT SOFTWARE</text>
+  </g>
+</svg>
