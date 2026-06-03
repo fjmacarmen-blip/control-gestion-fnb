@@ -1727,15 +1727,24 @@ function parseElegirN(title) {
   return parseInt(v);
 }
 
-/** Convierte un item de composición en HTML — si coincide con una receta, enlace al recetario */
+/** Convierte un item de composición en HTML — si coincide con una receta,
+ *  el NOMBRE queda como texto plano (para que el click del <label> marque el
+ *  input correctamente) y solo el icono ↗ aparte abre la ficha del recetario.
+ *
+ *  v5.11.1 · bug fix: antes el nombre era un <a> con onclick=stopPropagation,
+ *  lo que rompía el comportamiento natural del label de marcar el checkbox.
+ *  El usuario clicaba en "Gambas al Ajillo" esperando seleccionarlo y en su
+ *  lugar se le abría una pestaña nueva al recetario y la opción no se marcaba.
+ */
 function renderCompItem(text, asLabel) {
-  // Detectar nombre de plato conocido. Buscamos coincidencias en el texto.
   let html = text;
   RECETAS_CATALOG.forEach(name => {
     if (text.indexOf(name) !== -1) {
       const url = `recetario.html#${encodeURIComponent(name)}`;
-      const linked = `<a class="comp-recipe-link" href="${url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Ver ficha y escandallo de ${name}">${name} <span class="link-arrow">↗</span></a>`;
-      html = html.split(name).join(linked);
+      // Nombre como texto plano (clic = marcar) + icono separado (clic = abrir ficha).
+      // stopPropagation en el icono evita que su click marque/desmarque el input.
+      const replacement = `${name}<a class="comp-recipe-link" href="${url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Ver ficha y escandallo de ${name}" aria-label="Abrir ficha de ${name} en el recetario"><span class="link-arrow" aria-hidden="true"> ↗</span></a>`;
+      html = html.split(name).join(replacement);
     }
   });
   return html;
