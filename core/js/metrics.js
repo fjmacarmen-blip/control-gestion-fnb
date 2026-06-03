@@ -22,7 +22,12 @@
   function getRepoBase() {
     const meta = document.querySelector('meta[name="project-base"]');
     if (meta && meta.content) return meta.content.replace(/\/?$/, '/');
-    return '../';
+    // v5.11.3 fix · default alineado con loader.js (era '../', incorrecto).
+    // Las páginas viven en /core/pages/ (depth 2), así que repo raíz = '../../'.
+    // Dashboards en /dashboard/ (depth 1) declaran meta[name="project-base"]="../".
+    // Antes este desajuste causaba 404 silencioso al cargar budgets desde el
+    // cotizador (ruta resuelta a /core/projects/... en vez de /projects/...).
+    return '../../';
   }
 
   // ── Carga ──────────────────────────────────────────
