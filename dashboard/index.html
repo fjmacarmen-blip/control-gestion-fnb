@@ -314,7 +314,10 @@
       <h1 class="projects-title" data-i18n="dashboard.projects_title">Proyectos</h1>
       <p class="projects-sub" id="projectsCount" data-i18n="common.loading">Cargando…</p>
     </div>
-    <a href="wizard.html" class="btn-new" data-i18n="dashboard.new_project">➕ Nuevo proyecto</a>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <a href="superadmin.html" id="btnSuperadminPanel" class="btn-new" style="display:none;background:linear-gradient(135deg,#0F4D2E,#1A8550);border-color:#00E676;box-shadow:0 0 16px rgba(0,230,118,0.25);">🛡️ Panel Superadmin</a>
+      <a href="wizard.html" class="btn-new" data-i18n="dashboard.new_project">➕ Nuevo proyecto</a>
+    </div>
   </div>
 
   <div class="projects-grid" id="projectsGrid">
@@ -367,6 +370,11 @@ function showProjects(session) {
   els.navAuthed.style.display = '';
   els.loginView.classList.add('hidden');
   els.projectsView.classList.remove('hidden');
+  // v5.14 · enlace al panel superadmin sólo para sesiones super-admin
+  var btnSuper = document.getElementById('btnSuperadminPanel');
+  if (btnSuper && session.scope === 'super-admin') {
+    btnSuper.style.display = 'inline-flex';
+  }
   loadProjectsList();
 }
 
