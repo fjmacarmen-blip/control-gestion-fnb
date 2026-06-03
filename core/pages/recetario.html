@@ -239,11 +239,34 @@ main { padding: 36px 40px; }
 }
 .card:hover .card-thumb img { transform: scale(1.06); }
 .card-thumb .emoji { font-size: 3.8rem; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)); z-index: 1; }
-.card-thumb .emoji-overlay {
-  position: absolute; bottom: 10px; right: 12px;
-  font-size: 1.8rem; z-index: 2;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
-  opacity: 0.9;
+/* v5.12 · emoji-overlay deprecated · icon ahora va junto al nombre */
+.card-name-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 8px;
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  margin-right: 10px;
+  vertical-align: -.3em;
+  line-height: 1;
+}
+.modal-title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 10px;
+  background: rgba(201, 168, 76, 0.15);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  margin-right: 12px;
+  vertical-align: -.3em;
+  line-height: 1;
 }
 .card-thumb::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 55%;
@@ -332,7 +355,8 @@ main { padding: 36px 40px; }
   transform: scale(1.03);
 }
 .modal-hero .big-emoji { font-size: 6rem; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5)); z-index: 1; }
-.modal-hero-emoji {
+/* v5.12 · modal-hero-emoji deprecated · icon ahora junto al título del modal */
+.modal-hero-emoji-DEPRECATED {
   position: absolute; bottom: 16px; right: 20px; z-index: 3;
   font-size: 3rem; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
   opacity: 0.9;
@@ -1384,14 +1408,14 @@ function renderRecipes(cat) {
     c.dataset.cat = cat;
     c.dataset.search = (r.n + ' ' + r.sub + ' ' + (r.ing||[]).map(function(x){return x[1];}).join(' ')).toLowerCase();
     var imgSrc = IMG_MAP[r.n];
+    // v5.12 · emoji-overlay removed (movido junto al nombre del plato)
     c.innerHTML =
       '<div class="card-thumb ' + r.g + '">' +
         (imgSrc ? '<img src="' + imgSrc + '" alt="' + r.n + '" loading="lazy" decoding="async">' : '<span class="emoji">' + r.e + '</span>') +
-        (imgSrc ? '<span class="emoji-overlay">' + r.e + '</span>' : '') +
         '<span class="card-difficulty ' + diffClass(r.dif) + '">' + r.dif + '</span>' +
       '</div>' +
       '<div class="card-body">' +
-        '<div class="card-name">' + r.n + '</div>' +
+        '<div class="card-name"><span class="card-name-icon" aria-hidden="true">' + r.e + '</span>' + r.n + '</div>' +
         '<div class="card-sub">' + r.sub + '</div>' +
         '<div class="card-chips">' +
           (r.prep > 0 ? '<span class="chip">🔪 ' + r.prep + ' min</span>' : '') +
@@ -1581,15 +1605,15 @@ function openModal(cat, idx) {
   }
 
   var modalImg = IMG_MAP[r.n];
+  // v5.12 · modal-hero-emoji removed (movido junto al título del modal)
   document.getElementById('modal').innerHTML =
     '<div class="modal-hero ' + r.g + '">' +
       (modalImg ? '<img class="modal-hero-img" src="' + modalImg + '" alt="' + r.n.replace(/"/g,"&quot;") + '">' : '<div class="big-emoji">' + r.e + '</div>') +
       '<div class="modal-hero-overlay"></div>' +
-      (modalImg ? '<div class="modal-hero-emoji">' + r.e + '</div>' : '') +
       '<button class="modal-close" onclick="closeModal()">✕</button>' +
     '</div>' +
     '<div class="modal-body">' +
-      '<div class="modal-title">' + r.n + '</div>' +
+      '<div class="modal-title"><span class="modal-title-icon" aria-hidden="true">' + r.e + '</span>' + r.n + '</div>' +
       '<div class="modal-subtitle">' + r.sub + '</div>' +
       '<div class="modal-allerg-section">' +
         '<div class="modal-allerg-title">🚨 Alérgenos (Reglamento UE 1169/2011)</div>' +

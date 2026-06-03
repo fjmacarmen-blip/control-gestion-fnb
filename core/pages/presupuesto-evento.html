@@ -539,6 +539,21 @@ body{
 .sel-card.selected .sel-check::after { content:'✓'; font-weight:700; }
 
 .sel-icon { font-size:2.4rem; margin-bottom:10px; display:block; }
+/* v5.12 · icono al lado del nombre · no más emojis sobre las imágenes */
+.sel-name-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 8px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  margin-right: 8px;
+  vertical-align: -.35em;
+  line-height: 1;
+}
 .sel-name { font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--cream); margin-bottom:4px; font-weight:600; }
 .sel-desc { font-size:.75rem; color:var(--muted); line-height:1.6; margin-bottom:10px; }
 .sel-price { font-size:.88rem; color:var(--gold); font-weight:600; }
@@ -557,11 +572,11 @@ body{
   transition:transform 0.4s ease;
 }
 .sel-card.pkg:hover .pkg-thumb img { transform:scale(1.06); }
-.pkg-thumb .pkg-icon { position:relative; z-index:2; font-size:2.2rem;
-  filter:drop-shadow(0 3px 8px rgba(0,0,0,0.7)); }
+/* v5.12 · pkg-icon removed (ahora junto al nombre vía .sel-name-icon) */
 .pkg-thumb::after {
-  content:''; position:absolute; bottom:0; left:0; right:0; height:55%;
-  background:linear-gradient(transparent,rgba(10,22,40,0.65)); z-index:1;
+  content:''; position:absolute; bottom:0; left:0; right:0; height:40%;
+  background:linear-gradient(transparent,rgba(10,22,40,0.55)); z-index:1;
+  pointer-events: none;
 }
 
 /* Event type cards with image */
@@ -581,10 +596,7 @@ body{
   content:''; position:absolute; bottom:0; left:0; right:0; height:60%;
   background:linear-gradient(transparent,rgba(10,22,40,0.65)); z-index:1;
 }
-.evt-thumb-icon {
-  position:absolute; bottom:8px; left:12px; z-index:3;
-  font-size:1.6rem; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.7));
-}
+/* v5.12 · evt-thumb-icon removed (ahora junto al nombre vía .sel-name-icon) */
 .evt-body { padding:14px 16px 16px; position:relative; }
 
 /* Dish card image thumbnail */
@@ -1635,8 +1647,7 @@ function radioCard(item, selKey, grid, paxRef=true, extraClass='') {
   card.innerHTML = `
     <div class="sel-check"></div>
     ${item.badge ? `<span class="pkg-badge ${item.badge}">${item.name}</span>` : ''}
-    <span class="sel-icon">${item.icon || item.ico}</span>
-    <div class="sel-name">${item.name}</div>
+    <div class="sel-name"><span class="sel-name-icon" aria-hidden="true">${item.icon || item.ico}</span>${item.name}</div>
     <div class="sel-desc">${item.desc}</div>
     <div class="sel-price">${priceStr}</div>
     ${item.incl ? `<div class="sel-price-note">✓ ${item.incl}</div>` : ''}`;
@@ -1663,12 +1674,10 @@ function pkgCard(item, selKey, grid) {
   card.innerHTML = `
     <div class="pkg-thumb ${item.g}">
       ${item.img ? `<img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async">` : ''}
-      <span class="pkg-icon">${item.icon}</span>
-      <span class="pkg-badge ${item.badge}">${item.type === 'coctel' ? '🥂 Cóctel de Pie' : item.name}</span>
     </div>
     <div class="pkg-body">
       <div class="sel-check"></div>
-      <div class="sel-name">${item.name}</div>
+      <div class="sel-name"><span class="sel-name-icon" aria-hidden="true">${item.icon}</span>${item.name}</div>
       <div class="sel-desc">${item.desc}</div>
       <div class="sel-price">${pp===0?'A calcular':`${pp} € / pax`}</div>
       ${item.incl ? `<div class="sel-price-note">✓ ${item.incl}</div>` : ''}
@@ -2065,17 +2074,15 @@ function initGrids() {
       c.innerHTML = `
         <div class="evt-thumb">
           <img src="${t.img}" alt="${t.name}" loading="lazy" decoding="async">
-          <span class="evt-thumb-icon">${t.icon}</span>
         </div>
         <div class="evt-body">
           <div class="sel-check"></div>
-          <div class="sel-name">${t.name}</div>
+          <div class="sel-name"><span class="sel-name-icon" aria-hidden="true">${t.icon}</span>${t.name}</div>
           <div class="sel-desc">${t.desc}</div>
         </div>`;
     } else {
       c.innerHTML = `<div class="sel-check"></div>
-        <span class="sel-icon">${t.icon}</span>
-        <div class="sel-name">${t.name}</div>
+        <div class="sel-name"><span class="sel-name-icon" aria-hidden="true">${t.icon}</span>${t.name}</div>
         <div class="sel-desc">${t.desc}</div>`;
     }
     c.onclick = () => {
