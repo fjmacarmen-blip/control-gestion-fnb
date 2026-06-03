@@ -754,3 +754,68 @@ Durante el QA inicial de v5.1, Paco detectó un desajuste entre el flujo dibujad
    - 6: Director (mantenimiento)
 
 **Lección de proceso:** el flujo visual debe construirse leyendo el código línea a línea, no inferido. La revisión rápida del usuario me ahorró un fallo de copy que se habría comunicado mal a empleadores y a clientes potenciales del producto.
+
+---
+
+## Addendum v5.12 → v5.14 (junio 2026)
+
+### v5.12 · Decisión de diseño · iconos al lado del nombre
+Patrón visual común a todas las cards del producto: el emoji deja de
+flotar sobre la imagen y se reubica como **badge dorado pequeño al lado
+del nombre**. Clases CSS reutilizables: `.sel-name-icon` (cotizador),
+`.card-name-icon` (recetario lista), `.modal-title-icon` (recetario modal).
+SW_VERSION → 5.12.0.
+
+### v5.13 · Catálogo de recetas profesional
+Tres cambios estructurales en `projects/miramar/recetas.json`:
+
+1. **+36 fichas nuevas** con escandallo a nivel profesional (ingredientes
+   con gramaje exacto, precios Makro mayorista 2026, 5-9 pasos de
+   elaboración, alérgenos declarados).
+2. **Nueva categoría `estaciones`** con 8 estaciones en vivo (sushi,
+   carving DOP, wok, pasta, pizza, ostras, ceviche, brunch). Las fichas
+   de estaciones incluyen además personal contratado (sushiman, cortador
+   profesional, pizzaiolo) y alquiler de equipo (vitrina refrigerada,
+   horno de leña móvil, jamonero pro) como parte del escandallo.
+3. **Layout sidebar vertical** en `core/pages/recetario.html` con 3
+   grupos (Carta · Eventos · Operativa), sticky en desktop y fallback
+   horizontal scroll en móvil (<900px).
+
+SW_VERSION → 5.13.0.
+
+### v5.14 · Dashboard superadmin diferenciado
+
+Nueva página `dashboard/superadmin.html`. **Ruptura deliberada de
+coherencia visual** con el resto del producto (azul-marfil-oro):
+paleta verde+negro inspirada en dashboards admin tipo Vercel/Linear/Spotify.
+
+| Tokens CSS | Valor |
+| --- | --- |
+| `--bg` | `#060A07` (negro verdoso muy oscuro) |
+| `--green-deep` | `#0F4D2E` (verde profundo brand) |
+| `--green-bright` | `#00E676` (verde fluorescente accent) |
+| `--green-glow` | `#00FF88` (hover state) |
+| theme-color | `#0a1612` (vs `#0a1733` navy del director) |
+
+**Auth gate**: la página verifica `window.fnbAuth.getSession()` y solo
+muestra el dashboard si `scope === 'super-admin'`. En caso contrario
+renderiza un card de "Acceso restringido" con link al login.
+
+**Componentes:**
+- 4 KPI cards con sparklines SVG inline
+- Chart de volumen mensual SVG con gradient fill (toggles 6M/12M/YTD)
+- Tabla de proyectos con health pills + mini-sparkline 7d
+- Top 5 paquetes con barras de progreso
+- Distribución por tipo de evento
+- Activity feed con timestamps relativos
+
+**Agregación de datos:** `aggregateMetrics()` carga `projects/index.json`
+y para cada proyecto descarga `budgets/index.json` + N detalles
+individuales. Calcula sparklines por mes y agrega top paquetes / tipos
+de evento globales.
+
+**Acceso:** botón "🛡️ Panel Superadmin" en `dashboard/index.html` que
+aparece solo si la sesión es super-admin, con gradiente verde para
+señalizar visualmente que entra en un modo distinto.
+
+SW_VERSION → 5.14.0.
