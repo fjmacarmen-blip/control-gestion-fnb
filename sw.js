@@ -8,7 +8,7 @@
  *
  * Versionado: CACHE_NAME se actualiza al cambiar SW_VERSION.
  */
-const SW_VERSION = '5.13.0';
+const SW_VERSION = '5.14.0';
 const CACHE_NAME = 'fnb-shell-v' + SW_VERSION;
 const RUNTIME_CACHE = 'fnb-runtime-v' + SW_VERSION;
 
