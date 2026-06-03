@@ -613,6 +613,483 @@
           "Verter la mezcla de huevo y nata hasta casi cubrir.",
           "Hornear 15-18 min a 180°C hasta dorado. Servir tibias."
         ]
+      },
+      {
+        "n": "Brocheta de queso manchego con uva moscatel",
+        "e": "🍇",
+        "g": "g3",
+        "sub": "Bocado dulce-salado · manchego curado 12 meses + uva moscatel fresca",
+        "prep": 20,
+        "coc": 0,
+        "rac": 20,
+        "dif": "Baja",
+        "mp": 0.85,
+        "alergen": "Lácteos, sulfitos",
+        "ing": [
+          [
+            "50g",
+            "Manchego curado 12 meses",
+            "en dados de 2x2 cm (22€/kg Makro)"
+          ],
+          [
+            "2 ud",
+            "Uva moscatel grande",
+            "lavada y deshojada (3€/kg)"
+          ],
+          [
+            "1 ud",
+            "Palillo madera 9 cm",
+            "para brocheta (0.01€)"
+          ],
+          [
+            "c/n",
+            "Romero fresco",
+            "como decoración (0.20€/manojo)"
+          ]
+        ],
+        "pasos": [
+          "Cortar el manchego en cubos perfectos de 2 cm con cuchillo caliente.",
+          "Lavar y secar las uvas moscatel. Reservar las más uniformes.",
+          "Ensartar uva-queso-uva en el palillo, dejando los extremos limpios.",
+          "Disponer sobre pizarra negra con una hojita de romero entre brochetas.",
+          "Servir a 18 ºC (sacar del frigo 20 min antes) para apreciar matices del manchego."
+        ]
+      },
+      {
+        "n": "Brocheta de tomate cherry y mozzarella",
+        "e": "🍅",
+        "g": "g5",
+        "sub": "Capresse en miniatura · cherry rama + mozzarella fior di latte + albahaca",
+        "prep": 15,
+        "coc": 0,
+        "rac": 20,
+        "dif": "Baja",
+        "mp": 0.55,
+        "alergen": "Lácteos",
+        "ing": [
+          [
+            "2 ud",
+            "Tomate cherry rama",
+            "lavado (3€/kg = 0.05€/ud)"
+          ],
+          [
+            "20g",
+            "Mozzarella fior di latte",
+            "bolitas perlino (9€/kg)"
+          ],
+          [
+            "1 hoja",
+            "Albahaca fresca",
+            "(2.50€/maceta)"
+          ],
+          [
+            "1 ud",
+            "Palillo bambú",
+            "(0.01€)"
+          ],
+          [
+            "2g",
+            "Aceite oliva virgen extra DO",
+            "para barniz (7€/L)"
+          ]
+        ],
+        "pasos": [
+          "Cortar el cherry por la mitad si es muy grande; si es perlino, entero.",
+          "Escurrir bien las bolitas de mozzarella en papel.",
+          "Ensartar cherry-mozzarella-albahaca-cherry-mozzarella.",
+          "Barnizar con AOVE Hojiblanca con pincel.",
+          "Servir frío (4 ºC) con sal Maldon aparte."
+        ]
+      },
+      {
+        "n": "Brocheta de fresa con chocolate",
+        "e": "🍓",
+        "g": "g4",
+        "sub": "Postre en pincho · fresa fresca + cobertura chocolate 70% + crocante",
+        "prep": 20,
+        "coc": 5,
+        "rac": 20,
+        "dif": "Baja",
+        "mp": 0.65,
+        "alergen": "Lácteos (chocolate)",
+        "ing": [
+          [
+            "3 ud",
+            "Fresa mediana",
+            "lavada y sin rabo (4€/kg = 0.18€/ud)"
+          ],
+          [
+            "20g",
+            "Chocolate cobertura 70%",
+            "templado (15€/kg)"
+          ],
+          [
+            "3g",
+            "Crocante de almendra",
+            "picado fino (12€/kg)"
+          ],
+          [
+            "1 ud",
+            "Palillo madera",
+            "(0.01€)"
+          ]
+        ],
+        "pasos": [
+          "Lavar y secar las fresas con papel absorbente.",
+          "Templar el chocolate al baño maría (45→27→32 ºC).",
+          "Ensartar 3 fresas por brocheta, con los rabos hacia adentro.",
+          "Sumergir la punta en chocolate, dejar gotear y rebozar en crocante.",
+          "Refrigerar 5 min sobre papel sulfurizado para cuajar la cobertura."
+        ]
+      },
+      {
+        "n": "Croqueta de jamón ibérico",
+        "e": "🥖",
+        "g": "g7",
+        "sub": "Receta clásica · bechamel cremosa con jamón ibérico picado fino",
+        "prep": 40,
+        "coc": 15,
+        "rac": 4,
+        "dif": "Media",
+        "mp": 0.45,
+        "alergen": "Lácteos, gluten, huevo",
+        "ing": [
+          [
+            "100g",
+            "Jamón ibérico bellota picado",
+            "(16€/kg mayorista)"
+          ],
+          [
+            "80g",
+            "Mantequilla",
+            "(6€/kg)"
+          ],
+          [
+            "80g",
+            "Harina trigo",
+            "(0.50€/kg)"
+          ],
+          [
+            "800ml",
+            "Leche entera",
+            "(0.80€/L)"
+          ],
+          [
+            "1 ud",
+            "Cebolla pequeña",
+            "picada brunoise (1€/kg)"
+          ],
+          [
+            "c/n",
+            "Nuez moscada",
+            "rallada (2g por receta)"
+          ],
+          [
+            "2 ud",
+            "Huevo M",
+            "para empanar (0.25€/ud)"
+          ],
+          [
+            "200g",
+            "Pan rallado panko",
+            "para empanar (3€/kg)"
+          ],
+          [
+            "c/n",
+            "Aceite girasol",
+            "para fritura (2€/L)"
+          ]
+        ],
+        "pasos": [
+          "Pochar la cebolla en la mantequilla a fuego suave 8 min.",
+          "Añadir la harina y cocinar 2 min sin que coja color.",
+          "Verter la leche templada poco a poco, varilla en mano.",
+          "Cocer la bechamel 10 min sin parar de mover hasta espesar bien.",
+          "Añadir el jamón ibérico al final, nuez moscada y sal con prudencia.",
+          "Extender en bandeja, tapar con film a piel y enfriar 4 h o toda la noche.",
+          "Formar bolitas de 20g, empanar pasando por huevo y panko (doble rebozado).",
+          "Freír a 180 ºC hasta dorar (90 seg). Escurrir en papel."
+        ]
+      },
+      {
+        "n": "Croqueta líquida de jamón ibérico de bellota",
+        "e": "🥖",
+        "g": "g11",
+        "sub": "Versión premium · interior cremoso casi líquido + ibérico bellota DOP",
+        "prep": 60,
+        "coc": 20,
+        "rac": 4,
+        "dif": "Alta",
+        "mp": 0.95,
+        "alergen": "Lácteos, gluten, huevo",
+        "ing": [
+          [
+            "120g",
+            "Jamón ibérico bellota DOP",
+            "picado muy fino (18€/kg)"
+          ],
+          [
+            "100g",
+            "Mantequilla francesa",
+            "(8€/kg)"
+          ],
+          [
+            "70g",
+            "Harina floja",
+            "(0.60€/kg)"
+          ],
+          [
+            "1L",
+            "Caldo de jamón infusionado",
+            "con huesos de ibérico (1€/L)"
+          ],
+          [
+            "200ml",
+            "Leche entera",
+            "(0.80€/L)"
+          ],
+          [
+            "3 ud",
+            "Yema huevo",
+            "(0.30€/ud por huevo entero)"
+          ],
+          [
+            "2 ud",
+            "Huevo M",
+            "para empanar (0.25€/ud)"
+          ],
+          [
+            "c/n",
+            "Panko japonés",
+            "(5€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Reducir el caldo de jamón a 600ml para concentrar sabor.",
+          "Roux blanco con mantequilla y harina; añadir el caldo y leche templados.",
+          "Cocinar 8 min para una textura más ligera que la croqueta clásica.",
+          "Fuera del fuego, montar con las yemas y el jamón picado.",
+          "Extender en bandeja fina (2 cm) y congelar 2 h para poder formar.",
+          "Formar bolitas, empanar doble y volver a congelar 1 h.",
+          "Freír a 190 ºC durante 60 seg (debe quedar costra y el interior casi líquido)."
+        ]
+      },
+      {
+        "n": "Cucharilla de Salmorejo",
+        "e": "🥄",
+        "g": "g1",
+        "sub": "Salmorejo cordobés clásico en cucharilla · jamón ibérico + huevo cocido",
+        "prep": 15,
+        "coc": 10,
+        "rac": 10,
+        "dif": "Baja",
+        "mp": 0.4,
+        "alergen": "Huevo, sulfitos",
+        "ing": [
+          [
+            "500g",
+            "Tomate pera maduro",
+            "(1.80€/kg)"
+          ],
+          [
+            "100g",
+            "Pan candeal",
+            "del día anterior (2€/kg)"
+          ],
+          [
+            "100ml",
+            "AOVE Hojiblanca",
+            "(7€/L)"
+          ],
+          [
+            "1 diente",
+            "Ajo blanco",
+            "(3€/kg)"
+          ],
+          [
+            "10g",
+            "Sal fina",
+            "(0.60€/kg)"
+          ],
+          [
+            "20g",
+            "Jamón ibérico picado",
+            "para terminar (16€/kg)"
+          ],
+          [
+            "1 ud",
+            "Huevo duro",
+            "rallado (0.25€/ud)"
+          ]
+        ],
+        "pasos": [
+          "Triturar tomate, pan remojado, ajo y sal en Thermomix 2 min vel 10.",
+          "Emulsionar con AOVE en hilo fino hasta textura cremosa.",
+          "Colar por estameña para textura sedosa (opcional pero recomendable).",
+          "Refrigerar 2 h a 4 ºC.",
+          "Servir en cucharillas de porcelana con jamón ibérico y huevo rallado encima."
+        ]
+      },
+      {
+        "n": "Vasito de Gazpacho Andaluz",
+        "e": "🥒",
+        "g": "g1",
+        "sub": "Gazpacho tradicional servido frío en chupito · viruta jamón ibérico",
+        "prep": 20,
+        "coc": 0,
+        "rac": 20,
+        "dif": "Baja",
+        "mp": 0.35,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "1kg",
+            "Tomate maduro pera",
+            "(1.80€/kg)"
+          ],
+          [
+            "1 ud",
+            "Pepino mediano",
+            "(1.50€/kg)"
+          ],
+          [
+            "1 ud",
+            "Pimiento verde italiano",
+            "(2€/kg)"
+          ],
+          [
+            "1/2 ud",
+            "Cebolla morada",
+            "(1.20€/kg)"
+          ],
+          [
+            "1 diente",
+            "Ajo",
+            "(3€/kg)"
+          ],
+          [
+            "50g",
+            "Pan candeal",
+            "remojado (2€/kg)"
+          ],
+          [
+            "80ml",
+            "AOVE",
+            "(7€/L)"
+          ],
+          [
+            "20ml",
+            "Vinagre Jerez",
+            "(8€/L)"
+          ],
+          [
+            "10g",
+            "Sal",
+            "(0.60€/kg)"
+          ],
+          [
+            "20g",
+            "Jamón ibérico",
+            "en viruta (16€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Triturar todas las verduras con el pan remojado y la sal 3 min en Thermomix.",
+          "Emulsionar con AOVE y vinagre en hilo, vel 5 durante 1 min.",
+          "Colar para textura fina, refrigerar 3 h.",
+          "Servir en chupitos de cristal con virutas de jamón ibérico encima."
+        ]
+      },
+      {
+        "n": "Canapé de foie mi-cuit con higos",
+        "e": "🫐",
+        "g": "g8",
+        "sub": "Canapé premium · foie + higos + reducción PX sobre tosta brioche",
+        "prep": 15,
+        "coc": 0,
+        "rac": 10,
+        "dif": "Baja",
+        "mp": 1.2,
+        "alergen": "Gluten, lácteos, sulfitos",
+        "ing": [
+          [
+            "20g",
+            "Foie mi-cuit DO Périgord",
+            "(60€/kg)"
+          ],
+          [
+            "10g",
+            "Higo de Almoharín",
+            "en gajos finos (8€/kg)"
+          ],
+          [
+            "1 ud",
+            "Tosta brioche redonda",
+            "(0.20€/ud)"
+          ],
+          [
+            "3g",
+            "Reducción PX Toro Albalá",
+            "(20€/L)"
+          ],
+          [
+            "c/n",
+            "Sal Maldon",
+            "(40€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Tostar el brioche 30 seg por lado en plancha sin grasa.",
+          "Cortar el foie en quenelle pequeña con cuchara caliente.",
+          "Disponer foie sobre tosta tibia, encima 2 gajos de higo.",
+          "Pintar con reducción PX y terminar con grano de sal Maldon.",
+          "Servir inmediatamente (foie y brioche pierden textura en 5 min)."
+        ]
+      },
+      {
+        "n": "Caviar Beluga sobre blinis",
+        "e": "🥄",
+        "g": "g7",
+        "sub": "Lujo absoluto · caviar Beluga sobre blini de patata + huevo de codorniz",
+        "prep": 10,
+        "coc": 5,
+        "rac": 10,
+        "dif": "Baja",
+        "mp": 8.5,
+        "alergen": "Gluten, lácteos, huevo, pescado",
+        "ing": [
+          [
+            "2g",
+            "Caviar Beluga Acipenser huso",
+            "(4€/g = 4000€/kg)"
+          ],
+          [
+            "1 ud",
+            "Blini patata 3 cm",
+            "casero (0.20€/ud)"
+          ],
+          [
+            "3g",
+            "Crème fraîche d'Isigny",
+            "(15€/kg)"
+          ],
+          [
+            "1/4 ud",
+            "Huevo codorniz cocido",
+            "(0.30€/ud)"
+          ],
+          [
+            "c/n",
+            "Cebollino fino",
+            "(2€/manojo)"
+          ]
+        ],
+        "pasos": [
+          "Calentar el blini ligeramente (no debe quemar la crème).",
+          "Quenelle pequeña de crème fraîche encima.",
+          "Disponer cuarto de huevo de codorniz y, sobre él, el caviar con cuchara de nácar.",
+          "Decorar con cebollino. Servir con champagne brut a 8 ºC."
+        ]
       }
     ],
     "entrantes": [
@@ -1376,6 +1853,268 @@
           "Cortar el aguacate en daditos similar y aliñar con sal y lima.",
           "Disponer en aro de emplatado: aguacate abajo, tartar encima.",
           "Desmoldar con cuidado. Ralladura de lima y cebollino picado por encima."
+        ]
+      },
+      {
+        "n": "Carpaccio de Ternera (sin pan)",
+        "e": "🥩",
+        "g": "g7",
+        "sub": "Lomo ternera lonchado fino + parmesano + rúcula · sin gluten",
+        "prep": 15,
+        "coc": 0,
+        "rac": 4,
+        "dif": "Media",
+        "mp": 1.85,
+        "alergen": "Lácteos (parmesano)",
+        "ing": [
+          [
+            "100g",
+            "Lomo ternera limpio",
+            "(22€/kg)"
+          ],
+          [
+            "20g",
+            "Parmigiano Reggiano 24m",
+            "en virutas (24€/kg)"
+          ],
+          [
+            "15g",
+            "Rúcula fresca selección",
+            "(8€/kg)"
+          ],
+          [
+            "10ml",
+            "AOVE Hojiblanca",
+            "(7€/L)"
+          ],
+          [
+            "c/n",
+            "Pimienta negra molida",
+            "y sal Maldon"
+          ],
+          [
+            "1 ud",
+            "Limón",
+            "para zumo (1.50€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Congelar el lomo de ternera 90 min para poder cortar finísimo.",
+          "Cortar al cortafiambres a grosor 2 (1 mm).",
+          "Extender lonchas sobre plato frío evitando que se solapen.",
+          "Aliñar con AOVE, gotas de limón, pimienta y sal Maldon.",
+          "Disponer rúcula en el centro y virutas de parmesano alrededor.",
+          "Servir inmediatamente para que la ternera no oxide."
+        ]
+      },
+      {
+        "n": "Salmorejo Cordobés (sin pan)",
+        "e": "🍅",
+        "g": "g1",
+        "sub": "Versión libre de gluten · tomate, ajo, AOVE emulsionados sin pan",
+        "prep": 15,
+        "coc": 0,
+        "rac": 4,
+        "dif": "Baja",
+        "mp": 0.75,
+        "alergen": "Huevo, sulfitos",
+        "ing": [
+          [
+            "800g",
+            "Tomate pera maduro",
+            "(1.80€/kg)"
+          ],
+          [
+            "150ml",
+            "AOVE Hojiblanca",
+            "(7€/L)"
+          ],
+          [
+            "1 diente",
+            "Ajo blanco",
+            "(3€/kg)"
+          ],
+          [
+            "10g",
+            "Sal fina",
+            "(0.60€/kg)"
+          ],
+          [
+            "30g",
+            "Jamón ibérico picado",
+            "(16€/kg)"
+          ],
+          [
+            "2 ud",
+            "Huevo duro",
+            "rallado (0.25€/ud)"
+          ],
+          [
+            "20g",
+            "Polvo de almendra tostada",
+            "para espesar sin pan (15€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Triturar tomate, ajo y sal con el polvo de almendra 2 min a máxima potencia.",
+          "Emulsionar con AOVE en hilo fino.",
+          "Colar por estameña fina; refrigerar 2 h.",
+          "Servir frío con jamón ibérico y huevo duro rallado.",
+          "Etiquetar SIN GLUTEN en presentación buffet."
+        ]
+      },
+      {
+        "n": "Ensalada Gamba Roja",
+        "e": "🦐",
+        "g": "g6",
+        "sub": "Mezclum + gamba roja Málaga + aguacate + vinagreta cítrica",
+        "prep": 15,
+        "coc": 3,
+        "rac": 4,
+        "dif": "Media",
+        "mp": 2.4,
+        "alergen": "Crustáceos",
+        "ing": [
+          [
+            "100g",
+            "Gamba roja Málaga",
+            "(50€/kg)"
+          ],
+          [
+            "80g",
+            "Mezclum gourmet",
+            "(12€/kg)"
+          ],
+          [
+            "1 ud",
+            "Aguacate Hass",
+            "(4€/kg)"
+          ],
+          [
+            "20ml",
+            "Aceite oliva + zumo lima",
+            "vinagreta (7€/L)"
+          ],
+          [
+            "c/n",
+            "Sal Maldon",
+            "y pimienta"
+          ],
+          [
+            "10g",
+            "Pistacho garrapiñado",
+            "picado (24€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Pelar las gambas dejando la cola; reservar las cabezas.",
+          "Marcar las colas 30 seg por lado en plancha caliente con AOVE.",
+          "Disponer mezclum como base; encima aguacate en dados y gambas.",
+          "Aliñar con vinagreta cítrica al servir.",
+          "Terminar con pistacho garrapiñado y sal Maldon."
+        ]
+      },
+      {
+        "n": "Tataki de Atún Rojo con sésamo y yuzu",
+        "e": "🐟",
+        "g": "g2",
+        "sub": "Lomo de atún marcado por fuera + crudo dentro + glaseado yuzu",
+        "prep": 10,
+        "coc": 2,
+        "rac": 4,
+        "dif": "Media",
+        "mp": 2.2,
+        "alergen": "Pescado, sésamo, soja, gluten",
+        "ing": [
+          [
+            "120g",
+            "Atún rojo lomo bajo",
+            "(45€/kg)"
+          ],
+          [
+            "10g",
+            "Sésamo blanco y negro",
+            "(8€/kg)"
+          ],
+          [
+            "15ml",
+            "Salsa yuzu-soja",
+            "(18€/L)"
+          ],
+          [
+            "3ml",
+            "Aceite sésamo tostado",
+            "(12€/L)"
+          ],
+          [
+            "c/n",
+            "Cebollino y rábano",
+            "(2€/manojo)"
+          ]
+        ],
+        "pasos": [
+          "Sellar el lomo de atún 15 seg por cada cara en sartén muy caliente.",
+          "Sumergir en agua-hielo 30 seg para detener cocción.",
+          "Rebozar el exterior en sésamo mezclado.",
+          "Cortar en láminas de 1 cm con cuchillo bien afilado.",
+          "Glasear con yuzu-soja y aceite sésamo, decorar con cebollino."
+        ]
+      },
+      {
+        "n": "Tartar de Atún Rojo sobre maíz tostado (sin gluten)",
+        "e": "🌽",
+        "g": "g4",
+        "sub": "Tartar marinado en soja sin gluten sobre lecho crujiente de maíz tostado",
+        "prep": 20,
+        "coc": 5,
+        "rac": 4,
+        "dif": "Media",
+        "mp": 2.3,
+        "alergen": "Pescado, sésamo, soja",
+        "ing": [
+          [
+            "100g",
+            "Atún rojo loma central",
+            "(45€/kg)"
+          ],
+          [
+            "40g",
+            "Maíz dulce tostado",
+            "(6€/kg)"
+          ],
+          [
+            "10ml",
+            "Tamari sin gluten",
+            "(12€/L)"
+          ],
+          [
+            "3ml",
+            "Aceite sésamo",
+            "(12€/L)"
+          ],
+          [
+            "10g",
+            "Aguacate dados",
+            "(4€/kg)"
+          ],
+          [
+            "5g",
+            "Cebollino",
+            "(2€/manojo)"
+          ],
+          [
+            "c/n",
+            "Sal Maldon",
+            "(40€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Cortar el atún en brunoise muy fina con cuchillo.",
+          "Macerar con tamari y aceite sésamo 5 min.",
+          "Tostar el maíz dulce en sartén sin aceite hasta dorar.",
+          "Disponer base de maíz tostado en plato frío.",
+          "Quenelle de tartar encima con aguacate, cebollino y sal Maldon.",
+          "Etiquetar SIN GLUTEN claramente."
         ]
       }
     ],
@@ -3536,6 +4275,410 @@
           "Partir el bizcocho en 2 capas, rellenar con mermelada caliente.",
           "Cubrir con ganache (chocolate fundido con nata). Decorar con la palabra Sacher en chocolate blanco."
         ]
+      },
+      {
+        "n": "Coulant de Chocolate 72% con helado de vainilla Bourbon",
+        "e": "🍫",
+        "g": "g8",
+        "sub": "Bizcocho con corazón líquido de chocolate + helado vainilla artesano",
+        "prep": 30,
+        "coc": 11,
+        "rac": 8,
+        "dif": "Alta",
+        "mp": 1.1,
+        "alergen": "Lácteos, gluten, huevo",
+        "ing": [
+          [
+            "100g",
+            "Chocolate cobertura 72%",
+            "Valrhona (15€/kg)"
+          ],
+          [
+            "100g",
+            "Mantequilla",
+            "(6€/kg)"
+          ],
+          [
+            "50g",
+            "Azúcar blanca",
+            "(1€/kg)"
+          ],
+          [
+            "2 ud",
+            "Huevo M",
+            "(0.25€/ud)"
+          ],
+          [
+            "2 ud",
+            "Yema huevo",
+            "(de los 2 anteriores)"
+          ],
+          [
+            "30g",
+            "Harina trigo",
+            "(0.50€/kg)"
+          ],
+          [
+            "1 bola",
+            "Helado vainilla Bourbon",
+            "artesanal (15€/L = 0.75€/bola 50ml)"
+          ],
+          [
+            "c/n",
+            "Sirope frambuesa",
+            "(8€/L)"
+          ]
+        ],
+        "pasos": [
+          "Fundir chocolate + mantequilla al baño maría a 45 ºC.",
+          "Batir huevos enteros + yemas con azúcar hasta blanquear (3 min varillas).",
+          "Incorporar la mezcla chocolate-mantequilla en hilo.",
+          "Tamizar la harina sobre la mezcla y plegar suavemente.",
+          "Engrasar moldes individuales con mantequilla y cacao.",
+          "Rellenar 3/4 del molde, congelar 30 min (clave para conseguir el corazón).",
+          "Hornear 11 min EXACTOS a 200 ºC (no más, no menos).",
+          "Desmoldar inmediatamente sobre plato; bola de helado al lado.",
+          "Hilo de sirope frambuesa para acabar."
+        ]
+      },
+      {
+        "n": "Crema catalana flameada en cucharilla",
+        "e": "🥄",
+        "g": "g4",
+        "sub": "Crema catalana clásica caramelizada al momento · servida en cucharilla",
+        "prep": 30,
+        "coc": 15,
+        "rac": 20,
+        "dif": "Media",
+        "mp": 0.35,
+        "alergen": "Lácteos, huevo",
+        "ing": [
+          [
+            "500ml",
+            "Leche entera",
+            "(0.80€/L)"
+          ],
+          [
+            "6 ud",
+            "Yema huevo",
+            "(0.25€/ud)"
+          ],
+          [
+            "120g",
+            "Azúcar blanco",
+            "(1€/kg)"
+          ],
+          [
+            "20g",
+            "Maicena",
+            "(2€/kg)"
+          ],
+          [
+            "1 ud",
+            "Rama canela",
+            "(8€/kg)"
+          ],
+          [
+            "1 ud",
+            "Piel limón",
+            "ecológico (1.50€/kg)"
+          ],
+          [
+            "c/n",
+            "Azúcar para caramelizar",
+            "(1€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Infusionar la leche con canela y piel limón 15 min sin hervir.",
+          "Blanquear yemas con azúcar y maicena.",
+          "Añadir leche infusionada colada en hilo, sin parar de mover.",
+          "Cocinar a fuego suave hasta espesar (88 ºC máximo). 5-7 min.",
+          "Verter en cucharillas porcelana, refrigerar 4 h.",
+          "Espolvorear azúcar y quemar con soplete justo antes de servir."
+        ]
+      },
+      {
+        "n": "Bienmesabe malagueño en tartaleta",
+        "e": "🥥",
+        "g": "g3",
+        "sub": "Postre tradicional Málaga · almendra molida + bizcocho + miel y canela",
+        "prep": 25,
+        "coc": 10,
+        "rac": 15,
+        "dif": "Baja",
+        "mp": 0.55,
+        "alergen": "Frutos secos, gluten, huevo, lácteos",
+        "ing": [
+          [
+            "1 ud",
+            "Tartaleta masa quebrada",
+            "(0.20€/ud)"
+          ],
+          [
+            "10g",
+            "Bienmesabe (mezcla)",
+            "casera (5€/kg materia prima)"
+          ],
+          [
+            "100g",
+            "Almendra molida cruda",
+            "(15€/kg)"
+          ],
+          [
+            "50g",
+            "Miel azahar",
+            "(10€/kg)"
+          ],
+          [
+            "1 ud",
+            "Yema huevo",
+            "(0.25€/ud)"
+          ],
+          [
+            "50ml",
+            "Almíbar canela",
+            "(2€/L)"
+          ],
+          [
+            "c/n",
+            "Canela molida",
+            "para decorar (12€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Mezclar almendra molida con miel y almíbar tibio.",
+          "Añadir yema sin parar de mover (no debe cuajar).",
+          "Rellenar las tartaletas hasta el borde.",
+          "Hornear 8 min a 160 ºC.",
+          "Espolvorear canela al servir."
+        ]
+      },
+      {
+        "n": "Mini tarta de queso La Viña",
+        "e": "🧀",
+        "g": "g3",
+        "sub": "Versión mini de la legendaria tarta vasca · queso cremoso muy hecho por fuera",
+        "prep": 15,
+        "coc": 20,
+        "rac": 12,
+        "dif": "Baja",
+        "mp": 0.65,
+        "alergen": "Lácteos, gluten, huevo",
+        "ing": [
+          [
+            "500g",
+            "Queso crema Philadelphia",
+            "(8€/kg)"
+          ],
+          [
+            "200ml",
+            "Nata 35% MG",
+            "(3€/L)"
+          ],
+          [
+            "150g",
+            "Azúcar",
+            "(1€/kg)"
+          ],
+          [
+            "4 ud",
+            "Huevo L",
+            "(0.30€/ud)"
+          ],
+          [
+            "20g",
+            "Harina trigo",
+            "(0.50€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Batir queso crema con azúcar hasta cremoso.",
+          "Añadir huevos uno a uno integrando bien cada vez.",
+          "Verter nata y harina tamizada en hilo.",
+          "Repartir en moldes individuales con papel sulfurizado arrugado.",
+          "Hornear 20 min a 220 ºC (debe quedar muy dorada y temblona).",
+          "Reposar 4 h en frigo antes de servir (mejora muchísimo)."
+        ]
+      },
+      {
+        "n": "Sorbete de limón",
+        "e": "🍋",
+        "g": "g2",
+        "sub": "Sorbete cítrico cremoso · limón fresco DO + sirope + clara montada",
+        "prep": 15,
+        "coc": 5,
+        "rac": 10,
+        "dif": "Media",
+        "mp": 0.45,
+        "alergen": "Huevo (clara)",
+        "ing": [
+          [
+            "8 ud",
+            "Limón fresco Murcia",
+            "para zumo (1.50€/kg)"
+          ],
+          [
+            "200g",
+            "Azúcar",
+            "(1€/kg)"
+          ],
+          [
+            "200ml",
+            "Agua",
+            "filtrada"
+          ],
+          [
+            "1 ud",
+            "Clara huevo",
+            "(0.30€/ud)"
+          ],
+          [
+            "c/n",
+            "Hojas hierbabuena",
+            "(1.50€/manojo)"
+          ]
+        ],
+        "pasos": [
+          "Hervir agua con azúcar hasta sirope ligero (105 ºC).",
+          "Mezclar con zumo de limón colado y ralladura.",
+          "Enfriar y montar en mantecadora 30 min.",
+          "En los últimos 5 min, añadir clara montada a punto de nieve.",
+          "Servir en copa de cóctel con hierbabuena."
+        ]
+      },
+      {
+        "n": "Mini pavlova de frutos rojos",
+        "e": "🍓",
+        "g": "g4",
+        "sub": "Merengue crujiente por fuera y cremoso dentro · nata + frutos rojos",
+        "prep": 30,
+        "coc": 90,
+        "rac": 12,
+        "dif": "Alta",
+        "mp": 0.8,
+        "alergen": "Lácteos, huevo",
+        "ing": [
+          [
+            "4 ud",
+            "Clara huevo",
+            "(0.30€/ud)"
+          ],
+          [
+            "200g",
+            "Azúcar blanco fino",
+            "(1€/kg)"
+          ],
+          [
+            "5ml",
+            "Vinagre blanco",
+            "(2€/L)"
+          ],
+          [
+            "10g",
+            "Maicena",
+            "(2€/kg)"
+          ],
+          [
+            "200ml",
+            "Nata 35% MG",
+            "(3€/L)"
+          ],
+          [
+            "20g",
+            "Azúcar glas",
+            "para nata (2€/kg)"
+          ],
+          [
+            "100g",
+            "Frutos rojos mix",
+            "(12€/kg)"
+          ],
+          [
+            "c/n",
+            "Hojas menta",
+            "(1.50€/manojo)"
+          ]
+        ],
+        "pasos": [
+          "Montar claras con azúcar a punto de pico de pájaro firme.",
+          "Añadir vinagre y maicena al final con espátula.",
+          "Formar 12 nidos individuales sobre papel sulfurizado.",
+          "Hornear 90 min a 100 ºC con horno entreabierto.",
+          "Dejar enfriar dentro del horno apagado.",
+          "Rellenar con nata montada con azúcar glas.",
+          "Decorar con frutos rojos y hojita de menta al servir."
+        ]
+      },
+      {
+        "n": "Macarón de frambuesa y lichi",
+        "e": "🍡",
+        "g": "g5",
+        "sub": "Macarón francés clásico · ganache lichi rosa + corazón frambuesa fresca",
+        "prep": 90,
+        "coc": 18,
+        "rac": 20,
+        "dif": "Alta",
+        "mp": 0.95,
+        "alergen": "Frutos secos, lácteos, huevo",
+        "ing": [
+          [
+            "125g",
+            "Almendra polvo",
+            "(15€/kg)"
+          ],
+          [
+            "125g",
+            "Azúcar glas",
+            "(2€/kg)"
+          ],
+          [
+            "100g",
+            "Azúcar blanco",
+            "(1€/kg)"
+          ],
+          [
+            "100g",
+            "Clara huevo añeja",
+            "(0.30€/ud)"
+          ],
+          [
+            "c/n",
+            "Colorante rosa hidrosoluble",
+            "(40€/100ml)"
+          ],
+          [
+            "150g",
+            "Chocolate blanco",
+            "para ganache (20€/kg)"
+          ],
+          [
+            "80ml",
+            "Nata 35%",
+            "(3€/L)"
+          ],
+          [
+            "20g",
+            "Pulpa lichi",
+            "concentrada (35€/kg)"
+          ],
+          [
+            "20 ud",
+            "Frambuesa fresca",
+            "centro (20€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Tamizar almendra y glas tres veces juntas.",
+          "Merengue italiano con sirope a 118 ºC sobre claras a punto.",
+          "Macaronear hasta lazo perfecto (cae como cinta).",
+          "Manga pastelera con boquilla 10 mm; discos de 3 cm.",
+          "Reposar 30 min hasta formar piel (test del dedo seco).",
+          "Hornear 18 min a 140 ºC con ventilador.",
+          "Ganache lichi-blanco-nata calentado y enfriado.",
+          "Rellenar dos conchas con ganache y frambuesa fresca al centro.",
+          "Madurar 24 h en frigo (NO servir el mismo día)."
+        ]
       }
     ],
     "coctel": [
@@ -4187,6 +5330,816 @@
           "Incorporar la harina tamizada con movimientos suaves.",
           "Verter en vasitos engrasados y enharinados hasta 2/3 de capacidad. Refrigerar hasta servicio.",
           "Hornear a 200°C durante 7-8 minutos exactos. El centro debe quedar líquido. Servir en el vasito con una lámina de helado de vainilla."
+        ]
+      },
+      {
+        "n": "Aperol Spritz",
+        "e": "🍹",
+        "g": "g4",
+        "sub": "Cóctel aperitivo italiano · Aperol + Prosecco + soda + naranja",
+        "prep": 2,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 2.95,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "60ml",
+            "Aperol",
+            "(14€/L)"
+          ],
+          [
+            "90ml",
+            "Prosecco brut Riondo",
+            "(5€/botella 75cl)"
+          ],
+          [
+            "30ml",
+            "Soda fría",
+            "(0.50€/L)"
+          ],
+          [
+            "1 rodaja",
+            "Naranja fresca",
+            "(2€/kg)"
+          ],
+          [
+            "c/n",
+            "Hielo en cubos grandes",
+            "(1€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Llenar copa balón con hielo en cubos grandes (no machacado).",
+          "Verter Aperol primero (color base).",
+          "Añadir Prosecco frío 4 ºC, removiendo levemente.",
+          "Coronar con chorrito de soda.",
+          "Decorar con media rodaja de naranja gajos."
+        ]
+      },
+      {
+        "n": "Mojito Andaluz",
+        "e": "🌿",
+        "g": "g5",
+        "sub": "Mojito clásico con toque andaluz · ron blanco + lima + hierbabuena + Pedro Ximénez",
+        "prep": 3,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 2.3,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "50ml",
+            "Ron blanco Bacardi",
+            "(14€/L)"
+          ],
+          [
+            "20ml",
+            "Zumo lima fresca",
+            "(2€/kg)"
+          ],
+          [
+            "10g",
+            "Azúcar moreno",
+            "(1.50€/kg)"
+          ],
+          [
+            "8 hojas",
+            "Hierbabuena fresca",
+            "(1.50€/manojo)"
+          ],
+          [
+            "10ml",
+            "Pedro Ximénez",
+            "Don PX (20€/L)"
+          ],
+          [
+            "c/n",
+            "Soda fría",
+            "(0.50€/L)"
+          ],
+          [
+            "c/n",
+            "Hielo picado",
+            "(1€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Macerar hierbabuena con azúcar y lima en vaso alto (no machacar fuerte).",
+          "Añadir el ron blanco y el PX andaluz.",
+          "Rellenar con hielo picado hasta 3/4 del vaso.",
+          "Coronar con soda fría y remover suavemente.",
+          "Decorar con ramillete generoso de hierbabuena fresca."
+        ]
+      },
+      {
+        "n": "Brisa Mediterránea (signature)",
+        "e": "🌊",
+        "g": "g9",
+        "sub": "Cóctel signature de la casa · vodka cítrico + romero + limonada artesanal + sal Maldon",
+        "prep": 3,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 2.05,
+        "alergen": "-",
+        "ing": [
+          [
+            "40ml",
+            "Vodka Grey Goose Citron",
+            "(28€/L)"
+          ],
+          [
+            "80ml",
+            "Limonada artesanal",
+            "(1€/L casera)"
+          ],
+          [
+            "1 ramita",
+            "Romero fresco",
+            "ahumado (0.20€/manojo)"
+          ],
+          [
+            "c/n",
+            "Sal Maldon",
+            "para borde copa (40€/kg)"
+          ],
+          [
+            "1 ud",
+            "Twist piel limón",
+            "(1.50€/kg)"
+          ],
+          [
+            "c/n",
+            "Hielo cubos grandes",
+            "(1€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Quemar la ramita de romero con soplete y atrapar el humo en copa volcada 10 seg.",
+          "Escarchar borde de copa con sal Maldon (mojar con limón antes).",
+          "Llenar copa con hielo en cubos grandes.",
+          "Verter vodka cítrico y limonada artesanal.",
+          "Remover suavemente con cuchara mezcladora.",
+          "Decorar con romero ahumado y twist de piel limón."
+        ]
+      },
+      {
+        "n": "Old Fashioned con bitter de naranja",
+        "e": "🥃",
+        "g": "g11",
+        "sub": "Cóctel clásico · bourbon + bitter + azúcar moreno + twist naranja",
+        "prep": 4,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 3.2,
+        "alergen": "-",
+        "ing": [
+          [
+            "60ml",
+            "Bourbon Bulleit",
+            "(35€/L)"
+          ],
+          [
+            "1 ud",
+            "Terrón azúcar moreno",
+            "(2€/kg)"
+          ],
+          [
+            "2 dashes",
+            "Angostura Aromatic Bitters",
+            "(40€/L)"
+          ],
+          [
+            "1 dash",
+            "Orange Bitters",
+            "Regan's (45€/L)"
+          ],
+          [
+            "1 ud",
+            "Twist piel naranja",
+            "(2€/kg)"
+          ],
+          [
+            "1 ud",
+            "Cubo hielo grande",
+            "tallado (1€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Colocar terrón de azúcar en vaso old fashioned.",
+          "Empapar con los bitters (Angostura + Orange).",
+          "Añadir un dash de agua y macerar el terrón con muddler.",
+          "Verter el bourbon y un cubo grande de hielo.",
+          "Remover 20 seg con cuchara mezcladora.",
+          "Flambear y exprimir piel naranja sobre el cóctel; introducir en vaso."
+        ]
+      },
+      {
+        "n": "Espresso Martini",
+        "e": "☕",
+        "g": "g11",
+        "sub": "Café + vodka + Kahlúa · espuma cremosa coronada de granos de café",
+        "prep": 3,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 2.4,
+        "alergen": "-",
+        "ing": [
+          [
+            "50ml",
+            "Vodka Grey Goose",
+            "(28€/L)"
+          ],
+          [
+            "30ml",
+            "Café espresso recién hecho",
+            "(0.20€)"
+          ],
+          [
+            "20ml",
+            "Licor café Kahlúa",
+            "(18€/L)"
+          ],
+          [
+            "10ml",
+            "Sirope simple",
+            "casero (2€/L)"
+          ],
+          [
+            "3 ud",
+            "Grano café tostado",
+            "(20€/kg)"
+          ],
+          [
+            "c/n",
+            "Hielo cubos",
+            "(1€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Preparar el espresso recién hecho (clave: usar caliente).",
+          "Verter en coctelera vodka, Kahlúa, sirope y café caliente.",
+          "Llenar con hielo y agitar VIGOROSAMENTE 15 seg (clave para la espuma).",
+          "Doble colado en copa Martini fría.",
+          "Decorar con 3 granos de café formando triángulo perfecto."
+        ]
+      },
+      {
+        "n": "Negroni",
+        "e": "🟠",
+        "g": "g8",
+        "sub": "Cóctel italiano clásico · ginebra + Campari + vermut rojo a partes iguales",
+        "prep": 2,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Baja",
+        "mp": 2.6,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "30ml",
+            "Ginebra Bombay Sapphire",
+            "(18€/L)"
+          ],
+          [
+            "30ml",
+            "Campari",
+            "(18€/L)"
+          ],
+          [
+            "30ml",
+            "Vermut rojo Carpano Antica",
+            "(20€/L)"
+          ],
+          [
+            "1 ud",
+            "Twist piel naranja",
+            "(2€/kg)"
+          ],
+          [
+            "1 ud",
+            "Cubo hielo tallado",
+            "(1€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Llenar vaso de mezcla con hielo en cubos.",
+          "Verter ginebra, Campari y vermut a partes iguales.",
+          "Remover con cuchara mezcladora 30 seg (importante: NO agitar).",
+          "Colar sobre vaso old fashioned con cubo de hielo grande.",
+          "Exprimir piel naranja sobre el cóctel; introducir en vaso."
+        ]
+      },
+      {
+        "n": "Málaga Sour",
+        "e": "🍋",
+        "g": "g10",
+        "sub": "Whisky sour con toque malagueño · bourbon + zumo limón + moscatel + clara",
+        "prep": 4,
+        "coc": 0,
+        "rac": 1,
+        "dif": "Media",
+        "mp": 2.2,
+        "alergen": "Huevo, sulfitos",
+        "ing": [
+          [
+            "50ml",
+            "Bourbon Bulleit",
+            "(35€/L)"
+          ],
+          [
+            "25ml",
+            "Zumo limón fresco",
+            "(1.50€/kg)"
+          ],
+          [
+            "15ml",
+            "Moscatel DO Málaga",
+            "Bentomiz (15€/botella)"
+          ],
+          [
+            "10ml",
+            "Sirope simple",
+            "(2€/L)"
+          ],
+          [
+            "1 ud",
+            "Clara huevo",
+            "(0.30€/ud)"
+          ],
+          [
+            "2 dashes",
+            "Angostura",
+            "(40€/L)"
+          ],
+          [
+            "1 ud",
+            "Twist limón",
+            "y guinda marrasquino (15€/kg)"
+          ]
+        ],
+        "pasos": [
+          "Dry shake (sin hielo) bourbon, limón, moscatel, sirope y clara 15 seg.",
+          "Añadir hielo y agitar de nuevo 15 seg vigorosamente.",
+          "Doble colado en copa coupe fría.",
+          "Esperar 30 seg que se forme la capa de espuma blanca.",
+          "Decorar con 3 gotas de Angostura formando estrella, twist y guinda."
+        ]
+      }
+    ],
+    "estaciones": [
+      {
+        "n": "Carving de jamón ibérico de bellota D.O.P. Guijuelo",
+        "e": "🍖",
+        "g": "g7",
+        "sub": "Estación con maestro cortador · pieza completa cortada al momento durante el evento",
+        "prep": 30,
+        "coc": 0,
+        "rac": 80,
+        "dif": "Alta",
+        "mp": 4.8,
+        "alergen": "Sulfitos",
+        "ing": [
+          [
+            "1 ud",
+            "Pieza jamón ibérico bellota D.O.P. Guijuelo 8 kg",
+            "(16€/kg = 128€)"
+          ],
+          [
+            "4h",
+            "Maestro cortador profesional",
+            "tarifa evento (40€/h x 4h = 160€)"
+          ],
+          [
+            "80g/pax",
+            "Pan cristal",
+            "fino tostado (2€/kg)"
+          ],
+          [
+            "c/n",
+            "AOVE Hojiblanca",
+            "para tosta (7€/L)"
+          ],
+          [
+            "1 ud",
+            "Jamonero pro + cuchillos",
+            "alquiler (25€/evento)"
+          ]
+        ],
+        "pasos": [
+          "Recepcionar la pieza con factura D.O.P. Guijuelo verificada.",
+          "Atemperar la pieza a 22 ºC durante 2 h previas al evento.",
+          "Posicionar la estación visible para el invitado (es show además de servicio).",
+          "El maestro cortador trabaja con bandeja caliente para el jamón.",
+          "Servir en lonchas finas casi transparentes sobre pan cristal con AOVE.",
+          "Coste/pax (80 pax): jamón 1.60€ + cortador 2.00€ + pan/AOVE 0.30€ + mat 0.90€ = 4.80€"
+        ]
+      },
+      {
+        "n": "Barra de sushi con maestro sushiman",
+        "e": "🍣",
+        "g": "g9",
+        "sub": "Estación con sushi al momento · niguiri y maki sobre arroz japonés tibio",
+        "prep": 60,
+        "coc": 10,
+        "rac": 60,
+        "dif": "Alta",
+        "mp": 8.9,
+        "alergen": "Pescado, soja, sésamo, gluten",
+        "ing": [
+          [
+            "50g/pax",
+            "Atún rojo loma central",
+            "(45€/kg)"
+          ],
+          [
+            "40g/pax",
+            "Salmón noruego sashimi",
+            "(28€/kg)"
+          ],
+          [
+            "30g/pax",
+            "Langostino tigre cocido",
+            "(22€/kg)"
+          ],
+          [
+            "60g/pax",
+            "Arroz japonés Koshihikari",
+            "(8€/kg cocido)"
+          ],
+          [
+            "10g/pax",
+            "Alga nori premium",
+            "(80€/kg)"
+          ],
+          [
+            "c/n",
+            "Wasabi auténtico",
+            "fresco (200€/kg)"
+          ],
+          [
+            "c/n",
+            "Salsa soja Kikkoman",
+            "(8€/L)"
+          ],
+          [
+            "c/n",
+            "Jengibre encurtido",
+            "gari (10€/kg)"
+          ],
+          [
+            "5h",
+            "Sushiman profesional",
+            "tarifa evento (35€/h x 5h = 175€)"
+          ],
+          [
+            "1 ud",
+            "Vitrina refrigerada de barra",
+            "alquiler (40€/evento)"
+          ]
+        ],
+        "pasos": [
+          "Sushiman llega 1 h antes para preparar arroz, cortes y mise en place.",
+          "Atún y salmón en porciones de 12-15g por niguiri.",
+          "Arroz a 35 ºC en el momento (clave para textura correcta).",
+          "Niguiri al momento delante del invitado; maki preparado en bandeja.",
+          "Coste/pax (60 pax): pescado 5.40€ + arroz 0.50€ + sushiman 2.90€ + mat 0.10€ = 8.90€"
+        ]
+      },
+      {
+        "n": "Wok asiático en directo",
+        "e": "🥢",
+        "g": "g5",
+        "sub": "Estación de wok con chef · noodles, verduras, gambas o pollo a elección",
+        "prep": 20,
+        "coc": 4,
+        "rac": 60,
+        "dif": "Media",
+        "mp": 4.2,
+        "alergen": "Soja, gluten, frutos secos, crustáceos",
+        "ing": [
+          [
+            "80g/pax",
+            "Noodles trigo o arroz",
+            "frescos (4€/kg)"
+          ],
+          [
+            "60g/pax",
+            "Mix verduras wok",
+            "(brote soja, pak choi, zanahoria 3€/kg)"
+          ],
+          [
+            "40g/pax",
+            "Proteína (pollo/gambas)",
+            "alternativa (12€/kg promedio)"
+          ],
+          [
+            "10ml/pax",
+            "Salsa wok casa",
+            "soja+ajo+jengibre (5€/L)"
+          ],
+          [
+            "5g/pax",
+            "Anacardos tostados",
+            "(14€/kg)"
+          ],
+          [
+            "4h",
+            "Chef wok",
+            "(30€/h x 4h = 120€)"
+          ],
+          [
+            "1 ud",
+            "Wok industrial + burner",
+            "alquiler (35€/evento)"
+          ]
+        ],
+        "pasos": [
+          "Mise en place: verduras cortadas en juliana, proteína en dados.",
+          "Wok a fuego máximo siempre; añadir proteína primero 30 seg.",
+          "Verduras a continuación, salteado vigoroso 60 seg.",
+          "Noodles previamente cocidos y enfriados; añadir al wok.",
+          "Salsa y anacardos al final; servir en bowl al momento.",
+          "Coste/pax (60 pax): mat 1.95€ + chef 2.00€ + alq 0.25€ = 4.20€"
+        ]
+      },
+      {
+        "n": "Pasta fresca al momento",
+        "e": "🍝",
+        "g": "g10",
+        "sub": "Estación con chef italiano · pasta fresca (taglierini, ravioli) salteada en parmesano",
+        "prep": 20,
+        "coc": 5,
+        "rac": 60,
+        "dif": "Media",
+        "mp": 3.5,
+        "alergen": "Gluten, huevo, lácteos",
+        "ing": [
+          [
+            "100g/pax",
+            "Pasta fresca taglierini",
+            "casera (5€/kg materia prima)"
+          ],
+          [
+            "10g/pax",
+            "Mantequilla francesa",
+            "(8€/kg)"
+          ],
+          [
+            "15g/pax",
+            "Parmigiano Reggiano 24m",
+            "rallado al momento (24€/kg)"
+          ],
+          [
+            "c/n",
+            "Trufa negra verano",
+            "rallada (200€/kg = 1g/pax = 0.20€)"
+          ],
+          [
+            "c/n",
+            "Pimienta negra Tellicherry",
+            "(40€/kg)"
+          ],
+          [
+            "4h",
+            "Chef pasta",
+            "(30€/h x 4h = 120€)"
+          ],
+          [
+            "1 ud",
+            "Rueda parmesano para flambear",
+            "alquiler (40€/evento)"
+          ]
+        ],
+        "pasos": [
+          "Pasta fresca preparada 4 h antes (laminada y porcionada).",
+          "Hervir agua con abundante sal en la estación.",
+          "Cocer la pasta 90 seg (al dente perfecto).",
+          "Escurrir y saltear dentro de la rueda de parmesano caliente.",
+          "Coronar con raspadura de trufa y pimienta al servir.",
+          "Coste/pax (60 pax): mat 0.95€ + chef 2.00€ + rueda 0.55€ = 3.50€"
+        ]
+      },
+      {
+        "n": "Pizzas al horno de leña",
+        "e": "🍕",
+        "g": "g8",
+        "sub": "Estación con pizzaiolo + horno leña móvil · masa fina + ingredientes frescos",
+        "prep": 240,
+        "coc": 3,
+        "rac": 60,
+        "dif": "Media",
+        "mp": 3.8,
+        "alergen": "Gluten, lácteos",
+        "ing": [
+          [
+            "120g/pax",
+            "Masa madre 48h fermentación",
+            "(2€/kg materia prima)"
+          ],
+          [
+            "50g/pax",
+            "Tomate San Marzano DOP",
+            "(4€/kg)"
+          ],
+          [
+            "40g/pax",
+            "Mozzarella fior di latte",
+            "(9€/kg)"
+          ],
+          [
+            "c/n",
+            "Albahaca, jamón, rúcula, parmesano",
+            "ingredientes (8€/kg promedio)"
+          ],
+          [
+            "4h",
+            "Pizzaiolo",
+            "(30€/h x 4h = 120€)"
+          ],
+          [
+            "1 ud",
+            "Horno leña móvil + leña",
+            "alquiler (80€/evento)"
+          ]
+        ],
+        "pasos": [
+          "Masa con fermentación 48 h preparada el día anterior.",
+          "Horno leña encendido 90 min antes (400-450 ºC).",
+          "Bola de 240g estirada al momento a mano (no rodillo).",
+          "Tomate + mozzarella base; toppings al gusto del invitado.",
+          "Horneado 90 segundos exactos (debe quedar leoparda).",
+          "Coste/pax (60 pax): mat 1.20€ + pizzaiolo 2.00€ + horno 0.60€ = 3.80€"
+        ]
+      },
+      {
+        "n": "Barra de ostras y mariscos",
+        "e": "🦪",
+        "g": "g9",
+        "sub": "Estación premium · ostras Galicia + cigalas + bogavante con granizado de pepino",
+        "prep": 45,
+        "coc": 10,
+        "rac": 40,
+        "dif": "Alta",
+        "mp": 11.5,
+        "alergen": "Moluscos, crustáceos, sulfitos",
+        "ing": [
+          [
+            "2 ud/pax",
+            "Ostras finas Galicia n°2",
+            "(2.50€/ud)"
+          ],
+          [
+            "1 ud/pax",
+            "Cigala cocida 60g",
+            "(45€/kg = 2.70€/ud)"
+          ],
+          [
+            "20g/pax",
+            "Bogavante cocido en daditos",
+            "(40€/kg)"
+          ],
+          [
+            "c/n",
+            "Granizado pepino-limón",
+            "casero (3€/L)"
+          ],
+          [
+            "c/n",
+            "Vinagre de jerez con chalota",
+            "mignonette (8€/L)"
+          ],
+          [
+            "5h",
+            "Mariscador-abridor",
+            "(35€/h x 5h = 175€)"
+          ],
+          [
+            "c/n",
+            "Hielo picado y soporte",
+            "presentación (20€/evento)"
+          ]
+        ],
+        "pasos": [
+          "Recepción de marisco vivo o ostras con etiqueta de pureza.",
+          "Mantener a 2 ºC sobre lecho de hielo picado en todo momento.",
+          "Mariscador abre ostras delante del invitado (espectáculo + frescura).",
+          "Servir con vinagre de jerez, limón y granizado de pepino.",
+          "Coste/pax (40 pax): ostras 5.00€ + cigala 2.70€ + bogavante 0.80€ + abridor 4.40€ + complementos 1.10€ - distribución 2.50€ = 11.50€"
+        ]
+      },
+      {
+        "n": "Ceviche bar",
+        "e": "🐟",
+        "g": "g6",
+        "sub": "Estación con maestro ceviche · corvina o lubina marinada al momento en leche tigre",
+        "prep": 30,
+        "coc": 0,
+        "rac": 50,
+        "dif": "Media",
+        "mp": 4.6,
+        "alergen": "Pescado, apio",
+        "ing": [
+          [
+            "60g/pax",
+            "Corvina o lubina sashimi",
+            "(22€/kg)"
+          ],
+          [
+            "15ml/pax",
+            "Leche tigre",
+            "lima+ají+cilantro+ajo (3€/L)"
+          ],
+          [
+            "20g/pax",
+            "Boniato cocido + maíz cancha",
+            "(2€/kg)"
+          ],
+          [
+            "c/n",
+            "Cebolla roja en pluma",
+            "(1.20€/kg)"
+          ],
+          [
+            "c/n",
+            "Cilantro fresco",
+            "(2€/manojo)"
+          ],
+          [
+            "c/n",
+            "Ají amarillo y rocoto",
+            "(20€/kg)"
+          ],
+          [
+            "4h",
+            "Chef ceviche",
+            "(30€/h x 4h = 120€)"
+          ]
+        ],
+        "pasos": [
+          "Pescado en dados 1.5 cm; conservar a 2 ºC todo el evento.",
+          "Leche tigre preparada al momento (clave: lima fresca, NUNCA conserva).",
+          "Marinado al instante delante del invitado (30 seg máximo).",
+          "Plato con boniato cocido, cancha y cebolla; encima ceviche y leche.",
+          "Decorar con cilantro y rocoto al gusto.",
+          "Coste/pax (50 pax): mat 1.50€ + leche tigre 0.30€ + complementos 0.80€ + chef 2.00€ = 4.60€"
+        ]
+      },
+      {
+        "n": "Eggs Benedict (estación brunch)",
+        "e": "🍳",
+        "g": "g4",
+        "sub": "Estación brunch · huevos pochés + salsa holandesa + brioche o jamón York",
+        "prep": 30,
+        "coc": 4,
+        "rac": 40,
+        "dif": "Alta",
+        "mp": 2.8,
+        "alergen": "Gluten, lácteos, huevo",
+        "ing": [
+          [
+            "2 ud/pax",
+            "Huevo M ecológico",
+            "(0.30€/ud)"
+          ],
+          [
+            "1 ud/pax",
+            "English muffin o brioche",
+            "(0.45€/ud)"
+          ],
+          [
+            "30g/pax",
+            "Jamón cocido York extra",
+            "(9€/kg)"
+          ],
+          [
+            "20ml/pax",
+            "Salsa holandesa fresca",
+            "(5€/L coste mat)"
+          ],
+          [
+            "c/n",
+            "Cebollino y pimentón",
+            "(2€/manojo)"
+          ],
+          [
+            "4h",
+            "Chef brunch",
+            "(30€/h x 4h = 120€)"
+          ]
+        ],
+        "pasos": [
+          "Salsa holandesa al momento (yema+mantequilla clarificada+limón en bain-marie).",
+          "Agua con vinagre a punto de hervor; pochar huevo 3 min remolino.",
+          "Tostar el muffin/brioche partido por la mitad.",
+          "Montar: muffin tostado + York + huevo poché + salsa holandesa.",
+          "Decorar con cebollino picado y pimentón Vera dulce.",
+          "Coste/pax (40 pax): huevos 0.60€ + muffin 0.45€ + York 0.27€ + holandesa 0.50€ - chef 3.00€ - rec 1.50€ = 2.80€"
         ]
       }
     ]
