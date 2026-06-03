@@ -48,16 +48,21 @@ Hoteles independientes y pequeñas cadenas de 3 a 15 establecimientos. Restauran
 - Importadores Excel/CSV, PDF y bulk imágenes con IA
 - Conectores de productos (4 niveles) y TPV (4 niveles)
 - Modo claro/oscuro · 5 temas visuales por proyecto
+- **Panel superadmin (v5.14)** con paleta propia (verde+negro) y métricas
+  agregadas de todos los proyectos: KPIs con sparklines, chart de volumen
+  mensual, tabla con health pills, top paquetes, activity feed
 
 ## Estado técnico
 
 | Cosa | Estado |
 | --- | --- |
-| Versión actual | **v5.1** |
+| Versión actual | **v5.14** |
 | Proyectos demo en producción | 3 (Miramar, Casa Lola, Demo) |
+| Recetas escandalladas (Miramar) | **114** (78 + 36 nuevas con precios Makro 2026) |
+| Categorías del recetario | 7 (entremeses, entrantes, primeros, segundos, postres, cócteles, **estaciones en vivo**) |
 | Plantillas marketplace | 3 (cafetería, marisquería, hotel rural) |
 | ADRs (decisiones arquitectónicas documentadas) | 3 |
-| Tests automatizados | 59 (Node nativo · 0 dependencias) |
+| Tests automatizados | 67 unit + 19 E2E (86 totales) |
 | Auditoría de seguridad | Cerrada (SRI · CSP · CI · escapeText) |
 | Coste mensual de operación | **0 €** |
 | Tiempo desde "cero" hasta "demo lista" para un cliente nuevo | **<30 minutos** |

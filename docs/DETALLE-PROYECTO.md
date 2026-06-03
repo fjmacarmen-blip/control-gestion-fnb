@@ -1,4 +1,4 @@
-# Detalle del proyecto · Queens Bellybutton v5.1
+# Detalle del proyecto · Queens Bellybutton v5.14
 
 > Inventario completo del proyecto: qué hay, dónde está, cómo se relaciona.
 > Documento técnico de referencia. Para versión corta ver `RESUMEN-EJECUTIVO.md`.
@@ -237,3 +237,86 @@ GitHub Action en cada push a main, feat/* y fix/*.
 | v5.3 | Cuando aparezca primera necesidad webhook tiempo real | Backend mínimo Cloudflare Worker | ~5 €/mes infraestructura |
 | v6.0 | Cuando haya 3+ clientes | Multi-tenant separado (no más sub-paths) · panel super-admin con todos los clientes | Decisión comercial |
 | v6.1 | Después | Marketplace público de plantillas con submissions de la comunidad | v6.0 |
+
+## 10 · Cambios v5.11 → v5.14 (junio 2026)
+
+### v5.11 · Cierre de auditoría
+Aplica los 9 correctivos altos de la auditoría v5.10 (criptografía PAT,
+i18n race condition, Safari < 16.4 markdown, TTL drafts, console.warn en
+loader, escape en errores GitHub API, mejoras de prosa en pitch y landing,
+fix navy header, ARIA `role="alert"` en login errors). Tag `v5.11.4`
+incluye el fix crítico de `.sel-card::before` con `pointer-events:none`
+que estaba bloqueando el modal de composición en el cotizador.
+
+### v5.12 · Iconos al lado del nombre
+Decisión de diseño del usuario: los emojis dejan de flotar sobre las
+imágenes de las cards y se reubican como **badge dorado pequeño al lado
+del nombre del plato**. Aplica a:
+- `presupuesto-evento.html` · cards de paquetes, eventos e ítems
+- `recetario.html` · cards y modal de receta
+
+Clases CSS nuevas: `.sel-name-icon`, `.card-name-icon`, `.modal-title-icon`.
+SW_VERSION → 5.12.0.
+
+### v5.13 · Escandallos detallados + sidebar
+**+36 fichas nuevas** con precios Makro mayorista 2026 (jamón ibérico
+16€/kg, atún rojo 45€/kg, foie 60€/kg, Beluga 4€/g, gamba roja Málaga
+50€/kg, etc.). Total recetas: 78 → 114.
+
+- **Entremeses** (+9): brochetas manchego/cherry/fresa, croquetas clásica
+  y líquida ibérica, cucharilla salmorejo, vasito gazpacho, canapé foie,
+  blini salmón, tartar atún cucurucho, caviar Beluga
+- **Entrantes** (+5): carpaccio ternera, salmorejo sin gluten, ensalada
+  gamba roja, tataki atún, tartar atún sin gluten
+- **Postres** (+7): coulant 72%, crema catalana flameada, bienmesabe
+  tartaleta, mini tarta La Viña, sorbete limón, mini pavlova, macarón
+  frambuesa-lichi
+- **Cócteles** (+7): Aperol Spritz, Mojito Andaluz, Brisa Mediterránea
+  (signature de la casa), Old Fashioned, Espresso Martini, Negroni,
+  Málaga Sour
+
+**Nueva categoría "Estaciones en vivo" (+8):** carving jamón ibérico DOP
+Guijuelo, barra sushi con sushiman, wok asiático, pasta fresca, pizzas al
+horno de leña, barra ostras y mariscos, ceviche bar, eggs benedict brunch.
+Cada estación incluye desglose de materia prima + personal + alquiler equipo.
+
+**UI · sidebar vertical sticky** en el recetario (desktop) con 3 grupos:
+Carta · Eventos · Operativa. Fallback horizontal scrolleable en móvil.
+SW_VERSION → 5.13.0.
+
+### v5.14 · Dashboard superadmin diferenciado
+Nuevo `dashboard/superadmin.html` con **paleta deliberadamente distinta**
+(negro verdoso `#060A07` + verde fluorescente `#00E676`) rompiendo a
+propósito la coherencia con el dashboard de directores. Solo accesible
+con sesión `scope === 'super-admin'`.
+
+Componentes:
+- 4 KPI cards con sparklines SVG (proyectos activos, presupuestos,
+  volumen €, próximos 30d)
+- Chart de volumen mensual con gradient fill (6M/12M/YTD)
+- Tabla de proyectos con health pills + sparkline 7d
+- Top 5 paquetes con barras
+- Distribución por tipo de evento
+- Activity feed con timestamps relativos
+
+Acceso desde `dashboard/index.html`: botón "🛡️ Panel Superadmin" con
+gradiente verde que aparece **solo** si la sesión es super-admin.
+
+Test E2E nuevo en `e2e/superadmin.spec.js` (3 specs). SW_VERSION → 5.14.0.
+
+## 11 · Métricas del repo (v5.14)
+
+| Métrica | v5.1 | v5.14 |
+| --- | --- | --- |
+| LOC JS core | ~2 600 | ~3 200 |
+| LOC HTML dashboard | ~3 800 | ~5 100 |
+| LOC HTML core/pages | ~5 600 | ~6 800 |
+| Archivos JSON totales | 67 | 70+ |
+| Recetas Miramar | 78 | **114** |
+| Categorías recetario | 6 | **7** (+ estaciones) |
+| Presupuestos seed | 30 | 30 |
+| Tests automatizados | 59 | 67 (unit) + 19 (E2E) |
+| ADRs | 3 | 3 |
+| PRs cerrados a main | 28 | 48 |
+| Tags publicados | 4 | 8 (v4.14, v4.15, v5.0, v5.1, v5.10, v5.12, v5.13, v5.14) |
+| Coste mensual operación | 0 € | 0 € |

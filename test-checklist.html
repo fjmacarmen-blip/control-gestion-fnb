@@ -314,7 +314,7 @@
 </div>
 
 <main>
-  <div class="eyebrow">Queens Bellybutton v5.1 · checklist interactivo</div>
+  <div class="eyebrow">Queens Bellybutton v5.14 · checklist interactivo</div>
   <h1>Prueba cada función<br>y marca lo que falle</h1>
   <p class="lede">
     Cada bloque agrupa funciones relacionadas. Marca cada test con <strong>✓ OK</strong> o <strong>✗ Error</strong>.
@@ -771,6 +771,65 @@ const BLOCKS = [
         desc: 'En <a href="index.html" target="_blank">la landing</a> aparece la card 5 «Paquete comercial» con badge rosa v5.3 y 4 links (pitch, mockups, PDFs, case study).' },
     ],
   },
+  {
+    id: 'b22',
+    title: 'Iconos al lado del nombre (v5.12)',
+    desc: 'Los emojis ya no flotan sobre las imágenes de las cards: viven en un badge cuadrado dorado a la izquierda del nombre. Aplicado a cotizador y recetario.',
+    tests: [
+      { id: 'b22t1', name: 'Cotizador · cards de paquetes sin emoji sobre imagen',
+        desc: 'Abre <a href="core/pages/presupuesto-evento.html?proyecto=miramar" target="_blank">presupuesto-evento.html</a> · paso 2 (Menú). En cada card no hay emoji ni badge encima de la imagen del fondo. El emoji aparece pequeño junto al nombre del paquete (badge dorado).' },
+      { id: 'b22t2', name: 'Cotizador · ítems individuales (entremeses, cócteles) también en línea',
+        desc: 'Sigue al paso 3 (Servicios) y al paso 4 (Animación). Los emojis de cada selección están al lado del texto, nunca flotando sobre fondos.' },
+      { id: 'b22t3', name: 'Recetario · cards con icono inline',
+        desc: 'Abre <a href="core/pages/recetario.html?proyecto=miramar" target="_blank">recetario.html</a>. En cada card el emoji está dentro del nombre del plato como pildora dorada, NUNCA sobre la foto.' },
+      { id: 'b22t4', name: 'Recetario · modal de receta también con icono inline',
+        desc: 'Click en cualquier card. En la cabecera del modal el emoji está junto al título, no sobre la foto del hero.' },
+    ],
+  },
+  {
+    id: 'b23',
+    title: 'Escandallos detallados + sidebar (v5.13)',
+    desc: '36 fichas nuevas con precios Makro mayorista 2026 + reorganización del recetario con barra lateral de categorías + nueva sección "Estaciones en vivo".',
+    tests: [
+      { id: 'b23t1', name: 'Recetario · sidebar vertical en desktop',
+        desc: 'Abre <a href="core/pages/recetario.html?proyecto=miramar" target="_blank">recetario.html</a> en pantalla >900px. La navegación de categorías está a la IZQUIERDA en columna, agrupada en 3 secciones (Carta · Eventos · Operativa). El grupo se mantiene visible al scrollear (sticky).' },
+      { id: 'b23t2', name: 'Recetario · móvil mantiene scroll horizontal',
+        desc: 'Misma URL en ancho <900px (o redimensiona la ventana). La nav vuelve a horizontal scrolleable arriba, sin sidebar lateral (responsivo).' },
+      { id: 'b23t3', name: 'Recetario · nueva categoría "Estaciones en vivo"',
+        desc: 'En el sidebar, grupo Eventos, hay un botón "🔥 Estaciones en vivo". Click → grid con 8 estaciones (Carving jamón DOP, sushi, wok, pasta, pizza, ostras, ceviche, eggs benedict brunch).' },
+      { id: 'b23t4', name: 'Recetario · pills muestran conteo real',
+        desc: 'Los números junto a cada categoría del sidebar coinciden con las cards que se renderizan (21 entremeses, 19 entrantes, 13 primeros, 14 segundos, 20 postres, 19 cócteles, 8 estaciones).' },
+      { id: 'b23t5', name: 'Fichas nuevas · escandallos con precio Makro',
+        desc: 'Abre cualquier ficha nueva: "Caviar Beluga sobre blinis", "Croqueta líquida de jamón ibérico de bellota", "Tataki de Atún Rojo con sésamo y yuzu", "Brisa Mediterránea (signature)", "Carving de jamón ibérico de bellota D.O.P. Guijuelo". Cada una tiene ingredientes con gramaje + precio Makro indicado entre paréntesis (ej: "16€/kg", "45€/kg", "4€/g"), 5-9 pasos numerados, alérgenos declarados.' },
+      { id: 'b23t6', name: 'Estaciones · desglose personal + alquiler',
+        desc: 'Abre "Carving de jamón ibérico de bellota D.O.P. Guijuelo". Entre los ingredientes aparece "Maestro cortador profesional 40€/h x 4h = 160€" y "Jamonero pro + cuchillos 25€/evento". El coste/pax desglosado se explica en el último paso de elaboración.' },
+    ],
+  },
+  {
+    id: 'b24',
+    title: 'Panel Superadmin diferenciado (v5.14)',
+    desc: 'Dashboard global SOLO para el super-admin con paleta verde+negro (deliberadamente distinta del azul-marfil-oro de los directores). Métricas agregadas de TODOS los proyectos.',
+    tests: [
+      { id: 'b24t1', name: 'Auth gate sin sesión',
+        desc: 'Abre <a href="dashboard/superadmin.html" target="_blank">superadmin.html</a> en pestaña de incógnito. Debe mostrar SOLO el card "Acceso restringido" con escudo 🛡️ y link al login. NO se ve el dashboard.' },
+      { id: 'b24t2', name: 'Acceso desde dashboard de director',
+        desc: 'Inicia sesión en <a href="dashboard/" target="_blank">dashboard/</a> con credenciales super-admin. En la cabecera "Proyectos" aparece un botón "🛡️ Panel Superadmin" con gradiente verde (NO aparece para directores normales).' },
+      { id: 'b24t3', name: 'Paleta verde-negra aplicada',
+        desc: 'En superadmin.html: fondo casi negro con tinte verdoso, sidebar oscuro, accent verde fluorescente #00E676. Theme-color meta = #0a1612 (verifica con DevTools).' },
+      { id: 'b24t4', name: 'KPIs con sparklines',
+        desc: '4 KPI cards arriba (Proyectos activos · Presupuestos generados · Volumen acumulado · Próximos eventos 30d). Cada uno tiene un sparkline SVG mini abajo a la derecha en verde fluorescente.' },
+      { id: 'b24t5', name: 'Chart de volumen mensual con toggle',
+        desc: 'Sección "Volumen mensual estimado": gráfico de línea con relleno gradient verde. Botones 6M / 12M / YTD cambian el rango. La línea se reanima al cambiar.' },
+      { id: 'b24t6', name: 'Tabla de proyectos con health pills',
+        desc: 'Tabla "Proyectos en la plataforma" con cada proyecto del index.json. Columna estado con pill verde (Activo) / amarillo (Borrador) / rojo (Pausado). Mini-sparkline 7 días.' },
+      { id: 'b24t7', name: 'Top paquetes + tipos de evento',
+        desc: 'Dos cards abajo: "Paquetes más demandados" con top 5 + barras de progreso verdes, y "Distribución por tipo de evento". Si no hay presupuestos, dice "Sin datos agregados todavía".' },
+      { id: 'b24t8', name: 'Activity feed con timestamps relativos',
+        desc: 'Card "Actividad reciente" con últimos 8 presupuestos en orden cronológico inverso. Timestamps en formato "hace 3 d", "hace 5 h". Border-left verde fluorescente (amarillo si presupuesto >5000€).' },
+      { id: 'b24t9', name: 'Imprimir conserva la paleta verde',
+        desc: 'Ctrl+P en superadmin.html. La vista de impresión oculta el sidebar y las acciones, pero mantiene los colores corporativos (no se "rompe" el verde).' },
+    ],
+  },
 ];
 
 // ─────────────────────────────────────────────────────
@@ -832,6 +891,9 @@ const LEVEL_MAP = {
   b19: 'cliente',   // Asistente IA
   b20: 'cliente',   // Idiomas
   b21: 'admin',     // Material comercial
+  b22: 'cliente',   // Iconos al lado del nombre (cards visibles para todo público)
+  b23: 'director',  // Escandallos detallados + sidebar (recetario es del director)
+  b24: 'admin',     // Panel superadmin diferenciado
 };
 BLOCKS.forEach(b => { b.level = LEVEL_MAP[b.id] || 'admin'; });
 
