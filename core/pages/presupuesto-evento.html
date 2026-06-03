@@ -518,6 +518,11 @@ body{
   content:''; position:absolute; inset:0;
   background:linear-gradient(135deg,var(--gold-dim),transparent);
   opacity:0; transition:var(--t);
+  /* v5.11.4 fix · sin esto el pseudo-elemento se traga los clicks del
+     ratón en hover/selected estado, impidiendo que lleguen al
+     .btn-composition que vive dentro de la card. Bug reportado en
+     producción: "Ver composición no abre nada al hacer click". */
+  pointer-events: none;
 }
 .sel-card:hover { border-color:var(--border2); transform:translateY(-2px); }
 .sel-card:hover::before { opacity:1; }
