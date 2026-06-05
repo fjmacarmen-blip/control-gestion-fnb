@@ -1,0 +1,22 @@
+{
+  "version": "5.17.0",
+  "date": "2026-06-05",
+  "tag": "v5.17",
+  "title": "Colores de dietas en sala y orden + versioning visible",
+  "highlights": [
+    "renderDietPills en sala-movil.html alineado con sistema transversal (8 dietas + infantil)",
+    "Pills coloreadas de dietas en el resumen del cotizador (paso 7)",
+    "Sistema de versioning visible: badge fijo con versión y enlace al changelog",
+    "Todos los HTMLs principales cargan core/js/version-badge.js"
+  ],
+  "changelog_url": "https://github.com/fjmacarmen-blip/control-gestion-fnb/blob/main/docs/CHANGELOG-v5.11-v5.17.md",
+  "history": [
+    { "v": "5.17.0", "d": "2026-06-05", "t": "Colores dietas transversal + versioning visible" },
+    { "v": "5.16.0", "d": "2026-06-05", "t": "Menús especiales completos · 8 dietas + paso 2.5" },
+    { "v": "5.15.0", "d": "2026-06-05", "t": "Tema verde en wizard y change-password" },
+    { "v": "5.14.0", "d": "2026-06-05", "t": "Dashboard superadmin diferenciado" },
+    { "v": "5.13.0", "d": "2026-06-05", "t": "Escandallos detallados + sidebar recetario" },
+    { "v": "5.12.0", "d": "2026-06-05", "t": "Iconos al lado del nombre" },
+    { "v": "5.11.0", "d": "2026-06-02", "t": "Cierre auditoría v5.10" }
+  ]
+}

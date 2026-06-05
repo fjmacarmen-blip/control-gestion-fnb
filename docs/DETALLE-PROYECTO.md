@@ -1,4 +1,9 @@
-# Detalle del proyecto · Queens Bellybutton v5.14
+# Detalle del proyecto · Queens Bellybutton v5.17
+
+> **¿Estás en la última versión?** Mira el badge esquina inferior izquierda
+> de cualquier página HTML del producto. Si pone `v5.17 · 5 jun 2026`,
+> sí. Si pone una versión anterior, fuerza recarga (Ctrl+Shift+R).
+> Documento detallado del proyecto · actualizado 5 junio 2026.
 
 > Inventario completo del proyecto: qué hay, dónde está, cómo se relaciona.
 > Documento técnico de referencia. Para versión corta ver `RESUMEN-EJECUTIVO.md`.
@@ -238,7 +243,7 @@ GitHub Action en cada push a main, feat/* y fix/*.
 | v6.0 | Cuando haya 3+ clientes | Multi-tenant separado (no más sub-paths) · panel super-admin con todos los clientes | Decisión comercial |
 | v6.1 | Después | Marketplace público de plantillas con submissions de la comunidad | v6.0 |
 
-## 10 · Cambios v5.11 → v5.14 (junio 2026)
+## 10 · Cambios v5.11 → v5.17 (junio 2026)
 
 ### v5.11 · Cierre de auditoría
 Aplica los 9 correctivos altos de la auditoría v5.10 (criptografía PAT,
@@ -320,3 +325,76 @@ Test E2E nuevo en `e2e/superadmin.spec.js` (3 specs). SW_VERSION → 5.14.0.
 | PRs cerrados a main | 28 | 48 |
 | Tags publicados | 4 | 8 (v4.14, v4.15, v5.0, v5.1, v5.10, v5.12, v5.13, v5.14) |
 | Coste mensual operación | 0 € | 0 € |
+
+### v5.15 · Tema verde extendido a zona admin (PR #50)
+
+Nuevo `core/css/theme-superadmin.css` reutilizable que sobrescribe CSS
+variables. Aplicado a `dashboard/wizard.html` y `scripts/change-password.html`.
+Las páginas neutras (login, editor, métricas, landing) mantienen
+azul-marfil-oro. Badge "ADMIN ZONE" automático arriba a la derecha.
+SW_VERSION → 5.15.0.
+
+### v5.16 · Menús especiales completos (PR #51)
+
+Cierra una carencia detectada por el usuario: las dietas marcadas en el
+cotizador no tenían menús reales detrás.
+
+- `dietas.json`: añadida **👶 Infantil** con color rosa. **Total 8 dietas.**
+- `menus.json`: **+8 paquetes type:"menu_especial"** con composición real
+  (cóctel + 3 entrantes/primeros/segundos/postres a elegir + bodega +
+  garantías).
+- `recetas.json`: **+39 recetas** con campo `dietas[]` multi-valor.
+  **Total Miramar: 114 → 153.**
+- Cotizador: **paso 2.5 nuevo "Menús adaptados por dieta"** con tarjetas
+  coloreadas, control de totales (warning si suma dietas > pax) y
+  enlaces ↗ al recetario.
+- Recetario: **sidebar "Filtrar por dieta"** con 8 botones de colores y
+  pills coloreadas en cada card.
+- E2E nuevo: `e2e/menus-especiales.spec.js` (4 specs).
+
+SW_VERSION → 5.16.0.
+
+### v5.17 · Colores transversal + versioning visible (PR #52)
+
+Cierra v5.16 propagando colores y añade un sistema para que el usuario
+nunca revise documentos viejos sin darse cuenta.
+
+**Colores transversal cierre:**
+- `sala-movil.html` · `renderDietPills` alineado (8 dietas + infantil,
+  kosher actualizado de morado a amarillo con emoji 🕎)
+- `presupuesto-evento.html` · `renderDietasPillsHTML()` genera pills
+  coloreadas para el resumen final (paso 7)
+
+**Sistema de versioning visible:**
+- **`core/version.json`** nuevo: `{ version, date, tag, title,
+  highlights[], changelog_url, history[] }`
+- **`core/js/version-badge.js`** nuevo: badge fijo esquina inferior
+  izquierda con punto verde, versión y fecha. Click → changelog.
+  Hover → tooltip con highlights. localStorage recuerda última versión
+  vista; si hay nueva, parpadea.
+- **Inyectado en 17 HTMLs principales**: landing, pitch, mockups, flujo,
+  sala-móvil, disponibilidad-publica, evento-publica, carta-publica,
+  test-checklist, dashboard (5), scripts/change-password, core/pages (2).
+- E2E nuevo: `e2e/version-badge.spec.js` (4 specs).
+
+**Lección operativa:** todo cambio de versión a partir de ahora se
+refleja automáticamente en todas las páginas. No más versiones invisibles
+para usuarios con cache.
+
+SW_VERSION → 5.17.0.
+
+## 12 · Métricas del repo (v5.17)
+
+| Métrica | v5.14 | v5.17 |
+| --- | --- | --- |
+| LOC JS core | ~3 200 | ~3 700 |
+| LOC HTML dashboard | ~5 100 | ~5 200 |
+| LOC HTML core/pages | ~6 800 | ~7 800 |
+| Archivos JSON totales | 70+ | 72+ |
+| Recetas Miramar | 114 | **153** |
+| Categorías recetario | 7 | 7 |
+| Paquetes (menus.json) | 26 | **34** (8 especiales) |
+| Dietas | 7 | **8** (+ infantil) |
+| Tests automatizados | 67+19 | 67+27 |
+| Tags publicados | 8 | **12** (v4.14, v4.15, v5.0, v5.1, v5.10, v5.12-v5.17) |
+| PRs cerrados a main | 48 | 52 |

@@ -56,9 +56,11 @@ Hoteles independientes y pequeñas cadenas de 3 a 15 establecimientos. Restauran
 
 | Cosa | Estado |
 | --- | --- |
-| Versión actual | **v5.14** |
+| Versión actual | **v5.17** (5 jun 2026 · badge visible en cada página) |
 | Proyectos demo en producción | 3 (Miramar, Casa Lola, Demo) |
-| Recetas escandalladas (Miramar) | **114** (78 + 36 nuevas con precios Makro 2026) |
+| Recetas escandalladas (Miramar) | **153** (78 base + 36 v5.13 + 39 v5.16 dietas, todas con precios Makro 2026) |
+| Menús de eventos | **34 paquetes** (26 sugeridos + **8 especiales** vegano/vegetariano/sin-gluten/sin-lactosa/sin-frutos/halal/kosher/infantil) |
+| Dietas soportadas con menú real | **8** (eran solo conteo antes de v5.16) |
 | Categorías del recetario | 7 (entremeses, entrantes, primeros, segundos, postres, cócteles, **estaciones en vivo**) |
 | Plantillas marketplace | 3 (cafetería, marisquería, hotel rural) |
 | ADRs (decisiones arquitectónicas documentadas) | 3 |

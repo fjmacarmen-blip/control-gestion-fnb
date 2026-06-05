@@ -314,7 +314,7 @@
 </div>
 
 <main>
-  <div class="eyebrow">Queens Bellybutton v5.16 · checklist interactivo</div>
+  <div class="eyebrow">Queens Bellybutton v5.17 · checklist interactivo</div>
   <h1>Prueba cada función<br>y marca lo que falle</h1>
   <p class="lede">
     Cada bloque agrupa funciones relacionadas. Marca cada test con <strong>✓ OK</strong> o <strong>✗ Error</strong>.
@@ -806,6 +806,27 @@ const BLOCKS = [
     ],
   },
   {
+    id: 'b26',
+    title: 'Colores transversales + Versioning visible (v5.17)',
+    desc: 'Sistema de colores de dietas aplicado de extremo a extremo (cotizador resumen, sala-móvil con infantil) y badge de versión visible en TODOS los HTMLs principales para evitar revisar archivos viejos.',
+    tests: [
+      { id: 'b26t1', name: 'Badge versión visible en landing',
+        desc: 'Abre <a href="index.html" target="_blank">la landing</a>. Esquina inferior izquierda debe mostrar badge con punto verde "v5.17 · 5 jun 2026". Click → abre <a href="docs/CHANGELOG-v5.11-v5.17.md" target="_blank">CHANGELOG-v5.11-v5.17.md</a> en pestaña nueva.' },
+      { id: 'b26t2', name: 'Badge presente también en cotizador, recetario, dashboard',
+        desc: 'Abre <a href="core/pages/presupuesto-evento.html?proyecto=miramar" target="_blank">cotizador</a>, <a href="core/pages/recetario.html?proyecto=miramar" target="_blank">recetario</a>, <a href="dashboard/" target="_blank">dashboard</a>, <a href="dashboard/superadmin.html" target="_blank">superadmin</a>, <a href="sala-movil.html" target="_blank">sala-móvil</a>, <a href="test-checklist.html" target="_blank">este checklist</a>. El badge aparece en todos (17 HTMLs).' },
+      { id: 'b26t3', name: 'Badge parpadea si la versión es nueva',
+        desc: 'Borra localStorage (DevTools → Application → Local Storage → borrar `qbb_last_seen_version`). Recarga. El badge parpadea con verde brillante. Click en él → para de parpadear (recuerda que ya viste esta versión).' },
+      { id: 'b26t4', name: 'Hover en badge muestra highlights',
+        desc: 'Pasa el cursor sobre el badge. Tooltip del navegador muestra el título de la versión + los highlights principales.' },
+      { id: 'b26t5', name: 'Sala-móvil · pills de dieta incluyen infantil',
+        desc: 'Abre <a href="sala-movil.html" target="_blank">sala-móvil</a> → pestaña Dietas. Si hay eventos con dieta infantil, debe verse pill rosa "👶 KID" junto a las otras. El emoji kosher es 🕎 (antes era ✡️).' },
+      { id: 'b26t6', name: 'Cotizador paso 7 · pills coloreadas de dietas',
+        desc: 'Completa el cotizador con dietas marcadas (ej: 5 veganos, 2 niños, 1 celíaco). En el paso 7 "Resumen" la fila "🌿 Dietas especiales" muestra pills coloreadas en lugar de texto plano. Si añadiste "otras alergias", aparecen en cursiva debajo.' },
+      { id: 'b26t7', name: 'core/version.json existe con estructura válida',
+        desc: 'Abre directamente <a href="core/version.json" target="_blank">core/version.json</a>. Debe ser un JSON con campos `version`, `date`, `tag`, `title`, `highlights[]`, `changelog_url`, `history[]` (mínimo 4 entradas).' },
+    ],
+  },
+  {
     id: 'b25',
     title: 'Menús especiales completos (v5.16)',
     desc: '8 menús especiales con composición real (vegano, vegetariano, sin gluten, sin lactosa, sin frutos, halal, kosher, infantil). Paso 2.5 del cotizador con control de totales + filtros por dieta en el recetario + sistema de colores transversal.',
@@ -922,6 +943,7 @@ const LEVEL_MAP = {
   b23: 'director',  // Escandallos detallados + sidebar (recetario es del director)
   b24: 'admin',     // Panel superadmin diferenciado
   b25: 'cliente',   // Menús especiales (cliente final los pide en el cotizador)
+  b26: 'cliente',   // Badge visible para todos · colores transversales para todos
 };
 BLOCKS.forEach(b => { b.level = LEVEL_MAP[b.id] || 'admin'; });
 
@@ -1232,5 +1254,8 @@ $('#btnClosePrompt').addEventListener('click', hidePromptOutput);
 // ─────────────────────────────────────────────────────
 renderBlocks();
 </script>
+
+<!-- v5.17 · version-badge · badge versión visible -->
+<script src="core/js/version-badge.js" defer></script>
 </body>
 </html>

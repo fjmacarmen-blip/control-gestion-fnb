@@ -540,6 +540,7 @@ function eventCard(b) {
 }
 
 function renderDietPills(dietas) {
+  // v5.17 · alineado con sistema transversal DIETA_COLORS del cotizador
   const map = {
     vegano:      { c: '#22c55e', l: '🌱 VEG' },
     vegetariano: { c: '#84cc16', l: '🥗 VG' },
@@ -547,7 +548,8 @@ function renderDietPills(dietas) {
     sinLactosa:  { c: '#3b82f6', l: '🥛 SL' },
     sinFrutos:   { c: '#f97316', l: '🌰 SF' },
     halal:       { c: '#8b5cf6', l: '🕌 HAL' },
-    kosher:      { c: '#a78bfa', l: '✡️ KOS' },
+    kosher:      { c: '#facc15', l: '🕎 KOS' },   // v5.17 · alineado #facc15 + emoji 🕎
+    infantil:    { c: '#ec4899', l: '👶 KID' },   // v5.17 · nuevo
   };
   const items = Object.entries(dietas).filter(([, n]) => n > 0);
   if (!items.length) return '';
@@ -676,5 +678,8 @@ if (window.fnbI18n) {
 loadProjectsList();
 loadAll();
 </script>
+
+<!-- v5.17 · version-badge · badge versión visible -->
+<script src="core/js/version-badge.js" defer></script>
 </body>
 </html>

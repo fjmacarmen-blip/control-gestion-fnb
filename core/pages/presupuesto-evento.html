@@ -2522,6 +2522,25 @@ function currentProjectId() {
   return new URLSearchParams(location.search).get('proyecto') || 'miramar';
 }
 
+// v5.17 · Pills coloreadas de dietas para el resumen final (paso 7) y orden servicio
+function renderDietasPillsHTML() {
+  var pills = [];
+  Object.keys(DIETAS_LABELS).forEach(function(k) {
+    var n = dietas[k] || 0;
+    if (n <= 0) return;
+    var color = DIETA_COLORS[k] || '#9ca3af';
+    var label = DIETAS_LABELS[k];
+    pills.push(
+      '<span style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;' +
+        'background:color-mix(in srgb,' + color + ' 15%,transparent);color:' + color + ';' +
+        'border:1px solid color-mix(in srgb,' + color + ' 35%,transparent);' +
+        'font-size:.78rem;font-weight:600;margin:2px 4px 2px 0;">' +
+      label + ' <strong>' + n + '</strong></span>'
+    );
+  });
+  return pills.join('');
+}
+
 function slugify(s) {
   return String(s || '').toLowerCase()
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -2794,8 +2813,9 @@ function buildFinalSummary() {
       ['Duración', document.getElementById('eventDuration')?.value + ' horas' || '—'],
       ['Asistentes', `${pt} (${adultos} adultos · ${ninos} niños · ${bebes} bebés)`],
       ['Pax facturable', `${pf} (niños al 50%, bebés gratis)`],
+      // v5.17 · dietas con pills coloreadas (mismo sistema transversal)
       ...(dietasTotal() > 0 || dietas.otros ? [['🌿 Dietas especiales',
-        (dietasResumen().join(' · ') || 'ver notas') + (dietas.otros ? ' · ' + dietas.otros : '')]] : []),
+        (renderDietasPillsHTML() || 'ver notas') + (dietas.otros ? '<br><em style="color:var(--muted);font-size:.8rem;">' + escapeHtml(dietas.otros) + '</em>' : '')]] : []),
     ]},
     // v5.4 · dulces movidos aquí (forman parte de la oferta gastronómica)
     { t:'🍽️ Gastronomía', rows: [
@@ -3298,5 +3318,8 @@ window.pickVenue = pickVenue;
   <div class="comp-modal" id="compModalBody" onclick="event.stopPropagation()"></div>
 </div>
 
+
+<!-- v5.17 · version-badge · badge versión visible -->
+<script src="../../core/js/version-badge.js" defer></script>
 </body>
 </html>
