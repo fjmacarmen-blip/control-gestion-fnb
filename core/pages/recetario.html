@@ -380,6 +380,42 @@ main { padding: 36px 40px; min-width: 0; }
 }
 .card-sub { font-size: 0.76rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px; }
 .card-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+
+/* v5.16 · Pills de dieta y filtro lateral · sistema de colores transversal */
+.dieta-pills {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  margin-top: 8px; margin-bottom: 6px;
+}
+.dieta-pill {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 7px; border-radius: 999px;
+  font-size: 0.62rem; font-weight: 600;
+  border: 1px solid var(--c, var(--gold-border));
+  color: var(--c, var(--gold));
+  background: color-mix(in srgb, var(--c, var(--gold)) 12%, transparent);
+  letter-spacing: 0.3px; text-transform: uppercase;
+  font-family: 'DM Sans', sans-serif;
+}
+.dieta-filter {
+  padding: 8px 14px; cursor: pointer; white-space: nowrap;
+  font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 500;
+  color: var(--text-muted); background: transparent;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px; margin-bottom: 3px; width: 100%;
+  text-align: left; transition: var(--t);
+  display: flex; align-items: center; gap: 8px;
+}
+.dieta-filter:hover { color: var(--c); border-color: var(--c); }
+.dieta-filter.active {
+  background: color-mix(in srgb, var(--c) 18%, transparent);
+  border-color: var(--c);
+  color: var(--c);
+  font-weight: 600;
+}
+.dieta-clear { color: var(--text-muted); margin-top: 4px; }
+@media (max-width: 900px) {
+  .dieta-filter { width: auto; }
+}
 .chip {
   background: var(--glass); border: 1px solid var(--glass-border);
   border-radius: 20px; padding: 3px 10px;
@@ -912,6 +948,17 @@ main { padding: 36px 40px; min-width: 0; }
   <div class="nav-section-title">Eventos</div>
   <button class="tab" data-sec="coctel">🥂 Cóctel de Pie <span class="tab-pill" id="pill-coctel">19</span></button>
   <button class="tab" data-sec="estaciones">🔥 Estaciones en vivo <span class="tab-pill" id="pill-estaciones">8</span></button>
+
+  <div class="nav-section-title">Filtrar por dieta (v5.16)</div>
+  <button class="dieta-filter" data-dieta="vegano"      style="--c:#22c55e">🌱 Vegano</button>
+  <button class="dieta-filter" data-dieta="vegetariano" style="--c:#84cc16">🥗 Vegetariano</button>
+  <button class="dieta-filter" data-dieta="sin_gluten"  style="--c:#ef4444">🌾 Sin gluten</button>
+  <button class="dieta-filter" data-dieta="sin_lactosa" style="--c:#3b82f6">🥛 Sin lactosa</button>
+  <button class="dieta-filter" data-dieta="sin_frutos"  style="--c:#f97316">🌰 Sin frutos</button>
+  <button class="dieta-filter" data-dieta="halal"       style="--c:#8b5cf6">🕌 Halal</button>
+  <button class="dieta-filter" data-dieta="kosher"      style="--c:#facc15">🕎 Kosher</button>
+  <button class="dieta-filter" data-dieta="infantil"    style="--c:#ec4899">👶 Infantil</button>
+  <button class="dieta-filter dieta-clear" data-dieta=""  style="--c:#9ca3af">✕ Quitar filtro</button>
 
   <div class="nav-section-title">Operativa</div>
   <button class="tab" data-sec="bebidas">🍷 Bebidas & Carta</button>
@@ -1496,6 +1543,28 @@ function calcDesgloseCostes(r) {
   return { lineas: lineas, otros: otros };
 }
 
+// v5.16 · Pills de dieta · sistema de colores transversal
+var DIETA_META = {
+  vegano:      { l:'Vegano',      e:'🌱', c:'#22c55e' },
+  vegetariano: { l:'Vegetariano', e:'🥗', c:'#84cc16' },
+  sin_gluten:  { l:'Sin gluten',  e:'🌾', c:'#ef4444' },
+  sin_lactosa: { l:'Sin lactosa', e:'🥛', c:'#3b82f6' },
+  sin_frutos:  { l:'Sin frutos',  e:'🌰', c:'#f97316' },
+  halal:       { l:'Halal',       e:'🕌', c:'#8b5cf6' },
+  kosher:      { l:'Kosher',      e:'🕎', c:'#facc15' },
+  infantil:    { l:'Infantil',    e:'👶', c:'#ec4899' }
+};
+function renderDietaPills(dietas) {
+  if (!dietas || !dietas.length) return '';
+  return '<div class="dieta-pills">' +
+    dietas.map(function(d){
+      var m = DIETA_META[d];
+      if (!m) return '';
+      return '<span class="dieta-pill" style="--c:' + m.c + '" title="' + m.l + '">' + m.e + ' ' + m.l + '</span>';
+    }).join('') +
+  '</div>';
+}
+
 function renderRecipes(cat) {
   var grid = document.getElementById('grid-' + cat);
   if (!grid) return;
@@ -1509,6 +1578,7 @@ function renderRecipes(cat) {
     c.dataset.idx = i;
     c.dataset.cat = cat;
     c.dataset.search = (r.n + ' ' + r.sub + ' ' + (r.ing||[]).map(function(x){return x[1];}).join(' ')).toLowerCase();
+    c.dataset.dietas = (r.dietas || []).join(' ');
     var imgSrc = IMG_MAP[r.n];
     // v5.12 · emoji-overlay removed (movido junto al nombre del plato)
     c.innerHTML =
@@ -1524,6 +1594,7 @@ function renderRecipes(cat) {
           (r.coc > 0  ? '<span class="chip">🔥 ' + r.coc + ' min</span>' : '') +
           '<span class="chip">👥 ' + r.rac + ' rac.</span>' +
         '</div>' +
+        renderDietaPills(r.dietas) +
         renderAlergenosBar(aSet, true) +
       '</div>' +
       '<div class="card-footer">' +
@@ -1760,8 +1831,17 @@ function closeOverlay(e) { if (e.target === document.getElementById('overlay')) 
 // NAVIGATION
 // ═══════════════════════════════════════════════
 document.getElementById('tabsNav').addEventListener('click', function(e) {
+  // v5.16 · primer chequear si es filtro de dieta
+  var dietaBtn = e.target.closest('.dieta-filter');
+  if (dietaBtn) {
+    setDietaFilter(dietaBtn.dataset.dieta || '');
+    return;
+  }
   var btn = e.target.closest('.tab');
   if (!btn) return;
+  // Click en categoría limpia el filtro de dieta
+  currentDietaFilter = '';
+  document.querySelectorAll('.dieta-filter').forEach(function(b) { b.classList.remove('active'); });
   var sec = btn.dataset.sec;
   document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
   document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
@@ -1789,6 +1869,37 @@ function doSearch(term) {
 function clearSearch() {
   document.getElementById('searchInput').value = '';
   document.querySelectorAll('.card').forEach(function(c) { c.style.display = ''; });
+}
+
+// v5.16 · Filtro por dieta · oculta cards que no contengan el tag pedido
+var currentDietaFilter = '';
+function setDietaFilter(dieta) {
+  currentDietaFilter = dieta;
+  document.querySelectorAll('.dieta-filter').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.dieta === dieta);
+  });
+  // Si hay filtro, mostrar TODAS las categorías a la vez (como hace search)
+  if (dieta) {
+    document.querySelectorAll('.tab').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+    ['entremeses','entrantes','primeros','segundos','postres','coctel','estaciones'].forEach(function(cat) {
+      var sec = document.getElementById('sec-' + cat);
+      if (sec) sec.classList.add('active');
+    });
+    document.querySelectorAll('.card').forEach(function(c) {
+      var dietas = (c.dataset.dietas || '').split(' ');
+      c.style.display = dietas.indexOf(dieta) !== -1 ? '' : 'none';
+    });
+  } else {
+    // Quitar filtro: mostrar todas + volver a entremeses
+    document.querySelectorAll('.card').forEach(function(c) { c.style.display = ''; });
+    document.querySelectorAll('.tab').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+    var first = document.querySelector('.tab[data-sec="entremeses"]');
+    if (first) first.classList.add('active');
+    var firstSec = document.getElementById('sec-entremeses');
+    if (firstSec) firstSec.classList.add('active');
+  }
 }
 
 // ═══════════════════════════════════════════════

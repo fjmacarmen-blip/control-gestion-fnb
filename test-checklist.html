@@ -314,7 +314,7 @@
 </div>
 
 <main>
-  <div class="eyebrow">Queens Bellybutton v5.14 · checklist interactivo</div>
+  <div class="eyebrow">Queens Bellybutton v5.16 · checklist interactivo</div>
   <h1>Prueba cada función<br>y marca lo que falle</h1>
   <p class="lede">
     Cada bloque agrupa funciones relacionadas. Marca cada test con <strong>✓ OK</strong> o <strong>✗ Error</strong>.
@@ -806,6 +806,33 @@ const BLOCKS = [
     ],
   },
   {
+    id: 'b25',
+    title: 'Menús especiales completos (v5.16)',
+    desc: '8 menús especiales con composición real (vegano, vegetariano, sin gluten, sin lactosa, sin frutos, halal, kosher, infantil). Paso 2.5 del cotizador con control de totales + filtros por dieta en el recetario + sistema de colores transversal.',
+    tests: [
+      { id: 'b25t1', name: 'Cotizador · paso 2 incluye casilla infantil',
+        desc: 'Abre <a href="core/pages/presupuesto-evento.html?proyecto=miramar" target="_blank">presupuesto-evento.html</a> · paso 1 → 2. En "¿Hay asistentes con dietas?" debe aparecer la casilla 👶 Infantil además de las 7 anteriores (vegano, vegetariano, celíaco, sin lactosa, sin frutos, halal, kosher).' },
+      { id: 'b25t2', name: 'Cotizador · botón "Menús especiales →" lleva al paso 2.5',
+        desc: 'Al final del paso 2 (Menú), el botón siguiente ahora pone "Menús especiales →" (no "Bebidas →"). Click → entra en paso 2.5 con título "Menús adaptados por dieta".' },
+      { id: 'b25t3', name: 'Paso 2.5 · empty state sin dietas marcadas',
+        desc: 'Si no marcaste ninguna dieta, el paso 2.5 muestra mensaje "No has marcado dietas especiales" con instrucción de volver al paso 2.' },
+      { id: 'b25t4', name: 'Paso 2.5 · tarjetas por dieta con composición',
+        desc: 'Marca 2 veganos, 3 niños, 1 celíaco. Vuelve al paso 2.5. Aparecen 3 tarjetas (vegana verde, infantil rosa, celíaca roja) cada una con: header del menú, contador de pax, composición desplegable con cócteles + 3 entrantes/primeros/segundos/postres a elegir.' },
+      { id: 'b25t5', name: 'Paso 2.5 · control de totales con warning',
+        desc: 'Si total de pax es 50 pero marcas 60 entre todas las dietas, arriba aparece warning amarillo "⚠️ Suma de dietas (60) supera el total (50)". Si suman exactamente 50, mensaje verde "✓ Todos con menú adaptado". Si suman menos, mensaje gris "X con menú principal · Y adaptados".' },
+      { id: 'b25t6', name: 'Paso 2.5 · enlaces ↗ a recetario',
+        desc: 'En cada opción de plato hay flecha ↗ que abre la ficha completa en el recetario (en pestaña nueva).' },
+      { id: 'b25t7', name: 'Recetario · sidebar grupo "Filtrar por dieta"',
+        desc: 'Abre <a href="core/pages/recetario.html?proyecto=miramar" target="_blank">recetario.html</a>. En el sidebar hay un grupo nuevo "Filtrar por dieta" con 8 botones de colores (verde vegano, lima vegetariano, rojo SG, azul SL, naranja SF, morado halal, amarillo kosher, rosa infantil) + botón "✕ Quitar filtro".' },
+      { id: 'b25t8', name: 'Recetario · filtro por dieta oculta no-compatibles',
+        desc: 'Click en "🌱 Vegano". El recetario muestra TODAS las categorías a la vez (entremeses, entrantes, primeros, segundos, postres, cócteles, estaciones), pero solo las cards que tengan tag vegano. El botón "Quitar filtro" devuelve la vista normal.' },
+      { id: 'b25t9', name: 'Recetario · pills de dieta visibles en cada card',
+        desc: 'Bajo los chips de tiempo aparecen mini-pills coloreadas indicando qué dietas cumple cada plato (ej: "🌱 Vegano · 🌾 Sin gluten · 🕌 Halal").' },
+      { id: 'b25t10', name: 'JSON · 8 paquetes y 39 recetas nuevas',
+        desc: 'Verifica en projects/miramar/menus.json que paquetes con type "menu_especial" son 8. En recetas.json el total ahora es 153 (eran 114). Cada nueva receta tiene campo "dietas": ["..."] con las dietas compatibles.' },
+    ],
+  },
+  {
     id: 'b24',
     title: 'Panel Superadmin diferenciado (v5.14)',
     desc: 'Dashboard global SOLO para el super-admin con paleta verde+negro (deliberadamente distinta del azul-marfil-oro de los directores). Métricas agregadas de TODOS los proyectos.',
@@ -894,6 +921,7 @@ const LEVEL_MAP = {
   b22: 'cliente',   // Iconos al lado del nombre (cards visibles para todo público)
   b23: 'director',  // Escandallos detallados + sidebar (recetario es del director)
   b24: 'admin',     // Panel superadmin diferenciado
+  b25: 'cliente',   // Menús especiales (cliente final los pide en el cotizador)
 };
 BLOCKS.forEach(b => { b.level = LEVEL_MAP[b.id] || 'admin'; });
 
