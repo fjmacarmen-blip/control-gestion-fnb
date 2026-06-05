@@ -1,8 +1,9 @@
-# Changelog · Queens Bellybutton v5.11 → v5.14
+# Changelog · Queens Bellybutton v5.11 → v5.17
 
-> Junio 2026 · Cuatro versiones consecutivas que cierran auditoría, refinan
-> diseño visual, profesionalizan el catálogo de recetas y añaden panel
-> superadmin.
+> Junio 2026 · Siete versiones consecutivas que cierran auditoría, refinan
+> diseño visual, profesionalizan el catálogo de recetas, añaden panel
+> superadmin, tema verde para zona admin, menús especiales completos y
+> sistema de versioning visible.
 
 ---
 
@@ -176,3 +177,114 @@ SW_VERSION → 5.14.0.
 | v5.14 | Panel superadmin verde+negro | ~1 309 | #48 |
 
 **Total:** 4 PRs, ~6 270 líneas, 0 regresiones en tests.
+
+---
+
+## v5.15 (PR #50) · Tema verde extendido a zona admin
+
+Aplicación del tema verde+negro (originalmente solo en `superadmin.html`)
+a TODOS los procesos exclusivos del superadmin.
+
+**Nuevo · `core/css/theme-superadmin.css`:**
+- Tema reutilizable que sobrescribe CSS variables de `dashboard-theme.css`
+- Mismo `--bg-base #060A07`, `--accent #00E676`, `--accent-deep #0F4D2E`
+- Badge automático "ADMIN ZONE" en esquina superior derecha (body::before)
+- Refuerzos puntuales para botones primarios, links, focus states
+
+**Aplicado a:**
+- `dashboard/wizard.html` (crear proyecto = solo admin)
+- `scripts/change-password.html` (regenerar hashes bcrypt)
+- `theme-color` meta cambiado a `#0a1612` en ambos
+
+**NO aplicado (mantienen azul-marfil-oro):**
+- `dashboard/index.html` (login y lista la usan ambos roles)
+- `dashboard/editor.html`, `metricas.html` (director edita su proyecto)
+- `index.html` landing pública (paleta comercial corporativa)
+
+SW_VERSION → 5.15.0.
+
+---
+
+## v5.16 (PR #51) · Menús especiales completos · 8 dietas + paso 2.5
+
+El usuario detectó que las dietas marcadas en el cotizador solo contaban
+personas; no había menús reales detrás. Ahora cada dieta tiene un menú
+adaptado completo con composición, escandallo y código de color.
+
+**Data:**
+- `dietas.json`: añadida **👶 Infantil** (color rosa `#ec4899`). Total: 8 dietas.
+- `menus.json`: **+8 paquetes `type:"menu_especial"`** (vegano, vegetariano,
+  sin gluten, sin lactosa, sin frutos, halal, kosher, infantil). Cada uno
+  con cóctel + 3 entrantes/primeros/segundos/postres a elegir + bodega
+  adaptada + garantías protocolarias.
+- `recetas.json`: **+39 recetas** con campo `dietas[]` multi-valor para
+  reutilización. Total Miramar: 114 → **153**.
+
+**UI cotizador:**
+- Casilla nueva **👶 Infantil** en paso 2
+- **PASO 2.5 nuevo "Menús adaptados por dieta"**:
+  - Tarjetas dinámicas con color izquierdo según dieta
+  - Composición desplegable con radio buttons (3 opciones por curso)
+  - Enlaces ↗ al recetario
+  - Control de totales: warning si suma dietas > total pax
+  - Empty state si no hay dietas marcadas
+
+**UI recetario:**
+- Sidebar nuevo "Filtrar por dieta" con 8 botones coloreados
+- Pills coloreadas en cada card mostrando qué dietas cumple
+- Filtro doble: por dieta abre todas las categorías y solo muestra compatibles
+
+**Sistema de colores transversal:**
+- `DIETA_COLORS` exportado al cotizador + recetario
+- `var(--c)` inline para fácil propagación futura
+
+E2E nuevo: `e2e/menus-especiales.spec.js` (4 specs). SW_VERSION → 5.16.0.
+
+---
+
+## v5.17 (PR #52) · Colores transversal completo + Versioning visible
+
+Cierra v5.16 propagando los colores de dietas al resto del producto, y
+añade un **sistema de versioning visible** para que el usuario nunca
+revise documentos viejos sin darse cuenta.
+
+**Colores transversal cierre:**
+- `sala-movil.html` · `renderDietPills` alineado con 8 dietas (+ infantil),
+  kosher actualizado de `#a78bfa` (morado) a `#facc15` (amarillo) con
+  emoji 🕎 (antes ✡️)
+- `presupuesto-evento.html` · `renderDietasPillsHTML()` nueva genera
+  pills coloreadas para el resumen final (paso 7) y orden de servicio
+
+**Sistema de versioning visible:**
+- **`core/version.json`** nuevo: `{ version, date, tag, title,
+  highlights[], changelog_url, history[] }`
+- **`core/js/version-badge.js`** nuevo: carga el JSON e inyecta badge
+  fijo (esquina inferior izquierda) con:
+  - Versión y fecha legibles ("v5.17 · 5 jun 2026")
+  - Click → abre changelog en pestaña nueva
+  - Hover → tooltip con highlights
+  - `localStorage` recuerda última versión vista; si hay nueva, parpadea
+  - Auto-detección de profundidad de path (raíz, /dashboard, /core/pages)
+  - Oculto en print
+- **Inyectado en 17 HTMLs principales** mediante script Python idempotente
+  (`scripts/migrations/v517_inject_version_badge.py`)
+
+**Tests nuevo:** `e2e/version-badge.spec.js` (4 specs).
+
+SW_VERSION → 5.17.0.
+
+---
+
+## Resumen ejecutivo de las 7 versiones
+
+| Versión | Tema | PR |
+| --- | --- | --- |
+| v5.11 | Cierre auditoría + 4 hotfixes (incluido bug crítico modal composición) | #45 |
+| v5.12 | Iconos al lado del nombre (no sobre imágenes) | #46 |
+| v5.13 | +36 recetas escandalladas con precios Makro + sidebar recetario + estaciones en vivo | #47 |
+| v5.14 | Panel superadmin diferenciado (paleta verde+negro) | #48 |
+| v5.15 | Tema verde extendido a wizard y change-password (zona admin) | #50 |
+| v5.16 | Menús especiales completos · 8 dietas + paso 2.5 cotizador | #51 |
+| v5.17 | Colores transversal + versioning visible en 17 HTMLs | #52 |
+
+**Total:** 7 PRs, ~10 000 líneas tocadas, 0 regresiones en tests.
