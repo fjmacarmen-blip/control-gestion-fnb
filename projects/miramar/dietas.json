@@ -1,5 +1,14 @@
 {
-  "claves_orden": ["vegano", "vegetariano", "celiaco", "sinLactosa", "sinFrutos", "halal", "kosher"],
+  "claves_orden": [
+    "vegano",
+    "vegetariano",
+    "celiaco",
+    "sinLactosa",
+    "sinFrutos",
+    "halal",
+    "kosher",
+    "infantil"
+  ],
   "instrucciones": {
     "vegano": {
       "label": "🌱 VEGANOS",
@@ -56,6 +65,14 @@
       "sala": "Pulseras lila · vajilla específica.",
       "bebidas": "Vino kosher · evitar mezclar carne con lácteos en mismo servicio.",
       "pedido": "Producto kosher con sello rabínico · vino kosher mevushal."
+    },
+    "infantil": {
+      "label": "👶 INFANTIL",
+      "color": "#ec4899",
+      "cocina": "Porciones reducidas (60% adulto) · sabores familiares · cocción media · sin picante · sin alcohol en salsas · cortes pequeños sin huesos · presentación divertida.",
+      "sala": "Pulseras rosas · sillas elevadoras disponibles · vajilla irrompible para menores 6 años · servicio prioritario para evitar esperas largas.",
+      "bebidas": "Zumos naturales · agua · refrescos sin cafeína · bricks de zumo individual para niños pequeños · nada de café/té.",
+      "pedido": "Manteles individuales con dibujos y crayones · pequeño regalo sorpresa al final · disponer mesa próxima a baños y zona de juego."
     }
   }
 }

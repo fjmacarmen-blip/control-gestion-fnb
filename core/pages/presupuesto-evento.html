@@ -501,6 +501,152 @@ body{
 .step-head p  { color:var(--muted); font-size:.88rem; margin-top:8px; line-height:1.7; }
 
 /* ══════════════════════════════════════════════════
+   v5.16 · PASO 2.5 · MENÚS ESPECIALES
+══════════════════════════════════════════════════ */
+.special-control {
+  background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.special-control-bar { display: flex; justify-content: space-between; width: 100%; align-items: center; gap: 14px; flex-wrap: wrap; }
+.special-control-detail { color: var(--muted); font-size: .82rem; margin-left: 10px; }
+.special-control-status { font-size: .85rem; font-weight: 500; }
+.special-warn { color: #fbbf24; background: rgba(251,191,36,0.10); padding: 5px 12px; border-radius: 999px; }
+.special-ok   { color: #22c55e; background: rgba(34,197,94,0.10); padding: 5px 12px; border-radius: 999px; }
+.special-info { color: var(--muted); }
+
+.special-menus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+.special-empty {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0,0,0,0.2);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  color: var(--text);
+}
+.special-card {
+  background: var(--card-bg, rgba(20,20,20,0.4));
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--c, var(--gold));
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: var(--t);
+}
+.special-card:hover {
+  border-color: var(--c);
+  box-shadow: 0 0 0 1px var(--c), 0 8px 24px rgba(0,0,0,0.25);
+}
+.special-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.special-card-icon {
+  font-size: 1.8rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--c) 18%, transparent);
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
+}
+.special-card-titles { flex: 1; min-width: 0; }
+.special-card-title { font-weight: 600; color: var(--c); font-size: 1.02rem; }
+.special-card-desc { color: var(--muted); font-size: .78rem; line-height: 1.5; margin-top: 4px; }
+.special-card-pax {
+  text-align: center;
+  background: color-mix(in srgb, var(--c) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
+  border-radius: 10px;
+  padding: 6px 12px;
+  flex-shrink: 0;
+}
+.special-card-pax .num { font-size: 1.5rem; font-weight: 700; color: var(--c); line-height: 1; }
+.special-card-pax .lbl { font-size: .65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.special-card-warn { color: #fbbf24; font-size: .85rem; }
+
+.special-comp { margin-top: 8px; }
+.special-comp > summary {
+  cursor: pointer;
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 8px;
+  color: var(--c);
+  font-size: .82rem;
+  font-weight: 500;
+  list-style: none;
+  user-select: none;
+}
+.special-comp > summary::before { content: '▾ '; margin-right: 4px; }
+.special-comp:not([open]) > summary::before { content: '▸ '; }
+.special-comp-sec { margin-top: 12px; }
+.special-comp-title {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--c);
+  margin-bottom: 6px;
+}
+.special-comp-list { list-style: none; padding-left: 0; margin: 0; }
+.special-comp-list li {
+  padding: 4px 0 4px 16px;
+  position: relative;
+  font-size: .82rem;
+  color: var(--text);
+}
+.special-comp-list li::before {
+  content: '·';
+  position: absolute;
+  left: 4px;
+  color: var(--c);
+  font-weight: 700;
+}
+.special-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.special-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--t);
+  font-size: .85rem;
+}
+.special-opt:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 8%, rgba(0,0,0,0.2)); }
+.special-opt input[type="radio"] { accent-color: var(--c); }
+.special-opt span { flex: 1; color: var(--text); }
+.special-opt-link {
+  color: var(--c);
+  text-decoration: none;
+  font-size: .9rem;
+  opacity: 0.6;
+  transition: var(--t);
+}
+.special-opt-link:hover { opacity: 1; }
+
+
+/* ══════════════════════════════════════════════════
    CARDS: SELECCIONABLES
 ══════════════════════════════════════════════════ */
 .sel-grid { display:grid; gap:16px; }
@@ -1122,11 +1268,18 @@ body{
             <button onclick="changeDieta('halal',+1)">+</button>
           </div>
         </div>
-        <div class="dieta-cell"><label>✡️ Kosher</label>
+        <div class="dieta-cell"><label>🕎 Kosher</label>
           <div class="dieta-input-wrap">
             <button onclick="changeDieta('kosher',-1)">−</button>
             <input type="number" id="dietaKosher" value="0" min="0" max="500" oninput="dietaChanged('kosher')">
             <button onclick="changeDieta('kosher',+1)">+</button>
+          </div>
+        </div>
+        <div class="dieta-cell"><label>👶 Infantil</label>
+          <div class="dieta-input-wrap">
+            <button onclick="changeDieta('infantil',-1)">−</button>
+            <input type="number" id="dietaInfantil" value="0" min="0" max="500" oninput="dietaChanged('infantil')">
+            <button onclick="changeDieta('infantil',+1)">+</button>
           </div>
         </div>
       </div>
@@ -1252,6 +1405,39 @@ body{
 
       <div class="step-nav">
         <button class="btn-prev" onclick="goStep(1)">← Atrás</button>
+        <button class="btn-next" onclick="goStep('2-5')">Menús especiales &nbsp;→</button>
+      </div>
+    </div>
+
+    <!-- ─── PASO 2.5: MENÚS ESPECIALES (v5.16) ─── -->
+    <div class="step-section" id="step-2-5">
+      <div class="step-head">
+        <div class="step-eyebrow">Paso 2.5 · MENÚS ESPECIALES</div>
+        <h2>Menús adaptados por dieta</h2>
+        <p>Configura el menú específico para cada dieta que has marcado. Cada dieta tiene su propia composición con 3 opciones a elegir por curso, escandallada y con su propio código de color que se aplicará en la orden de servicio y el plano de sala.</p>
+      </div>
+
+      <!-- Control de totales (warning si dietas > pax total) -->
+      <div id="specialMenusControl" class="special-control">
+        <div class="special-control-bar">
+          <div>
+            <strong id="specialAdaptedCount">0</strong> de <strong id="specialTotalPax">0</strong> comensales con menú adaptado
+            <span class="special-control-detail" id="specialBreakdown">—</span>
+          </div>
+          <div class="special-control-status" id="specialControlStatus"></div>
+        </div>
+      </div>
+
+      <!-- Grid dinámico de paquetes especiales -->
+      <div id="specialMenusGrid" class="special-menus-grid">
+        <div class="special-empty">
+          <p>No has marcado dietas especiales en el paso anterior.</p>
+          <p style="font-size:.85rem;color:var(--muted);margin-top:8px;">Si tienes asistentes veganos, celíacos, niños u otras restricciones, vuelve al paso 2 y márcalo en «¿Hay asistentes con dietas especiales?».</p>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button class="btn-prev" onclick="goStep(2)">← Atrás</button>
         <button class="btn-next" onclick="goStep(3)">Bebidas &nbsp;→</button>
       </div>
     </div>
@@ -2172,9 +2358,13 @@ function renderProgress() {
 // ══════════════════════════════════════════════════
 function goStep(n) {
   document.querySelectorAll('.step-section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(`step-${n}`).classList.add('active');
+  var el = document.getElementById(`step-${n}`);
+  if (!el) { console.warn('Step no existe:', n); return; }
+  el.classList.add('active');
   currentStep = n;
   renderProgress();
+  // v5.16 · renderizar paso 2.5 dinámicamente
+  if (n === '2-5' || n === 2.5) renderSpecialMenusStep();
   if (n===7) buildFinalSummary();
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -2186,14 +2376,164 @@ function goStep(n) {
 const DIETAS_LABELS = {
   vegano:'🌱 Vegano', vegetariano:'🥗 Vegetariano', celiaco:'🌾 Celíaco',
   sinLactosa:'🥛 Sin lactosa', sinFrutos:'🌰 Sin frutos secos',
-  halal:'🕌 Halal', kosher:'✡️ Kosher'
+  halal:'🕌 Halal', kosher:'🕎 Kosher', infantil:'👶 Infantil'
 };
-let dietas = { vegano:0, vegetariano:0, celiaco:0, sinLactosa:0, sinFrutos:0, halal:0, kosher:0, otros:'' };
+// v5.16 · Mapping clave dieta del cotizador → key del paquete en menus.json
+const DIETA_TO_PAQ_KEY = {
+  vegano: 'vegano', vegetariano: 'vegetariano', celiaco: 'sin_gluten',
+  sinLactosa: 'sin_lactosa', sinFrutos: 'sin_frutos',
+  halal: 'halal', kosher: 'kosher', infantil: 'infantil'
+};
+// v5.16 · Colores sistema transversal · plano sala + orden + presupuesto
+const DIETA_COLORS = {
+  vegano: '#22c55e', vegetariano: '#84cc16', celiaco: '#ef4444',
+  sinLactosa: '#3b82f6', sinFrutos: '#f97316',
+  halal: '#8b5cf6', kosher: '#facc15', infantil: '#ec4899'
+};
+let dietas = { vegano:0, vegetariano:0, celiaco:0, sinLactosa:0, sinFrutos:0, halal:0, kosher:0, infantil:0, otros:'' };
+// v5.16 · Selección de plato por dieta y curso (entrante/primero/segundo/postre)
+let specialSelections = {};  // { vegano: { entrante: 'X', primero: 'Y', ... }, ... }
 
 function dietasTotal() {
   return dietas.vegano + dietas.vegetariano + dietas.celiaco +
-         dietas.sinLactosa + dietas.sinFrutos + dietas.halal + dietas.kosher;
+         dietas.sinLactosa + dietas.sinFrutos + dietas.halal + dietas.kosher + dietas.infantil;
 }
+// ════════════════════════════════════════════════════════════
+// v5.16 · MENÚS ESPECIALES · paso 2.5
+// ════════════════════════════════════════════════════════════
+function renderSpecialMenusStep() {
+  var grid = document.getElementById('specialMenusGrid');
+  if (!grid) return;
+
+  // Filtrar paquetes de tipo menú especial (menuPkgs global cargado en init)
+  var specialPaqs = (menuPkgs || []).filter(function(p) {
+    return p.type === 'menu_especial';
+  });
+
+  // Build mapping dieta_key (paquete) → paquete completo
+  var paqByKey = {};
+  specialPaqs.forEach(function(p) { paqByKey[p.dieta_key] = p; });
+
+  // Total comensales con dieta especial + breakdown
+  var totalPax = window.pax || 0;
+  var adaptedCount = 0;
+  var breakdown = [];
+
+  // Construir tarjetas por cada dieta con cantidad > 0
+  var cards = [];
+  Object.keys(DIETAS_LABELS).forEach(function(dietaKey) {
+    var n = dietas[dietaKey] || 0;
+    if (n <= 0) return;
+    adaptedCount += n;
+    var paqKey = DIETA_TO_PAQ_KEY[dietaKey];
+    var paq = paqByKey[paqKey];
+    var color = DIETA_COLORS[dietaKey];
+    var label = DIETAS_LABELS[dietaKey];
+    breakdown.push(label + ': ' + n);
+
+    if (!paq) {
+      cards.push('<div class="special-card" style="--c:' + color + '">' +
+        '<div class="special-card-head"><span class="special-card-icon">⚠️</span>' +
+        '<div><div class="special-card-title">' + label + ' · ' + n + ' pax</div>' +
+        '<div class="special-card-warn">Paquete no encontrado para esta dieta</div></div></div></div>');
+      return;
+    }
+
+    // Build composición HTML
+    var compHtml = '';
+    Object.keys(paq.composition || {}).forEach(function(seccion) {
+      var items = paq.composition[seccion];
+      if (!Array.isArray(items)) return;
+      if (seccion === 'Garantías y protocolos' || seccion === 'Bodega adaptada') {
+        compHtml += '<div class="special-comp-sec">' +
+          '<div class="special-comp-title">' + escapeHtml(seccion) + '</div>' +
+          '<ul class="special-comp-list">' +
+            items.map(function(it){ return '<li>' + escapeHtml(it) + '</li>'; }).join('') +
+          '</ul></div>';
+      } else {
+        // Secciones de cursos: 3 opciones a elegir
+        compHtml += '<div class="special-comp-sec">' +
+          '<div class="special-comp-title">' + escapeHtml(seccion) + '</div>' +
+          '<div class="special-options">' +
+            items.map(function(it) {
+              return '<label class="special-opt">' +
+                '<input type="radio" name="sp-' + dietaKey + '-' + slugify(seccion) + '" value="' + escapeHtml(it) + '" onchange="setSpecialPick(\'' + dietaKey + '\',\'' + slugify(seccion) + '\',this.value)">' +
+                '<span>' + escapeHtml(it) + '</span>' +
+                '<a class="special-opt-link" href="recetario.html?proyecto=' + currentProjectId() + '#' + encodeURIComponent(it) + '" target="_blank" title="Ver ficha en recetario">↗</a>' +
+              '</label>';
+            }).join('') +
+          '</div></div>';
+      }
+    });
+
+    cards.push(
+      '<div class="special-card" style="--c:' + color + '">' +
+        '<div class="special-card-head">' +
+          '<span class="special-card-icon">' + paq.icon + '</span>' +
+          '<div class="special-card-titles">' +
+            '<div class="special-card-title">' + escapeHtml(paq.name) + '</div>' +
+            '<div class="special-card-desc">' + escapeHtml(paq.desc || '') + '</div>' +
+          '</div>' +
+          '<div class="special-card-pax">' +
+            '<div class="num">' + n + '</div><div class="lbl">pax</div>' +
+          '</div>' +
+        '</div>' +
+        '<details class="special-comp" open>' +
+          '<summary>Composición del menú · ' + paq.ppax + ' €/pax</summary>' +
+          compHtml +
+        '</details>' +
+      '</div>'
+    );
+  });
+
+  if (cards.length === 0) {
+    grid.innerHTML = '<div class="special-empty">' +
+      '<p>No has marcado dietas especiales en el paso anterior.</p>' +
+      '<p style="font-size:.85rem;color:var(--muted);margin-top:8px;">Si tienes asistentes veganos, celíacos, niños u otras restricciones, vuelve al paso 2 y márcalo en «¿Hay asistentes con dietas especiales?».</p>' +
+      '</div>';
+  } else {
+    grid.innerHTML = cards.join('');
+  }
+
+  // Control de totales
+  document.getElementById('specialAdaptedCount').textContent = adaptedCount;
+  document.getElementById('specialTotalPax').textContent = totalPax;
+  document.getElementById('specialBreakdown').textContent = breakdown.length ? '· ' + breakdown.join(' · ') : '';
+
+  var status = document.getElementById('specialControlStatus');
+  if (adaptedCount === 0) {
+    status.innerHTML = '';
+  } else if (adaptedCount > totalPax) {
+    status.innerHTML = '<span class="special-warn">⚠️ Suma de dietas (' + adaptedCount + ') supera el total de comensales (' + totalPax + ')</span>';
+  } else if (adaptedCount === totalPax) {
+    status.innerHTML = '<span class="special-ok">✓ Todos los comensales con menú adaptado</span>';
+  } else {
+    var rest = totalPax - adaptedCount;
+    status.innerHTML = '<span class="special-info">' + rest + ' con menú principal · ' + adaptedCount + ' adaptados</span>';
+  }
+}
+
+function setSpecialPick(dietaKey, secSlug, value) {
+  if (!specialSelections[dietaKey]) specialSelections[dietaKey] = {};
+  specialSelections[dietaKey][secSlug] = value;
+}
+
+function currentProjectId() {
+  return new URLSearchParams(location.search).get('proyecto') || 'miramar';
+}
+
+function slugify(s) {
+  return String(s || '').toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 function dietasResumen() {
   const bits = [];
   Object.keys(DIETAS_LABELS).forEach(k => {
