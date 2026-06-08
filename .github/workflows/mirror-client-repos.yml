@@ -78,12 +78,26 @@ jobs:
           CLIENT_REPO='${{ matrix.client.repo }}'
           BACKUP_REPO='${{ matrix.client.backupRepo }}'
           echo "→ Mirror $CLIENT_REPO → $BACKUP_REPO"
-          # Clone con todas las refs (branches, tags) en modo bare
-          git clone --mirror "https://$BACKUP_PAT@github.com/$CLIENT_REPO.git" repo.git
+          # Clone bare con todas las refs (branches, tags) — no usamos
+          # `--mirror` aquí porque luego haremos un push SELECTIVO para
+          # evitar `refs/pull/*/head` (refs internas de GitHub que el
+          # remoto rechaza con "deny updating a hidden ref").
+          git clone --bare "https://$BACKUP_PAT@github.com/$CLIENT_REPO.git" repo.git
           cd repo.git
-          # Push espejo al backup (sobrescribe el remoto si difiere)
-          git push --mirror "https://$BACKUP_PAT@github.com/$BACKUP_REPO.git"
-          echo "✓ Backup OK · $(git rev-list --all --count) commits respaldados"
+          # v5.17.1 · push selectivo: solo branches y tags, no refs/pull/*
+          # ──────────────────────────────────────────────────────────
+          # --prune: elimina del backup refs borradas en origen
+          # --force: sobreescribe si difiere (verdadero mirror)
+          # Refspecs explícitos: heads + tags, nada más
+          # Requiere PAT con scope `repo` + `workflow` (para .github/workflows/*)
+          git push --prune --force \
+            "https://$BACKUP_PAT@github.com/$BACKUP_REPO.git" \
+            'refs/heads/*:refs/heads/*' \
+            'refs/tags/*:refs/tags/*'
+          BRANCHES=$(git for-each-ref --format='%(refname:short)' refs/heads | wc -l)
+          TAGS=$(git for-each-ref --format='%(refname:short)' refs/tags | wc -l)
+          COMMITS=$(git rev-list --all --count)
+          echo "✓ Backup OK · $COMMITS commits · $BRANCHES branches · $TAGS tags respaldados"
 
       - name: Registrar timestamp del backup
         if: success()
