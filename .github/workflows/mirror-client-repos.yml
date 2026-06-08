@@ -1,6 +1,6 @@
 name: mirror-client-repos
 # ──────────────────────────────────────────────────────────────────
-# Blocker B3 · v5.8
+# Blocker B3 · v5.9
 # Espejo nocturno de los repos de los clientes hacia un repo backup
 # privado controlado por el super-admin. Si un cliente borra su cuenta
 # de GitHub o pierde acceso a su organización, sigue habiendo copia
@@ -90,11 +90,7 @@ jobs:
         env:
           BACKUP_PAT: ${{ secrets.BACKUP_PAT }}
         run: |
-          # Touch fichero .last-backup en el backup para auditoría
           TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          echo "Backup OK · $TS · sha=$GITHUB_SHA" > /tmp/last-backup.txt
-          # Nota: no commiteamos el touch para no romper el mirror; el
-          # timestamp queda solo en los logs de Actions.
           echo "✓ Timestamp: $TS"
 
   notify-failure:
@@ -102,6 +98,8 @@ jobs:
     needs: [read-clients, mirror]
     if: always() && needs.mirror.result == 'failure'
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - uses: actions/checkout@v4
       - name: Abrir issue de incidencia
