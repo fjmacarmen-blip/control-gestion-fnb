@@ -4,13 +4,13 @@
   "description": "Vídeo promocional de Queens Bellybutton · Remotion · v5.18",
   "private": true,
   "scripts": {
-    "start": "remotion studio",
-    "build": "remotion render VideoPromo out/video-promo-landscape.mp4",
-    "build:square": "remotion render VideoPromoSquare out/video-promo-square.mp4",
-    "build:vertical": "remotion render VideoPromoVertical out/video-promo-vertical.mp4",
-    "build:teaser": "remotion render VideoPromoTeaser out/video-promo-teaser-90s.mp4",
+    "start": "node ./node_modules/@remotion/cli/remotion-cli.js studio",
+    "build": "node ./node_modules/@remotion/cli/remotion-cli.js render VideoPromo out/video-promo-landscape.mp4",
+    "build:square": "node ./node_modules/@remotion/cli/remotion-cli.js render VideoPromoSquare out/video-promo-square.mp4",
+    "build:vertical": "node ./node_modules/@remotion/cli/remotion-cli.js render VideoPromoVertical out/video-promo-vertical.mp4",
+    "build:teaser": "node ./node_modules/@remotion/cli/remotion-cli.js render VideoPromoTeaser out/video-promo-teaser-90s.mp4",
     "build:all": "npm run build && npm run build:square && npm run build:vertical && npm run build:teaser",
-    "upgrade": "remotion upgrade"
+    "upgrade": "node ./node_modules/@remotion/cli/remotion-cli.js upgrade"
   },
   "dependencies": {
     "@remotion/cli": "4.0.474",
