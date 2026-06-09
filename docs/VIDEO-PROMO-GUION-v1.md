@@ -103,16 +103,15 @@ Frame 360–450: "gestionaba mejor mi catering"
 - Floating elements: tabs de email, papeles, post-its
 - Reloj en esquina que avanza rápido (de las 10am a las 6pm)
 
-**Texto kinetic (cifras grandes que aparecen una a una):**
+**Texto kinetic (sin cifras concretas · descripción cualitativa):**
 ```
-0:45–0:50:   Aparece "8 HORAS"            ← número grande gold
-0:50–0:53:   "...al mes"                   ← más pequeño
-0:53–0:58:   "perseguir UN presupuesto"
-0:58–1:05:   Lista que aparece línea a línea:
+0:45–0:50:   "Una mañana entera"            ← frase grande gold
+0:50–0:55:   "para UN solo presupuesto."
+0:55–1:05:   Lista que aparece línea a línea:
              • Excel
              • Word
-             • 12 emails
-             • 3 firmas escaneadas
+             • Email tras email
+             • Firmas escaneadas
              • PDF maquetado a mano
 1:05–1:15:   "Y aún así, el cliente pregunta:
               ¿incluye el sushi al final?"   ← humor que reconoce el dolor
@@ -129,16 +128,16 @@ Frame 360–450: "gestionaba mejor mi catering"
 - Izquierda: dramatic scene · evento empezando, mesa vacía, cliente preguntando "¿dónde está mi presupuesto?"
 - Derecha: avatar Paco con expresión preocupada, sudando
 
-**Texto kinetic (alterna entre las dos mitades):**
+**Texto kinetic (alterna entre las dos mitades · sin cifras):**
 ```
 1:15–1:20:   Izquierda: "1 evento perdido"
-1:20–1:23:   Derecha: número grande "= 4.000€"  ← rojo
+1:20–1:23:   Derecha grande: "= mes a la basura"  ← rojo
 1:23–1:28:   Izquierda: "1 alergia mal marcada"
-1:28–1:32:   Derecha: número grande "= crisis"   ← rojo
+1:28–1:32:   Derecha grande: "= crisis en sala"   ← rojo
 1:32–1:45:   Centro, fullscreen:
-             "El 70% de la hostelería independiente
-              sigue gestionando así."
-             "Y yo era uno de ellos."   ← gold
+             "Y casi todo el sector independiente
+              sigue así."
+             "Yo era uno de ellos."   ← gold
 ```
 
 **Animación:** glitch sutil cuando aparecen los números rojos, fade a fullscreen para el cierre
@@ -182,8 +181,8 @@ Frame 360–450: "gestionaba mejor mi catering"
 2:40–2:45:   "Selecciona menús."
 2:45–2:50:   "Marca dietas especiales con menús reales."   ← énfasis "REALES"
 2:50–2:55:   Comparación:
-             ANTES: "3 horas en Excel"   ← rojo
-             AHORA: "90 segundos"        ← verde
+             ANTES: "Una mañana entera"   ← rojo
+             AHORA: "Minutos"              ← verde
 ```
 
 **Animación:** Side-by-side antes/después al final
@@ -197,11 +196,11 @@ Frame 360–450: "gestionaba mejor mi catering"
 - Zoom in en una receta concreta (ej: Caviar Beluga sobre blinis)
 - Aparece el escandallo desglosado
 
-**Texto kinetic:**
+**Texto kinetic (sin cifras objetivas · cualitativo):**
 ```
-2:55–3:00:   "153 recetas."   ← número grande
-3:00–3:05:   "Cada una escandallada."
-3:05–3:10:   "Precios Makro mayorista 2026."
+2:55–3:00:   "Un recetario completo."
+3:00–3:05:   "Cada plato escandallado."
+3:05–3:10:   "Con precios de mayorista reales."
 3:10–3:20:   Lista que cae:
              🌱 Vegano
              🌾 Sin gluten
@@ -210,7 +209,7 @@ Frame 360–450: "gestionaba mejor mi catering"
              🕌 Halal
              🕎 Kosher
              👶 Infantil
-3:20–3:30:   "8 dietas. Menús reales. No solo conteo."
+3:20–3:30:   "Cada dieta con su menú real. No solo casillas."
 ```
 
 **Animación:** Las pills de dieta aparecen con colores transversal del producto
