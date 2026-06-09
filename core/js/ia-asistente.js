@@ -455,7 +455,11 @@
 
     try {
       isLoading = true;
-      // v5.8 · uses buildRequestMessages (cache + ventana de N turnos)
+      // v5.8 · uses buildRequestMessages (cache + ventana de N turnos).
+      // v5.17 · análisis M1 audit: history.push ocurre ANTES de esta llamada,
+      // por lo que el mensaje del usuario siempre está en history al llamar
+      // slice(-MAX_HISTORY_TURNS). El extraUserMessage NO se pasa para evitar
+      // duplicar el turno de usuario en el payload de la API.
       const messages = buildRequestMessages();
       const reply = await callPollinations(messages);
       history.push({ role: 'assistant', content: reply, ts: Date.now() });

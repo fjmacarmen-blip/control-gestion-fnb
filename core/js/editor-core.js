@@ -221,26 +221,27 @@
   }
 
   // ── Diff superficial ──────────────────────────────────────
-  function diffSummary(projectId, sectionKey) {
-    return new Promise(async (resolve) => {
-      try {
-        const draft = loadDraft(projectId, sectionKey);
-        if (!draft) { resolve({ added: 0, modified: 0, removed: 0, total_keys: 0 }); return; }
-        let original;
-        try { original = await loadOriginal(projectId, sectionKey); }
-        catch { original = null; }
-        const a = JSON.stringify(original);
-        const b = JSON.stringify(draft);
-        resolve({
-          changed: a !== b,
-          original_bytes: a ? a.length : 0,
-          draft_bytes:    b ? b.length : 0,
-          delta_bytes:    (b ? b.length : 0) - (a ? a.length : 0),
-        });
-      } catch (e) {
-        resolve({ changed: false, error: e.message });
-      }
-    });
+  // v5.17 · fix L4 audit · eliminado new Promise(async) antipattern.
+  // Riesgo: si el executor async lanza antes del primer await, la Promise
+  // queda pendiente indefinidamente. Sustituido por async function directa.
+  async function diffSummary(projectId, sectionKey) {
+    try {
+      const draft = loadDraft(projectId, sectionKey);
+      if (!draft) return { added: 0, modified: 0, removed: 0, total_keys: 0 };
+      let original;
+      try { original = await loadOriginal(projectId, sectionKey); }
+      catch { original = null; }
+      const a = JSON.stringify(original);
+      const b = JSON.stringify(draft);
+      return {
+        changed: a !== b,
+        original_bytes: a ? a.length : 0,
+        draft_bytes:    b ? b.length : 0,
+        delta_bytes:    (b ? b.length : 0) - (a ? a.length : 0),
+      };
+    } catch (e) {
+      return { changed: false, error: e.message };
+    }
   }
 
   // ── Helpers UI (compartidos por las secciones) ────────────
@@ -275,6 +276,22 @@
     setTimeout(() => el.remove(), 2700);
   }
 
+  // v5.17 · fix M4 audit · clearAllDrafts para logout.
+  // Elimina TODOS los drafts y dirty-flags de localStorage en un solo paso.
+  // Se llama desde el handler de logout (dashboard/index.html) para que los
+  // datos financieros no persistan en ordenadores compartidos (recepción, etc.)
+  function clearAllDrafts() {
+    const keysToRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && (k.startsWith(DRAFT_PREFIX) || k.startsWith(DIRTY_PREFIX))) {
+        keysToRemove.push(k);
+      }
+    }
+    keysToRemove.forEach(k => localStorage.removeItem(k));
+    return keysToRemove.length;
+  }
+
   // ── Exports ──────────────────────────────────────────────
   window.fnbEditor = {
     loadOriginal,
@@ -282,6 +299,7 @@
     loadDraft,
     saveDraft,
     clearDraft,
+    clearAllDrafts,
     hasDraft,
     isDirty,
     listDrafts,

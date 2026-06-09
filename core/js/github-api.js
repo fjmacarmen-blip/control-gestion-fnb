@@ -63,6 +63,25 @@
     return 'https://api.github.com/repos/' + owner + '/' + repo + path;
   }
 
+  // v5.17 · fix M5 audit · validación de path antes de llamadas públicas.
+  // Sin allowlist, un caller comprometido podría escribir en .github/workflows/
+  // u otras rutas sensibles del repo. Permitimos solo paths bajo projects/,
+  // config/, branding/, core/ y la raíz de index.json conocidos del sistema.
+  // Los paths de la API interna (/git/*, /contents/, etc.) nunca pasan por aquí.
+  const VALID_FILE_PATH = /^[a-zA-Z0-9_\-./]+$/;
+  const BLOCKED_PATH_PREFIXES = ['.github/', '.claude/', 'node_modules/'];
+  function validateFilePath(path) {
+    if (!path || typeof path !== 'string') return false;
+    if (!VALID_FILE_PATH.test(path)) return false;
+    // Bloquear traversal
+    if (path.includes('..')) return false;
+    // Bloquear rutas sensibles
+    for (const prefix of BLOCKED_PATH_PREFIXES) {
+      if (path.startsWith(prefix) || path === prefix.slice(0, -1)) return false;
+    }
+    return true;
+  }
+
   // Wrapper de fetch con timeout · cierre auditoría M2 (v4.15)
   // Usa el helper expuesto por loader.js si está disponible; si no, fallback.
   const REQ_TIMEOUT_MS = 30000;
@@ -142,6 +161,7 @@
    * GET de un archivo. Retorna { ok, sha?, content?, error? }
    */
   async function getFile(path, branch) {
+    if (!validateFilePath(path)) return { ok: false, error: 'Ruta no permitida: ' + path };
     const url = apiUrl('/contents/' + encodeURI(path) + (branch ? '?ref=' + encodeURIComponent(branch) : ''));
     const headers = authHeaders() || { 'Accept': 'application/vnd.github+json' };
     try {
@@ -170,6 +190,7 @@
    * @returns { ok, commit?, sha?, error?, dryRun? }
    */
   async function putFile(path, content, message, opts) {
+    if (!validateFilePath(path)) return { ok: false, error: 'Ruta no permitida: ' + path };
     opts = opts || {};
     const branch = opts.branch || DEFAULT_BRANCH;
     const stringContent = typeof content === 'string' ? content : JSON.stringify(content, null, 2) + '\n';

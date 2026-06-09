@@ -2252,24 +2252,26 @@ function renderMenuPkgs() {
 // ══════════════════════════════════════════════════
 function initGrids() {
   // Step 1 — Event types (separados por categoría)
+  // v5.17 · fix H3 audit · t.icon, t.name, t.desc, t.img escapados con
+  // escapeHtml() antes de inyectar en innerHTML (template literals).
   eventTypes.forEach(t => {
     const c = document.createElement('div');
     c.className = t.img ? 'sel-card evt-img' : 'sel-card';
-    c.id = `rc_eventType_${t.id}`;
+    c.id = `rc_eventType_${escapeHtml(t.id)}`;
     if (t.img) {
       c.innerHTML = `
         <div class="evt-thumb">
-          <img src="${t.img}" alt="${t.name}" loading="lazy" decoding="async">
+          <img src="${escapeHtml(t.img)}" alt="${escapeHtml(t.name)}" loading="lazy" decoding="async">
         </div>
         <div class="evt-body">
           <div class="sel-check"></div>
-          <div class="sel-name"><span class="sel-name-icon" aria-hidden="true">${t.icon}</span>${t.name}</div>
-          <div class="sel-desc">${t.desc}</div>
+          <div class="sel-name"><span class="sel-name-icon" aria-hidden="true">${escapeHtml(t.icon)}</span>${escapeHtml(t.name)}</div>
+          <div class="sel-desc">${escapeHtml(t.desc)}</div>
         </div>`;
     } else {
       c.innerHTML = `<div class="sel-check"></div>
-        <div class="sel-name"><span class="sel-name-icon" aria-hidden="true">${t.icon}</span>${t.name}</div>
-        <div class="sel-desc">${t.desc}</div>`;
+        <div class="sel-name"><span class="sel-name-icon" aria-hidden="true">${escapeHtml(t.icon)}</span>${escapeHtml(t.name)}</div>
+        <div class="sel-desc">${escapeHtml(t.desc)}</div>`;
     }
     c.onclick = () => {
       document.querySelectorAll('[id^="rc_eventType_"]').forEach(x=>x.classList.remove('selected'));

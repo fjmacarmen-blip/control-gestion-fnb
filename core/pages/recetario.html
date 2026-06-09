@@ -1032,6 +1032,19 @@ main { padding: 36px 40px; min-width: 0; }
 <script src="../js/theme.js"></script>
 <script src="../js/loader.js"></script>
 <script>
+// v5.17 · fix H2 audit · escapeHtml añadida para proteger innerHTML renders.
+// Todos los datos del recetario (recetas, bebidas) vienen de JSON del repo;
+// un JSON comprometido podría inyectar HTML. Esta función lo previene.
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // ═══════════════════════════════════════════════
 // DATA — RECETAS
 // ═══════════════════════════════════════════════
@@ -1581,14 +1594,15 @@ function renderRecipes(cat) {
     c.dataset.dietas = (r.dietas || []).join(' ');
     var imgSrc = IMG_MAP[r.n];
     // v5.12 · emoji-overlay removed (movido junto al nombre del plato)
+    // v5.17 · fix H2 audit · r.g, r.dif, r.e, r.n, r.sub escapados.
     c.innerHTML =
-      '<div class="card-thumb ' + r.g + '">' +
-        (imgSrc ? '<img src="' + imgSrc + '" alt="' + r.n + '" loading="lazy" decoding="async">' : '<span class="emoji">' + r.e + '</span>') +
-        '<span class="card-difficulty ' + diffClass(r.dif) + '">' + r.dif + '</span>' +
+      '<div class="card-thumb ' + escapeHtml(r.g) + '">' +
+        (imgSrc ? '<img src="' + escapeHtml(imgSrc) + '" alt="' + escapeHtml(r.n) + '" loading="lazy" decoding="async">' : '<span class="emoji">' + escapeHtml(r.e) + '</span>') +
+        '<span class="card-difficulty ' + escapeHtml(diffClass(r.dif)) + '">' + escapeHtml(r.dif) + '</span>' +
       '</div>' +
       '<div class="card-body">' +
-        '<div class="card-name"><span class="card-name-icon" aria-hidden="true">' + r.e + '</span>' + r.n + '</div>' +
-        '<div class="card-sub">' + r.sub + '</div>' +
+        '<div class="card-name"><span class="card-name-icon" aria-hidden="true">' + escapeHtml(r.e) + '</span>' + escapeHtml(r.n) + '</div>' +
+        '<div class="card-sub">' + escapeHtml(r.sub) + '</div>' +
         '<div class="card-chips">' +
           (r.prep > 0 ? '<span class="chip">🔪 ' + r.prep + ' min</span>' : '') +
           (r.coc > 0  ? '<span class="chip">🔥 ' + r.coc + ' min</span>' : '') +
@@ -1628,17 +1642,18 @@ function renderBebidas() {
   B.forEach(function(sec) {
     var wrap = document.createElement('div');
     wrap.className = 'bev-cat';
-    wrap.innerHTML = '<div class="bev-cat-title"><span>' + sec.ico + '</span>' + sec.titulo + '</div>';
+    // v5.17 · fix H2 audit · sec.ico, sec.titulo, it.r, it.n, it.d, it.p escapados.
+    wrap.innerHTML = '<div class="bev-cat-title"><span>' + escapeHtml(sec.ico) + '</span>' + escapeHtml(sec.titulo) + '</div>';
     var grid = document.createElement('div');
     grid.className = 'bev-grid';
     sec.items.forEach(function(it) {
       var card = document.createElement('div');
       card.className = 'bev-card';
       card.innerHTML =
-        (it.r ? '<div class="bev-region">' + it.r + '</div>' : '') +
-        '<div class="bev-name">' + it.n + '</div>' +
-        '<div class="bev-desc">' + it.d + '</div>' +
-        '<div class="bev-price">' + it.p + '</div>';
+        (it.r ? '<div class="bev-region">' + escapeHtml(it.r) + '</div>' : '') +
+        '<div class="bev-name">' + escapeHtml(it.n) + '</div>' +
+        '<div class="bev-desc">' + escapeHtml(it.d) + '</div>' +
+        '<div class="bev-price">' + escapeHtml(it.p) + '</div>';
       grid.appendChild(card);
     });
     wrap.appendChild(grid);

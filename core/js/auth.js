@@ -175,10 +175,12 @@
       if (prev) prev.remove();
 
       const safeTitle = escapeText(opts.title || 'Necesitas un Personal Access Token');
-      const safeDesc = opts.descriptionHtml
-        || (opts.description
-            ? escapeText(opts.description)
-            : 'Para publicar cambios al repo, pega un PAT con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:\'JetBrains Mono\',monospace;font-size:11px;">repo</code>. Vive solo en esta pestaña (sessionStorage) y se borra al cerrar.');
+      // v5.17 · fix M2 audit · eliminada opción descriptionHtml que bypass escapeText().
+      // No hay callers externos que la usen. Ahora solo se acepta opts.description (escapado)
+      // o el texto por defecto hardcoded. opts.descriptionHtml ignorado.
+      const safeDesc = opts.description
+        ? escapeText(opts.description)
+        : 'Para publicar cambios al repo, pega un PAT con scope <code style="background:#21262d;padding:1px 6px;border-radius:4px;color:#6ee7b7;font-family:\'JetBrains Mono\',monospace;font-size:11px;">repo</code>. Vive solo en esta pestaña (sessionStorage) y se borra al cerrar.';
 
       const overlay = document.createElement('div');
       overlay.id = '__patModal__';
@@ -290,10 +292,10 @@
       overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,17,23,.85);backdrop-filter:blur(6px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Inter,system-ui,sans-serif;';
       // Sanitizado · cierre auditoría C3 (v4.15)
       const safeTitle = escapeText(opts.title || 'Confirma tu identidad');
-      const safeDesc = opts.descriptionHtml
-        || (opts.description
-            ? escapeText(opts.description)
-            : 'Antes de ejecutar esta acción destructiva, vuelve a teclear la password para confirmar.');
+      // v5.17 · fix M2 audit · eliminada opción descriptionHtml (ver promptForPAT).
+      const safeDesc = opts.description
+        ? escapeText(opts.description)
+        : 'Antes de ejecutar esta acción destructiva, vuelve a teclear la password para confirmar.';
       const safeActionLabel = escapeText(opts.actionLabel || 'Confirmar y continuar');
       const actionLabel = opts.actionLabel || 'Confirmar y continuar';
       const safeEmail = escapeText(session.user && session.user.email ? session.user.email : '—');

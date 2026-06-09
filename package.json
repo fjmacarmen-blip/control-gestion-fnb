@@ -1,6 +1,6 @@
 {
   "name": "control-gestion-fnb",
-  "version": "5.8.0",
+  "version": "5.17.0",
   "private": true,
   "description": "Plataforma multi-tenant de gestión F&B · Vanilla JS · GitHub Pages static · zero coste",
   "scripts": {

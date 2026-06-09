@@ -413,6 +413,12 @@ if (window.fnbI18n) {
 }
 
 els.btnLogout.addEventListener('click', () => {
+  // v5.17 · fix M4 audit · limpiar drafts financieros al cerrar sesión.
+  // Sin esto, los datos económicos persisten en localStorage en ordenadores
+  // compartidos (recepción, TPV, etc.) y el siguiente usuario los veía.
+  if (window.fnbEditor && window.fnbEditor.clearAllDrafts) {
+    window.fnbEditor.clearAllDrafts();
+  }
   window.fnbAuth.clearSession();
   window.fnbAuth.clearPAT();
   showLogin();

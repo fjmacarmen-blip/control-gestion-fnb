@@ -49,9 +49,14 @@ jobs:
             echo "count=0" >> $GITHUB_OUTPUT
             exit 0
           fi
+          # v5.17 · fix H1 audit · inyección de shell vía client_filter.
+          # Antes: FILTER se interpolaba directamente en la expresión jq.
+          # Ahora: se pasa como argumento con --arg (jq lo trata como
+          # string literal, nunca como código jq). Valor nunca toca el
+          # shell como parte de un comando.
           FILTER='${{ github.event.inputs.client_filter }}'
           if [ -n "$FILTER" ]; then
-            CLIENTS=$(jq -c "[.[] | select(.name == \"$FILTER\")]" config/clients.json)
+            CLIENTS=$(jq -c --arg f "$FILTER" '[.[] | select(.name == $f)]' config/clients.json)
           else
             CLIENTS=$(jq -c '.' config/clients.json)
           fi
@@ -90,7 +95,12 @@ jobs:
           # --force: sobreescribe si difiere (verdadero mirror)
           # Refspecs explícitos: heads + tags, nada más
           # Requiere PAT con scope `repo` + `workflow` (para .github/workflows/*)
-          git push --prune --force \
+          # v5.17 · fix L6 audit · --force reemplazado por --force-with-lease.
+          # --force sobreescribe refs aunque otro proceso haya avanzado el
+          # branch entre el clone y el push (ventana de borrado de commits).
+          # --force-with-lease falla si el remoto ha cambiado desde el fetch,
+          # protegiendo contra pérdida accidental de historial en el backup.
+          git push --prune --force-with-lease \
             "https://$BACKUP_PAT@github.com/$BACKUP_REPO.git" \
             'refs/heads/*:refs/heads/*' \
             'refs/tags/*:refs/tags/*'

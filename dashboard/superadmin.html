@@ -837,6 +837,20 @@ function checkSession() {
   return s;
 }
 
+// v5.17 · fix M3 audit · requireSuperAdmin para re-verificar scope en
+// operaciones sensibles (no solo en DOMContentLoaded).
+// Esto evita que una sesión manipulada después de la carga inicial pueda
+// leer datos consolidados de todos los proyectos.
+function requireSuperAdmin() {
+  const s = checkSession();
+  if (!s) {
+    console.warn('[superadmin] Acceso no autorizado — scope inválido o sesión expirada');
+    logout();
+    throw new Error('Unauthorized');
+  }
+  return s;
+}
+
 function logout() {
   if (window.fnbAuth) window.fnbAuth.clearSession();
   location.href = 'index.html';
@@ -997,13 +1011,15 @@ function renderProjectsTable(projects) {
     const sparkSvg = sparklinePath(p.sparkline, 70, 18);
     const statusKey = p.status === 'draft' ? 'draft' : (p.status === 'paused' ? 'paused' : 'active');
     const statusText = statusKey === 'draft' ? 'Borrador' : (statusKey === 'paused' ? 'Pausado' : 'Activo');
+    // v5.17 · fix H4 audit · p.name y p.id escapados antes de innerHTML.
+    // escapeHtml definida en línea ~1203 de este mismo archivo.
     return '<tr>' +
       '<td>' +
         '<div class="proj-name">' +
           '<div class="proj-mark">' + (p.icon.length === 1 || /^\p{Emoji}/u.test(p.icon) ? p.icon : initials) + '</div>' +
           '<div class="proj-name-text">' +
-            '<span class="proj-name-title">' + p.name + '</span>' +
-            '<span class="proj-name-id">' + p.id + '</span>' +
+            '<span class="proj-name-title">' + escapeHtml(p.name) + '</span>' +
+            '<span class="proj-name-id">' + escapeHtml(p.id) + '</span>' +
           '</div>' +
         '</div>' +
       '</td>' +
@@ -1216,6 +1232,7 @@ function escapeHtml(s) {
 let currentProjects = [];
 
 async function refreshData() {
+  requireSuperAdmin();   // v5.17 · re-verifica scope antes de agregar métricas
   currentProjects = await aggregateMetrics();
   renderKPIs(currentProjects);
   renderProjectsTable(currentProjects);
