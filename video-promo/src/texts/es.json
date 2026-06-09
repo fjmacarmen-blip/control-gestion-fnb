@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "lang": "es",
+    "version": "1.0",
+    "duration_total_seconds": 330
+  },
+  "s01": {
+    "line1": "Llevo 30 años",
+    "line2": "dirigiendo hoteles.",
+    "line3": "Y un cuaderno",
+    "line4_part1": "gestionaba mejor mi catering",
+    "line4_part2": "que cualquier software.",
+    "highlight": "cualquier"
+  },
+  "s02": {
+    "name": "Francisco Javier Martínez Alba",
+    "role": "Director hotelero · 30 años",
+    "place": "Algeciras · Costa del Sol",
+    "bridge1": "He gestionado bodas, congresos,",
+    "bridge2": "eventos corporativos, cenas de gala.",
+    "punchline": "Conozco el dolor."
+  },
+  "s03": {
+    "headline_part1": "Una mañana entera",
+    "headline_part2": "para UN solo presupuesto.",
+    "list": ["Excel", "Word", "Email tras email", "Firmas escaneadas", "PDF maquetado a mano"],
+    "joke1": "Y aún así, el cliente pregunta:",
+    "joke2": "¿incluye el sushi al final?"
+  },
+  "s04": {
+    "left1": "1 evento perdido",
+    "right1": "= mes a la basura",
+    "left2": "1 alergia mal marcada",
+    "right2": "= crisis en sala",
+    "closing1": "Y casi todo el sector independiente",
+    "closing2": "sigue así.",
+    "closing3": "Yo era uno de ellos."
+  },
+  "s05": {
+    "brand": "Queens Bellybutton",
+    "tagline1": "Una plataforma.",
+    "tagline2": "Construida por un hotelero.",
+    "tagline3": "Para hoteleros.",
+    "url": "queensbellybutton.com"
+  },
+  "s06": {
+    "intro": "El cliente entra desde un QR.",
+    "step1": "Configura su evento.",
+    "step2": "Selecciona menús.",
+    "step3": "Marca dietas especiales con menús reales.",
+    "highlight": "REALES",
+    "before_label": "ANTES",
+    "before_value": "Una mañana entera",
+    "after_label": "AHORA",
+    "after_value": "Minutos"
+  },
+  "s07": {
+    "line1": "Un recetario completo.",
+    "line2": "Cada plato escandallado.",
+    "line3": "Con precios de mayorista reales.",
+    "diets": [
+      { "emoji": "🌱", "label": "Vegano", "key": "vegano" },
+      { "emoji": "🥗", "label": "Vegetariano", "key": "vegetariano" },
+      { "emoji": "🌾", "label": "Sin gluten", "key": "celiaco" },
+      { "emoji": "🥛", "label": "Sin lactosa", "key": "sinLactosa" },
+      { "emoji": "🌰", "label": "Sin frutos", "key": "sinFrutos" },
+      { "emoji": "🕌", "label": "Halal", "key": "halal" },
+      { "emoji": "🕎", "label": "Kosher", "key": "kosher" },
+      { "emoji": "👶", "label": "Infantil", "key": "infantil" }
+    ],
+    "closing": "Cada dieta con su menú real. No solo casillas."
+  },
+  "s08": {
+    "intro": "El equipo de sala consulta en el bolsillo:",
+    "items": ["dietas críticas", "protocolo de servicio", "alergias por mesa"],
+    "quote1": "Sin paseos a cocina.",
+    "quote2": "Sin notas perdidas.",
+    "quote3": "Sin sorpresas el día del servicio."
+  },
+  "s09": {
+    "line1": "Métricas de presupuestos.",
+    "line2": "Calendario que evita dobles reservas.",
+    "line3": "Panel superadmin con KPIs globales.",
+    "closing": "Todo en un sitio. Una URL por cliente."
+  },
+  "s10": {
+    "line1": "Sin frameworks que se actualicen mañana.",
+    "line2": "Sin coste mensual.",
+    "line3": "Tus datos NUNCA salen de tu navegador.",
+    "line4": "Tu repo. Tu control.",
+    "line5": "Cada cliente, su propia URL.",
+    "line6": "Un solo administrador detrás: el cliente."
+  },
+  "s11": {
+    "promise": "Si lo necesitas, lo construyo contigo.",
+    "url": "fjmacarmen-blip.github.io/control-gestion-fnb",
+    "contact": "LinkedIn · GitHub · email",
+    "footer": "v5.18 · junio 2026 · 0 € coste operación"
+  }
+}
