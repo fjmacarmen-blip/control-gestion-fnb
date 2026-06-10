@@ -1,15 +1,14 @@
 {
   "name": "queens-bellybutton-video-promo",
   "version": "1.0.0",
-  "description": "Vídeo promocional de Queens Bellybutton · Remotion · v5.18",
+  "description": "Motion comic promocional de Queen's Bellybutton · Remotion · v5.19",
   "private": true,
   "scripts": {
     "start": "node ./node_modules/@remotion/cli/remotion-cli.js studio",
     "build": "node ./node_modules/@remotion/cli/remotion-cli.js render VideoPromo out/video-promo-landscape.mp4",
     "build:square": "node ./node_modules/@remotion/cli/remotion-cli.js render VideoPromoSquare out/video-promo-square.mp4",
     "build:vertical": "node ./node_modules/@remotion/cli/remotion-cli.js render VideoPromoVertical out/video-promo-vertical.mp4",
-    "build:teaser": "node ./node_modules/@remotion/cli/remotion-cli.js render VideoPromoTeaser out/video-promo-teaser-90s.mp4",
-    "build:all": "npm run build && npm run build:square && npm run build:vertical && npm run build:teaser",
+    "build:all": "npm run build && npm run build:square && npm run build:vertical",
     "upgrade": "node ./node_modules/@remotion/cli/remotion-cli.js upgrade"
   },
   "dependencies": {
@@ -22,6 +21,7 @@
   },
   "devDependencies": {
     "@types/react": "19.0.0",
+    "pngjs": "^7.0.0",
     "typescript": "5.7.3"
   }
 }

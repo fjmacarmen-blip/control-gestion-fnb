@@ -1,23 +1,42 @@
-# Video promo · Queens Bellybutton · Remotion
+# Video promo · Queen's Bellybutton · Remotion
 
 Proyecto **Remotion** que genera el vídeo promocional del producto programáticamente. Coste real: **0 €**.
 
-Versión actual: **v5.18** · 5:30 min · 4 composiciones · paleta corporativa coherente con el producto.
+Versión actual: **v5.19** · motion comic estilo Marvel retro · 2:18 min · 11 paneles · 3 composiciones.
 
 ---
 
 ## ¿Qué genera?
 
-Cuatro composiciones registradas, todas con los mismos 11 frames narrativos pero distinta resolución:
+Tres composiciones registradas, todas con los mismos 11 paneles de cómic pero distinta resolución. Las tres reutilizan `VideoComic.tsx` con escalado de escenario (1920×1080 centrado y escalado sobre papel de cómic con puntos de semitono):
 
 | Composición | Dimensiones | Duración | Uso |
 |---|---|---|---|
-| `VideoPromo` | 1920×1080 | 5:30 min | Web, embed, presentaciones, YouTube |
-| `VideoPromoSquare` | 1080×1080 | 5:30 min | LinkedIn feed, Instagram feed |
-| `VideoPromoVertical` | 1080×1920 | 5:30 min | Stories, Reels, TikTok |
-| `VideoPromoTeaser` | 1920×1080 | 1:30 min | WhatsApp, preview rápido |
+| `VideoPromo` | 1920×1080 | 2:18 min | Web, embed, presentaciones, YouTube |
+| `VideoPromoSquare` | 1080×1080 | 2:18 min | LinkedIn feed, Instagram feed |
+| `VideoPromoVertical` | 1080×1920 | 2:18 min | Stories, Reels, TikTok |
 
-Cada una sale como MP4 sin marca de agua, sin coste, en `out/`.
+Cada una sale como MP4 sin marca de agua de terceros (lleva el isotipo QBB como watermark propio), sin coste, en `out/`.
+
+---
+
+## Los 11 paneles
+
+Guion **producto primero**: la trayectoria personal aparece solo como aval de credibilidad (panel 10, 8 s).
+
+| # | Panel | Duración | Contenido |
+|---|---|---|---|
+| 1 | Portada | 10 s | Logo QBB héroe + título estilo cómic |
+| 2 | Problema | 12 s | El caos de gestionar eventos a mano |
+| 3 | Solución | 12 s | Qué es Queen's Bellybutton |
+| 4 | Cotizador | 15 s | El cliente entra desde un QR y configura su evento |
+| 5 | Dietas | 13 s | Sistema transversal de dietas y protocolos |
+| 6 | Recetario | 14 s | Recetario con escandallos |
+| 7 | Sala | 13 s | Vista móvil de sala el día del evento |
+| 8 | Métricas | 13 s | KPIs reales + calendario de disponibilidad |
+| 9 | Diferenciador | 12 s | Qué lo hace distinto |
+| 10 | Credibilidad | 8 s | 30 años de dirección hotelera |
+| 11 | CTA | 16 s | Llamada a la acción + logo |
 
 ---
 
@@ -30,7 +49,7 @@ cd video-promo
 npm install
 ```
 
-Tarda ~2-3 min la primera vez (descarga Remotion + Chromium para renderizar). Sin tu intervención.
+Tarda ~2-3 min la primera vez (descarga Remotion + Chromium para renderizar).
 
 ---
 
@@ -42,7 +61,7 @@ Tarda ~2-3 min la primera vez (descarga Remotion + Chromium para renderizar). Si
 npm start
 ```
 
-Abre `http://localhost:3000`. Ves las 4 composiciones, las navegas frame a frame, editas el JSON de textos y se actualiza al instante. **Ideal para iterar.**
+Abre `http://localhost:3000`. Ves las 3 composiciones, las navegas frame a frame, editas el JSON de textos y se actualiza al instante. **Ideal para iterar.**
 
 ### Render del MP4 final
 
@@ -56,14 +75,11 @@ npm run build:square
 # Vertical Stories/Reels
 npm run build:vertical
 
-# Teaser 90 seg WhatsApp
-npm run build:teaser
-
-# Las 4 de golpe
+# Las 3 de golpe
 npm run build:all
 ```
 
-Cada render tarda ~3-8 min según tu CPU. Los MP4 salen en `out/`.
+Con `Config.setConcurrency(4)` (ya configurado), cada render tarda ~10-15 min en un i7 de 4 núcleos. Los MP4 salen en `out/`.
 
 ---
 
@@ -71,60 +87,41 @@ Cada render tarda ~3-8 min según tu CPU. Los MP4 salen en `out/`.
 
 ```
 video-promo/
-├── package.json              · deps Remotion 4.x + React 19
+├── package.json              · deps Remotion 4.0.474 + React 19
 ├── tsconfig.json
-├── remotion.config.ts
+├── remotion.config.ts        · jpeg + concurrency 4 + angle
+├── scripts/
+│   ├── crop-poses.py         · recorta poses desde la hoja de Gemini
+│   └── remove-bg.js          · quita fondo blanco de las poses (pngjs)
 ├── public/
-│   ├── assets/               · 8 capturas reales del producto (ya están)
-│   ├── audio/
-│   │   └── faith.mp3         · ⚠️ descargar manualmente (ver abajo)
-│   └── fonts/                · (opcional: locales · si no, usa Google Fonts)
+│   ├── assets/               · 8 capturas reales del producto
+│   └── comic/                · poses Marvel del personaje + logos QBB
+│       ├── paco-personaje-marvel.png   · referencia maestra del personaje
+│       ├── paco-pose-*.png             · 10 poses recortadas
+│       ├── qbb-logo-hero.png           · logo completo (portada + CTA)
+│       └── qbb-isotipo-*.png/svg       · isotipo (watermark)
 └── src/
     ├── index.ts              · registerRoot
-    ├── Root.tsx              · registra las 4 composiciones
-    ├── theme.ts              · design tokens (paleta, fonts, fps, duraciones)
+    ├── Root.tsx              · registra las 3 composiciones
+    ├── theme.ts              · design tokens (paleta cómic, fonts, fps, SCENE_DURATIONS)
     ├── texts/
-    │   └── es.json           · todos los textos kinetic en español
+    │   └── es.json           · todos los textos del cómic en español
     ├── components/
-    │   ├── PacoAvatar.tsx    · avatar SVG · 4 poses (thinking/worried/happy/waving)
-    │   ├── KineticText.tsx   · texto animado con fade+slide o spring
-    │   ├── Background.tsx    · fondo navy/gradient/split
+    │   ├── ComicPage.tsx     · papel + semitono + escalado de escenario
+    │   ├── ComicPanel.tsx    · viñeta con borde de tinta
+    │   ├── SpeechBubble.tsx  · bocadillo de diálogo
+    │   ├── CaptionBox.tsx    · cartela narrativa amarilla
+    │   ├── Onomatopeya.tsx   · ¡ZAS! ¡BOOM! con spring
+    │   ├── Watermark.tsx     · isotipo QBB fijo en esquina
     │   ├── DietPill.tsx      · pill coloreada por dieta
     │   └── KenBurnsImage.tsx · imagen con zoom+pan lento
     ├── scenes/
-    │   ├── Scene01ColdOpen.tsx
-    │   ├── Scene02Personaje.tsx
-    │   ├── Scene03Problema.tsx
-    │   ├── Scene04OhCrap.tsx
-    │   ├── Scene05Solucion.tsx
-    │   ├── Scene06Cotizador.tsx
-    │   ├── Scene07Recetario.tsx
-    │   ├── Scene08SalaMovil.tsx
-    │   ├── Scene09Metricas.tsx
-    │   ├── Scene10Diferenciador.tsx
-    │   └── Scene11CTA.tsx
+    │   └── Scene01Portada.tsx … Scene11CTA.tsx
     └── compositions/
-        ├── VideoPromo.tsx           · principal 5:30 min
-        └── VideoPromoTeaser.tsx     · teaser 1:30 min
+        └── VideoComic.tsx    · única composición, parametrizada por tamaño
 ```
 
----
-
-## Música de fondo · Faith
-
-⚠️ **Falta este archivo · te toca a ti:**
-
-1. Ve a https://studio.youtube.com/channel/UC/music
-2. Busca "Faith" de **Ron Gelinas** (o cualquier otro track royalty-free Cinematic/Hopeful)
-3. Descarga el MP3
-4. Guárdalo en `video-promo/public/audio/faith.mp3`
-5. En `src/compositions/VideoPromo.tsx` descomenta esta línea:
-   ```tsx
-   {/* <Audio src={staticFile("audio/faith.mp3")} volume={0.18} /> */}
-   ```
-6. Vuelve a renderizar
-
-**Si decides no añadir música:** el vídeo funciona perfecto en silencio (los textos kinetic son legibles solos, es lo bueno de no usar voz).
+Tipografías vía `@remotion/google-fonts`: **Bangers** (display cómic) + **Comic Neue** (cuerpo).
 
 ---
 
@@ -132,39 +129,24 @@ video-promo/
 
 Toda la copia está en `src/texts/es.json`. Cambias una frase → re-renderizas con `npm run build` → MP4 nuevo. No tocas código.
 
-Para añadir una versión inglesa:
-1. Copia `es.json` a `en.json`
-2. Traduce los valores
-3. En cada escena cambia `import texts from "../texts/es.json"` por `en.json`
-4. Renderiza con otra composición o sobrescribe
+## Calibrar timing panel a panel
 
----
+Las duraciones están en `src/theme.ts` en `SCENE_DURATIONS`, en segundos. Remotion recalcula automáticamente cuándo empieza cada panel siguiente.
 
-## Calibrar timing escena por escena
+## Regenerar poses del personaje
 
-Las duraciones están en `src/theme.ts` en `SCENE_DURATIONS`. Cada una en segundos × 30 fps.
-
-Si una escena se siente larga o corta, edita el número ahí. Remotion recalcula automáticamente cuándo empieza cada escena siguiente.
+1. Genera la hoja de poses en Gemini usando `public/comic/paco-personaje-marvel.png` como referencia del personaje (pelo castaño oscuro, traje azul marino).
+2. Recorta con `python scripts/crop-poses.py`.
+3. Limpia el fondo con `node scripts/remove-bg.js`.
+4. Las poses quedan en `public/comic/paco-pose-*.png`.
 
 ---
 
 ## Si algo no se ve bien
 
-1. **Texto fuera de pantalla en versión cuadrada/vertical:** los layouts están pensados para 1920×1080. La square y vertical reutilizan el mismo código, pueden recortar bordes. Si pasa, ajusta `maxWidth` en la escena afectada o crea `VideoPromoSquare.tsx` con layout específico.
-2. **Avatar Paco no se parece a ti:** el SVG está en `PacoAvatar.tsx`. Es código puro, puedes ajustar colores del pelo, traje, gafas a tu gusto. Cada `<path>` está comentado.
-3. **Las capturas del producto se ven borrosas:** las capturé a 1920×1080 desde Chrome DevTools MCP. Si quieres más resolución, vuelve a capturarlas con `--device-scale-factor=2`.
-4. **Render muy lento:** baja `Config.setConcurrency(1)` a 4 u 8 en `remotion.config.ts` si tu CPU tiene más cores.
-
----
-
-## Estado actual
-
-- ✅ Estructura completa del proyecto
-- ✅ 11 escenas implementadas con animaciones
-- ✅ Avatar Paco SVG con 4 poses
-- ✅ Capturas reales del producto incluidas
-- ✅ 4 composiciones registradas
-- ⚠️ Faltan: `npm install` (lo haces tú la primera vez) + `faith.mp3` (descarga manual)
+1. **Bordes recortados en cuadrada/vertical:** las tres composiciones escalan el escenario 1920×1080 completo (letterbox sobre papel de cómic), así que no se recorta contenido; si un texto se ve pequeño en vertical, sube su tamaño en la escena.
+2. **Las capturas del producto se ven borrosas:** están capturadas a 1920×1080 desde Chrome DevTools. Para más resolución, recaptura con `--device-scale-factor=2`.
+3. **Render muy lento:** ajusta `Config.setConcurrency()` en `remotion.config.ts` al número de cores de tu CPU.
 
 ---
 
