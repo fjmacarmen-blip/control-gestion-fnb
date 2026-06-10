@@ -1,100 +1,89 @@
 {
   "_meta": {
     "lang": "es",
-    "version": "1.0",
-    "duration_total_seconds": 330
+    "version": "2.0 · v5.19 motion comic",
+    "duration_total_seconds": 138,
+    "nota": "Guion producto-primero: 9 paneles de producto, 1 panel breve de credibilidad, 1 CTA"
   },
-  "s01": {
-    "line1": "Llevo 30 años",
-    "line2": "dirigiendo hoteles.",
-    "line3": "Y un cuaderno",
-    "line4_part1": "gestionaba mejor mi catering",
-    "line4_part2": "que cualquier software.",
-    "highlight": "cualquier"
+  "p01_portada": {
+    "kicker": "PRESENTANDO LA PLATAFORMA DE GESTIÓN F&B",
+    "title": "QUEEN'S BELLYBUTTON",
+    "subtitle": "Tus eventos, de la petición al servicio, en una sola herramienta",
+    "issue": "Nº 1 · JUNIO 2026",
+    "price": "0 € / mes"
   },
-  "s02": {
-    "name": "Francisco Javier Martínez Alba",
-    "role": "Director hotelero · 30 años",
-    "place": "Algeciras · Costa del Sol",
-    "bridge1": "He gestionado bodas, congresos,",
-    "bridge2": "eventos corporativos, cenas de gala.",
-    "punchline": "Conozco el dolor."
+  "p02_problema": {
+    "caption": "Hoy, en cientos de hoteles y salones de eventos…",
+    "bubble": "¡¿Dónde está el presupuesto de la boda?! ¿Y la lista de alérgenos?",
+    "items": ["Excel", "Word", "emails infinitos", "notas sueltas"],
+    "onomatopeya": "¡RIIING!"
   },
-  "s03": {
-    "headline_part1": "Una mañana entera",
-    "headline_part2": "para UN solo presupuesto.",
-    "list": ["Excel", "Word", "Email tras email", "Firmas escaneadas", "PDF maquetado a mano"],
-    "joke1": "Y aún así, el cliente pregunta:",
-    "joke2": "¿incluye el sushi al final?"
+  "p03_solucion": {
+    "caption": "Hasta que todo cambia.",
+    "bubble": "Se acabó el caos. Esto es Queen's Bellybutton.",
+    "tagline1": "Todo tu catering.",
+    "tagline2": "Una sola plataforma.",
+    "tagline3": "Cero cuota mensual."
   },
-  "s04": {
-    "left1": "1 evento perdido",
-    "right1": "= mes a la basura",
-    "left2": "1 alergia mal marcada",
-    "right2": "= crisis en sala",
-    "closing1": "Y casi todo el sector independiente",
-    "closing2": "sigue así.",
-    "closing3": "Yo era uno de ellos."
+  "p04_cotizador": {
+    "caption": "EL COTIZADOR",
+    "text1": "El cliente entra desde un QR y configura su evento…",
+    "text2": "…elige menús con precios siempre al día.",
+    "antes_label": "ANTES",
+    "antes_value": "una mañana entera",
+    "ahora_label": "AHORA",
+    "ahora_value": "minutos",
+    "onomatopeya": "¡ZAS!"
   },
-  "s05": {
-    "brand": "Queens Bellybutton",
-    "tagline1": "Una plataforma.",
-    "tagline2": "Construida por un hotelero.",
-    "tagline3": "Para hoteleros.",
-    "url": "queensbellybutton.com"
-  },
-  "s06": {
-    "intro": "El cliente entra desde un QR.",
-    "step1": "Configura su evento.",
-    "step2": "Selecciona menús.",
-    "step3": "Marca dietas especiales con menús reales.",
-    "highlight": "REALES",
-    "before_label": "ANTES",
-    "before_value": "Una mañana entera",
-    "after_label": "AHORA",
-    "after_value": "Minutos"
-  },
-  "s07": {
-    "line1": "Un recetario completo.",
-    "line2": "Cada plato escandallado.",
-    "line3": "Con precios de mayorista reales.",
+  "p05_dietas": {
+    "caption": "MENÚS ESPECIALES",
+    "text": "8 dietas con menús reales. No simples casillas.",
     "diets": [
       { "emoji": "🌱", "label": "Vegano", "key": "vegano" },
       { "emoji": "🥗", "label": "Vegetariano", "key": "vegetariano" },
       { "emoji": "🌾", "label": "Sin gluten", "key": "celiaco" },
       { "emoji": "🥛", "label": "Sin lactosa", "key": "sinLactosa" },
-      { "emoji": "🌰", "label": "Sin frutos", "key": "sinFrutos" },
+      { "emoji": "🌰", "label": "Sin frutos secos", "key": "sinFrutos" },
       { "emoji": "🕌", "label": "Halal", "key": "halal" },
       { "emoji": "🕎", "label": "Kosher", "key": "kosher" },
       { "emoji": "👶", "label": "Infantil", "key": "infantil" }
     ],
-    "closing": "Cada dieta con su menú real. No solo casillas."
+    "closing": "Cada dieta con su menú completo y su protocolo de sala."
   },
-  "s08": {
-    "intro": "El equipo de sala consulta en el bolsillo:",
-    "items": ["dietas críticas", "protocolo de servicio", "alergias por mesa"],
-    "quote1": "Sin paseos a cocina.",
-    "quote2": "Sin notas perdidas.",
-    "quote3": "Sin sorpresas el día del servicio."
+  "p06_recetario": {
+    "caption": "RECETARIO + ESCANDALLOS",
+    "text1": "Cada plato con su ficha, su foto y su escandallo.",
+    "text2": "Precios de mayorista reales. El margen, bajo control.",
+    "bubble": "Sabes lo que cuesta cada plato antes de venderlo."
   },
-  "s09": {
-    "line1": "Métricas de presupuestos.",
-    "line2": "Calendario que evita dobles reservas.",
-    "line3": "Panel superadmin con KPIs globales.",
-    "closing": "Todo en un sitio. Una URL por cliente."
+  "p07_sala": {
+    "caption": "SALA MÓVIL",
+    "text1": "El equipo de sala lo consulta todo desde el bolsillo:",
+    "items": ["dietas críticas por mesa", "protocolo de servicio", "alergias señalizadas"],
+    "text2": "Sin paseos a cocina. Sin sorpresas en el servicio."
   },
-  "s10": {
-    "line1": "Sin frameworks que se actualicen mañana.",
-    "line2": "Sin coste mensual.",
-    "line3": "Tus datos NUNCA salen de tu navegador.",
-    "line4": "Tu repo. Tu control.",
-    "line5": "Cada cliente, su propia URL.",
-    "line6": "Un solo administrador detrás: el cliente."
+  "p08_metricas": {
+    "caption": "MÉTRICAS Y CALENDARIO",
+    "text1": "Presupuestos, ocupación y disponibilidad en un panel.",
+    "text2": "El calendario bloquea las dobles reservas solo.",
+    "onomatopeya": "¡PLOP!"
   },
-  "s11": {
-    "promise": "Si lo necesitas, lo construyo contigo.",
+  "p09_diferenciador": {
+    "caption": "¿Y EL TRUCO? NO HAY TRUCO.",
+    "line1": "Sin cuotas mensuales.",
+    "line2": "Tus datos viven en tu propio repositorio.",
+    "line3": "Cada cliente, su propia URL."
+  },
+  "p10_credibilidad": {
+    "caption": "Detrás no hay una startup.",
+    "text": "Hay 30 años dirigiendo hoteles y eventos.",
+    "firma": "Francisco J. Martínez Alba · Director hotelero"
+  },
+  "p11_cta": {
+    "bubble": "¿Lo vemos con tu carta?",
+    "promise": "Demo con tus menús en minutos.",
     "url": "fjmacarmen-blip.github.io/control-gestion-fnb",
     "contact": "LinkedIn · GitHub · email",
-    "footer": "v5.18 · junio 2026 · 0 € coste operación"
+    "footer": "v5.19 · junio 2026 · 0 € coste de operación"
   }
 }

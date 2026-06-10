@@ -1,34 +1,35 @@
-// Design tokens · paleta corporativa Queens Bellybutton
-// Coincide con la paleta de dashboard-theme.css y del producto.
+// Design tokens · Queen's Bellybutton motion comic (v5.19)
+// Paleta cómic retro años 60 + acentos corporativos QBB.
+
+import { Easing } from "remotion";
+import { loadFont as loadBangers } from "@remotion/google-fonts/Bangers";
+import { loadFont as loadComicNeue } from "@remotion/google-fonts/ComicNeue";
+
+const bangers = loadBangers();
+const comicNeue = loadComicNeue();
 
 export const colors = {
-  // Backgrounds
-  bg: "#0a1733",          // Navy primary
-  bgSurface: "#0f1f42",
-  bgElevated: "#15295a",
+  // Cómic retro
+  paper: "#f2e8d2",       // crema papel envejecido (fondo de las viñetas Gemini)
+  paperDark: "#e6d8b8",
+  ink: "#16130d",         // tinta negra
+  comicRed: "#d62828",
+  comicYellow: "#f9c80e",
+  comicBlue: "#1d6fb8",
+  comicOrange: "#f3722c",
 
-  // Texto
-  text: "#f4ead7",        // Cream / champán suave
-  textSoft: "#b8c4dc",
-  textMuted: "#8aa5d6",
-
-  // Acentos
-  gold: "#c9a35c",        // Oro corporativo
+  // Marca QBB
+  bg: "#0a1733",          // navy corporativo
+  text: "#f4ead7",
+  gold: "#c9a35c",
   goldSoft: "#e8cf8a",
   goldDeep: "#8a682b",
 
   // Estados
-  success: "#34d399",     // Verde para CTAs positivos
-  successSoft: "#6ee7b7",
-  danger: "#f85149",      // Rojo para dolor / errores
-  warning: "#fbbf24",
-  info: "#a78bfa",
+  success: "#34d399",
+  danger: "#f85149",
 
-  // Verde superadmin (sólo si aparece esa escena)
-  greenBright: "#00E676",
-  greenDeep: "#0F4D2E",
-
-  // Pills de dietas (sistema transversal)
+  // Pills de dietas (sistema transversal del producto)
   diet: {
     vegano: "#22c55e",
     vegetariano: "#84cc16",
@@ -42,7 +43,8 @@ export const colors = {
 } as const;
 
 export const fonts = {
-  display: '"Cormorant Garamond", Georgia, serif',
+  display: `"${bangers.fontFamily}", Impact, sans-serif`,   // titulares cómic
+  body: `"${comicNeue.fontFamily}", "Comic Sans MS", cursive`, // captions y bocadillos
   ui: '"Inter", -apple-system, system-ui, sans-serif',
   mono: '"JetBrains Mono", ui-monospace, monospace',
 } as const;
@@ -53,28 +55,27 @@ export const FPS = 30;
 // Frame -> seconds helper para timing legible en cada escena
 export const sec = (n: number) => Math.round(n * FPS);
 
-// Duración por escena en frames (s × 30)
+// Duración por panel en frames (s × 30) · total 138 s = 2:18
 export const SCENE_DURATIONS = {
-  s01_coldOpen:       sec(15),    // 0:00–0:15
-  s02_personaje:      sec(30),    // 0:15–0:45
-  s03_problema:       sec(30),    // 0:45–1:15
-  s04_ohCrap:         sec(30),    // 1:15–1:45
-  s05_solucion:       sec(30),    // 1:45–2:15
-  s06_cotizador:      sec(40),    // 2:15–2:55
-  s07_recetario:      sec(35),    // 2:55–3:30
-  s08_salaMovil:      sec(35),    // 3:30–4:05
-  s09_metricas:       sec(25),    // 4:05–4:30
-  s10_diferenciador:  sec(30),    // 4:30–5:00
-  s11_cta:            sec(30),    // 5:00–5:30
+  p01_portada:       sec(10),   // 0:00–0:10
+  p02_problema:      sec(12),   // 0:10–0:22
+  p03_solucion:      sec(12),   // 0:22–0:34
+  p04_cotizador:     sec(15),   // 0:34–0:49
+  p05_dietas:        sec(13),   // 0:49–1:02
+  p06_recetario:     sec(14),   // 1:02–1:16
+  p07_sala:          sec(13),   // 1:16–1:29
+  p08_metricas:      sec(13),   // 1:29–1:42
+  p09_diferenciador: sec(12),   // 1:42–1:54
+  p10_credibilidad:  sec(8),    // 1:54–2:02
+  p11_cta:           sec(16),   // 2:02–2:18
 } as const;
 
 export const TOTAL_DURATION = Object.values(SCENE_DURATIONS).reduce(
   (a, b) => a + b,
   0
-); // 9900 frames @ 30 fps = 330 s = 5:30 min
+); // 4140 frames @ 30 fps = 138 s
 
-// Easings reutilizables · bezier "snap" recomendado por Remotion
-import { Easing } from "remotion";
+// Easings reutilizables
 export const easings = {
   inOut: Easing.bezier(0.16, 1, 0.3, 1),
   spring: Easing.bezier(0.34, 1.56, 0.64, 1),
