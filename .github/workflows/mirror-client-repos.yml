@@ -100,8 +100,17 @@ jobs:
           # branch entre el clone y el push (ventana de borrado de commits).
           # --force-with-lease falla si el remoto ha cambiado desde el fetch,
           # protegiendo contra pérdida accidental de historial en el backup.
-          git push --prune --force-with-lease \
-            "https://$BACKUP_PAT@github.com/$BACKUP_REPO.git" \
+          # v5.17.2 · fix mirror roto · lease real para --force-with-lease.
+          # Pusheando por URL directa no existen remote-tracking refs del
+          # backup, así que el lease no tiene valor esperado y git rechaza
+          # toda ref existente con "stale info" (fallos nightly 10/11-jun).
+          # Se configura el backup como remote, se hace fetch de sus heads
+          # (--no-tags: no resucitar tags ya borrados en origen) y se
+          # pushea contra ese remote para que el lease compare de verdad.
+          git remote add backup "https://$BACKUP_PAT@github.com/$BACKUP_REPO.git"
+          git config remote.backup.fetch '+refs/heads/*:refs/remotes/backup/*'
+          git fetch --no-tags --quiet backup
+          git push --prune --force-with-lease backup \
             'refs/heads/*:refs/heads/*' \
             'refs/tags/*:refs/tags/*'
           BRANCHES=$(git for-each-ref --format='%(refname:short)' refs/heads | wc -l)
