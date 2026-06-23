@@ -527,12 +527,19 @@ const BLOCKS = [
         desc: 'Click «Cóctel» · solo aparecen menús tipo cóctel.' },
       { id: 'b9t3', name: 'Alérgenos siempre visibles al final',
         desc: 'Caja roja con info de los 14 alérgenos.' },
-      { id: 'b9t4', name: 'Editor · botón QR genera código',
-        desc: 'Editor · sección Establecimiento · 📱 QR carta · modal con QR válido.' },
-      { id: 'b9t5', name: 'Descargar QR como SVG funciona',
-        desc: 'Botón «⬇ Descargar SVG» · archivo qr-carta-<id>.svg en descargas.' },
       { id: 'b9t6', name: 'Escanear QR abre la carta pública',
         desc: 'Con móvil escanear el SVG impreso · abre carta-publica.html del proyecto.' },
+    ],
+  },
+  {
+    id: 'b9b',
+    title: 'Carta digital · Generación de QR (Editor)',
+    desc: 'Generación y descarga del QR de la carta. Función de supervisor/director: NO se ofrece al cliente final, solo en el editor tras contratar el servicio.',
+    tests: [
+      { id: 'b9t4', name: 'Editor · botón QR genera código',
+        desc: '<a href="dashboard/editor.html?proyecto=miramar" target="_blank">Editor Miramar</a> · sección Establecimiento · 📱 QR carta · modal con QR válido.' },
+      { id: 'b9t5', name: 'Descargar QR como SVG funciona',
+        desc: 'Botón «⬇ Descargar SVG» · archivo qr-carta-<id>.svg en descargas.' },
     ],
   },
   {
@@ -927,6 +934,7 @@ const LEVEL_MAP = {
   b7:  'director',  // Metricas y agenda
   b8:  'usuario',   // Sala movil PWA
   b9:  'cliente',   // Carta publica + QR
+  b9b: 'director',  // Generacion de QR de la carta · funcion del editor (supervisor)
   b10: 'director',  // Calculadora escandallos
   b11: 'director',  // Apariencia light/dark
   b12: 'cliente',   // Cotizador publico
