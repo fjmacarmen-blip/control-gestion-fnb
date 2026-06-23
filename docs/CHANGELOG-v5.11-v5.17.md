@@ -288,3 +288,36 @@ SW_VERSION → 5.17.0.
 | v5.17 | Colores transversal + versioning visible en 17 HTMLs | #52 |
 
 **Total:** 7 PRs, ~10 000 líneas tocadas, 0 regresiones en tests.
+
+---
+
+## v5.20 (PR #65) · Cierre de QA v5.1 + checklist con vínculos
+
+> **Nota de numeración:** v5.18 y v5.19 se consumieron en el material
+> audiovisual de promoción (vídeo y motion comic, PRs #56–#61); no son
+> versiones de la app. La línea de producto retoma aquí con el primer
+> minor limpio posterior, **v5.20**. `core/version.json` permaneció en
+> 5.17.0 durante esa excursión y salta ahora a 5.20.0.
+
+Cierra los **4 errores del Reporte de QA · v5.1** (un commit por bug) y
+rehace `test-checklist.html` para que cada test enlace al objeto a revisar.
+
+**Fixes de QA:**
+- `carta-publica.html` · el botón **QR** genera el código y se expone a
+  nivel supervisor.
+- `presupuesto-evento.html` · **«Ver composición ▾»** despliega el desglose
+  con el escandallo oculto al cliente y grupos «a medida».
+- `presupuesto-evento.html` · **«Solicitar con datos»** abre un `mailto`
+  con el presupuesto detallado por partidas.
+- `presupuesto-evento.html` · **«Solicitar copia»** imprime/guarda el PDF
+  del presupuesto detallado.
+
+**Checklist con vínculos (`test-checklist.html`):**
+- Helper `firstHref()` + `renderTest(t, block)`: cada test pinta un enlace
+  **«Abrir para repasar»** al primer `href` de su descripción, con
+  fallback a la URL del bloque.
+- `LEVEL_MAP` y nuevo `BLOCK_URLS` reconstruidos sobre los IDs reales;
+  re-nivelado por rol (cliente/usuario/director/admin) y limpieza de
+  bloques muertos. Verificado: 27 bloques, 162 tests, 162 enlaces.
+
+SW_VERSION → 5.20.0.

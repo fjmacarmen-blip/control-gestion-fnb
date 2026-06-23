@@ -1,9 +1,9 @@
-# Detalle del proyecto · Queens Bellybutton v5.17
+# Detalle del proyecto · Queens Bellybutton v5.20
 
 > **¿Estás en la última versión?** Mira el badge esquina inferior izquierda
-> de cualquier página HTML del producto. Si pone `v5.17 · 5 jun 2026`,
+> de cualquier página HTML del producto. Si pone `v5.20 · 24 jun 2026`,
 > sí. Si pone una versión anterior, fuerza recarga (Ctrl+Shift+R).
-> Documento detallado del proyecto · actualizado 5 junio 2026.
+> Documento detallado del proyecto · actualizado 24 junio 2026.
 
 > Inventario completo del proyecto: qué hay, dónde está, cómo se relaciona.
 > Documento técnico de referencia. Para versión corta ver `RESUMEN-EJECUTIVO.md`.
@@ -243,7 +243,7 @@ GitHub Action en cada push a main, feat/* y fix/*.
 | v6.0 | Cuando haya 3+ clientes | Multi-tenant separado (no más sub-paths) · panel super-admin con todos los clientes | Decisión comercial |
 | v6.1 | Después | Marketplace público de plantillas con submissions de la comunidad | v6.0 |
 
-## 10 · Cambios v5.11 → v5.17 (junio 2026)
+## 10 · Cambios v5.11 → v5.20 (junio 2026)
 
 ### v5.11 · Cierre de auditoría
 Aplica los 9 correctivos altos de la auditoría v5.10 (criptografía PAT,
@@ -382,6 +382,31 @@ refleja automáticamente en todas las páginas. No más versiones invisibles
 para usuarios con cache.
 
 SW_VERSION → 5.17.0.
+
+### v5.20 · Cierre de QA v5.1 + checklist con vínculos (PR #65)
+
+> Las versiones 5.18 y 5.19 se consumieron en el material audiovisual de
+> promoción (vídeo y motion comic); la línea de producto retoma aquí con
+> el primer minor limpio posterior, v5.20.
+
+Cierra los 4 errores del **Reporte de QA · v5.1** (un commit por bug) y
+rehace el checklist de pruebas para que cada test enlace al objeto a revisar.
+
+**Fixes de QA (carta pública + cotizador):**
+- `carta-publica.html` · el botón **QR** genera el código y se expone a
+  nivel supervisor.
+- `presupuesto-evento.html` · **«Ver composición ▾»** muestra el desglose
+  con el escandallo oculto al cliente y grupos «a medida»; **«Solicitar con
+  datos»** abre un `mailto` con el presupuesto detallado por partidas;
+  **«Solicitar copia»** imprime/guarda el PDF del presupuesto detallado.
+
+**Checklist con vínculos (`test-checklist.html`):**
+- Cada test renderiza un enlace **«Abrir para repasar»** al objeto a
+  revisar (primer `href` de la descripción, con fallback al bloque).
+- Bloques re-nivelados por rol (cliente/usuario/director/admin) y limpieza
+  de bloques muertos.
+
+SW_VERSION → 5.20.0.
 
 ## 12 · Métricas del repo (v5.17)
 
