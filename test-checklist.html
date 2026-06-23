@@ -923,37 +923,74 @@ const LEVELS = [
   },
 ];
 
-// Mapping bloque -> nivel
+// Mapping bloque -> nivel de usuario · claves = IDs REALES de los bloques.
 const LEVEL_MAP = {
-  b1:  'admin',     // Acceso y autenticacion
-  b2:  'admin',     // Lista de proyectos y navegacion
+  b1:  'admin',     // Acceso y autenticación
+  b2:  'admin',     // Lista de proyectos y navegación
   b3:  'director',  // Editor visual
-  b4:  'admin',     // Wizard creacion + plantillas
-  b5:  'director',  // Importadores
-  b6:  'director',  // Conectores externos productos/TPV
-  b7:  'director',  // Metricas y agenda
-  b8:  'usuario',   // Sala movil PWA
-  b9:  'cliente',   // Carta publica + QR
-  b9b: 'director',  // Generacion de QR de la carta · funcion del editor (supervisor)
-  b10: 'director',  // Calculadora escandallos
-  b11: 'director',  // Apariencia light/dark
-  b12: 'cliente',   // Cotizador publico
-  b13: 'director',  // Cotizador interno
-  b14: 'director',  // Acceso al cotizador desde dashboard
-  b15: 'cliente',   // Resto del frontend publico
-  b16: 'cliente',   // Calendario y disponibilidad
-  b17: 'admin',     // Seguridad y robustez
-  b18: 'cliente',   // FAQ publica
-  b19: 'cliente',   // Asistente IA
-  b20: 'cliente',   // Idiomas
-  b21: 'admin',     // Material comercial
+  b4:  'admin',     // Wizard de creación + plantillas marketplace
+  b5:  'director',  // Importadores (Excel · PDF · imágenes)
+  b6:  'director',  // Conectores externos · productos y TPV
+  b7:  'director',  // Métricas y agenda
+  b8:  'usuario',   // Sala móvil (PWA)
+  b9:  'cliente',   // Carta pública + QR
+  b9b: 'director',  // Carta digital · Generación de QR (Editor / supervisor)
+  b10: 'director',  // Calculadora de escandallos
+  b11: 'director',  // Apariencia (light/dark mode)
+  b12: 'cliente',   // Cotizador público (cliente final · self-service)
+  b12b:'director',  // Cotizador interno (comercial del hotel)
+  b12c:'director',  // Acceso al cotizador desde el dashboard
+  b12d:'cliente',   // Resto del frontend público
+  b13: 'admin',     // Seguridad y robustez
+  b14: 'admin',     // Material comercial v5.3
+  b15: 'cliente',   // FAQ pública en la carta (v5.5)
+  b16: 'cliente',   // Asistente IA (v5.5)
+  b17: 'cliente',   // Idiomas ES/EN (v5.5)
+  b18: 'cliente',   // Calendario y disponibilidad (v5.6)
   b22: 'cliente',   // Iconos al lado del nombre (cards visibles para todo público)
   b23: 'director',  // Escandallos detallados + sidebar (recetario es del director)
-  b24: 'admin',     // Panel superadmin diferenciado
+  b24: 'admin',     // Panel Superadmin diferenciado
   b25: 'cliente',   // Menús especiales (cliente final los pide en el cotizador)
-  b26: 'cliente',   // Badge visible para todos · colores transversales para todos
+  b26: 'cliente',   // Colores transversales + versioning visible (para todos)
 };
-BLOCKS.forEach(b => { b.level = LEVEL_MAP[b.id] || 'admin'; });
+
+// URL de referencia por bloque · fallback cuando un test no trae su propio
+// enlace en la descripción. El checklist vive en la raíz del repo, así que
+// las rutas son relativas a la raíz (proyecto piloto = miramar).
+const BLOCK_URLS = {
+  b1:  'dashboard/',
+  b2:  'dashboard/',
+  b3:  'dashboard/editor.html?proyecto=miramar',
+  b4:  'dashboard/wizard.html',
+  b5:  'dashboard/editor.html?proyecto=miramar',
+  b6:  'dashboard/editor.html?proyecto=miramar',
+  b7:  'dashboard/metricas.html?proyecto=miramar',
+  b8:  'sala-movil.html?proyecto=miramar',
+  b9:  'carta-publica.html?proyecto=miramar',
+  b9b: 'dashboard/editor.html?proyecto=miramar',
+  b10: 'core/pages/recetario.html?proyecto=miramar',
+  b11: 'dashboard/',
+  b12: 'core/pages/presupuesto-evento.html?proyecto=miramar',
+  b12b:'core/pages/presupuesto-evento.html?proyecto=miramar&modo=interno',
+  b12c:'dashboard/',
+  b12d:'index.html',
+  b13: 'dashboard/',
+  b14: 'pitch.html',
+  b15: 'carta-publica.html?proyecto=miramar',
+  b16: 'carta-publica.html?proyecto=miramar',
+  b17: 'carta-publica.html?proyecto=miramar',
+  b18: 'disponibilidad-publica.html?proyecto=miramar',
+  b22: 'core/pages/recetario.html?proyecto=miramar',
+  b23: 'core/pages/recetario.html?proyecto=miramar',
+  b24: 'dashboard/superadmin.html',
+  b25: 'core/pages/presupuesto-evento.html?proyecto=miramar',
+  b26: 'core/pages/presupuesto-evento.html?proyecto=miramar',
+};
+
+BLOCKS.forEach(b => {
+  b.level = LEVEL_MAP[b.id] || 'admin';
+  b.url = BLOCK_URLS[b.id] || '';
+});
 
 // ─────────────────────────────────────────────────────
 // STATE
@@ -1057,7 +1094,7 @@ function renderBlocks() {
         </div>
         <div class="block-body">
           <div class="block-desc">${block.desc}</div>
-          ${visibleTests.map(t => renderTest(t)).join('')}
+          ${visibleTests.map(t => renderTest(t, block)).join('')}
         </div>
       `;
       root.appendChild(div);
@@ -1066,16 +1103,28 @@ function renderBlocks() {
   refreshStats();
 }
 
-function renderTest(t) {
+// Extrae el primer enlace (objeto a repasar) de una descripción HTML.
+function firstHref(html) {
+  const m = /<a\s[^>]*href="([^"]+)"/i.exec(String(html || ''));
+  return m ? m[1] : '';
+}
+
+function renderTest(t, block) {
   const cur = state[t.id] || {};
   const status = cur.status || '';
   const note = cur.note || '';
+  // Vínculo por test: el enlace más específico del desc, o el del bloque.
+  const url = firstHref(t.desc) || (block && block.url) || '';
+  const linkHtml = url
+    ? `<a class="test-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">Abrir para repasar</a>`
+    : '';
   return `
     <div class="test" data-test-id="${t.id}">
       <div class="test-head">
         <div class="test-info">
           <div class="test-name">${escapeHtml(t.name)}</div>
           <div class="test-desc">${t.desc || ''}</div>
+          ${linkHtml}
         </div>
         <div class="test-controls">
           <button class="test-btn ${status === 'ok' ? 'is-active ok' : ''}" data-set="ok" title="Marcar OK">✓</button>
