@@ -1,18 +1,18 @@
 /**
- * Version badge · v5.17
+ * Version badge
  * Verifica que el badge se inyecta en las páginas principales y carga
  * version.json correctamente.
  */
 const { test, expect } = require('@playwright/test');
 
-test.describe('version badge · v5.17', () => {
+test.describe('version badge', () => {
   test('landing carga version.json y muestra badge con versión', async ({ page }) => {
     await page.goto('/index.html');
     // Esperar que el badge aparezca (carga async)
     const badge = page.locator('#qbb-version-badge');
     await expect(badge).toBeVisible({ timeout: 5000 });
-    // Texto del badge contiene la versión
-    await expect(badge).toContainText(/v5\.17/);
+    // Texto del badge contiene una versión (agnóstico al número concreto)
+    await expect(badge).toContainText(/v\d+\.\d+/);
   });
 
   test('badge es link al changelog y abre en pestaña nueva', async ({ page }) => {
