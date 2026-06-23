@@ -2920,36 +2920,85 @@ function buildPresupuestoTexto(data, ref) {
   if (data.espacio)  lines.push('Espacio: ' + data.espacio);
   lines.push('Comensales: ' + data.pt + ' (' + data.adultos + ' adultos + ' + data.ninos + ' niños + ' + data.bebes + ' bebés)');
   if (data.sel && data.sel.eventType) lines.push('Tipo de evento: ' + (data.sel.eventType.name || ''));
-  if (data.sel && data.sel.menuPkg)   lines.push('Menú: ' + (data.sel.menuPkg.name || '') + ' · ' + (data.sel.menuPkg.ppax || 0) + ' €/pax');
   lines.push('');
-  // Dietas
-  const dietasActivas = Object.entries(data.dietas || {}).filter(([, n]) => n > 0);
-  if (dietasActivas.length) {
-    lines.push('▸ DIETAS ESPECIALES');
-    dietasActivas.forEach(([k, n]) => lines.push('  · ' + k + ': ' + n));
+
+  // ── Desglose detallado por partidas (v5.1 Error 3) ──────────────────────────
+  // El presupuesto del cliente muestra TODO partida a partida con su importe,
+  // no sólo el nombre. Mismo criterio de cálculo que calcTotal()/updateSide():
+  //   · ítems "por pax" (pp:true)  → precio × pax facturable (pf)
+  //   · ítems fijos     (pp:false) → precio absoluto
+  //   · paquete de mesa            → ppax × pax total (pt)
+  //   · centro de mesa             → fijo + por_mesa × ceil(pt/8)
+  // Así la suma de las líneas cuadra con el TOTAL.
+  const pf = data.pf || 0;
+  const pt = data.pt || 0;
+  const S  = data.sel || {};
+  const COLW = 52;
+  const li = (name, val) => {
+    const price = (typeof val === 'number') ? fmtEur(val) : String(val);
+    const left  = '  · ' + name;
+    const gap   = Math.max(1, COLW - left.length - price.length);
+    return left + ' '.repeat(gap) + price;
+  };
+  const extraVal   = it => (it.pp ? it.price * pf : it.price);   // mismo criterio que calcTotal
+  const pushSection = (title, rows) => {
+    rows = (rows || []).filter(Boolean);
+    if (!rows.length) return;
+    lines.push(title);
+    rows.forEach(r => lines.push(r));
     lines.push('');
-  }
-  // Extras agrupados por categoría · v5.4 (dulces en Gastronomía, no en Animación)
-  if (data.sel) {
-    const cats = [
-      ['▸ GASTRONOMÍA ADICIONAL',  ['bebExtras', 'dulces']],
-      ['▸ MONTAJE Y DECORACIÓN',   ['luzExtras', 'montajeExtras', 'centroMesa', 'floralExtras', 'velasExtras']],
-      ['▸ ANIMACIÓN, SHOW Y RECUERDOS', ['musica', 'show', 'foto']],
-    ];
-    cats.forEach(([title, keys]) => {
-      const items = [];
-      keys.forEach(k => {
-        const v = data.sel[k];
-        if (Array.isArray(v) && v.length) v.forEach(it => items.push(it.name));
-        else if (v && v.name) items.push(v.name);
+  };
+
+  // ▸ MENÚ
+  const menuRows = [];
+  if (S.menuPkg) {
+    if (S.menuPkg.id === 'custom') {
+      ['entrantes','primeros','segundos','postres'].forEach(cat => {
+        ((S.customDishes && S.customDishes[cat]) || []).forEach(d => {
+          menuRows.push(li((d.n || 'Plato a medida') + ' · ' + cat, (d.ppax || 0) * pf));
+        });
       });
-      if (items.length) {
-        lines.push(title);
-        items.forEach(e => lines.push('  · ' + e));
-        lines.push('');
-      }
-    });
+    } else {
+      menuRows.push(li(S.menuPkg.name + ' (' + (S.menuPkg.ppax || 0) + ' €/pax × ' + pf + ')', (S.menuPkg.ppax || 0) * pf));
+    }
   }
+  pushSection('▸ MENÚ', menuRows);
+
+  // ▸ DIETAS ESPECIALES
+  const dietasActivas = Object.entries(data.dietas || {}).filter(([, n]) => n > 0);
+  pushSection('▸ DIETAS ESPECIALES', dietasActivas.map(([k, n]) => '  · ' + k + ': ' + n));
+
+  // ▸ BEBIDAS
+  pushSection('▸ BEBIDAS', [
+    S.bebPkg ? li(S.bebPkg.name + ' (' + (S.bebPkg.ppax || 0) + ' €/pax × ' + pf + ')', (S.bebPkg.ppax || 0) * pf) : null,
+    ...(S.bebExtras || []).map(b => li(b.name, extraVal(b)))
+  ]);
+
+  // ▸ MONTAJE Y MOBILIARIO
+  pushSection('▸ MONTAJE Y MOBILIARIO', [
+    S.tablePkg ? li(S.tablePkg.name + ' (' + (S.tablePkg.ppax || 0) + ' €/pax × ' + pt + ')', (S.tablePkg.ppax || 0) * pt) : null,
+    (data.bebes > 0) ? ('  · ' + data.bebes + ' silla(s) alta(s) bebé — incluida') : null,
+    ...(S.luzExtras || []).map(l => li(l.name, extraVal(l))),
+    ...(S.montajeExtras || []).map(m => li(m.name, extraVal(m)))
+  ]);
+
+  // ▸ FLORES Y DECORACIÓN
+  pushSection('▸ FLORES Y DECORACIÓN', [
+    S.centroMesa ? li(S.centroMesa.name + ' (fijo ' + S.centroMesa.price_fijo + ' € + ' + S.centroMesa.price_mesa + ' €/mesa × ' + Math.ceil(pt/8) + ')', S.centroMesa.price_fijo + S.centroMesa.price_mesa * Math.ceil(pt/8)) : null,
+    ...(S.floralExtras || []).map(f => li(f.name, extraVal(f))),
+    ...(S.velasExtras || []).map(v => li(v.name, extraVal(v)))
+  ]);
+
+  // ▸ DULCES Y EXTRAS GASTRONÓMICOS
+  pushSection('▸ DULCES Y EXTRAS GASTRONÓMICOS', (S.dulces || []).map(d => li(d.name, extraVal(d))));
+
+  // ▸ ANIMACIÓN, SHOW Y RECUERDOS
+  pushSection('▸ ANIMACIÓN, SHOW Y RECUERDOS', [
+    ...(S.musica || []).map(m => li(m.name, extraVal(m))),
+    ...(S.show   || []).map(s => li(s.name, extraVal(s))),
+    ...(S.foto   || []).map(f => li(f.name, extraVal(f)))
+  ]);
+
   lines.push('▸ TOTAL ESTIMADO');
   lines.push('Subtotal sin IVA: ' + fmtEur(data.total));
   lines.push('IVA 10 %:         ' + fmtEur(data.total * 0.10));
