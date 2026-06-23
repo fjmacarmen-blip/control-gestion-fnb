@@ -3049,19 +3049,12 @@ async function generateBudget() {
   const subject = 'Solicitud de presupuesto · ' + ref + ' · ' + name;
   const body = texto;
 
-  // 1. Intentar copiar al portapapeles (silencioso si falla)
-  let copiado = false;
-  try {
-    await navigator.clipboard.writeText(texto);
-    copiado = true;
-  } catch {}
-
-  // 2. Construir mailto:
+  // 1. Construir mailto:
   const mailto = 'mailto:' + encodeURIComponent(dest) +
     '?subject=' + encodeURIComponent(subject) +
     '&body=' + encodeURIComponent(body);
 
-  // 3. Mostrar modal de confirmación con opciones
+  // 2. Mostrar modal de confirmación con opciones (email / WhatsApp / PDF)
   showBudgetConfirmation({
     ref,
     name,
@@ -3071,7 +3064,6 @@ async function generateBudget() {
     hotelTel: hotel.telefono || '',
     hotelNombre: hotel._nombre || '',
     texto,
-    copiado,
   });
 }
 
@@ -3093,13 +3085,13 @@ function showBudgetConfirmation(opts) {
       <p style="font-size:13px;color:#8b949e;line-height:1.55;margin-bottom:18px;">
         Ref <strong style="color:#e6edf3;font-family:monospace;">${escapeBudgetHtml(opts.ref)}</strong> ·
         Total estimado <strong style="color:#34d399;">${escapeBudgetHtml(fmtEur(opts.total))}</strong>
-        ${opts.copiado ? '<br><br>✓ El detalle se ha <strong>copiado al portapapeles</strong>. Si tu cliente de email no se abre, puedes pegarlo manualmente donde quieras (WhatsApp, otro email, etc.).' : ''}
+        <br><br>Revisa el detalle abajo. Puedes <strong>enviarlo por email</strong> al establecimiento o <strong>guardarlo en PDF</strong> en la ubicación que elijas.
       </p>
       <div style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px 14px;font-family:monospace;font-size:11px;line-height:1.5;max-height:160px;overflow:auto;margin-bottom:18px;white-space:pre-wrap;color:#8b949e;">${escapeBudgetHtml(opts.texto)}</div>
       <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:14px;">
         <a href="${escapeBudgetAttr(opts.mailto)}" target="_blank" style="background:linear-gradient(135deg,#34d399 0%,#059669 100%);color:#0d1117;padding:13px 18px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;text-align:center;">✉️ Abrir email a ${escapeBudgetHtml(opts.hotelNombre || 'el establecimiento')}</a>
         ${waUrl ? `<a href="${escapeBudgetAttr(waUrl)}" target="_blank" rel="noopener" style="background:#25d366;color:#fff;padding:11px 16px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:500;text-align:center;">💬 Enviar por WhatsApp</a>` : ''}
-        <button id="__budgetCopy" style="background:#21262d;color:#e6edf3;border:1px solid #30363d;padding:11px 16px;border-radius:8px;cursor:pointer;font:inherit;font-size:13px;">📋 Volver a copiar al portapapeles</button>
+        <button id="__budgetPrint" style="background:#21262d;color:#e6edf3;border:1px solid #30363d;padding:11px 16px;border-radius:8px;cursor:pointer;font:inherit;font-size:13px;">🖨️ Imprimir / Guardar en PDF</button>
         <button id="__budgetClose" style="background:transparent;color:#8b949e;border:1px solid #30363d;padding:9px 16px;border-radius:8px;cursor:pointer;font:inherit;font-size:12px;">Cerrar</button>
       </div>
       <p style="font-size:11px;color:#6e7681;line-height:1.5;margin:0;">
@@ -3110,11 +3102,44 @@ function showBudgetConfirmation(opts) {
   `;
   document.body.appendChild(overlay);
   document.getElementById('__budgetClose').addEventListener('click', () => overlay.remove());
-  document.getElementById('__budgetCopy').addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(opts.texto); document.getElementById('__budgetCopy').textContent = '✓ Copiado'; }
-    catch { alert('No se pudo copiar. Selecciona el texto manualmente.'); }
-  });
+  document.getElementById('__budgetPrint').addEventListener('click', () => openBudgetPrintable(opts));
   overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+}
+
+// Abre una ventana imprimible con el presupuesto detallado en monospace para
+// que el cliente lo «imprima → Guardar como PDF» en la ubicación que elija
+// (v5.1 Error 4 · sustituye a la copia al portapapeles).
+function openBudgetPrintable(opts) {
+  const w = window.open('', '_blank');
+  if (!w) {
+    alert('Tu navegador ha bloqueado la ventana de impresión. Permite las ventanas emergentes para guardar el PDF.');
+    return;
+  }
+  const doc = '<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">' +
+    '<title>Presupuesto ' + escapeBudgetHtml(opts.ref) + '</title>' +
+    '<style>' +
+      '@page { margin: 18mm 16mm; }' +
+      'body { font-family: system-ui, sans-serif; color: #111; margin: 0; padding: 24px; }' +
+      'h1 { font-size: 20px; margin: 0 0 4px; }' +
+      '.meta { font-size: 13px; color: #555; margin-bottom: 18px; }' +
+      '.meta strong { color: #111; }' +
+      'pre { font-family: "Courier New", monospace; font-size: 12px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; margin: 0; }' +
+      '.foot { margin-top: 22px; font-size: 11px; color: #777; border-top: 1px solid #ddd; padding-top: 10px; }' +
+      '.noprint { margin-bottom: 16px; }' +
+      '.noprint button { font: inherit; padding: 8px 16px; border-radius: 6px; border: 1px solid #ccc; background: #f3f4f6; cursor: pointer; }' +
+      '@media print { .noprint { display: none !important; } }' +
+    '</style></head><body>' +
+      '<div class="noprint"><button onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button></div>' +
+      '<h1>Presupuesto · ' + escapeBudgetHtml(opts.hotelNombre || '') + '</h1>' +
+      '<div class="meta">Ref <strong>' + escapeBudgetHtml(opts.ref) + '</strong> · Total estimado <strong>' + escapeBudgetHtml(fmtEur(opts.total)) + '</strong></div>' +
+      '<pre>' + escapeBudgetHtml(opts.texto) + '</pre>' +
+      '<div class="foot">Solicitud orientativa generada desde el cotizador. Guarda tu referencia.</div>' +
+    '</body></html>';
+  w.document.open();
+  w.document.write(doc);
+  w.document.close();
+  w.focus();
+  setTimeout(() => { try { w.print(); } catch {} }, 400);
 }
 
 function escapeBudgetHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
