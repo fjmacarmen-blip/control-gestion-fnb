@@ -607,11 +607,11 @@ Este apartado actualiza el documento original con todo lo ejecutado entre v4.1 y
 │              CAPA DE PRESENTACIÓN                           │
 ├──────────────┬──────────────┬──────────────┬───────────────┤
 │ Landing      │ Dashboard    │ Frontend     │ Vista pública │
-│ /index.html  │ /dashboard/  │ público      │ /sala-movil   │
-│              │  · index     │  · presup    │ /carta-pub    │
-│              │  · editor    │  · recetario │  (PWA)        │
+│ /index.html  │ /dashboard/  │ público      │ /carta-pub    │
+│              │  · index     │  · presup    │ /evento-pub   │
+│              │  · editor    │  · recetario │ /disponib-pub │
 │              │  · wizard    │  · contrato  │               │
-│              │  · métricas  │  · orden     │               │
+│              │  · sala(v6.0)│  · orden     │               │
 └──────────────┴──────────────┴──────────────┴───────────────┘
         │              │              │              │
         ▼              ▼              ▼              ▼

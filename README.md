@@ -32,7 +32,7 @@ Una aplicación web estática que gestiona:
 - **Calculadora de escandallos** · cruza recetas con catálogo de productos, calcula coste materia prima por ración, % escandallo real y PVP recomendado por categoría.
 - **Métricas** · facturación mensual, ocupación de espacios, top eventos, próximos eventos (Chart.js).
 - **Multi-tema** · 5 paletas seleccionables por proyecto (moderno, cercano, típico, mediterráneo, clásico) + toggle global claro/oscuro.
-- **Vista móvil sala (PWA)** · app instalable y offline-first para el equipo de sala: eventos del día, dietas críticas con pulseras, ocupación de espacios.
+- **Vista de sala responsive** · panel integrado en el dashboard para el equipo de sala: eventos del día, dietas críticas con pulseras, ocupación de espacios. Acceso desde cualquier navegador, sin instalación.
 - **Carta digital pública + QR** · cada proyecto genera su URL pública sin login y su QR descargable en SVG.
 - **QR dos usos** (v6.0) · hoja imprimible con dos modos: QR de carta digital y QR de evento con hash SHA-256. Generado también desde el cotizador.
 - **Diseñador de sala interactivo** (v6.0) · plano SVG drag-drop con 6 planos predefinidos, 5 tipos de elemento, estados de asiento (libre/dieta/infantil/bebé), panel de plazas y compartir.

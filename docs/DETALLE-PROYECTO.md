@@ -1,9 +1,9 @@
-# Detalle del proyecto · Queens Bellybutton v5.20
+# Detalle del proyecto · Queens Bellybutton v6.0
 
 > **¿Estás en la última versión?** Mira el badge esquina inferior izquierda
-> de cualquier página HTML del producto. Si pone `v5.20 · 24 jun 2026`,
+> de cualquier página HTML del producto. Si pone `v6.0 · 25 jun 2026`,
 > sí. Si pone una versión anterior, fuerza recarga (Ctrl+Shift+R).
-> Documento detallado del proyecto · actualizado 24 junio 2026.
+> Documento detallado del proyecto · actualizado 25 junio 2026.
 
 > Inventario completo del proyecto: qué hay, dónde está, cómo se relaciona.
 > Documento técnico de referencia. Para versión corta ver `RESUMEN-EJECUTIVO.md`.
@@ -12,12 +12,8 @@
 
 ```
 control-gestion-fnb/
-├── index.html                    Landing pública (5 cards · v5.0)
+├── index.html                    Landing pública (7 cards · v6.0)
 ├── carta-publica.html            Carta digital pública por proyecto
-├── sala-movil.html               PWA · vista del equipo de sala
-├── manifest.json                 PWA manifest
-├── sw.js                         Service worker (cache + offline)
-├── icons/                        Icon set PWA (192/512 SVG)
 ├── robots.txt · sitemap.xml      SEO básico
 │
 ├── core/                         CÓDIGO COMPARTIDO
@@ -118,15 +114,14 @@ control-gestion-fnb/
 | Publicar cambios | Cualquier sección · botón ☁ Publicar | Re-verify password · commit atómico vía GitHub API |
 | Rotar password | `/scripts/change-password.html` | Generador bcrypt standalone · copy-paste a auth.json |
 
-### 2.2 · Equipo de sala (PWA móvil)
+### 2.2 · Equipo de sala (vista responsive · v6.0)
 
 | Capacidad | URL | Función |
 | --- | --- | --- |
-| Eventos del día + 7 días | `/sala-movil.html?proyecto=X&vista=hoy` | Cliente · hora · espacio · menú · pax + dietas |
+| Eventos del día + 7 días | `/dashboard/sala.html?proyecto=X&vista=hoy` | Cliente · hora · espacio · menú · pax + dietas |
 | Protocolos por pulsera | `?vista=dietas` | Cada dieta crítica con instrucciones cocina/sala/bebidas |
 | Ocupación próximos 30d | `?vista=espacios` | Por espacio · % ocupación · catálogo completo |
 | Simulador TPV | `?vista=tpv` | 2 escenarios pregrabados · eventos en directo |
-| Instalación como app | "Añadir a pantalla de inicio" | Funciona offline tras primera visita |
 
 ### 2.3 · Cliente final potencial (público · self-service)
 

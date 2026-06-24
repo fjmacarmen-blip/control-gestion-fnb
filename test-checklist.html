@@ -468,7 +468,7 @@ const BLOCKS = [
   {
     id: 'b6',
     title: 'Conectores externos · productos y TPV',
-    desc: 'Catálogo de productos con sus 4 niveles y conector TPV (simulator visible en sala-móvil).',
+    desc: 'Catálogo de productos con sus 4 niveles y conector TPV (simulator visible en sala del dashboard).',
     tests: [
       { id: 'b6t1', name: 'Productos · cambiar source a CSV-URL',
         desc: 'Editor · Productos · cambiar tipo a csv-url + URL pública de un Sheet. Debe validar.' },
@@ -684,8 +684,8 @@ const BLOCKS = [
         desc: 'Tras editar · F5 · los cambios siguen ahí (warning del navegador si dirty).' },
       { id: 'b13t3', name: 'Botón «↩ Descartar» pide confirmación',
         desc: 'Si hay borradores, descartar pide confirmar (no destruye accidental).' },
-      { id: 'b13t4', name: 'Service worker no cachea peticiones GitHub API',
-        desc: 'En sala-móvil con devtools · Network · las requests a api.github.com no aparecen como (ServiceWorker).' },
+      { id: 'b13t4', name: 'CSP presente en las 3 páginas nuevas v6.0',
+        desc: 'Abrir disenador-sala.html, factura-servicio.html y qr-print.html · ver source · comprobar que existe meta http-equiv="Content-Security-Policy".' },
       { id: 'b13t5', name: 'CSP no rompe ningún script CDN',
         desc: 'Abrir cualquier HTML del dashboard · console limpia · sin errores CSP.' },
     ],
@@ -759,7 +759,7 @@ const BLOCKS = [
       { id: 'b14t2', name: 'Pitch deck · navegación con teclado',
         desc: 'Flecha izquierda/derecha funcionan. Tecla F entra/sale de pantalla completa. Tecla Home vuelve al 1.' },
       { id: 'b14t3', name: 'Pitch deck · links de demos en vivo abren los URLs reales',
-        desc: 'Slides 5-9 tienen botones «Probar en vivo» que abren dashboard, editor, cotizador, sala móvil y carta pública en nueva pestaña.' },
+        desc: 'Slides 5-9 tienen botones «Probar en vivo» que abren dashboard, editor, cotizador, sala y carta pública en nueva pestaña.' },
       { id: 'b14t4', name: 'Pitch deck · imprimir produce PDF aceptable',
         desc: 'Ctrl+P · Guardar como PDF. Cada slide debe ocupar 1 página A4. Sin texto cortado.' },
       { id: 'b14t5', name: 'Mockups · 5 secciones renderizan',
@@ -906,8 +906,8 @@ const LEVELS = [
   {
     id: 'usuario',
     title: '🍽️  Usuario interno · sala',
-    sub: 'Equipo operativo · PWA movil · sin admin',
-    desc: 'Lo que el equipo de sala usa cada turno: ver eventos del dia, dietas criticas, simulador TPV. Acceso por dispositivo movil instalado como PWA.',
+    sub: 'Equipo operativo · vista de sala responsive · sin admin',
+    desc: 'Lo que el equipo de sala usa cada turno: ver eventos del dia, dietas criticas, simulador TPV. Acceso desde el panel de administración en cualquier dispositivo con navegador.',
   },
   {
     id: 'director',
@@ -932,7 +932,7 @@ const LEVEL_MAP = {
   b5:  'director',  // Importadores (Excel · PDF · imágenes)
   b6:  'director',  // Conectores externos · productos y TPV
   b7:  'director',  // Métricas y agenda
-  b8:  'usuario',   // Sala móvil (PWA)
+  b8:  'usuario',   // Sala operativa · vista responsive
   b9:  'cliente',   // Carta pública + QR
   b9b: 'director',  // Carta digital · Generación de QR (Editor / supervisor)
   b10: 'director',  // Calculadora de escandallos
