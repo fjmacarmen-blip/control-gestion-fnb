@@ -1589,6 +1589,9 @@ body{
           <button class="btn-next" onclick="abrirOrdenServicio()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
             📋 Generar Orden de Servicio (interno)
           </button>
+          <button class="btn-next" onclick="abrirFactura()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
+            🧾 Generar Factura de Servicios
+          </button>
         </div>
       </div>
 
@@ -3212,6 +3215,15 @@ function abrirOrdenServicio() {
   }
   exportPresupuestoData();
   window.open('orden-servicio.html', '_blank');
+}
+
+function abrirFactura() {
+  if (!sel.eventType || !sel.menuPkg) {
+    alert('Para generar la factura necesitas haber seleccionado al menos el tipo de evento y un menú.');
+    return;
+  }
+  exportPresupuestoData();
+  window.open('factura-servicio.html', '_blank');
 }
 
 // ══════════════════════════════════════════════════
