@@ -3,7 +3,7 @@
 [![GitHub Pages](https://img.shields.io/badge/demo-online-success?logo=github)](https://fjmacarmen-blip.github.io/control-gestion-fnb/)
 [![Stack](https://img.shields.io/badge/stack-vanilla%20JS-yellow?logo=javascript)](#stack)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](#)
-[![Status](https://img.shields.io/badge/status-v5.0-emerald)](#roadmap)
+[![Status](https://img.shields.io/badge/status-v6.0-gold)](#roadmap)
 [![Tests](https://github.com/fjmacarmen-blip/control-gestion-fnb/actions/workflows/tests.yml/badge.svg)](https://github.com/fjmacarmen-blip/control-gestion-fnb/actions/workflows/tests.yml)
 
 > Plataforma SaaS de gestión de eventos y banquetes para hoteles y restaurantes, construida sin frameworks, desplegada en GitHub Pages.
@@ -34,6 +34,10 @@ Una aplicación web estática que gestiona:
 - **Multi-tema** · 5 paletas seleccionables por proyecto (moderno, cercano, típico, mediterráneo, clásico) + toggle global claro/oscuro.
 - **Vista móvil sala (PWA)** · app instalable y offline-first para el equipo de sala: eventos del día, dietas críticas con pulseras, ocupación de espacios.
 - **Carta digital pública + QR** · cada proyecto genera su URL pública sin login y su QR descargable en SVG.
+- **QR dos usos** (v6.0) · hoja imprimible con dos modos: QR de carta digital y QR de evento con hash SHA-256. Generado también desde el cotizador.
+- **Diseñador de sala interactivo** (v6.0) · plano SVG drag-drop con 6 planos predefinidos, 5 tipos de elemento, estados de asiento (libre/dieta/infantil/bebé), panel de plazas y compartir.
+- **Factura de servicios** (v6.0) · factura A4 generada desde el cotizador interno, con IVA 10%, vencimiento a 30 días y compartir por email.
+- **Modelo de 3 roles formal** (v6.0) · super-admin / administrador (proyecto acotado) / cliente final (sin login). Panel de director con vista responsiva de sala integrada.
 
 ## Demos online
 
@@ -41,7 +45,8 @@ Una aplicación web estática que gestiona:
 | --- | --- | --- |
 | **Dashboard · Miramar** | [/dashboard/](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/) | Login + listado · piloto Miramar Algeciras |
 | **Dashboard · Casa Lola** | [/dashboard/?proyecto=restaurante-casa-lola](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/?proyecto=restaurante-casa-lola) | Tema mediterráneo · 12 presupuestos seed |
-| **Vista de sala · Miramar** | [/dashboard/sala.html?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/sala.html?proyecto=miramar) | Operativa del equipo · responsive · integrada en el panel |
+| **Vista de sala · Miramar** | [/dashboard/sala.html?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/sala.html?proyecto=miramar) | Operativa del equipo · responsive · integrada en panel |
+| **Diseñador de sala** | [/core/pages/disenador-sala.html?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/core/pages/disenador-sala.html?proyecto=miramar) | Plano SVG drag-drop · v6.0 |
 | **Carta pública · Miramar** | [/carta-publica.html?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/carta-publica.html?proyecto=miramar) | Destino del QR · sin login |
 | **Carta pública · Casa Lola** | [/carta-publica.html?proyecto=restaurante-casa-lola](https://fjmacarmen-blip.github.io/control-gestion-fnb/carta-publica.html?proyecto=restaurante-casa-lola) | Carta mediterránea |
 
@@ -57,6 +62,8 @@ Una aplicación web estática que gestiona:
 | Importadores | SheetJS · PapaParse · pdf.js · browser-image-compression | Todo client-side, ningún archivo sale del navegador |
 | Gráficas | Chart.js | Dual-axis, lazy load |
 | Visualización IA | Pollinations.ai | Generación de fotos de plato gratis, sin API key |
+| QR + hash evento | qr-gen.js · crypto.subtle SHA-256 | QR SVG generado browser-side · hash de evento sin backend |
+| Compartir docs | share.js (window.fnbShare) | Imprimir · email · WhatsApp · copiar URL en todos los documentos |
 
 ## Arquitectura
 
@@ -64,8 +71,13 @@ Una aplicación web estática que gestiona:
 /
 ├── core/                  # Código compartido entre todos los proyectos
 │   ├── js/                #   loader · auth · github-api · editor-core · theme · metrics · importers
-│   └── css/               #   sistema de temas (data-theme="<id>")
-├── dashboard/             # Login · listado · editor · wizard · métricas
+│   │                      #   share.js · qr-gen.js · version-badge.js
+│   ├── css/               #   sistema de temas (data-theme="<id>") · theme-superadmin.css
+│   └── pages/             #   presupuesto-evento · recetario · factura-servicio · qr-print
+│                          #   disenador-sala · contrato · orden-servicio
+├── dashboard/             # Login · listado · editor · wizard · métricas · sala (v6.0)
+│   ├── superadmin.html    #   panel super-admin (paleta verde+negro)
+│   └── sala.html          #   vista de sala responsive integrada (sustituyó sala-movil.html)
 ├── projects/              # 1 carpeta por establecimiento
 │   ├── miramar/           #   10 JSON (establecimiento, menús, recetas, ...) + budgets/
 │   ├── restaurante-casa-lola/
@@ -110,9 +122,10 @@ La auditoría de ingeniería v4.14 con su plan de remediación está en [docs/AU
 - [x] **v4.14** · Segunda demo (Casa Lola) · README · case study
 - [x] **v4.15** · Cierre auditoría (SRI · CSP · CI · 59 tests)
 - [x] **v5.0** · PWA sala móvil · conectores TPV · escandallos · carta pública + QR · 3 plantillas · light mode
-- [ ] **v5.1** · Integración real Glop (cliente piloto)
-- [ ] **v5.2** · Backend mínimo para webhook TPV tiempo real
-- [ ] **v6.0** · Marketplace de plantillas por categoría con publicación de la comunidad
+- [x] **v5.1–v5.17** · Catálogo recetas Makro (153) · menús especiales (8) · panel superadmin · versioning visible · checklist · vídeo promo
+- [x] **v6.0** · Modelo 3 roles · sala integrada en dashboard · diseñador de sala · factura de servicios · QR dos usos · share universal
+- [ ] **v6.1** · Integración real Glop (cliente piloto)
+- [ ] **v6.2** · Backend mínimo para webhook TPV tiempo real
 
 ## Quién lo construyó
 

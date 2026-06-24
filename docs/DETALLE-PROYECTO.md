@@ -37,19 +37,25 @@ control-gestion-fnb/
 │   │   ├── productos-connector.js  4 niveles (static/csv/json/api)
 │   │   ├── tpv-connector.js      4 niveles (simulator/csv-poll/tpv/webhook)
 │   │   ├── escandallos.js        Coste por receta · PVP sugerido
-│   │   ├── qr-gen.js             SVG QR descargable
+│   │   ├── qr-gen.js             SVG QR · buildPublicMenuUrl · buildEventUrl (SHA-256)
+│   │   ├── share.js              Compartir universal (imprimir/email/WA/copiar)
 │   │   └── appearance.js         Light/dark toggle persistente
-│   └── pages/                    Frontend público del establecimiento
-│       ├── presupuesto-evento.html
+│   └── pages/                    Frontend del establecimiento
+│       ├── presupuesto-evento.html   Cotizador · modo interno · diseñador CTA · factura · QR evento
 │       ├── recetario.html
 │       ├── contrato-servicios.html
-│       └── orden-servicio.html
+│       ├── orden-servicio.html
+│       ├── disenador-sala.html   Plano SVG interactivo · drag-drop (v6.0)
+│       ├── factura-servicio.html Factura A4 con IVA 10% (v6.0)
+│       └── qr-print.html         Hoja imprimible QR · carta + evento (v6.0)
 │
 ├── dashboard/                    PANEL DEL DIRECTOR
-│   ├── index.html                Login + listado de proyectos
-│   ├── editor.html               CRUD de 6 secciones + escandallos + QR
+│   ├── index.html                Login + listado de proyectos · enlace QR por proyecto
+│   ├── editor.html               CRUD de 6 secciones + escandallos + QR + hoja imprimible
 │   ├── wizard.html               4 pasos + marketplace plantillas
 │   ├── metricas.html             Presupuestos + agenda + Chart.js
+│   ├── sala.html                 Vista sala responsive integrada (v6.0 · sustituyó sala-movil.html)
+│   ├── superadmin.html           Panel super-admin paleta verde+negro
 │   └── auth.json                 Hash bcrypt super-admin
 │
 ├── projects/                     DATOS POR ESTABLECIMIENTO
@@ -423,3 +429,81 @@ SW_VERSION → 5.20.0.
 | Tests automatizados | 67+19 | 67+27 |
 | Tags publicados | 8 | **12** (v4.14, v4.15, v5.0, v5.1, v5.10, v5.12-v5.17) |
 | PRs cerrados a main | 48 | 52 |
+
+---
+
+## 13 · Cambios v6.0 (junio 2026) — epic estructural
+
+### v6.0.A · Componente compartir universal (`share.js`)
+
+`window.fnbShare.mount(target, optsOrFn)` inyecta un grupo de botones de
+acción en cualquier documento: **Imprimir PDF**, **Email**, **WhatsApp**,
+**Copiar URL**. Se aplica a presupuesto-evento, contrato, orden de servicio,
+factura y diseñador de sala. Elimina el código de compartir duplicado que
+había en cada página.
+
+### v6.0.B · Disolución app móvil
+
+`sala-movil.html` + `sw.js` + `manifest.json` eliminados. Toda su
+funcionalidad (eventos del día, dietas críticas, ocupación de espacios,
+simulador TPV) queda en `dashboard/sala.html` con diseño totalmente
+responsive. Motivo: eliminar dualidad conceptual y reducir superficie de
+mantenimiento. El favicon/PWA branding se mantiene en
+`branding/favicon/site.webmanifest`.
+
+### v6.0.C · Modelo de 3 roles formal
+
+| Rol | Scope | Acceso | Capacidades |
+| --- | --- | --- | --- |
+| Super-admin | `super-admin` | dashboard/index.html | Todos los proyectos · panel superadmin |
+| Administrador | `admin` + `proyecto` | dashboard/index.html | Solo su proyecto |
+| Cliente final | — sin login | URL pública | Cotizador · carta · diseñador solo-lectura |
+
+`auth.js` exporta: `ROLES`, `isSuperAdmin`, `isAdmin`, `scopedProject`,
+`roleLabel`, `login`.
+
+### v6.0.D · Diseñador de sala interactivo (`disenador-sala.html`)
+
+SVG drag-drop 499 líneas. 6 planos predefinidos (PLANOS), 5 tipos de
+elemento (ITEM_DEF: mesa redonda/rectangular, silla, escenario, pista de
+baile). Estados de asiento: libre / dieta-especial / infantil / bebé.
+Panel lateral: total plazas, plazas ocupadas, resumen por estado.
+Integra share.js. Accesible desde el cotizador (paso plano de sala) y
+desde el dashboard (tarjeta de proyecto, botón 🪑 Plano).
+
+### v6.0.E · Factura de servicios (`factura-servicio.html`)
+
+308 líneas. Lee `fnb_presupuesto_actual` de `sessionStorage` (escrito por
+`exportPresupuestoData()` en el cotizador). Carga datos legales del hotel
+vía `loadProject`. Número de factura: reemplaza `PRES-` por `FACT-`.
+Vencimiento: 30 días desde hoy. Tabla: Concepto | Detalle | Base imp. |
+IVA 10% | Cuota IVA | Total. Totales en gold. Print CSS A4 limpio.
+Accesible desde el cotizador (botón 🧾 Generar Factura) y desde el
+dashboard (tarjeta de proyecto, botón 🧾 Factura) y desde el editor QR.
+
+### v6.0.F · QR dos usos (`qr-print.html`)
+
+286 líneas. Dos modos seleccionables por tabs:
+- **carta** → URL `carta-publica.html?proyecto=<id>`
+- **evento** → URL `evento-publica.html?proyecto=<id>&h=<hash>` · hash
+  SHA-256 del evento vía `crypto.subtle` (async) · `qr-gen.buildEventUrl`
+
+Campos editables para evento (tipo, fecha, espacio, referencia) que se
+prerellenan desde parámetros URL. Print CSS oculta nav/tabs/campos/acciones.
+Accesible desde:
+- Dashboard tarjeta proyecto (botón 📱 QR)
+- Editor — botón «📄 Hoja imprimible» en modal QR
+- Cotizador interno — botón «🔗 QR del evento»
+
+## 14 · Métricas del repo (v6.0)
+
+| Métrica | v5.17 | v6.0 |
+| --- | --- | --- |
+| LOC JS core | ~3 700 | ~3 900 (share.js + auth roles) |
+| LOC HTML dashboard | ~5 200 | ~5 400 (sala integrada) |
+| LOC HTML core/pages | ~7 800 | **~8 900** (+disenador +factura +qr-print) |
+| Páginas HTML totales | — | +3 nuevas · -1 eliminada (sala-movil) |
+| Módulos JS core | 14 | **16** (share.js · version-badge.js ya contado) |
+| Tests automatizados | 67+27 | 67+27 (pendiente suite v6.0) |
+| PRs cerrados a main | 52 | **54+** (epic v6.0) |
+| Coste mensual operación | 0 € | 0 € |

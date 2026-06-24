@@ -9,7 +9,7 @@ Antes de plantear cómo vender, asentamos qué tenemos y qué no.
 
 | Cosa | Estado |
 | --- | --- |
-| Producto técnico funcional | ✅ v5.1 |
+| Producto técnico funcional | ✅ v6.0 |
 | Demo pública navegable | ✅ Miramar + Casa Lola |
 | Documentación técnica + arquitectura | ✅ 3 ADRs + arquitectura + audit |
 | Marca registrada | ❌ |
