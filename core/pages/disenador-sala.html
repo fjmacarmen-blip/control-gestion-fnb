@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="moderno">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Diseñador de sala · Queens Bellybutton</title>
+  <link rel="icon" type="image/svg+xml" href="../../branding/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="../../branding/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="../css/themes.css">
+  <style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg-base,#0a1126);color:var(--text,#e8edf6);min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;align-items:center;gap:12px;padding:10px 18px;background:var(--bg-surface,#141d33);border-bottom:1px solid var(--border-default,#2a3550);flex-wrap:wrap}
+  .hd-logo{font-family:'Cormorant Garamond',Georgia,serif;font-size:16px;font-weight:700;color:var(--accent,#34d399);white-space:nowrap}
+  .hd-title{font-size:14px;font-weight:600;color:var(--text,#e8edf6)}
+  .hd-sep{color:var(--border-default,#2a3550);margin:0 4px}
+  select.ctrl{background:var(--bg-elevated,#1d2840);border:1px solid var(--border-default,#2a3550);color:var(--text,#e8edf6);border-radius:7px;padding:5px 10px;font-size:13px;cursor:pointer}
+  .hd-counts{margin-left:auto;display:flex;gap:12px;font-size:12px;color:var(--text-muted,#7a8aa0)}
+  .hd-count span{color:var(--text,#e8edf6);font-weight:600}
+  .btn-sm{cursor:pointer;background:var(--bg-elevated,#1d2840);border:1px solid var(--border-default,#2a3550);color:var(--text,#e8edf6);border-radius:7px;padding:5px 11px;font-size:13px;font-family:inherit;transition:border-color .15s}
+  .btn-sm:hover{border-color:var(--accent,#34d399)}
+  .btn-sm.active{background:var(--accent,#34d399);color:#0a1126;border-color:transparent;font-weight:700}
+  main{flex:1;display:flex;overflow:hidden;position:relative}
+  #toolbar{display:flex;flex-direction:column;gap:6px;padding:12px 8px;background:var(--bg-surface,#141d33);border-right:1px solid var(--border-default,#2a3550);min-width:56px;align-items:center}
+  .tool-btn{width:40px;height:40px;border-radius:8px;border:1px solid var(--border-default,#2a3550);background:var(--bg-elevated,#1d2840);color:var(--text,#e8edf6);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;position:relative;flex-shrink:0}
+  .tool-btn:hover{border-color:var(--accent,#34d399)}
+  .tool-btn.active{background:var(--accent,#34d399);color:#0a1126;border-color:transparent}
+  .tool-sep{width:32px;height:1px;background:var(--border-default,#2a3550);margin:4px 0}
+  #canvas-wrap{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--bg-base,#0a1126)}
+  #canvas{display:block;max-width:100%;cursor:default;user-select:none;touch-action:none}
+  #canvas.tool-add{cursor:crosshair}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--text-muted,#7a8aa0)}
+  .legend-item{display:flex;align-items:center;gap:5px}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  #seating-panel{width:300px;background:var(--bg-surface,#141d33);border-left:1px solid var(--border-default,#2a3550);overflow-y:auto;transition:width .2s;flex-shrink:0}
+  #seating-panel.collapsed{width:0;overflow:hidden}
+  .sp-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border-default,#2a3550);font-size:13px;font-weight:600;position:sticky;top:0;background:var(--bg-surface,#141d33);z-index:1}
+  .sp-table{margin:12px 10px;background:var(--bg-elevated,#1d2840);border-radius:8px;border:1px solid var(--border-default,#2a3550);overflow:hidden}
+  .sp-table-header{padding:8px 12px;font-size:12px;font-weight:700;color:var(--accent,#34d399);border-bottom:1px solid var(--border-default,#2a3550)}
+  .sp-seat{display:flex;align-items:center;gap:8px;padding:6px 12px;border-bottom:1px solid var(--border-default,#2a3550)}
+  .sp-seat:last-child{border-bottom:none}
+  .sp-seat-num{font-size:11px;color:var(--text-muted,#7a8aa0);width:16px;flex-shrink:0;text-align:right}
+  .sp-seat input{flex:1;background:transparent;border:none;border-bottom:1px solid var(--border-default,#2a3550);color:var(--text,#e8edf6);font-size:12px;padding:2px 4px;font-family:inherit;outline:none}
+  .sp-seat input:focus{border-bottom-color:var(--accent,#34d399)}
+  .sp-seat select{background:var(--bg-surface,#141d33);border:1px solid var(--border-default,#2a3550);color:var(--text,#e8edf6);border-radius:4px;font-size:11px;padding:2px 4px;font-family:inherit;cursor:pointer}
+  #share-bar{padding:10px 18px;background:var(--bg-surface,#141d33);border-top:1px solid var(--border-default,#2a3550)}
+  @media(max-width:640px){#seating-panel{position:fixed;right:0;top:0;bottom:0;z-index:100;box-shadow:-4px 0 20px rgba(0,0,0,.5)}}
+  @media print{#toolbar,#share-bar,#seating-panel,header .btn-sm,header .ctrl{display:none!important}#canvas-wrap{padding:0}#canvas{width:100%!important;height:auto!important}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="hd-logo">QB</div>
+  <div class="hd-sep">·</div>
+  <div class="hd-title">Diseñador de sala</div>
+  <div class="hd-sep">·</div>
+  <label style="font-size:12px;color:var(--text-muted)">Espacio:</label>
+  <select class="ctrl" id="espacioSel">
+    <option value="interior">Gran Salón Mediterráneo</option>
+    <option value="terraza">Terraza Real</option>
+    <option value="jardines">Jardines y Piscina</option>
+    <option value="carpa">Carpa Climatizada</option>
+    <option value="playa">Chiringuito / Playa</option>
+    <option value="otro">Espacio personalizado</option>
+  </select>
+  <button class="btn-sm" id="btnReset" title="Resetear al plano automático">↺ Reset</button>
+  <button class="btn-sm" id="btnSeating">🪑 Lista de mesa</button>
+  <div class="hd-counts">
+    <div>Mesas: <span id="cntMesas">0</span></div>
+    <div>Comensales: <span id="cntPax">0</span></div>
+    <div>Dietas: <span id="cntDietas">0</span></div>
+    <div>Niños: <span id="cntNinos">0</span></div>
+  </div>
+</header>
+
+<main>
+  <div id="toolbar">
+    <button class="tool-btn active" data-tool="select" title="Seleccionar / mover">↖</button>
+    <div class="tool-sep"></div>
+    <button class="tool-btn" data-tool="mesa-redonda" title="Mesa redonda (8 pax)">○</button>
+    <button class="tool-btn" data-tool="mesa-alta" title="Mesa alta cóctel (4 pax)">⬜</button>
+    <div class="tool-sep"></div>
+    <button class="tool-btn" data-tool="escenario" title="Escenario / tarima">🎪</button>
+    <button class="tool-btn" data-tool="mesa-apoyo" title="Mesa de apoyo">📋</button>
+    <button class="tool-btn" data-tool="silla-alta" title="Silla alta bebé">🍼</button>
+    <div class="tool-sep"></div>
+    <button class="tool-btn" data-tool="delete" title="Eliminar seleccionado" style="font-size:14px">🗑</button>
+  </div>
+
+  <div id="canvas-wrap">
+    <svg id="canvas" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#e8eaf0;opacity:.7"></div>Asiento libre</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Dieta especial</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Niño</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Bebé / silla alta</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6;border-radius:0"></div>Escenario</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c9a84c;border-radius:0"></div>Mesa apoyo</div>
+    </div>
+  </div>
+
+  <div id="seating-panel" class="collapsed">
+    <div class="sp-header">
+      <span>Lista de comensales</span>
+      <button class="btn-sm" id="btnCloseSeating">✕</button>
+    </div>
+    <div id="sp-content"></div>
+  </div>
+</main>
+
+<div id="share-bar"></div>
+
+<script src="../js/share.js"></script>
+<script>
+'use strict';
+
+const PLANOS = {
+  interior: { nombre:'Gran Salón Mediterráneo (Interior)', W:850, H:500,
+    accesos:[{x:425,y:0,tipo:'P'},{x:0,y:250,tipo:'C'}],
+    notas:'Salón principal · 850 m² · 9,2 m altura libre' },
+  terraza: { nombre:'Terraza Real (Exterior, frente al mar)', W:850, H:450,
+    accesos:[{x:0,y:225,tipo:'P'},{x:850,y:225,tipo:'J'}],
+    notas:'Terraza con vistas al Mediterráneo · 600 m² · Toldo retráctil' },
+  jardines: { nombre:'Jardines y Piscina (Exterior)', W:900, H:550,
+    accesos:[{x:100,y:0,tipo:'P'},{x:700,y:550,tipo:'B'}],
+    notas:'Jardines subtropicales · 1.200 m²' },
+  carpa: { nombre:'Carpa Climatizada', W:700, H:500,
+    accesos:[{x:350,y:0,tipo:'P'}],
+    notas:'Carpa modular climatizada · 400 m² · Suelo de tarima' },
+  playa: { nombre:'Chiringuito / Playa Privada', W:750, H:400,
+    accesos:[{x:375,y:0,tipo:'P'},{x:375,y:400,tipo:'M'}],
+    notas:'Beach Club privado · 400 m de playa' },
+  otro: { nombre:'Espacio personalizado', W:800, H:500,
+    accesos:[{x:400,y:0,tipo:'P'}],
+    notas:'Configuración personalizada' },
+};
+
+const SEAT_STATES = ['libre','dieta','infantil','bebe'];
+const SEAT_COLORS = { libre:'rgba(232,234,240,0.65)', dieta:'#f59e0b', infantil:'#10b981', bebe:'#3b82f6' };
+
+const params = new URLSearchParams(location.search);
+const PROYECTO = params.get('proyecto') || 'demo';
+const STORAGE_KEY = () => `fnb_sala_${PROYECTO}_${state.espacio}`;
+
+const state = {
+  espacio: params.get('espacio') || 'interior',
+  tool: 'select',
+  selected: null,
+  items: [],    // {id, type, x, y, label?, seats?, seatStates?}
+  guests: {},   // {'id_0': {nombre, dieta}}
+  nextId: 1,
+};
+
+const ITEM_DEF = {
+  'mesa-redonda': { r:38, seats:8, color:'rgba(201,168,76,0.20)', stroke:'#c9a84c' },
+  'mesa-alta':    { w:52, h:52, seats:4, color:'rgba(201,168,76,0.15)', stroke:'#c9a84c' },
+  'escenario':    { w:180, h:80, seats:0, color:'rgba(139,92,246,0.20)', stroke:'#8b5cf6' },
+  'mesa-apoyo':   { w:70, h:35, seats:0, color:'rgba(201,168,76,0.15)', stroke:'#c9a84c' },
+  'silla-alta':   { r:14, seats:1, color:'rgba(59,130,246,0.25)', stroke:'#3b82f6' },
+};
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY(), JSON.stringify({ items: state.items, guests: state.guests, nextId: state.nextId })); } catch(e) {}
+}
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY()) || 'null');
+    if (d && Array.isArray(d.items)) { state.items = d.items; state.guests = d.guests || {}; state.nextId = d.nextId || 1; return true; }
+  } catch(e) {}
+  return false;
+}
+
+function autoPlano(espacio) {
+  const p = PLANOS[espacio];
+  const W = p.W, H = p.H, padX = 80, padY = 70;
+  const nMesas = 8;
+  const usW = W - 2*padX, usH = H - 2*padY;
+  const cols = Math.ceil(Math.sqrt(nMesas * usW / usH));
+  const rows = Math.ceil(nMesas / cols);
+  const cellW = usW / cols, cellH = usH / rows;
+  state.items = []; state.guests = {}; state.nextId = 1;
+  let m = 0;
+  for (let r = 0; r < rows && m < nMesas; r++) {
+    for (let c = 0; c < cols && m < nMesas; c++) {
+      addItem('mesa-redonda', Math.round(padX + cellW*(c+0.5)), Math.round(padY + cellH*(r+0.5)), false);
+      m++;
+    }
+  }
+}
+
+function addItem(type, x, y, doSave = true) {
+  const def = ITEM_DEF[type];
+  const id = type + '-' + (state.nextId++);
+  const label = type === 'mesa-redonda' || type === 'mesa-alta'
+    ? String(state.items.filter(i => i.type === 'mesa-redonda' || i.type === 'mesa-alta').length + 1)
+    : '';
+  const item = { id, type, x, y, label };
+  if (def.seats) item.seatStates = Array(def.seats).fill('libre');
+  state.items.push(item);
+  if (doSave) save();
+  return item;
+}
+
+function buildSVG() {
+  const p = PLANOS[state.espacio];
+  const W = p.W, H = p.H;
+  let svg = `<svg id="canvas" xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 ${W} ${H+48}" width="${W}" height="${H+48}"
+    style="touch-action:none;cursor:${state.tool === 'select' ? 'default' : 'crosshair'}">`;
+
+  svg += `<rect x="0" y="0" width="${W}" height="${H}" fill="rgba(15,32,64,0.7)" stroke="#c9a84c" stroke-width="3" rx="8"/>`;
+  svg += `<text x="20" y="26" fill="#e8eaf0" font-size="15" font-weight="600" font-family="Cormorant Garamond,serif">${p.nombre}</text>`;
+  svg += `<text x="20" y="44" fill="#7a8499" font-size="11" font-family="DM Sans">${p.notas}</text>`;
+
+  // Grid (subtle)
+  for (let x = 80; x < W; x += 40)
+    svg += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="rgba(255,255,255,.04)" stroke-width="1"/>`;
+  for (let y = 70; y < H; y += 40)
+    svg += `<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="rgba(255,255,255,.04)" stroke-width="1"/>`;
+
+  // Access points
+  p.accesos.forEach(a => {
+    svg += `<circle cx="${a.x}" cy="${a.y}" r="18" fill="#0a1628" stroke="#c9a84c" stroke-width="3"/>`;
+    svg += `<text x="${a.x}" y="${a.y+4}" text-anchor="middle" fill="#c9a84c" font-size="10" font-weight="700" font-family="DM Sans">${a.tipo}</text>`;
+  });
+
+  // Items
+  state.items.forEach(item => {
+    const sel = state.selected === item.id;
+    svg += renderItem(item, sel);
+  });
+
+  // Footer note
+  svg += `<text x="${W/2}" y="${H+32}" text-anchor="middle" fill="#7a8499" font-size="11" font-family="DM Sans">
+    ${state.items.filter(i=>i.type==='mesa-redonda'||i.type==='mesa-alta').length} mesas ·
+    Haz clic en un asiento para marcar dieta / niño / bebé</text>`;
+
+  svg += '</svg>';
+  return svg;
+}
+
+function renderItem(item, selected) {
+  const def = ITEM_DEF[item.type];
+  let g = `<g data-id="${item.id}" style="cursor:${state.tool==='select'?'grab':'crosshair'}">`;
+  const sx = `<rect x="${item.x-4}" y="${item.y-4}" `;
+
+  if (item.type === 'mesa-redonda') {
+    if (selected) g += `<circle cx="${item.x}" cy="${item.y}" r="${def.r+6}" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="5,3"/>`;
+    g += `<circle cx="${item.x}" cy="${item.y}" r="${def.r}" fill="${def.color}" stroke="${def.stroke}" stroke-width="2"/>`;
+    g += `<text x="${item.x}" y="${item.y+5}" text-anchor="middle" fill="${def.stroke}" font-size="13" font-family="DM Sans" font-weight="700">${item.label||''}</text>`;
+    // 8 seats
+    (item.seatStates||[]).forEach((st,s) => {
+      const angle = (s/8)*2*Math.PI - Math.PI/2;
+      const sx = item.x + (def.r+14)*Math.cos(angle), sy = item.y + (def.r+14)*Math.sin(angle);
+      g += `<rect x="${sx-6}" y="${sy-6}" width="12" height="12" rx="2" fill="${SEAT_COLORS[st]||SEAT_COLORS.libre}" data-seat="${item.id}_${s}" style="cursor:pointer"/>`;
+    });
+  } else if (item.type === 'mesa-alta') {
+    const hw = def.w/2, hh = def.h/2;
+    if (selected) g += `<rect x="${item.x-hw-5}" y="${item.y-hh-5}" width="${def.w+10}" height="${def.h+10}" rx="6" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="5,3"/>`;
+    g += `<rect x="${item.x-hw}" y="${item.y-hh}" width="${def.w}" height="${def.h}" rx="4" fill="${def.color}" stroke="${def.stroke}" stroke-width="2"/>`;
+    g += `<text x="${item.x}" y="${item.y+5}" text-anchor="middle" fill="${def.stroke}" font-size="12" font-family="DM Sans" font-weight="700">${item.label||''}</text>`;
+    const positions = [[0,-hh-10],[hw+10,0],[0,hh+10],[-hw-10,0]];
+    (item.seatStates||[]).forEach((st,s) => {
+      const [ox,oy] = positions[s]||[0,0];
+      g += `<circle cx="${item.x+ox}" cy="${item.y+oy}" r="6" fill="${SEAT_COLORS[st]||SEAT_COLORS.libre}" data-seat="${item.id}_${s}" style="cursor:pointer"/>`;
+    });
+  } else if (item.type === 'escenario') {
+    const hw = def.w/2, hh = def.h/2;
+    if (selected) g += `<rect x="${item.x-hw-5}" y="${item.y-hh-5}" width="${def.w+10}" height="${def.h+10}" rx="6" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="5,3"/>`;
+    g += `<rect x="${item.x-hw}" y="${item.y-hh}" width="${def.w}" height="${def.h}" rx="6" fill="${def.color}" stroke="${def.stroke}" stroke-width="2"/>`;
+    g += `<text x="${item.x}" y="${item.y-6}" text-anchor="middle" fill="${def.stroke}" font-size="11" font-family="DM Sans" font-weight="700">ESCENARIO</text>`;
+    g += `<text x="${item.x}" y="${item.y+12}" text-anchor="middle" fill="${def.stroke}" font-size="10" font-family="DM Sans">${def.w}×${def.h} cm</text>`;
+  } else if (item.type === 'mesa-apoyo') {
+    const hw = def.w/2, hh = def.h/2;
+    if (selected) g += `<rect x="${item.x-hw-5}" y="${item.y-hh-5}" width="${def.w+10}" height="${def.h+10}" rx="4" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="5,3"/>`;
+    g += `<rect x="${item.x-hw}" y="${item.y-hh}" width="${def.w}" height="${def.h}" rx="4" fill="${def.color}" stroke="${def.stroke}" stroke-width="1.5"/>`;
+    g += `<text x="${item.x}" y="${item.y+4}" text-anchor="middle" fill="${def.stroke}" font-size="9" font-family="DM Sans">APOYO</text>`;
+  } else if (item.type === 'silla-alta') {
+    if (selected) g += `<circle cx="${item.x}" cy="${item.y}" r="${def.r+5}" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="4,3"/>`;
+    g += `<circle cx="${item.x}" cy="${item.y}" r="${def.r}" fill="${def.color}" stroke="${def.stroke}" stroke-width="2"/>`;
+    g += `<text x="${item.x}" y="${item.y+4}" text-anchor="middle" fill="${def.stroke}" font-size="10" font-family="DM Sans">🍼</text>`;
+  }
+
+  g += '</g>';
+  return g;
+}
+
+function render() {
+  document.getElementById('canvas-wrap').querySelector('svg,div.placeholder')?.remove?.();
+  const tmp = document.createElement('div');
+  tmp.innerHTML = buildSVG();
+  const newSvg = tmp.firstChild;
+  document.getElementById('canvas-wrap').insertBefore(newSvg, document.getElementById('canvas-wrap').firstChild);
+  attachHandlers();
+  updateCounts();
+  if (!document.getElementById('seating-panel').classList.contains('collapsed')) renderSeatingPanel();
+}
+
+let drag = null;
+function attachHandlers() {
+  const svg = document.querySelector('#canvas-wrap svg');
+  if (!svg) return;
+  svg.addEventListener('pointerdown', onDown);
+  svg.addEventListener('pointermove', onMove);
+  svg.addEventListener('pointerup', onUp);
+  svg.addEventListener('click', onCanvasClick);
+}
+
+function svgPt(e) {
+  const svg = document.querySelector('#canvas-wrap svg');
+  const pt = svg.createSVGPoint();
+  pt.x = e.clientX; pt.y = e.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+function onDown(e) {
+  const seatEl = e.target.closest('[data-seat]');
+  if (seatEl) return; // seat clicks handled in onClick
+  const itemEl = e.target.closest('[data-id]');
+  if (state.tool === 'select' && itemEl) {
+    const id = itemEl.dataset.id;
+    state.selected = id;
+    const item = state.items.find(i => i.id === id);
+    if (!item) return;
+    const pt = svgPt(e);
+    drag = { id, ox: pt.x - item.x, oy: pt.y - item.y };
+    itemEl.setPointerCapture(e.pointerId);
+    render();
+    e.stopPropagation();
+  }
+}
+
+function onMove(e) {
+  if (!drag) return;
+  const pt = svgPt(e);
+  const item = state.items.find(i => i.id === drag.id);
+  if (!item) return;
+  const p = PLANOS[state.espacio];
+  item.x = Math.max(20, Math.min(p.W - 20, Math.round((pt.x - drag.ox) / 10) * 10));
+  item.y = Math.max(20, Math.min(p.H - 20, Math.round((pt.y - drag.oy) / 10) * 10));
+  render();
+}
+
+function onUp(e) {
+  if (drag) { save(); drag = null; }
+}
+
+function onCanvasClick(e) {
+  // Seat click: cycle state
+  const seatEl = e.target.closest('[data-seat]');
+  if (seatEl) {
+    const [itemId, sIdx] = seatEl.dataset.seat.split('_');
+    const item = state.items.find(i => i.id === itemId);
+    if (!item || !item.seatStates) return;
+    const cur = item.seatStates[+sIdx] || 'libre';
+    item.seatStates[+sIdx] = SEAT_STATES[(SEAT_STATES.indexOf(cur) + 1) % SEAT_STATES.length];
+    save(); render(); return;
+  }
+
+  if (state.tool === 'delete') {
+    if (state.selected) {
+      state.items = state.items.filter(i => i.id !== state.selected);
+      // clean guests
+      Object.keys(state.guests).forEach(k => { if (k.startsWith(state.selected + '_')) delete state.guests[k]; });
+      state.selected = null;
+      reLabel();
+      save(); render();
+    }
+    return;
+  }
+
+  if (state.tool !== 'select') {
+    const pt = svgPt(e);
+    addItem(state.tool, Math.round(pt.x), Math.round(pt.y));
+    reLabel();
+    render();
+  } else {
+    const itemEl = e.target.closest('[data-id]');
+    if (!itemEl) { state.selected = null; render(); }
+  }
+}
+
+function reLabel() {
+  let n = 1;
+  state.items.forEach(i => {
+    if (i.type === 'mesa-redonda' || i.type === 'mesa-alta') i.label = String(n++);
+  });
+}
+
+function updateCounts() {
+  const tables = state.items.filter(i => i.type === 'mesa-redonda' || i.type === 'mesa-alta');
+  let pax = 0, dietas = 0, ninos = 0;
+  tables.forEach(t => {
+    (t.seatStates||[]).forEach(st => {
+      pax++; if (st === 'dieta') dietas++; if (st === 'infantil' || st === 'bebe') ninos++;
+    });
+  });
+  document.getElementById('cntMesas').textContent = tables.length;
+  document.getElementById('cntPax').textContent = pax;
+  document.getElementById('cntDietas').textContent = dietas;
+  document.getElementById('cntNinos').textContent = ninos;
+}
+
+function renderSeatingPanel() {
+  const cont = document.getElementById('sp-content');
+  const tables = state.items.filter(i => i.type === 'mesa-redonda' || i.type === 'mesa-alta');
+  if (!tables.length) { cont.innerHTML = '<p style="padding:14px;font-size:12px;color:var(--text-muted)">Añade mesas al plano para gestionar comensales.</p>'; return; }
+  cont.innerHTML = tables.map(t => `
+    <div class="sp-table">
+      <div class="sp-table-header">Mesa ${t.label} · ${ITEM_DEF[t.type].seats} pax</div>
+      ${(t.seatStates||[]).map((st,s) => {
+        const gk = t.id + '_' + s;
+        const g = state.guests[gk] || {};
+        return `<div class="sp-seat">
+          <span class="sp-seat-num">${s+1}</span>
+          <input type="text" placeholder="Nombre del comensal" value="${escHtml(g.nombre||'')}"
+            data-gk="${gk}" data-field="nombre" oninput="guestInput(this)">
+          <select data-gk="${gk}" data-field="dieta" onchange="guestInput(this)">
+            <option value="">Sin restricción</option>
+            <option value="vegano" ${g.dieta==='vegano'?'selected':''}>Vegano</option>
+            <option value="vegetariano" ${g.dieta==='vegetariano'?'selected':''}>Vegetariano</option>
+            <option value="celiaco" ${g.dieta==='celiaco'?'selected':''}>Celíaco</option>
+            <option value="sin-lactosa" ${g.dieta==='sin-lactosa'?'selected':''}>Sin lactosa</option>
+            <option value="alergia" ${g.dieta==='alergia'?'selected':''}>Alergia</option>
+          </select>
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+}
+
+function guestInput(el) {
+  const gk = el.dataset.gk, field = el.dataset.field;
+  if (!state.guests[gk]) state.guests[gk] = {};
+  state.guests[gk][field] = el.value;
+  save();
+}
+window.guestInput = guestInput;
+
+function escHtml(s) {
+  return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+document.querySelectorAll('.tool-btn[data-tool]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.tool = btn.dataset.tool;
+    if (state.tool === 'delete') {
+      if (state.selected) {
+        state.items = state.items.filter(i => i.id !== state.selected);
+        Object.keys(state.guests).forEach(k => { if (k.startsWith(state.selected + '_')) delete state.guests[k]; });
+        state.selected = null;
+        reLabel();
+        save(); render();
+      }
+      state.tool = 'select';
+    }
+    document.querySelectorAll('.tool-btn[data-tool]').forEach(b => b.classList.toggle('active', b.dataset.tool === state.tool));
+    render();
+  });
+});
+
+document.getElementById('espacioSel').value = state.espacio;
+document.getElementById('espacioSel').addEventListener('change', e => {
+  state.espacio = e.target.value;
+  state.selected = null;
+  if (!load()) autoPlano(state.espacio);
+  render();
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  if (!confirm('¿Resetear el plano al diseño automático? Se perderán los cambios de esta sala.')) return;
+  localStorage.removeItem(STORAGE_KEY());
+  autoPlano(state.espacio);
+  render();
+});
+
+document.getElementById('btnSeating').addEventListener('click', () => {
+  const panel = document.getElementById('seating-panel');
+  panel.classList.toggle('collapsed');
+  if (!panel.classList.contains('collapsed')) renderSeatingPanel();
+});
+document.getElementById('btnCloseSeating').addEventListener('click', () => {
+  document.getElementById('seating-panel').classList.add('collapsed');
+});
+
+if (window.fnbShare) {
+  const tables = () => state.items.filter(i => i.type === 'mesa-redonda' || i.type === 'mesa-alta');
+  const dietas = () => { const d = []; state.items.forEach(it => (it.seatStates||[]).forEach((st,s) => { if (st !== 'libre') { const g = state.guests[it.id+'_'+s]; d.push(`Mesa ${it.label} / asiento ${s+1}: ${st}${g?.nombre?' ('+g.nombre+')':''}`); } })); return d; };
+  window.fnbShare.mount(document.getElementById('share-bar'), () => ({
+    title: 'Plano de sala · ' + (PLANOS[state.espacio].nombre),
+    summary: `${tables().length} mesas · ${tables().reduce((a,t)=>a+(t.seatStates?.length||0),0)} comensales\n${dietas().join('\n')}`,
+    actions: ['print','email','whatsapp','copy'],
+  }));
+}
+
+if (!load()) autoPlano(state.espacio);
+render();
+</script>
+</body>
+</html>
