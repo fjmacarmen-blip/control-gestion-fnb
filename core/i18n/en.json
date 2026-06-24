@@ -59,6 +59,7 @@
   },
   "sala": {
     "title": "Floor",
+    "back_panel": "← Panel",
     "tab_today": "Today",
     "tab_diets": "Diets",
     "tab_spaces": "Spaces",

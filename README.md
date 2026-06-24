@@ -41,7 +41,7 @@ Una aplicación web estática que gestiona:
 | --- | --- | --- |
 | **Dashboard · Miramar** | [/dashboard/](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/) | Login + listado · piloto Miramar Algeciras |
 | **Dashboard · Casa Lola** | [/dashboard/?proyecto=restaurante-casa-lola](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/?proyecto=restaurante-casa-lola) | Tema mediterráneo · 12 presupuestos seed |
-| **Sala móvil · Miramar** | [/sala-movil.html?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/sala-movil.html?proyecto=miramar) | PWA instalable · offline-first |
+| **Vista de sala · Miramar** | [/dashboard/sala.html?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/dashboard/sala.html?proyecto=miramar) | Operativa del equipo · responsive · integrada en el panel |
 | **Carta pública · Miramar** | [/carta-publica.html?proyecto=miramar](https://fjmacarmen-blip.github.io/control-gestion-fnb/carta-publica.html?proyecto=miramar) | Destino del QR · sin login |
 | **Carta pública · Casa Lola** | [/carta-publica.html?proyecto=restaurante-casa-lola](https://fjmacarmen-blip.github.io/control-gestion-fnb/carta-publica.html?proyecto=restaurante-casa-lola) | Carta mediterránea |
 
