@@ -269,7 +269,7 @@
     <div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div>
     <div>
       <div class="brand-title">Dashboard</div>
-      <div class="brand-sub">Super-admin</div>
+      <div class="brand-sub" id="navRole">Panel</div>
     </div>
   </div>
   <div class="nav-user">
@@ -283,7 +283,7 @@
   <form class="login-card" id="loginForm" autocomplete="on">
     <div class="login-eyebrow">Queens Bellybutton</div>
     <h1 class="login-title" data-i18n="login.title">Dashboard</h1>
-    <p class="login-lede" data-i18n="login.subtitle">Acceso al panel de director. Soft auth client-side (ver ADR §3 D7).</p>
+    <p class="login-lede" data-i18n="login.subtitle">Acceso para super-admin y administradores. El cliente final entra sin login desde el enlace público del proyecto.</p>
 
     <div class="field">
       <label for="email" data-i18n="login.email">Email</label>
@@ -316,7 +316,7 @@
     </div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
       <a href="superadmin.html" id="btnSuperadminPanel" class="btn-new" style="display:none;background:linear-gradient(135deg,#0F4D2E,#1A8550);border-color:#00E676;box-shadow:0 0 16px rgba(0,230,118,0.25);">🛡️ Panel Superadmin</a>
-      <a href="wizard.html" class="btn-new" data-i18n="dashboard.new_project">➕ Nuevo proyecto</a>
+      <a href="wizard.html" id="btnNewProject" class="btn-new" data-i18n="dashboard.new_project">➕ Nuevo proyecto</a>
     </div>
   </div>
 
@@ -325,7 +325,7 @@
   </div>
 
   <div class="footer-note">
-    Dashboard v4.3 · Fase 3.A · login + lista ·
+    Panel de gestión · super-admin · administrador · cliente final ·
     <a href="../">← Volver a la landing</a> ·
     <a href="../docs/arquitectura-plataforma.md">Arquitectura</a>
   </div>
@@ -370,12 +370,21 @@ function showProjects(session) {
   els.navAuthed.style.display = '';
   els.loginView.classList.add('hidden');
   els.projectsView.classList.remove('hidden');
-  // v5.14 · enlace al panel superadmin sólo para sesiones super-admin
+
+  // v6.0 · etiqueta de rol en el header (#271)
+  var navRole = document.getElementById('navRole');
+  if (navRole) navRole.textContent = window.fnbAuth.roleLabel(session);
+
+  // v6.0 · controles exclusivos del super-admin: panel global + alta de
+  // proyectos. El administrador gestiona SOLO su proyecto, no crea proyectos
+  // nuevos ni accede al panel cross-tenant.
+  var isSuper = window.fnbAuth.isSuperAdmin(session);
   var btnSuper = document.getElementById('btnSuperadminPanel');
-  if (btnSuper && session.scope === 'super-admin') {
-    btnSuper.style.display = 'inline-flex';
-  }
-  loadProjectsList();
+  if (btnSuper) btnSuper.style.display = isSuper ? 'inline-flex' : 'none';
+  var btnNew = document.getElementById('btnNewProject');
+  if (btnNew) btnNew.style.display = isSuper ? 'inline-flex' : 'none';
+
+  loadProjectsList(session);
 }
 
 // ── Login flow ────────────────────────────────────────────
@@ -425,23 +434,35 @@ els.btnLogout.addEventListener('click', () => {
 });
 
 // ── Lista de proyectos ────────────────────────────────────
-async function loadProjectsList() {
+async function loadProjectsList(session) {
   els.projectsGrid.innerHTML = '<div class="empty-state"><div class="icon">⏳</div><div>Cargando proyectos…</div></div>';
+
+  // v6.0 · scope por rol (#271): el admin solo ve SU proyecto; el super-admin, todos.
+  const scoped = window.fnbAuth.scopedProject(session);
 
   try {
     const manifest = await fetch('../projects/index.json').then(r => {
       if (!r.ok) throw new Error('No se pudo leer projects/index.json');
       return r.json();
     });
-    const proyectos = (manifest.proyectos || []).filter(p => !p.archivado);
+    const proyectos = (manifest.proyectos || [])
+      .filter(p => !p.archivado)
+      .filter(p => !scoped || p.id === scoped);
 
     if (!proyectos.length) {
-      els.projectsCount.textContent = 'Sin proyectos todavía.';
-      els.projectsGrid.innerHTML = '<div class="empty-state"><div class="icon">📂</div><div>Aún no hay proyectos. Crea el primero desde el wizard (Fase 3.B).</div></div>';
+      if (scoped) {
+        els.projectsCount.textContent = 'Tu proyecto no está disponible.';
+        els.projectsGrid.innerHTML = '<div class="empty-state"><div class="icon">🔒</div><div>Tu cuenta está asignada al proyecto <strong>' + escapeHtml(scoped) + '</strong>, pero no aparece en el manifiesto. Contacta con el super-admin.</div></div>';
+      } else {
+        els.projectsCount.textContent = 'Sin proyectos todavía.';
+        els.projectsGrid.innerHTML = '<div class="empty-state"><div class="icon">📂</div><div>Aún no hay proyectos. Crea el primero desde el wizard.</div></div>';
+      }
       return;
     }
 
-    els.projectsCount.textContent = proyectos.length + ' proyecto' + (proyectos.length === 1 ? '' : 's') + ' · click en cualquier acción para ir a la página correspondiente';
+    els.projectsCount.textContent = scoped
+      ? 'Tu proyecto · ' + escapeHtml(scoped)
+      : proyectos.length + ' proyecto' + (proyectos.length === 1 ? '' : 's') + ' · click en cualquier acción para ir a la página correspondiente';
 
     // Cargamos cada config.json en paralelo para mostrar nombre + categoría
     const cards = await Promise.all(proyectos.map(async (p) => {

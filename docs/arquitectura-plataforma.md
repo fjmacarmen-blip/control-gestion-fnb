@@ -819,3 +819,37 @@ aparece solo si la sesión es super-admin, con gradiente verde para
 señalizar visualmente que entra en un modo distinto.
 
 SW_VERSION → 5.14.0.
+
+---
+
+## Addendum v6.0 · Modelo de 3 roles (junio 2026)
+
+### v6.0 · Disolución de app móvil y formalización de roles
+
+#### Cambio estructural: sin app móvil separada
+
+La PWA `sala-movil.html` + `sw.js` + `manifest.json` se eliminan. Toda su funcionalidad (vista de sala, dietas críticas, ocupación de espacios) queda integrada en `dashboard/sala.html` con diseño responsive. Motivo: reducir superficie de mantenimiento y eliminar la dualidad conceptual «móvil vs. desktop».
+
+El favicon/branding PWA (`branding/favicon/site.webmanifest`) se mantiene intacto.
+
+#### Modelo de roles formal · v6.0
+
+A partir de esta versión el sistema reconoce tres actores con acceso y capacidades distintos:
+
+| Rol | Scope en sesión | Acceso | Capacidades |
+| --- | --- | --- | --- |
+| **Super-admin** | `super-admin` | `dashboard/index.html` → login | Gestión de TODOS los proyectos: crear, editar, métricas globales, wizard, panel superadmin (`superadmin.html`) |
+| **Administrador** | `admin` + campo `proyecto` | `dashboard/index.html` → login | Solo SU proyecto (`scopedProject(session)`): editar, métricas, sala, cotizador interno |
+| **Cliente final** | — (sin login) | URL pública `?proyecto=<id>` | Cotizador self-service (`presupuesto-evento.html`), carta pública, diseñador de sala en modo solo-lectura |
+
+**Implementación:**
+
+- `core/js/auth.js` exporta: `ROLES`, `isSuperAdmin(session)`, `isAdmin(session)`, `scopedProject(session)`, `roleLabel(session)`, `login` (alias de `loginSuperAdmin`).
+- `setSession(user, scope, proyecto)` almacena el scope y el proyecto acotado en `sessionStorage`.
+- `dashboard/index.html · loadProjectsList(session)` filtra el manifiesto al `scopedProject` cuando la sesión es admin; lista todos cuando es super-admin.
+- `dashboard/superadmin.html` rechaza cualquier sesión con `scope !== 'super-admin'` (sin cambios desde v5.14).
+- Alta de administradores: el super-admin crea un usuario en `auth.json` con `scope:"admin"` y `proyecto:"<id>"` usando `scripts/change-password.html`.
+
+**Compartir documentación:** toda la documentación generada (plano, menús especiales, contrato, factura, presupuesto, orden de servicio) expone el componente `window.fnbShare` (share.js · v6.0) con opciones imprimir PDF, email, WhatsApp y copiar URL — tanto para uso interno como para el cliente final.
+
+**Decisión de diseño:** el modelo sigue siendo soft-auth client-side (sin backend). El scope es informativo/UX, no un control de acceso criptográfico. Para clientes con requisito de seguridad real → evaluación de Supabase en fase futura.
