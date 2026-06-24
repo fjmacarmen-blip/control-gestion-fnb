@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factura de Servicios · Queens Bellybutton</title>
+<link rel="icon" type="image/svg+xml" href="../../branding/favicon/favicon.svg">
+<link rel="icon" type="image/x-icon" href="../../branding/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../../branding/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../branding/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../branding/favicon/apple-touch-icon.png">
+<meta name="theme-color" content="#0a1733">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/themes.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+img{display:block;max-width:100%;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;}
+
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,22,40,.94);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:14px 32px;display:flex;align-items:center;justify-content:space-between;
+}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-mark{
+  width:34px;height:34px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+  color:var(--bg);display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.95rem;
+}
+.nav-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);font-weight:600;}
+.nav-sub{font-size:.6rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.nav-actions{display:flex;gap:10px;align-items:center;}
+.btn{
+  background:transparent;color:var(--text);padding:8px 16px;border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;
+  border:1px solid var(--border2);cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+  transition:border-color .2s,background .2s;
+}
+.btn:hover{background:var(--card2);border-color:var(--gold-border);}
+
+.doc-wrap{max-width:840px;margin:40px auto;padding:0 24px 80px;}
+
+.invoice{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.inv-head{
+  padding:32px 36px;
+  background:linear-gradient(135deg,rgba(201,168,76,.08),transparent);
+  border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;
+}
+.inv-hotel-name{
+  font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;
+  color:var(--gold);margin-bottom:6px;
+}
+.inv-hotel-data{font-size:.8rem;color:var(--text-soft);line-height:1.8;}
+.inv-meta{text-align:right;}
+.inv-title{
+  font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;
+  color:var(--text);letter-spacing:1px;
+}
+.inv-num{font-size:.72rem;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin:4px 0 14px;}
+.inv-dates{font-size:.8rem;color:var(--text-soft);line-height:2;}
+
+.inv-client{
+  padding:18px 36px;border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+}
+.inv-client-label{
+  font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;
+}
+.inv-client-name{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:4px;}
+.inv-client-data{font-size:.8rem;color:var(--text-soft);line-height:1.8;}
+
+.inv-table{width:100%;border-collapse:collapse;}
+.inv-table th{
+  padding:10px 14px;font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px solid var(--border);text-align:left;
+  background:rgba(201,168,76,.04);
+}
+.inv-table th.r{text-align:right;}
+.inv-table td{padding:11px 14px;font-size:.84rem;border-bottom:1px solid rgba(255,255,255,.04);}
+.inv-table td.r{text-align:right;color:var(--text-soft);}
+.inv-table td.c-main{color:var(--text);font-weight:500;}
+
+.inv-totals{
+  padding:20px 36px;display:flex;justify-content:flex-end;
+  border-top:1px solid var(--border);background:rgba(201,168,76,.03);
+}
+.totals-grid{min-width:260px;}
+.t-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:5px 0;font-size:.85rem;color:var(--text-soft);
+}
+.t-row.sep{border-top:1px solid var(--border);margin-top:8px;padding-top:10px;}
+.t-row.t-main{font-size:1.1rem;font-weight:700;color:var(--text);}
+.t-row.t-main span:last-child{color:var(--gold);}
+
+.inv-footer{
+  padding:14px 36px;border-top:1px solid var(--border);
+  font-size:.75rem;color:var(--muted);line-height:1.8;
+}
+
+.no-data{padding:60px;text-align:center;color:var(--muted);}
+
+@media print{
+  .nav{display:none!important;}
+  .doc-wrap{margin:0;padding:0;max-width:100%;}
+  .invoice{border:none;border-radius:0;}
+  body{background:#fff;color:#111;}
+  .inv-hotel-data,.inv-dates,.inv-client-data,.inv-footer{color:#555!important;}
+  .inv-hotel-name,.inv-title,.t-row.t-main span:last-child{color:#a07828!important;}
+  .inv-table th{background:#f5f0e8!important;color:#888!important;}
+  .inv-totals{background:#faf8f2!important;}
+}
+@media(max-width:640px){
+  .inv-head{grid-template-columns:1fr;}
+  .inv-meta{text-align:left;}
+  .doc-wrap{padding:0 12px 60px;}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-brand" href="presupuesto-evento.html">
+    <div class="nav-mark">QB</div>
+    <div>
+      <div class="nav-title">Queens Bellybutton</div>
+      <div class="nav-sub">Factura de Servicios</div>
+    </div>
+  </a>
+  <div class="nav-actions">
+    <button class="btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
+    <a href="presupuesto-evento.html" class="btn">← Presupuesto</a>
+    <span id="shareSlot"></span>
+  </div>
+</nav>
+
+<div class="doc-wrap" id="docWrap"></div>
+
+<script src="../js/theme.js"></script>
+<script src="../js/loader.js"></script>
+<script src="../js/share.js"></script>
+<script>
+const DATA_KEY = 'fnb_presupuesto_actual';
+let HOTEL = {};
+
+function euro(n) {
+  return (+n||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+}
+function fmtDate(iso) {
+  if (!iso) return '—';
+  try { return new Date(iso).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}); }
+  catch(e){ return iso; }
+}
+function numFactura(ref) { return (ref||'').replace(/^PRES-/,'FACT-'); }
+
+function buildLines(d) {
+  const pf = d.pf||0, pt = d.pt||0;
+  const s  = d.sel||{};
+  const ls = [];
+  function add(concepto, detalle, base) {
+    if ((+base||0) > 0) ls.push({concepto, detalle, base: +base});
+  }
+  if (s.menuPkg) {
+    if (s.menuPkg.id==='custom')
+      add('🍽️ Menú personalizado','Platos a la carta',d.total||0);
+    else
+      add('🍽️ '+s.menuPkg.name,`${pf} pax × ${euro(s.menuPkg.ppax)} /pax`,s.menuPkg.ppax*pf);
+  }
+  if (s.bebPkg) add('🍷 '+s.bebPkg.name,`${pf} pax × ${euro(s.bebPkg.ppax)} /pax`,s.bebPkg.ppax*pf);
+  (s.bebExtras||[]).forEach(b=>add('🍾 '+b.name,b.pp?`${pf} pax`:'precio fijo',b.pp?b.price*pf:b.price));
+  (s.dulces||[]).forEach(b=>add('🍰 '+b.name,b.pp?`${pf} pax`:'precio fijo',b.pp?b.price*pf:b.price));
+  if (s.tablePkg) add('🪑 '+s.tablePkg.name,`${pt} pax × ${euro(s.tablePkg.ppax)} /pax`,s.tablePkg.ppax*pt);
+  (s.luzExtras||[]).forEach(l=>add('💡 '+l.name,l.pp?`${pf} pax`:'precio fijo',l.pp?l.price*pf:l.price));
+  (s.montajeExtras||[]).forEach(m=>add('🎪 '+m.name,m.pp?`${pf} pax`:'precio fijo',m.pp?m.price*pf:m.price));
+  if (s.centroMesa) {
+    const nm=Math.ceil(pt/8);
+    add('🌸 '+s.centroMesa.name,`Base + ${nm} mesa(s)`,s.centroMesa.price_fijo+s.centroMesa.price_mesa*nm);
+  }
+  (s.floralExtras||[]).forEach(f=>add('🌺 '+f.name,f.pp?`${pf} pax`:'precio fijo',f.pp?f.price*pf:f.price));
+  (s.velasExtras||[]).forEach(v=>add('🕯️ '+v.name,v.pp?`${pf} pax`:'precio fijo',v.pp?v.price*pf:v.price));
+  (s.musica||[]).forEach(m=>add('🎵 '+m.name,m.pp?`${pf} pax`:'precio fijo',m.pp?m.price*pf:m.price));
+  (s.show||[]).forEach(s2=>add('🎭 '+s2.name,s2.pp?`${pf} pax`:'precio fijo',s2.pp?s2.price*pf:s2.price));
+  (s.foto||[]).forEach(f=>add('📸 '+f.name,f.pp?`${pf} pax`:'precio fijo',f.pp?f.price*pf:f.price));
+  return ls;
+}
+
+function renderDoc() {
+  const raw = sessionStorage.getItem(DATA_KEY);
+  const wrap = document.getElementById('docWrap');
+  if (!raw) {
+    wrap.innerHTML = '<div class="no-data">Sin datos de presupuesto. <a href="presupuesto-evento.html" style="color:var(--gold)">Volver al cotizador</a>.</div>';
+    return;
+  }
+  const d     = JSON.parse(raw);
+  const lines = buildLines(d);
+  const base  = lines.reduce((a,l)=>a+l.base,0)||d.total||0;
+  const ivaAmt= base*0.10;
+  const total = base+ivaAmt;
+  const nFact = numFactura(d.referencia);
+  const hoy   = new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  const vence = new Date(Date.now()+30*86400000).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  const c = d.cliente||{};
+  const H = HOTEL;
+
+  const linesHtml = lines.length
+    ? lines.map(l=>`
+    <tr>
+      <td class="c-main">${l.concepto}</td>
+      <td class="r">${l.detalle||''}</td>
+      <td class="r">${euro(l.base)}</td>
+      <td class="r">10 %</td>
+      <td class="r">${euro(l.base*0.10)}</td>
+      <td class="r">${euro(l.base*1.10)}</td>
+    </tr>`).join('')
+    : '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">Sin conceptos facturables</td></tr>';
+
+  const direcHotel = [H.direccion, H.registro].filter(Boolean).join(' · ');
+
+  wrap.innerHTML = `
+<div class="invoice">
+  <div class="inv-head">
+    <div>
+      <div class="inv-hotel-name">${H.razon||H.nombre||'Queens Bellybutton'}</div>
+      <div class="inv-hotel-data">
+        ${H.direccion||''}<br>
+        NIF/CIF: ${H.nif||H.cif||'—'}<br>
+        ${H.email||''} ${H.telefono?' · '+H.telefono:''}
+      </div>
+    </div>
+    <div class="inv-meta">
+      <div class="inv-title">FACTURA</div>
+      <div class="inv-num">${nFact}</div>
+      <div class="inv-dates">
+        Emisión:<strong style="margin-left:6px">${hoy}</strong><br>
+        Vencimiento:<strong style="margin-left:6px">${vence}</strong><br>
+        Fecha evento:<strong style="margin-left:6px">${fmtDate(d.fecha)}</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="inv-client">
+    <div class="inv-client-label">Facturado a</div>
+    <div class="inv-client-name">${c.nombre||'Cliente'}</div>
+    <div class="inv-client-data">
+      ${c.dni?'NIF/DNI: '+c.dni+'<br>':''}
+      ${c.direccion?c.direccion+'<br>':''}
+      ${c.email||''} ${c.tel?' · '+c.tel:''}
+    </div>
+  </div>
+
+  <table class="inv-table">
+    <thead>
+      <tr>
+        <th style="width:36%">Concepto</th>
+        <th class="r" style="width:20%">Detalle</th>
+        <th class="r">Base imp.</th>
+        <th class="r">IVA</th>
+        <th class="r">Cuota IVA</th>
+        <th class="r">Total</th>
+      </tr>
+    </thead>
+    <tbody>${linesHtml}</tbody>
+  </table>
+
+  <div class="inv-totals">
+    <div class="totals-grid">
+      <div class="t-row"><span>Base imponible total</span><span>${euro(base)}</span></div>
+      <div class="t-row"><span>IVA reducido (10 %)</span><span>${euro(ivaAmt)}</span></div>
+      <div class="t-row sep t-main"><span>TOTAL FACTURA</span><span>${euro(total)}</span></div>
+    </div>
+  </div>
+
+  <div class="inv-footer">
+    Ref. presupuesto: ${d.referencia||'—'} · Espacio: ${d.espacio||'—'} · ${d.pt||0} asistentes
+    (${d.adultos||0} ad. · ${d.ninos||0} ni. · ${d.bebes||0} be.)<br>
+    Tipo impositivo: IVA 10 % — servicios de hostelería y restauración (art. 91.Uno.2 LIVA).<br>
+    ${direcHotel?direcHotel+'<br>':''}
+    Documento generado el ${hoy}. Esta factura está sujeta a las condiciones del contrato de servicios firmado.
+  </div>
+</div>`;
+
+  if (window.fnbShare) {
+    window.fnbShare.mount(document.getElementById('shareSlot'), ()=>({
+      title: 'Factura '+nFact,
+      summary: `${c.nombre||'Cliente'} · Evento ${fmtDate(d.fecha)}\nBase: ${euro(base)} · IVA 10%: ${euro(ivaAmt)} · Total: ${euro(total)}`,
+      actions: ['print','email','whatsapp','copy'],
+      email: c.email||''
+    }));
+  }
+}
+
+(async () => {
+  try {
+    const proj = await window.loadProject(undefined, {keys:['establecimiento']});
+    HOTEL = (proj.establecimiento?.datos_legacy) || {};
+  } catch(e) { /* defaults */ }
+  renderDoc();
+})();
+</script>
+</body>
+</html>

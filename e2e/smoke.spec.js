@@ -41,13 +41,19 @@ test.describe('smoke · landing y páginas raíz', () => {
       .toBeGreaterThanOrEqual(3);
   });
 
-  test('manifest PWA actualizado a Queens Bellybutton', async ({ request }) => {
-    const r = await request.get('/manifest.json');
-    expect(r.ok()).toBeTruthy();
-    const m = await r.json();
-    expect(m.name).toMatch(/Queens Bellybutton/);
-    expect(m.theme_color).toBe('#0a1733');
-    expect(m.icons.length).toBeGreaterThanOrEqual(2);
+  test('app móvil disuelta · Sala integrada en el panel (v6.0)', async ({ request }) => {
+    // v6.0 · la PWA se retiró: manifest, service worker y la página standalone ya no existen
+    for (const gone of ['/manifest.json', '/sw.js', '/sala-movil.html']) {
+      const r = await request.get(gone);
+      expect(r.status(), `${gone} debería devolver 404`).toBe(404);
+    }
+    // La vista de sala vive ahora dentro del panel de administración
+    const sala = await request.get('/dashboard/sala.html');
+    expect(sala.ok(), '/dashboard/sala.html debería responder 200').toBeTruthy();
+    const html = await sala.text();
+    expect(html).toMatch(/Sala/);
+    expect(html).not.toContain('serviceWorker');
+    expect(html).not.toContain('rel="manifest"');
   });
 
   test('favicon assets accesibles', async ({ request }) => {

@@ -37,7 +37,7 @@
   },
   "login": {
     "title": "Dashboard",
-    "subtitle": "Acceso al panel de director. Soft auth client-side (ver ADR §3 D7).",
+    "subtitle": "Acceso para super-admin y administradores. El cliente final entra sin login desde el enlace público del proyecto.",
     "email": "Email",
     "email_placeholder": "tu-email@ejemplo.com",
     "password": "Contraseña",
@@ -59,6 +59,7 @@
   },
   "sala": {
     "title": "Sala",
+    "back_panel": "← Panel",
     "tab_today": "Hoy",
     "tab_diets": "Dietas",
     "tab_spaces": "Espacios",

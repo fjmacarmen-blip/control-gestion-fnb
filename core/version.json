@@ -1,17 +1,19 @@
 {
-  "version": "5.20.0",
-  "date": "2026-06-24",
-  "tag": "v5.20",
-  "title": "Cierre de QA v5.1 + checklist con vínculos a cada objeto",
+  "version": "6.0.0",
+  "date": "2026-06-25",
+  "tag": "v6.0",
+  "title": "Epic v6.0 · 3 roles · diseñador de sala · factura · QR dos usos",
   "highlights": [
-    "Editor de carta pública: botón QR genera el código y lo expone a nivel supervisor",
-    "Cotizador: «Ver composición ▾» con escandallo oculto al cliente y grupos «a medida»",
-    "Cotizador: «Solicitar con datos» abre mailto con presupuesto detallado por partidas",
-    "Cotizador: «Solicitar copia» imprime/guarda el PDF del presupuesto detallado",
-    "test-checklist.html rehecho: cada test enlaza al objeto a repasar + bloques re-nivelados"
+    "Modelo formal de 3 roles: super-admin / administrador (proyecto acotado) / cliente final sin login",
+    "App móvil disuelta: sala de operaciones integrada como vista responsive en el panel de administración",
+    "Diseñador de sala interactivo: plano SVG drag-drop con 6 planos predefinidos, 5 tipos de elemento y compartir",
+    "Factura de servicios: factura A4 generada desde el cotizador interno con IVA 10% y vencimiento a 30 días",
+    "QR dos usos: hoja imprimible con QR de carta digital y QR de evento con hash SHA-256 (crypto.subtle)",
+    "Compartir universal: todos los documentos (plano, factura, presupuesto, orden, contrato) con share.js"
   ],
-  "changelog_url": "https://github.com/fjmacarmen-blip/control-gestion-fnb/blob/main/docs/CHANGELOG-v5.11-v5.17.md",
+  "changelog_url": "https://github.com/fjmacarmen-blip/control-gestion-fnb/blob/main/docs/DETALLE-PROYECTO.md#13--cambios-v60",
   "history": [
+    { "v": "6.0.0", "d": "2026-06-25", "t": "Epic v6.0 · 3 roles · diseñador sala · factura · QR dos usos · share universal" },
     { "v": "5.20.0", "d": "2026-06-24", "t": "Cierre QA v5.1 (4 bugs) + checklist con vínculos" },
     { "v": "5.17.0", "d": "2026-06-05", "t": "Colores dietas transversal + versioning visible" },
     { "v": "5.16.0", "d": "2026-06-05", "t": "Menús especiales completos · 8 dietas + paso 2.5" },

@@ -33,30 +33,33 @@ Hoteles independientes y pequeñas cadenas de 3 a 15 establecimientos. Restauran
 - Calcular escandallos: coste real de cada plato + PVP recomendado por categoría
 
 ### Para el equipo de sala
-- App móvil instalable (PWA) que funciona sin conexión
-- Eventos del día con dietas críticas marcadas
+- Vista de sala responsive integrada en el panel del director (v6.0 · sustituyó PWA independiente)
+- Eventos del día con dietas críticas marcadas por color
 - Ocupación de espacios próximos 30 días
 - Simulador de eventos TPV para entrenamiento
 
 ### Para el cliente final
 - Carta digital pública sin login, con alérgenos visibles
 - Acceso vía QR en mesa o flyer
+- Cotizador de eventos self-service con cotización detallada y envío por email/WhatsApp
 
-### Para Paco (administrador)
+### Para Paco (administrador / super-admin)
 - Wizard de alta de proyecto en 4 pasos
 - Marketplace de plantillas: cafetería · marisquería · hotel rural
 - Importadores Excel/CSV, PDF y bulk imágenes con IA
 - Conectores de productos (4 niveles) y TPV (4 niveles)
 - Modo claro/oscuro · 5 temas visuales por proyecto
-- **Panel superadmin (v5.14)** con paleta propia (verde+negro) y métricas
-  agregadas de todos los proyectos: KPIs con sparklines, chart de volumen
-  mensual, tabla con health pills, top paquetes, activity feed
+- **Panel superadmin** con paleta propia (verde+negro) y métricas agregadas de todos los proyectos
+- **Diseñador de sala interactivo (v6.0)** · plano SVG con 6 planos, drag-drop, 5 tipos de elemento
+- **Factura de servicios (v6.0)** · factura A4 desde el cotizador interno, IVA 10%, vencimiento 30 días
+- **QR dos usos (v6.0)** · hoja imprimible carta + evento con hash SHA-256
+- **Compartir universal (v6.0)** · todos los documentos (plano, factura, presupuesto, orden, contrato) con botón imprimir/email/WhatsApp/copiar
 
 ## Estado técnico
 
 | Cosa | Estado |
 | --- | --- |
-| Versión actual | **v5.20** (24 jun 2026 · badge visible en cada página) |
+| Versión actual | **v6.0** (25 jun 2026 · badge visible en cada página) |
 | Proyectos demo en producción | 3 (Miramar, Casa Lola, Demo) |
 | Recetas escandalladas (Miramar) | **153** (78 base + 36 v5.13 + 39 v5.16 dietas, todas con precios Makro 2026) |
 | Menús de eventos | **34 paquetes** (26 sugeridos + **8 especiales** vegano/vegetariano/sin-gluten/sin-lactosa/sin-frutos/halal/kosher/infantil) |

@@ -1589,7 +1589,26 @@ body{
           <button class="btn-next" onclick="abrirOrdenServicio()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
             📋 Generar Orden de Servicio (interno)
           </button>
+          <button class="btn-next" onclick="abrirFactura()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
+            🧾 Generar Factura de Servicios
+          </button>
+          <button class="btn-next" onclick="abrirQrEvento()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
+            🔗 QR del evento (para invitados)
+          </button>
         </div>
+      </div>
+
+      <!-- Enlace al diseñador de sala -->
+      <div id="btnDisenarSala" style="margin-top:16px;padding:14px 18px;background:var(--card);border:1px solid var(--gold-border);border-radius:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="font-size:22px">🪑</div>
+        <div style="flex:1;min-width:180px">
+          <div style="color:var(--gold);font-weight:600;font-size:.9rem;">Diseñar distribución de sala</div>
+          <div style="color:var(--text-soft);font-size:.8rem;margin-top:2px;">Coloca mesas, marca comensales con necesidades especiales y crea el seating list.</div>
+        </div>
+        <a id="linkDisenarSala" href="disenador-sala.html" target="_blank" rel="noopener"
+          style="display:inline-block;padding:8px 18px;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">
+          Abrir diseñador →
+        </a>
       </div>
 
       <div class="step-nav">
@@ -3201,6 +3220,28 @@ function abrirOrdenServicio() {
   window.open('orden-servicio.html', '_blank');
 }
 
+function abrirFactura() {
+  if (!sel.eventType || !sel.menuPkg) {
+    alert('Para generar la factura necesitas haber seleccionado al menos el tipo de evento y un menú.');
+    return;
+  }
+  exportPresupuestoData();
+  window.open('factura-servicio.html', '_blank');
+}
+
+function abrirQrEvento() {
+  const data = exportPresupuestoData();
+  const p = new URLSearchParams({
+    proyecto: new URLSearchParams(location.search).get('proyecto') || 'miramar',
+    tipo: 'evento',
+    eventId: data.referencia || '',
+    fecha: data.fecha || '',
+    evento: data.sel?.eventType?.name || '',
+    espacio: data.espacio || '',
+  });
+  window.open('qr-print.html?' + p.toString(), '_blank');
+}
+
 // ══════════════════════════════════════════════════
 // BOOT
 // ══════════════════════════════════════════════════
@@ -3232,6 +3273,10 @@ function applyPresupModeUI() {
     document.body.appendChild(banner);
     document.body.style.paddingTop = '32px';
   }
+  // Enlace diseñador con proyecto param
+  const _projSala = new URLSearchParams(location.search).get('proyecto') || 'miramar';
+  const _linkSala = document.getElementById('linkDisenarSala');
+  if (_linkSala) _linkSala.href = 'disenador-sala.html?proyecto=' + encodeURIComponent(_projSala);
 }
 
 // v5.6 · Disponibilidad

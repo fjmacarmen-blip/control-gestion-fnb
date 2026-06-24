@@ -43,6 +43,6 @@ test('QR URL · proyecto con caracteres que requieren encoding', () => {
 
 test('QR URL · custom page', () => {
   const loc = { origin: 'http://localhost', host: 'localhost', pathname: '/' };
-  const url = buildPublicMenuUrl('miramar', { page: 'sala-movil.html' }, loc);
-  assert.ok(url.includes('sala-movil.html?proyecto=miramar'));
+  const url = buildPublicMenuUrl('miramar', { page: 'evento-publica.html' }, loc);
+  assert.ok(url.includes('evento-publica.html?proyecto=miramar'));
 });

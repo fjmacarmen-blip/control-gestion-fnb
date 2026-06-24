@@ -902,7 +902,7 @@ main { padding: 36px 40px; min-width: 0; }
   </div>
   <div class="header-right">
     <button class="allerg-toggle-btn" id="allergToggleBtn" onclick="toggleAllergPanel()">🚨 Alérgenos</button>
-    <button class="btn-ghost" onclick="window.print()">🖨 Imprimir</button>
+    <span id="shareSlot"></span>
   </div>
 </header>
 
@@ -1031,6 +1031,7 @@ main { padding: 36px 40px; min-width: 0; }
 
 <script src="../js/theme.js"></script>
 <script src="../js/loader.js"></script>
+<script src="../js/share.js"></script>
 <script>
 // v5.17 · fix H2 audit · escapeHtml añadida para proteger innerHTML renders.
 // Todos los datos del recetario (recetas, bebidas) vienen de JSON del repo;
@@ -1957,6 +1958,21 @@ function openRecipeByName(name) {
   renderBebidas();
   calcCostes();
   renderAllergFilters();
+  // v6.0 · barra de compartir (documento interno · recetario / carta)
+  if (window.fnbShare) {
+    const slot = document.getElementById('shareSlot');
+    if (slot) {
+      slot.innerHTML = '';
+      const nRec = Object.values(R).reduce((a, c) => a + (Array.isArray(c) ? c.length : 0), 0);
+      const bar = window.fnbShare.mount(slot, {
+        title: 'Recetario & Carta completa',
+        summary: 'Recetario con escandallos y carta de bebidas'
+          + (nRec ? ' · ' + nRec + ' recetas' : ''),
+        label: 'Compartir'
+      });
+      if (bar) bar.style.margin = '0';
+    }
+  }
   // hashchange listener se registra después del primer render para evitar
   // race condition con R aún vacío.
   window.addEventListener('hashchange', function() {

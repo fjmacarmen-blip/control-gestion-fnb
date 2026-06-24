@@ -51,11 +51,44 @@
     }
   }
 
+  // ── Modelo de roles · v6.0 (#271) ──────────────────────────────
+  // Tres roles formalizados en la plataforma:
+  //   · super-admin → Paco. Gestiona TODOS los proyectos. Panel verde-negro
+  //                   (dashboard/superadmin.html), alta de proyectos y de
+  //                   administradores.
+  //   · admin       → el cliente (director del hotel/restaurante). Gestiona
+  //                   SOLO su proyecto. Tiene sesión con scope 'admin' y un
+  //                   campo `proyecto` que limita lo que ve en el panel.
+  //   · cliente     → el comensal/organizador del evento. SIN login: compone
+  //                   su evento en el cotizador público
+  //                   (presupuesto-evento.html?proyecto=<id>). No tiene sesión;
+  //                   es el visitante anónimo del enlace público del proyecto.
+  const ROLES = { SUPER_ADMIN: 'super-admin', ADMIN: 'admin', CLIENT: 'cliente' };
+
+  function isSuperAdmin(session) {
+    return !!session && session.scope === ROLES.SUPER_ADMIN;
+  }
+  function isAdmin(session) {
+    return !!session && session.scope === ROLES.ADMIN;
+  }
+  // Proyecto al que está limitada la sesión (admin). null = sin límite (super-admin).
+  function scopedProject(session) {
+    return (session && session.proyecto) || null;
+  }
+  function roleLabel(session) {
+    if (isSuperAdmin(session)) return 'Super-admin';
+    if (isAdmin(session)) return 'Administrador';
+    return 'Cliente';
+  }
+
   // ── Sesión (UX, no seguridad) ──────────────────────────────────
-  function setSession(user, scope) {
+  function setSession(user, scope, proyecto) {
     const session = {
       user: user,
-      scope: scope || 'super-admin',
+      scope: scope || ROLES.SUPER_ADMIN,
+      // v6.0 · proyecto al que se limita la sesión (solo rol admin).
+      // El super-admin no se limita: proyecto = null.
+      proyecto: proyecto || (user && user.proyecto) || null,
       iat: Date.now(),
       exp: Date.now() + SESSION_TTL_MS,
     };
@@ -113,7 +146,11 @@
 
   // ── Helpers para login contra auth.json del dashboard ─────────
   /**
-   * Login contra dashboard/auth.json (super-admin global).
+   * Login contra dashboard/auth.json. v6.0 (#271): resuelve cualquiera de
+   * los roles con sesión (super-admin o admin), no solo el super-admin —
+   * el rol viene de `user.scope` en auth.json y, para admins, `user.proyecto`
+   * delimita su acceso. (El rol 'cliente' no pasa por aquí: no tiene login.)
+   * Nombre histórico conservado por compatibilidad; alias `login` exportado.
    * authPath: ruta al auth.json relativa a la página llamante.
    * Retorna { ok, user?, error? }.
    */
@@ -130,7 +167,11 @@
       if (!user) return { ok: false, error: 'Usuario o contraseña incorrectos' };
       const valid = await verifyPassword(password, user.passwordHash);
       if (!valid) return { ok: false, error: 'Usuario o contraseña incorrectos' };
-      setSession({ email: user.email, name: user.name || user.email }, user.scope || 'super-admin');
+      setSession(
+        { email: user.email, name: user.name || user.email, proyecto: user.proyecto || null },
+        user.scope || ROLES.SUPER_ADMIN,
+        user.proyecto || null
+      );
       markFreshAuth();
       return { ok: true, user };
     } catch (e) {
@@ -597,9 +638,16 @@
     isFreshAuth,
     clearFreshAuth,
     loginSuperAdmin,
+    login: loginSuperAdmin, // v6.0 · alias role-aware (super-admin o admin)
     promptForPAT,
     promptForPATGuided,
     promptPasswordAndExecute,
+    // v6.0 · modelo de roles (#271)
+    ROLES,
+    isSuperAdmin,
+    isAdmin,
+    scopedProject,
+    roleLabel,
     SESSION_TTL_MS,
     FRESH_TTL_MS,
   };

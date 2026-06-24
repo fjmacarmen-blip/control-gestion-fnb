@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR · Queens Bellybutton</title>
+<link rel="icon" type="image/svg+xml" href="../../branding/favicon/favicon.svg">
+<link rel="icon" type="image/x-icon" href="../../branding/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../../branding/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../branding/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../branding/favicon/apple-touch-icon.png">
+<meta name="theme-color" content="#0a1733">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/themes.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,22,40,.94);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:14px 32px;display:flex;align-items:center;justify-content:space-between;
+}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-mark{
+  width:34px;height:34px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+  color:var(--bg);display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.95rem;
+}
+.nav-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);font-weight:600;}
+.nav-sub{font-size:.6rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.nav-actions{display:flex;gap:10px;align-items:center;}
+.btn{
+  background:transparent;color:var(--text);padding:8px 16px;border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;
+  border:1px solid var(--border2);cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+  transition:border-color .2s,background .2s;
+}
+.btn:hover{background:var(--card2);border-color:var(--gold-border);}
+.btn.primary{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
+
+.wrap{max-width:640px;margin:40px auto;padding:0 24px 80px;}
+
+.type-tabs{display:flex;gap:8px;margin-bottom:28px;}
+.type-tab{
+  flex:1;padding:12px;border-radius:10px;
+  border:1px solid var(--border);cursor:pointer;
+  font-size:.85rem;font-weight:500;color:var(--text-soft);
+  background:var(--card);text-align:center;transition:.2s;
+}
+.type-tab.active{border-color:var(--gold-border);color:var(--gold);background:var(--gold-dim);}
+.type-tab:hover:not(.active){border-color:var(--border2);}
+
+.qr-card{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;
+}
+.qr-preview-area{
+  padding:40px;text-align:center;
+  background:linear-gradient(135deg,rgba(201,168,76,.06),transparent);
+  border-bottom:1px solid var(--border);
+}
+.qr-box{
+  display:inline-block;background:#fff;padding:20px;border-radius:14px;
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
+}
+.qr-label{
+  font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--text);
+  margin-top:20px;font-weight:600;
+}
+.qr-sublabel{font-size:.82rem;color:var(--text-soft);margin-top:6px;line-height:1.5;}
+.qr-url{
+  font-size:.7rem;color:var(--muted);margin-top:10px;
+  word-break:break-all;font-family:monospace;line-height:1.5;
+}
+
+.qr-meta{padding:20px 28px;border-bottom:1px solid var(--border);}
+.meta-label{font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.meta-row{display:flex;gap:16px;flex-wrap:wrap;}
+.meta-field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:120px;}
+.meta-field label{font-size:.75rem;color:var(--text-soft);}
+.meta-field input{
+  background:var(--card2);border:1px solid var(--border2);border-radius:6px;
+  color:var(--text);font-size:.82rem;padding:7px 10px;
+  font-family:inherit;transition:border-color .2s;
+}
+.meta-field input:focus{outline:none;border-color:var(--gold-border);}
+
+.evento-fields{display:none;}
+.evento-fields.visible{display:block;}
+
+.qr-actions{padding:20px 28px;display:flex;gap:10px;flex-wrap:wrap;}
+
+@media print{
+  .nav,.nav-actions,.type-tabs,.qr-actions,.qr-meta{display:none!important;}
+  .wrap{margin:0;padding:0;max-width:100%;}
+  .qr-card{border:none;border-radius:0;box-shadow:none;}
+  .qr-preview-area{padding:20px;background:#fff!important;}
+  .qr-box{box-shadow:0 2px 8px rgba(0,0,0,.15);}
+  .qr-label{color:#1a1a1a!important;}
+  .qr-sublabel{color:#555!important;}
+  .qr-url{color:#888!important;}
+  body{background:#fff!important;}
+}
+@media(max-width:600px){
+  .wrap{padding:0 12px 60px;}
+  .qr-preview-area{padding:24px 12px;}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-brand" href="javascript:history.back()">
+    <div class="nav-mark">QB</div>
+    <div>
+      <div class="nav-title">Queens Bellybutton</div>
+      <div class="nav-sub" id="navSub">Generador de QR</div>
+    </div>
+  </a>
+  <div class="nav-actions">
+    <button class="btn" id="btnDownload">⬇ SVG</button>
+    <button class="btn primary" onclick="window.print()">🖨️ Imprimir</button>
+    <span id="shareSlot"></span>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="type-tabs" id="typeTabs">
+    <div class="type-tab active" data-tipo="carta" onclick="setTipo('carta')">
+      🍽️ Carta digital
+    </div>
+    <div class="type-tab" data-tipo="evento" onclick="setTipo('evento')">
+      🎊 Información de evento
+    </div>
+  </div>
+
+  <div class="qr-card">
+    <div class="qr-preview-area">
+      <div class="qr-box" id="qrBox">
+        <div style="width:260px;height:260px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:.8rem;">
+          Generando…
+        </div>
+      </div>
+      <div class="qr-label" id="qrLabel">Carta digital</div>
+      <div class="qr-sublabel" id="qrSublabel">Escanea para ver los menús disponibles</div>
+      <div class="qr-url" id="qrUrl"></div>
+    </div>
+
+    <div class="qr-meta" id="eventoFields">
+      <div class="meta-label">Datos del evento (aparecen en la hoja impresa)</div>
+      <div class="meta-row">
+        <div class="meta-field">
+          <label>Tipo de evento</label>
+          <input id="fEvento" type="text" placeholder="Ej. Boda · Cumpleaños · Gala" oninput="updateLabels()">
+        </div>
+        <div class="meta-field">
+          <label>Fecha</label>
+          <input id="fFecha" type="date" oninput="updateLabels()">
+        </div>
+      </div>
+      <div class="meta-row" style="margin-top:8px;">
+        <div class="meta-field">
+          <label>Espacio</label>
+          <input id="fEspacio" type="text" placeholder="Ej. Gran Salón Mediterráneo" oninput="updateLabels()">
+        </div>
+        <div class="meta-field">
+          <label>Referencia presupuesto (opcional)</label>
+          <input id="fRef" type="text" placeholder="PRES-2026-XXXX" oninput="regenerate()">
+        </div>
+      </div>
+    </div>
+
+    <div class="qr-actions">
+      <button class="btn primary" id="btnDownload2">⬇ Descargar SVG</button>
+      <button class="btn" onclick="window.print()">🖨️ Imprimir hoja QR</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/theme.js"></script>
+<script src="../js/loader.js"></script>
+<script src="../js/share.js"></script>
+<script src="../js/qr-gen.js"></script>
+<script>
+const params   = new URLSearchParams(location.search);
+const PROYECTO = params.get('proyecto') || 'miramar';
+let tipo       = params.get('tipo') || 'carta';
+let currentSvg = null;
+let currentUrl = '';
+
+function qs(id){ return document.getElementById(id); }
+function fmtDate(iso) {
+  if (!iso) return '';
+  try { return new Date(iso).toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
+  catch(e){ return iso; }
+}
+
+function setTipo(t) {
+  tipo = t;
+  document.querySelectorAll('.type-tab').forEach(el=>el.classList.toggle('active', el.dataset.tipo===t));
+  const isEvento = t==='evento';
+  qs('eventoFields').style.display = isEvento ? '' : 'none';
+  qs('navSub').textContent = isEvento ? 'QR Evento' : 'QR Carta Digital';
+  if (!isEvento) {
+    qs('qrLabel').textContent = 'Carta digital';
+    qs('qrSublabel').textContent = 'Escanea para ver los menús disponibles';
+  }
+  regenerate();
+}
+
+function updateLabels() {
+  if (tipo !== 'evento') return;
+  const ev   = qs('fEvento').value.trim();
+  const fecha= qs('fFecha').value;
+  const esp  = qs('fEspacio').value.trim();
+  const parts= [ev, fmtDate(fecha), esp].filter(Boolean);
+  qs('qrLabel').textContent    = parts[0] || 'Información del evento';
+  qs('qrSublabel').textContent = parts.slice(1).join(' · ') || 'Escanea para ver los detalles de tu evento';
+}
+
+async function regenerate() {
+  qs('qrBox').innerHTML = '<div style="width:260px;height:260px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:.8rem;">Generando…</div>';
+  try {
+    let url;
+    if (tipo === 'evento') {
+      const refRaw = qs('fRef').value.trim() || 'EVENTO';
+      url = await window.fnbQR.buildEventUrl(PROYECTO, refRaw);
+    } else {
+      url = window.fnbQR.buildPublicMenuUrl(PROYECTO);
+    }
+    currentUrl = url;
+    const svg = await window.fnbQR.generateQR(url, {size:260, level:'M'});
+    currentSvg = svg;
+    qs('qrBox').innerHTML = svg;
+    qs('qrUrl').textContent = url;
+    mountShare(url);
+  } catch(e) {
+    qs('qrBox').innerHTML = '<div style="color:#ff8a8a;width:260px;height:260px;display:flex;align-items:center;justify-content:center;font-size:.8rem;">Error: '+e.message+'</div>';
+  }
+}
+
+function downloadSvg() {
+  if (!currentSvg) return;
+  window.fnbQR.downloadQR(currentSvg, 'qr-'+(tipo==='evento'?'evento':'carta')+'-'+PROYECTO+'.svg');
+}
+
+function mountShare(url) {
+  if (!window.fnbShare) return;
+  const slot = qs('shareSlot');
+  if (!slot) return;
+  slot.innerHTML = '';
+  window.fnbShare.mount(slot, ()=>({
+    title: tipo==='evento' ? 'QR Evento · '+PROYECTO : 'QR Carta · '+PROYECTO,
+    summary: 'Código QR generado para '+PROYECTO+'\n'+url,
+    actions: ['print','whatsapp','copy'],
+  }));
+}
+
+qs('btnDownload').addEventListener('click', downloadSvg);
+qs('btnDownload2').addEventListener('click', downloadSvg);
+
+async function init() {
+  // Pre-fill from URL params
+  const eventId = params.get('eventId');
+  const fecha   = params.get('fecha');
+  const evento  = params.get('evento');
+  const espacio = params.get('espacio');
+  if (fecha)   qs('fFecha').value   = fecha;
+  if (evento)  qs('fEvento').value  = evento;
+  if (espacio) qs('fEspacio').value = espacio;
+  if (eventId) qs('fRef').value     = eventId;
+
+  // Set tipo tabs
+  setTipo(tipo);
+  // If tipo is already set, updateLabels
+  updateLabels();
+}
+
+init();
+</script>
+</body>
+</html>

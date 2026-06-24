@@ -37,7 +37,7 @@
   },
   "login": {
     "title": "Dashboard",
-    "subtitle": "Director's panel access. Client-side soft auth (see ADR §3 D7).",
+    "subtitle": "Access for super-admin and administrators. The final client logs in without credentials from the project's public link.",
     "email": "Email",
     "email_placeholder": "your-email@example.com",
     "password": "Password",
@@ -59,6 +59,7 @@
   },
   "sala": {
     "title": "Floor",
+    "back_panel": "← Panel",
     "tab_today": "Today",
     "tab_diets": "Diets",
     "tab_spaces": "Spaces",

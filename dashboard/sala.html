@@ -3,30 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="project-base" content="./">
-<meta name="description" content="Vista móvil para el equipo de sala · eventos del día · dietas críticas · ocupación.">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="F&B Sala">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; manifest-src 'self';">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/svg+xml" href="icons/icon-192.svg">
-<link rel="apple-touch-icon" href="icons/icon-192.svg">
+<meta name="project-base" content="../">
+<meta name="description" content="Vista de sala · operativa del equipo · eventos del día · dietas críticas · ocupación · TPV. Integrada en el panel de administración.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="core/css/dashboard-theme.css">
-<title>Sala · F&B</title>
+<link rel="stylesheet" href="../core/css/dashboard-theme.css">
+<title>Sala · Operativa · Queens Bellybutton</title>
 
 <!-- Queens Bellybutton favicon block v5.9 -->
-<link rel="icon" type="image/svg+xml" href="branding/favicon/favicon.svg">
-<link rel="icon" type="image/x-icon" href="branding/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="branding/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="branding/favicon/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="branding/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="../branding/favicon/favicon.svg">
+<link rel="icon" type="image/x-icon" href="../branding/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../branding/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../branding/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../branding/favicon/apple-touch-icon.png">
 <meta name="theme-color" content="#0a1733">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Queens Bellybutton">
 <!-- /Queens Bellybutton favicon block -->
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,8 +31,6 @@
     color: var(--text);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    user-select: none;
     padding-top: var(--safe-top);
     padding-bottom: var(--safe-bot);
   }
@@ -57,6 +46,12 @@
     backdrop-filter: blur(10px);
   }
   .brand { display: flex; align-items: center; gap: 10px; }
+  .back-link {
+    font-size: 12px; color: var(--text-soft); text-decoration: none;
+    border: 1px solid var(--border-default); border-radius: 7px;
+    padding: 7px 11px; transition: all .15s; white-space: nowrap;
+  }
+  .back-link:hover { color: var(--accent); border-color: rgba(52,211,153,.35); }
   .brand-mark {
     width: 40px; height: 40px;
     border-radius: 9px;
@@ -73,10 +68,10 @@
 
   /* ── Tabs grandes para dedo ───────────────────────── */
   .tabs {
-    display: grid; grid-template-columns: repeat(3, 1fr);
+    display: grid; grid-template-columns: repeat(4, 1fr);
     background: var(--bg-base);
     border-bottom: 1px solid var(--border-default);
-    position: sticky; top: 61px; z-index: 49;
+    position: sticky; top: 69px; z-index: 49;
   }
   .tab {
     padding: 14px 8px;
@@ -265,18 +260,21 @@
   .tpv-event-time { font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
   .tpv-event-body { color: var(--text); font-size: 13px; line-height: 1.4; }
 
-  /* ── Tablet ───────────────────────────────────────── */
+  /* ── Tablet + desktop ─────────────────────────────── */
   @media (min-width: 768px) {
-    main { max-width: 720px; margin: 0 auto; padding: 28px 24px 120px; }
+    main { max-width: 860px; margin: 0 auto; padding: 28px 24px 120px; }
     .topbar { padding: 16px 28px; }
     .ev-meta { grid-template-columns: repeat(4, 1fr); }
+    .proj-bar { justify-content: center; }
+    .proj-bar select { max-width: 420px; flex: initial; min-width: 280px; }
   }
 </style>
 </head>
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="brand-mark"><img src="branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div>
+      <a href="index.html" class="back-link" data-i18n="sala.back_panel">← Panel</a>
+      <div class="brand-mark"><img src="../branding/favicon/icon-192.png" alt="Queens Bellybutton" width="40" height="40"></div>
       <div class="brand-info">
         <div class="brand-name" data-i18n="sala.title">Sala</div>
         <div class="brand-proj" id="brandProj" data-i18n="common.loading">cargando…</div>
@@ -304,11 +302,11 @@
     <select id="projSelect"></select>
   </div>
 
-<script src="core/js/theme.js"></script>
-<script src="core/js/loader.js"></script>
-<script src="core/js/i18n.js"></script>
-<script src="core/js/metrics.js"></script>
-<script src="core/js/tpv-connector.js"></script>
+<script src="../core/js/theme.js"></script>
+<script src="../core/js/loader.js"></script>
+<script src="../core/js/i18n.js"></script>
+<script src="../core/js/metrics.js"></script>
+<script src="../core/js/tpv-connector.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -369,7 +367,7 @@ $$('.tab').forEach(t => {
 // ── Project switcher ────────────────────
 async function loadProjectsList() {
   try {
-    const res = await fetch('projects/index.json');
+    const res = await fetch('../projects/index.json');
     const idx = await res.json();
     const select = $('#projSelect');
     select.innerHTML = '';
@@ -421,7 +419,7 @@ function renderTPV(root) {
     <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;line-height:1.5;">
       Lanza un escenario y verás los eventos que llegarían del TPV en tiempo real.
       Útil para entrenar al equipo de sala antes del primer servicio.
-      <a href="docs/adr/013-tpv-connectors.md" style="color:var(--accent);">ADR 013</a>.
+      <a href="../docs/adr/013-tpv-connectors.md" style="color:var(--accent);">ADR 013</a>.
     </div>
     <div class="tpv-toolbar">
       <button class="tpv-btn primary" data-tpv="comida_normal">▶ Comida normal</button>
@@ -662,13 +660,6 @@ function renderEspacios(root) {
   root.innerHTML = html;
 }
 
-// ── Service worker registration ─────────
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW registration failed:', err));
-  });
-}
-
 // ── i18n selector en topbar (v5.5) ──────
 if (window.fnbI18n) {
   const slot = $('#i18nSlotSala');
@@ -681,6 +672,6 @@ loadAll();
 </script>
 
 <!-- v5.17 · version-badge · badge versión visible -->
-<script src="core/js/version-badge.js" defer></script>
+<script src="../core/js/version-badge.js" defer></script>
 </body>
 </html>
