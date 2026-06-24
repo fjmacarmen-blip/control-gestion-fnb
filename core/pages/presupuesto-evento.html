@@ -1592,6 +1592,9 @@ body{
           <button class="btn-next" onclick="abrirFactura()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
             🧾 Generar Factura de Servicios
           </button>
+          <button class="btn-next" onclick="abrirQrEvento()" style="background:var(--card2);border:1px solid var(--gold-border);color:var(--gold);">
+            🔗 QR del evento (para invitados)
+          </button>
         </div>
       </div>
 
@@ -3224,6 +3227,19 @@ function abrirFactura() {
   }
   exportPresupuestoData();
   window.open('factura-servicio.html', '_blank');
+}
+
+function abrirQrEvento() {
+  const data = exportPresupuestoData();
+  const p = new URLSearchParams({
+    proyecto: new URLSearchParams(location.search).get('proyecto') || 'miramar',
+    tipo: 'evento',
+    eventId: data.referencia || '',
+    fecha: data.fecha || '',
+    evento: data.sel?.eventType?.name || '',
+    espacio: data.espacio || '',
+  });
+  window.open('qr-print.html?' + p.toString(), '_blank');
 }
 
 // ══════════════════════════════════════════════════

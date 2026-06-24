@@ -652,6 +652,7 @@
     </div>
     <div class="modal-foot">
       <button class="btn" data-action="qr-close">Cerrar</button>
+      <button class="btn" data-action="qr-printsheet">📄 Hoja imprimible</button>
       <button class="btn primary" data-action="qr-download">⬇ Descargar SVG</button>
     </div>
   </div>
@@ -2119,6 +2120,7 @@ document.addEventListener('click', (e) => {
     case 'generate-qr':       openQrModal(); break;
     case 'qr-close':          closeQrModal(); break;
     case 'qr-download':       downloadCurrentQr(); break;
+    case 'qr-printsheet':     window.open('../core/pages/qr-print.html?proyecto='+encodeURIComponent(PROJECT_ID)+'&tipo=carta','_blank'); break;
     case 'show-escandallos':  openEscandallosModal(); break;
     case 'escandallos-close': closeEscandallosModal(); break;
   }
