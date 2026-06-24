@@ -331,7 +331,7 @@ body{
   </a>
   <div class="nav-actions">
     <a href="presupuesto-evento.html" class="btn">← Volver al presupuesto</a>
-    <button class="btn btn-primary" onclick="window.print()">🖨 Imprimir</button>
+    <span id="shareSlot"></span>
   </div>
 </nav>
 
@@ -339,6 +339,7 @@ body{
 
 <script src="../js/theme.js"></script>
 <script src="../js/loader.js"></script>
+<script src="../js/share.js"></script>
 <script>
 // ════════════════════════════════════════════════════════════════════════
 // Orden de Servicio — Generación automática desde sessionStorage
@@ -793,6 +794,23 @@ function renderDoc() {
       <p style="color:var(--text-soft);font-size:.92rem;line-height:1.7;">${data.notas}</p>
     </div>` : ''}
   `;
+
+  // v6.0 · barra de compartir con datos vivos de la orden (documento interno)
+  mountShare({
+    title: 'Orden de servicio · ' + ref,
+    summary: 'Operativa interna del evento\n'
+      + (data.sel?.eventType?.name || '') + ' · ' + hoy + ' · ' + (data.pt || 0) + ' pax\n'
+      + (data.espacio || '') + ' · ' + totalPersonal + ' personas de servicio',
+    label: 'Compartir orden'
+  });
+}
+
+function mountShare(opts) {
+  const slot = document.getElementById('shareSlot');
+  if (!slot || !window.fnbShare) return;
+  slot.innerHTML = '';
+  const bar = window.fnbShare.mount(slot, opts);
+  if (bar) bar.style.margin = '0';
 }
 
 function renderDeptCard(cls, title, dept) {

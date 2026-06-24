@@ -280,7 +280,7 @@ body{
   </a>
   <div class="nav-actions">
     <a href="presupuesto-evento.html" class="btn">← Volver al presupuesto</a>
-    <button class="btn btn-primary" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+    <span id="shareSlot"></span>
   </div>
 </nav>
 
@@ -288,6 +288,7 @@ body{
 
 <script src="../js/theme.js"></script>
 <script src="../js/loader.js"></script>
+<script src="../js/share.js"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════
 // Lee datos del presupuesto desde sessionStorage y rellena el contrato
@@ -529,6 +530,24 @@ function renderDoc() {
 
     </div>
   `;
+
+  // v6.0 · barra de compartir con datos vivos del contrato
+  mountShare({
+    title: 'Contrato de servicios · ' + (data.cliente?.nombre || ''),
+    summary: 'Contrato de organización de evento\n'
+      + (sel.eventType?.name || '') + ' · ' + fmtFecha(data.fecha) + ' · ' + pt + ' pax\n'
+      + 'Total con IVA: ' + fmtEur(totalIva) + ' · Señal 30 %: ' + fmtEur(senal),
+    email: data.cliente?.email || ''
+  });
+}
+
+// v6.0 · monta la barra de compartir (imprimir/PDF · email · WhatsApp · copiar) en la nav
+function mountShare(opts) {
+  const slot = document.getElementById('shareSlot');
+  if (!slot || !window.fnbShare) return;
+  slot.innerHTML = '';
+  const bar = window.fnbShare.mount(slot, opts);
+  if (bar) bar.style.margin = '0';
 }
 
 (async () => {
