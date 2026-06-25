@@ -10,7 +10,7 @@ Documento Word editable, 4-5 páginas A4. Plantilla profesional para enviar a ca
 
 **Estructura:**
 1. **Portada** · resumen ejecutivo + datos del cliente
-2. **Alcance** · tabla con las 10 capacidades incluidas + valor de mercado
+2. **Alcance** · tabla con las 12 capacidades incluidas + valor de mercado
 3. **Calendario de implantación** · 4 semanas detalladas
 4. **Inversión** · implantación one-shot + mantenimiento mensual opcional
 5. **Incluido y no incluido** · evita malentendidos

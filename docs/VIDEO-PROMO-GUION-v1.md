@@ -1,387 +1,220 @@
-# Vídeo promocional · Queens Bellybutton · Guion v1
+# Vídeo promocional · Queen's Bellybutton · Guion v6.0
 
-> **Formato:** Remotion (vídeo programático en React) · 1920×1080 · 30 fps · MP4
-> **Duración objetivo:** 5:30 min (9 900 frames)
-> **Audio:** Sin voz — texto kinetic en pantalla + música de fondo opcional (royalty-free)
-> **Narrativa:** Arco de 6 frames (storyboard skill) + 5 escenas de demo
-> **Tono:** Profesional cercano · primera persona · "hotelero 30 años construye su propia solución"
-> **Idioma:** Español (luego v2 inglesa cambiando solo el JSON de textos)
+> **Formato:** Remotion (vídeo programático en React) · motion comic estilo Marvel retro
+> **Resolución:** 1920×1080 · 30 fps · MP4 (+ versiones cuadrada 1080×1080 y vertical 1080×1920)
+> **Duración:** 2:18 min (138 s · 11 paneles de cómic)
+> **Audio:** Sin voz — cartelas y bocadillos en pantalla + música de fondo opcional (royalty-free)
+> **Narrativa:** Producto primero — 9 paneles de producto, 1 de credibilidad, 1 de CTA
+> **Tono:** Cómic de superhéroes vintage · enérgico · "el caos del catering tiene quien lo resuelva"
+> **Idioma:** Español (toda la copia vive en `src/texts/es.json`; una v2 inglesa sería un `en.json`)
+
+> **Nota de versión:** Este guion sustituye al borrador kinetic-typography de 5:30 min. El vídeo
+> real es un **motion comic** mucho más corto y visual. La copia de referencia es la de
+> `video-promo/src/texts/es.json`; si editas frases, hazlo allí, no aquí.
 
 ---
 
-## El arco narrativo (storyboard skill aplicado)
+## El arco narrativo
 
-| Frame | Cuándo | Qué | Por qué funciona |
-|---|---|---|---|
-| **1 · Personaje** | 0:00–0:30 | Paco, 30 años hostelero, Algeciras | Hace que cualquier hotelero se identifique |
-| **2 · Problema emerge** | 0:30–1:00 | 8h/mes en Excel + Word + email para 1 presupuesto | Dolor visceral reconocible |
-| **3 · Oh crap** | 1:00–1:30 | Evento perdido = 4.000€ · alergia mal marcada = crisis | Escalada de urgencia con números |
-| **4 · Solución aparece** | 1:30–2:00 | Logo Queens Bellybutton + manifesto en 3 líneas | Introduce sin venderse agresivo |
-| **5 · Aha moment** | 4:30–5:00 | Paco sonriendo · "todo en un repo" | Pago emocional de la promesa |
-| **6 · Vida después** | 5:00–5:30 | CTA + datos de contacto | Cierre llamada a acción |
+A diferencia del primer borrador (centrado en la historia personal de Paco), este vídeo pone el
+**producto primero**. La trayectoria de 30 años aparece solo al final, como aval de credibilidad
+(panel 10, 8 s). El recorrido es: caos → solución → recorrido por las herramientas → diferenciador
+→ quién hay detrás → llamada a la acción.
 
-Entre los frames 4 y 5 van **5 escenas de demo** (2:00–4:30) que prueban cada promesa con capturas reales del producto.
+| Bloque | Paneles | Qué hace |
+|---|---|---|
+| **Gancho** | 1 · Portada | Portada de cómic con el logo héroe e issue "Nº 1" |
+| **Dolor** | 2 · Problema | El caos de gestionar eventos a mano (Excel, Word, emails) |
+| **Promesa** | 3 · Solución | Qué es Queen's Bellybutton en tres líneas |
+| **Demo** | 4–8 · Cotizador, Dietas, Recetario, Sala, Métricas | Una herramienta por panel, con captura real |
+| **Diferenciador** | 9 | Sin cuotas · datos en tu repo · una URL por cliente |
+| **Aval** | 10 · Credibilidad | 30 años de dirección hotelera detrás |
+| **Cierre** | 11 · CTA | "¿Lo vemos con tu carta?" + logo + contacto |
 
 ---
 
 ## Decisiones de diseño
 
-### Paleta (consistente con el producto)
+### Estilo visual: cómic de superhéroes retro
+- **Página de cómic**: papel con textura y patrón de semitono (puntos Ben-Day), viñetas con borde
+  de tinta grueso y sombra dura desplazada.
+- **Personaje Paco** dibujado estilo Marvel vintage (pelo castaño oscuro, traje azul marino). Se
+  genera como hoja de poses y se recorta a PNGs individuales (`paco-pose-*.png`).
+- **Bocadillos de diálogo** (`SpeechBubble`) y **cartelas narrativas** amarillas (`CaptionBox`).
+- **Onomatopeyas** (`¡RIIING!`, `¡ZAS!`, `¡PLOP!`) que entran con un *spring* exagerado.
+- **Ken Burns** suave (zoom + pan lento) sobre las capturas reales del producto.
+- **Watermark** propio: el isotipo QBB fijo en una esquina (no es marca de agua de terceros).
+
+### Paleta cómic
 ```
-Fondo principal      #0a1733 · Navy corporativo
-Acento (oro)         #c9a35c · CTAs, números clave, énfasis
-Texto principal      #f4ead7 · Champaña suave (mejor que blanco)
-Texto secundario     #b8c4dc · Gris azulado
-Success / verde      #34d399 · Para indicar resultado positivo
-Danger / rojo        #f85149 · Para indicar el dolor
+Tinta (bordes/texto)   #16130d · casi negro cálido
+Papel                  crema con semitono
+Rojo cómic             cartelas de acción y acentos
+Azul cómic             bordes de pop-ups y cierres
+Oro / champán          logo y precio "0 €"
+Verde success          checks de la vista de sala
 ```
 
-### Tipografía
-- **Display (titulares grandes):** Cormorant Garamond (la del producto)
-- **UI / texto kinetic:** Inter (la del producto)
-- **Monoespaciada (datos):** JetBrains Mono
-
-### Avatar cartoon de Paco
-- Aparece 4 veces: escena 1 (intro), escena 3 (preocupado), escena 8 (aha), escena 11 (CTA cierre)
-- Estilo: SVG plano dibujado por código · NO 3D · NO realista
-- Características: gafas, pelo grisáceo, traje casual oscuro, mirada amable
-- Implementación: componente React `<PacoAvatar pose="thinking|worried|happy|waving" />`
+### Tipografía (vía `@remotion/google-fonts`)
+- **Display (titulares, onomatopeyas, cartelas):** Bangers
+- **Cuerpo (texto de apoyo, listas):** Comic Neue
 
 ---
 
-## Estructura completa · 11 escenas
+## Estructura · 11 paneles
 
-### Escena 1 · Cold open (0:00 – 0:15) · 15 seg · 450 frames
+> Duraciones en `src/theme.ts` (`SCENE_DURATIONS`). Cada escena es un `SceneNN*.tsx` en
+> `src/scenes/`. Los textos citados abajo son los de `es.json`.
 
-**Visual:**
-- Fondo navy `#0a1733` con sutil gradiente radial gold en una esquina
-- Avatar Paco aparece a la izquierda mirando un escritorio caótico (sticky notes, libreta papel, Excel en pantalla)
-- Cámara hace zoom lento sobre el caos
+### Panel 1 · Portada (10 s)
+**Visual:** Portada de cómic. Logo QBB héroe en grande, título estilo cómic, faja de "issue".
+**Copia:**
+- Kicker: "PRESENTANDO LA PLATAFORMA DE GESTIÓN F&B"
+- Título: "QUEEN'S BELLYBUTTON"
+- Subtítulo: "Tus eventos, de la petición al servicio, en una sola herramienta"
+- Issue: "Nº 1 · JUNIO 2026" · Precio: "0 € / mes"
 
-**Texto kinetic (centrado, derecha del avatar):**
-```
-Frame 0–90:    "Llevo 30 años"
-Frame 90–180:  "dirigiendo hoteles."
-Frame 180–270: (pausa con escritorio caótico)
-Frame 270–360: "Y un cuaderno"
-Frame 360–450: "gestionaba mejor mi catering"
-               "que cualquier software."   ← énfasis en CUALQUIER (gold)
-```
+### Panel 2 · El problema (12 s)
+**Visual:** Viñeta del caos; Paco agobiado, papeles volando. Onomatopeya de teléfono.
+**Copia:**
+- Cartela: "Hoy, en cientos de hoteles y salones de eventos…"
+- Bocadillo: "¡¿Dónde está el presupuesto de la boda?! ¿Y la lista de alérgenos?"
+- Items que caen: Excel · Word · emails infinitos · notas sueltas
+- Onomatopeya: "¡RIIING!"
 
-**Animación:** texto fade-in + slide-up con bezier `(0.16, 1, 0.3, 1)`, palabra clave "cualquier" hace scale 1.1 sutil
+### Panel 3 · La solución (12 s)
+**Visual:** Giro de tono; Paco resuelto presenta la plataforma.
+**Copia:**
+- Cartela: "Hasta que todo cambia."
+- Bocadillo: "Se acabó el caos. Esto es Queen's Bellybutton."
+- Taglines: "Todo tu catering." / "Una sola plataforma." / "Cero cuota mensual."
 
-**Transición a escena 2:** Fade negro 15 frames
+### Panel 4 · El cotizador (15 s)
+**Visual:** Captura real de `presupuesto-evento.html?proyecto=miramar` con Ken Burns; comparación antes/ahora.
+**Copia:**
+- Cartela: "EL COTIZADOR"
+- "El cliente entra desde un QR y configura su evento…"
+- "…elige menús con precios siempre al día."
+- ANTES: "una mañana entera" → AHORA: "minutos"
+- Onomatopeya: "¡ZAS!"
 
----
+### Panel 5 · Menús especiales / dietas (13 s)
+**Visual:** Rejilla de pills coloreadas (`DietPill`), una por dieta.
+**Copia:**
+- Cartela: "MENÚS ESPECIALES"
+- "8 dietas con menús reales. No simples casillas."
+- Pills: 🌱 Vegano · 🥗 Vegetariano · 🌾 Sin gluten · 🥛 Sin lactosa · 🌰 Sin frutos secos · 🕌 Halal · 🕎 Kosher · 👶 Infantil
+- Cierre: "Cada dieta con su menú completo y su protocolo de sala."
 
-### Escena 2 · Frame 1 storyboard · Quién soy (0:15 – 0:45) · 30 seg · 900 frames
+### Panel 6 · Recetario + escandallos (14 s)
+**Visual:** Captura del recetario con ficha de plato y escandallo.
+**Copia:**
+- Cartela: "RECETARIO + ESCANDALLOS"
+- "Cada plato con su ficha, su foto y su escandallo."
+- "Precios de mayorista reales. El margen, bajo control."
+- Bocadillo: "Sabes lo que cuesta cada plato antes de venderlo."
 
-**Visual:**
-- Avatar Paco centrado, pose tranquila
-- Detrás: tres cards floating de proyectos demo (Miramar, Casa Lola, Demo) con el isotipo gold
-- Las cards giran lentamente en 3D sutil
+### Panel 7 · Vista de sala (13 s)
+**Visual:** Dos viñetas-teléfono mostrando la vista de sala (capturas `sala-movil-hoy.png` y
+`sala-movil-empty.png`) y un checklist con checks verdes que hacen *pop*.
+**Copia:**
+- Cartela: "VISTA DE SALA"
+- "El equipo lo consulta todo desde el mismo panel, en cualquier pantalla:"
+- Checklist: ✓ dietas críticas por mesa · ✓ protocolo de servicio · ✓ alergias señalizadas
+- Cierre: "Sin paseos a cocina. Sin sorpresas en el servicio."
 
-**Texto kinetic (debajo del avatar):**
-```
-0:15–0:20:   "Francisco Javier Martínez Alba"
-0:20–0:25:   "Director hotelero · 30 años"
-0:25–0:30:   "Algeciras · Costa del Sol"
-0:30–0:45:   "He gestionado bodas, congresos,
-              eventos corporativos, cenas de gala.
-              Conozco el dolor."   ← "el dolor" en gold
-```
+> **Nota v6.0:** la vista de sala ya NO es una app móvil instalable (PWA). Es una vista más del
+> panel (`dashboard/sala.html`), responsive, que se abre en cualquier navegador. Las capturas se
+> muestran sobre viñetas con forma de teléfono solo para evocar el uso en movilidad.
 
-**Animación:** nombre aparece tipo máquina de escribir lenta (no típewriter rápido), líneas siguientes con fade
+### Panel 8 · Métricas y calendario (13 s)
+**Visual:** Panel de KPIs + calendario de disponibilidad. Onomatopeya al cuadrar una reserva.
+**Copia:**
+- Cartela: "MÉTRICAS Y CALENDARIO"
+- "Presupuestos, ocupación y disponibilidad en un panel."
+- "El calendario bloquea las dobles reservas solo."
+- Onomatopeya: "¡PLOP!"
 
----
+### Panel 9 · El diferenciador (12 s)
+**Visual:** Paco mirando a cámara; tres líneas de remate.
+**Copia:**
+- Cartela: "¿Y EL TRUCO? NO HAY TRUCO."
+- "Sin cuotas mensuales."
+- "Tus datos viven en tu propio repositorio."
+- "Cada cliente, su propia URL."
 
-### Escena 3 · Frame 2 · Problema emerge (0:45 – 1:15) · 30 seg · 900 frames
+### Panel 10 · Credibilidad (8 s)
+**Visual:** Retrato de Paco en pose firme; firma.
+**Copia:**
+- Cartela: "Detrás no hay una startup."
+- "Hay 30 años dirigiendo hoteles y eventos."
+- Firma: "Francisco J. Martínez Alba · Director hotelero"
 
-**Visual:**
-- Avatar Paco pose "trabajando" (mirando pantalla)
-- A su lado, captura real de un Excel desordenado (mockup de hoja Excel con celdas y datos hostelería)
-- Floating elements: tabs de email, papeles, post-its
-- Reloj en esquina que avanza rápido (de las 10am a las 6pm)
-
-**Texto kinetic (sin cifras concretas · descripción cualitativa):**
-```
-0:45–0:50:   "Una mañana entera"            ← frase grande gold
-0:50–0:55:   "para UN solo presupuesto."
-0:55–1:05:   Lista que aparece línea a línea:
-             • Excel
-             • Word
-             • Email tras email
-             • Firmas escaneadas
-             • PDF maquetado a mano
-1:05–1:15:   "Y aún así, el cliente pregunta:
-              ¿incluye el sushi al final?"   ← humor que reconoce el dolor
-```
-
-**Animación:** Excel parpadea molestamente, papeles caen del techo
-
----
-
-### Escena 4 · Frame 3 · Oh crap moment (1:15 – 1:45) · 30 seg · 900 frames
-
-**Visual:**
-- Pantalla parte por la mitad
-- Izquierda: dramatic scene · evento empezando, mesa vacía, cliente preguntando "¿dónde está mi presupuesto?"
-- Derecha: avatar Paco con expresión preocupada, sudando
-
-**Texto kinetic (alterna entre las dos mitades · sin cifras):**
-```
-1:15–1:20:   Izquierda: "1 evento perdido"
-1:20–1:23:   Derecha grande: "= mes a la basura"  ← rojo
-1:23–1:28:   Izquierda: "1 alergia mal marcada"
-1:28–1:32:   Derecha grande: "= crisis en sala"   ← rojo
-1:32–1:45:   Centro, fullscreen:
-             "Y casi todo el sector independiente
-              sigue así."
-             "Yo era uno de ellos."   ← gold
-```
-
-**Animación:** glitch sutil cuando aparecen los números rojos, fade a fullscreen para el cierre
-
----
-
-### Escena 5 · Frame 4 · Solución aparece (1:45 – 2:15) · 30 seg · 900 frames
-
-**Visual:**
-- Fade a negro (frame 1845–1860)
-- Aparece el logo Queens Bellybutton centrado en pantalla
-- Logo crece desde 0 a tamaño normal con efecto spring
-- Subtítulos aparecen secuencialmente debajo
-
-**Texto kinetic:**
-```
-1:46–1:50:   Logo aparece grande
-1:50–1:55:   "Queens Bellybutton"   ← Cormorant Garamond, 80px
-1:55–2:00:   "Una plataforma."
-2:00–2:05:   "Construida por un hotelero."
-2:05–2:10:   "Para hoteleros."
-2:10–2:15:   Underline: queensbellybutton.com (placeholder)
-```
-
-**Animación:** Spring scale-in del logo (overshoot suave), subtítulos fade+slide-up
-
----
-
-### Escena 6 · Demo 1 · Cotizador (2:15 – 2:55) · 40 seg · 1200 frames
-
-**Visual:**
-- Captura de pantalla real de `presupuesto-evento.html?proyecto=miramar`
-- Mock cursor del usuario navegando: paso 1 → paso 2 (menú) → paso 2.5 (dietas) → paso 7 (resumen)
-- Aceleración 4x del paso real
-
-**Texto kinetic (overlay sobre la captura):**
-```
-2:15–2:20:   "El cliente entra desde un QR."
-2:20–2:35:   (cursor navega los pasos del cotizador)
-2:35–2:40:   "Configura su evento."
-2:40–2:45:   "Selecciona menús."
-2:45–2:50:   "Marca dietas especiales con menús reales."   ← énfasis "REALES"
-2:50–2:55:   Comparación:
-             ANTES: "Una mañana entera"   ← rojo
-             AHORA: "Minutos"              ← verde
-```
-
-**Animación:** Side-by-side antes/después al final
-
----
-
-### Escena 7 · Demo 2 · Recetario + escandallos (2:55 – 3:30) · 35 seg · 1050 frames
-
-**Visual:**
-- Captura del recetario.html con sidebar de categorías
-- Zoom in en una receta concreta (ej: Caviar Beluga sobre blinis)
-- Aparece el escandallo desglosado
-
-**Texto kinetic (sin cifras objetivas · cualitativo):**
-```
-2:55–3:00:   "Un recetario completo."
-3:00–3:05:   "Cada plato escandallado."
-3:05–3:10:   "Con precios de mayorista reales."
-3:10–3:20:   Lista que cae:
-             🌱 Vegano
-             🌾 Sin gluten
-             🥛 Sin lactosa
-             🌰 Sin frutos
-             🕌 Halal
-             🕎 Kosher
-             👶 Infantil
-3:20–3:30:   "Cada dieta con su menú real. No solo casillas."
-```
-
-**Animación:** Las pills de dieta aparecen con colores transversal del producto
-
----
-
-### Escena 8 · Demo 3 · Sala móvil + Frame 5 (Aha) (3:30 – 4:05) · 35 seg · 1050 frames
-
-**Visual:**
-- Mockup de iPhone con sala-movil.html en pantalla
-- Avatar Paco aparece a la izquierda con pose "happy/aha"
-- Aparecen pulseras coloreadas por dieta sobre el mockup
-
-**Texto kinetic:**
-```
-3:30–3:35:   "El equipo de sala consulta en el bolsillo:"
-3:35–3:40:   "dietas críticas"
-3:40–3:45:   "protocolo de servicio"
-3:45–3:50:   "alergias por mesa"
-3:50–4:00:   Pull quote:
-             "Sin paseos a cocina.
-              Sin notas perdidas.
-              Sin sorpresas el día del servicio."
-4:00–4:05:   Avatar Paco asiente/sonríe
-```
-
-**Animación:** Las pulseras coloreadas vibran sutilmente
-
----
-
-### Escena 9 · Demo 4 · Métricas + Calendario (4:05 – 4:30) · 25 seg · 750 frames
-
-**Visual:**
-- Split screen: izquierda métricas.html, derecha calendario
-- Bar charts y heatmap se animan rellenándose
-
-**Texto kinetic:**
-```
-4:05–4:10:   "Métricas de presupuestos."
-4:10–4:15:   "Calendario que evita dobles reservas."
-4:15–4:20:   "Panel superadmin con KPIs globales."   ← guiño al verde+negro
-4:20–4:30:   "Todo en un sitio. Una URL por cliente."
-```
-
-**Animación:** charts crecen, calendario marca eventos con animación de wave
-
----
-
-### Escena 10 · Frame 5 cierre · Aha + diferenciador (4:30 – 5:00) · 30 seg · 900 frames
-
-**Visual:**
-- Vuelta a fondo navy limpio
-- Avatar Paco grande en el centro, pose "happy"
-- A su alrededor, 4 íconos floating: 🔓 sin frameworks, 💰 cero coste, 🛡️ datos privados, 🌐 una URL
-
-**Texto kinetic (cada línea aparece con énfasis):**
-```
-4:30–4:35:   "Sin frameworks que se actualicen mañana."
-4:35–4:40:   "Sin coste mensual."   ← gold grande
-4:40–4:45:   "Tus datos NUNCA salen de tu navegador."
-4:45–4:50:   "Tu repo. Tu control."
-4:50–5:00:   "Cada cliente, su propia URL."
-             "Un solo administrador detrás: el cliente."
-```
-
-**Animación:** Los 4 íconos orbitan suavemente alrededor del avatar
-
----
-
-### Escena 11 · Frame 6 · CTA cierre (5:00 – 5:30) · 30 seg · 900 frames
-
-**Visual:**
-- Avatar Paco saludando con la mano
-- Logo grande Queens Bellybutton centrado
-- Datos de contacto
-
-**Texto kinetic:**
-```
-5:00–5:10:   "Si lo necesitas, lo construyo contigo."   ← gold, énfasis
-5:10–5:15:   Logo Queens Bellybutton
-5:15–5:20:   "fjmacarmen-blip.github.io/control-gestion-fnb"
-5:20–5:25:   "LinkedIn · GitHub · email"   ← iconos clickables (en HTML5 player)
-5:25–5:30:   "v5.17 · junio 2026 · 0€ coste operación"   ← consistencia con badge versión
-```
-
-**Animación:** Final fade-out suave 30 frames, último frame loopable para thumbnail
+### Panel 11 · CTA cierre (16 s)
+**Visual:** Logo QBB héroe, Paco saludando, datos de contacto, faja de versión.
+**Copia:**
+- Bocadillo: "¿Lo vemos con tu carta?"
+- Promesa: "Demo con tus menús en minutos."
+- URL: "fjmacarmen-blip.github.io/control-gestion-fnb"
+- Contacto: "LinkedIn · GitHub · email"
+- Footer: "v6.0 · junio 2026 · 0 € coste de operación"
 
 ---
 
 ## Timeline resumen
 
-| Escena | Cuándo | Duración | Frames | Tipo |
-|---|---|---|---|---|
-| 1 · Cold open | 0:00–0:15 | 15s | 450 | Hook |
-| 2 · Personaje | 0:15–0:45 | 30s | 900 | Frame 1 |
-| 3 · Problema | 0:45–1:15 | 30s | 900 | Frame 2 |
-| 4 · Oh crap | 1:15–1:45 | 30s | 900 | Frame 3 |
-| 5 · Solución | 1:45–2:15 | 30s | 900 | Frame 4 |
-| 6 · Demo cotizador | 2:15–2:55 | 40s | 1200 | Demo |
-| 7 · Demo recetario | 2:55–3:30 | 35s | 1050 | Demo |
-| 8 · Demo sala móvil | 3:30–4:05 | 35s | 1050 | Demo |
-| 9 · Demo métricas | 4:05–4:30 | 25s | 750 | Demo |
-| 10 · Diferenciador | 4:30–5:00 | 30s | 900 | Frame 5 |
-| 11 · CTA cierre | 5:00–5:30 | 30s | 900 | Frame 6 |
-| **TOTAL** | **5:30** | **330s** | **9 900** |  |
+| Panel | Tema | Duración |
+|---|---|---|
+| 1 | Portada | 10 s |
+| 2 | Problema | 12 s |
+| 3 | Solución | 12 s |
+| 4 | Cotizador | 15 s |
+| 5 | Dietas | 13 s |
+| 6 | Recetario | 14 s |
+| 7 | Vista de sala | 13 s |
+| 8 | Métricas | 13 s |
+| 9 | Diferenciador | 12 s |
+| 10 | Credibilidad | 8 s |
+| 11 | CTA | 16 s |
+| **TOTAL** | | **138 s · 2:18** |
 
 ---
 
-## Capturas/mockups necesarios
+## Capturas reales necesarias
 
-Lista de assets a generar/capturar para meter en `/public/`:
+Viven en `video-promo/public/assets/` (8 capturas a 1920×1080 desde Chrome). Para más nitidez,
+recapturar con `--device-scale-factor=2`.
 
-| # | Archivo | Origen | Para escena |
-|---|---|---|---|
-| 1 | `excel-caotico.png` | Mockup generado (no real Excel) | 3 |
-| 2 | `evento-empezando.svg` | Ilustración generada | 4 |
-| 3 | `logo-queens-bellybutton.svg` | Ya existe en `branding/` | 5 |
-| 4 | `cotizador-step-1.png` | Captura real `presupuesto-evento.html?proyecto=miramar` | 6 |
-| 5 | `cotizador-step-2.png` | Misma URL, paso 2 | 6 |
-| 6 | `cotizador-step-2-5.png` | Misma URL, paso 2.5 dietas | 6 |
-| 7 | `cotizador-final.png` | Misma URL, paso 7 | 6 |
-| 8 | `recetario-sidebar.png` | Captura `recetario.html?proyecto=miramar` | 7 |
-| 9 | `receta-detalle.png` | Modal de receta abierto | 7 |
-| 10 | `sala-movil-iphone.png` | `sala-movil.html` en mockup iPhone | 8 |
-| 11 | `metricas-charts.png` | `dashboard/metricas.html` | 9 |
-| 12 | `superadmin-kpis.png` | `dashboard/superadmin.html` | 9 |
+| Panel | Origen sugerido |
+|---|---|
+| 4 · Cotizador | `presupuesto-evento.html?proyecto=miramar` |
+| 6 · Recetario | `recetario.html?proyecto=miramar` (ficha de plato + escandallo) |
+| 7 · Sala | `dashboard/sala.html?proyecto=miramar` (servicio de hoy y vista vacía) |
+| 8 · Métricas | `dashboard/metricas.html` + calendario |
+
+Las poses del personaje (`public/comic/paco-pose-*.png`) se regeneran con la hoja de Gemini y los
+scripts `scripts/crop-poses.py` + `scripts/remove-bg.js`.
 
 ---
 
 ## Música de fondo (opcional)
 
-Si quieres añadir música, recomendación: **YouTube Audio Library** (royalty-free, 0€).
-
-Búsqueda específica para tu vídeo:
-- Género: "Cinematic", "Inspirational", "Corporate"
-- Mood: "Calm", "Hopeful"
-- BPM: 80–110
-- Duración: cualquiera (Remotion loopea o trim)
-
-Sugerencias concretas (sin escuchar):
-- "Renaissance" de Audionautix
-- "Faith" de Ron Gelinas
-- "Wonders" de Roa Music
-
-Bajamos el volumen al 15–20% para no competir con el texto kinetic.
+Recomendación: **YouTube Audio Library** (royalty-free, 0 €). Para un motion comic enérgico encaja
+mejor un tema "Upbeat / Funk / Retro" a 100–120 BPM que algo cinemático lento. Volumen al 15–20 %
+para no competir con las cartelas.
 
 ---
 
-## Próximos pasos (orden de ejecución)
+## Cómo renderizar
 
-1. **Tú revisas este guion** y me dices qué cambiar (escenas que sobran, tono, cifras concretas, etc.)
-2. Cuando lo apruebes, **yo monto el proyecto Remotion** en `/video-promo/` dentro del repo:
-   - `package.json` con Remotion 4.x
-   - `src/Root.tsx` con la composición
-   - 11 componentes React, uno por escena
-   - Avatar Paco SVG en `src/components/PacoAvatar.tsx`
-   - Sistema de design tokens en `src/theme.ts`
-3. **Tú** capturas las 12 imágenes/mockups listados arriba (te paso un script que las genera con Playwright si quieres)
-4. **Render local**: `npx remotion render` genera el MP4 en tu PC. Sin marca de agua, 0€, 100% tuyo.
-5. **Iteraciones**: si quieres cambiar una frase, editas el JSON de textos y re-renderizas en 5 min.
+```bash
+cd video-promo
+npm install        # primera vez (~2-3 min)
+npm start          # Remotion Studio en localhost:3000 para iterar
+npm run build      # MP4 landscape 1920×1080 en out/
+npm run build:square    # 1080×1080 (LinkedIn/Instagram feed)
+npm run build:vertical  # 1080×1920 (Stories/Reels/TikTok)
+npm run build:all       # las tres de golpe
+```
 
----
-
-## Decisiones que necesito de ti antes de implementar
-
-1. **¿El guion te encaja o reescribimos partes?** Especialmente:
-   - El humor del sushi en escena 3 (¿muy informal?)
-   - La cifra "4.000€" de evento perdido (¿realista o exagerada?)
-   - La promesa "construyo contigo" en escena 11 (¿quieres comprometerte así?)
-
-2. **¿Música sí o no?** Si sí, te paso 3 candidatos para que elijas; si no, queda sin música y mejor.
-
-3. **¿Subtítulos en inglés en v2 después?** Misma estructura, JSON con textos en `en.json`, re-renderizas en 1 comando.
-
-4. **¿LinkedIn / Instagram también?** Implica crear versión cuadrada 1080×1080 y vertical 1080×1920 (Remotion lo hace en otra composición, no es trabajo extra de guion).
+Detalle completo del proyecto en [`video-promo/README.md`](../video-promo/README.md).

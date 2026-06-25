@@ -2,7 +2,7 @@
 
 Proyecto **Remotion** que genera el vídeo promocional del producto programáticamente. Coste real: **0 €**.
 
-Versión actual: **v5.19** · motion comic estilo Marvel retro · 2:18 min · 11 paneles · 3 composiciones.
+Versión actual: **v6.0** · motion comic estilo Marvel retro · 2:18 min · 11 paneles · 3 composiciones.
 
 ---
 
@@ -32,7 +32,7 @@ Guion **producto primero**: la trayectoria personal aparece solo como aval de cr
 | 4 | Cotizador | 15 s | El cliente entra desde un QR y configura su evento |
 | 5 | Dietas | 13 s | Sistema transversal de dietas y protocolos |
 | 6 | Recetario | 14 s | Recetario con escandallos |
-| 7 | Sala | 13 s | Vista móvil de sala el día del evento |
+| 7 | Sala | 13 s | Vista de sala integrada en el panel, el día del evento |
 | 8 | Métricas | 13 s | KPIs reales + calendario de disponibilidad |
 | 9 | Diferenciador | 12 s | Qué lo hace distinto |
 | 10 | Credibilidad | 8 s | 30 años de dirección hotelera |

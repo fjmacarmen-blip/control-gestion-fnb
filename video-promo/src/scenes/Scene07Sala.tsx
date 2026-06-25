@@ -50,9 +50,10 @@ const SalaItem: React.FC<{ label: string; from: number; top: number }> = ({
 };
 
 /**
- * Panel 7 · SALA MÓVIL (1:16–1:29)
- * Dos teléfonos con la vista de sala real y el checklist
- * de lo que el equipo consulta desde el bolsillo.
+ * Panel 7 · VISTA DE SALA (1:16–1:29)
+ * La vista de sala integrada en el panel, responsive, mostrada en
+ * pantalla de móvil, con el checklist de lo que el equipo consulta
+ * el día del evento (dietas por mesa, protocolo, alergias).
  */
 export const Scene07Sala: React.FC = () => {
   return (

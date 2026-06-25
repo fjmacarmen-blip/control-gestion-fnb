@@ -1,5 +1,5 @@
 /**
- * Generador de PROPUESTA-ECONOMICA.docx · Plataforma F&B v5.7
+ * Generador de PROPUESTA-ECONOMICA.docx · Plataforma F&B v6.0
  *
  * Plantilla Word editable con placeholders [VARIABLE]. Paco la abre en Word,
  * usa Buscar/Reemplazar para personalizar y la convierte a PDF antes de enviar.
@@ -169,16 +169,18 @@ const portada = [
 
 // ── PÁG 2 · ALCANCE ────────────────────────────────────────
 const alcanceRows = [
-  ['Dashboard del director', 'Login seguro, gestión multi-tenant de proyectos, métricas y agenda', '2 400 €'],
+  ['Dashboard del director', 'Login seguro con 3 roles (superadmin, director, cliente), gestión multi-tenant de proyectos, métricas y agenda', '2 400 €'],
   ['Editor visual', 'CRUD completo de menús, recetas, productos, tema visual y configuración', '1 800 €'],
   ['Wizard de alta y plantillas', 'Creación guiada de proyectos con 3 plantillas de sector incluidas', '900 €'],
   ['Cotizador self-service', 'Cliente final configura su evento en 7 pasos, sin intervención del equipo', '2 100 €'],
   ['Calendario de disponibilidad', 'Vista mensual + validación automática de conflictos en mismo espacio/fecha', '1 500 €'],
-  ['Sala móvil (PWA)', 'App instalable para el equipo de sala · eventos del día, dietas, ocupación', '1 800 €'],
-  ['Carta digital pública + QR', 'Carta accesible por QR en mesa o flyer, con alérgenos y FAQ', '900 €'],
+  ['Vista de sala + diseñador de plano', 'Vista responsive integrada en el panel (se abre en cualquier navegador, sin instalar nada) · eventos del día, dietas críticas, ocupación · diseñador de plano de mesas arrastrar y soltar', '1 800 €'],
+  ['Carta digital pública + QR de doble uso', 'Carta accesible por QR en mesa o flyer, con alérgenos y FAQ · el mismo QR sirve para carta y para evento', '900 €'],
   ['Calculadora de escandallos', 'Cálculo automático de coste por ración y PVP sugerido por categoría', '700 €'],
+  ['Factura de servicio', 'Generación de la factura del servicio del evento, lista para descargar y enviar', '900 €'],
   ['Asistente IA conversacional', 'Chat que ayuda al cliente final a configurar su menú · sin coste por uso', '1 200 €'],
   ['Importadores Excel/PDF/imágenes', 'Migración de datos heredados con auto-matching y fallback de IA', '1 100 €'],
+  ['Panel superadmin multi-establecimiento', 'Vista agregada de KPIs de todos los establecimientos · facturación, ocupación y top paquetes con sparklines', '1 500 €'],
 ];
 
 const alcance = [
@@ -210,7 +212,7 @@ const alcance = [
       // Total
       new TableRow({ children: [
         cell('Valor total estimado de mercado', { width: Math.round(CONTENT_WIDTH * 0.82), bold: true, color: SLATE, bg: HEADER_BG, size: 22 }),
-        cell('14 400 €', { width: Math.round(CONTENT_WIDTH * 0.18), bold: true, color: EMERALD, bg: HEADER_BG, align: AlignmentType.RIGHT, size: 22 }),
+        cell('16 800 €', { width: Math.round(CONTENT_WIDTH * 0.18), bold: true, color: EMERALD, bg: HEADER_BG, align: AlignmentType.RIGHT, size: 22 }),
       ] }),
     ],
   }),
@@ -413,7 +415,7 @@ const condiciones = [
 const doc = new Document({
   creator: 'Francisco Javier Martínez Alba',
   title: 'Propuesta económica · Plataforma F&B',
-  description: 'Plantilla editable para personalizar por cliente. v5.7',
+  description: 'Plantilla editable para personalizar por cliente. v6.0',
   styles: {
     default: {
       document: { run: { font: fontBody, size: 22, color: TEXT } },
@@ -448,7 +450,7 @@ const doc = new Document({
           alignment: AlignmentType.CENTER,
           spacing: { before: 120 },
           children: [
-            new TextRun({ text: 'Plataforma F&B · v5.6  ·  Francisco Javier Martínez Alba  ·  Página ', font: fontBody, size: 16, color: MUTED }),
+            new TextRun({ text: 'Plataforma F&B · v6.0  ·  Francisco Javier Martínez Alba  ·  Página ', font: fontBody, size: 16, color: MUTED }),
             new TextRun({ children: [PageNumber.CURRENT], font: fontBody, size: 16, color: MUTED }),
             new TextRun({ text: ' de ', font: fontBody, size: 16, color: MUTED }),
             new TextRun({ children: [PageNumber.TOTAL_PAGES], font: fontBody, size: 16, color: MUTED }),

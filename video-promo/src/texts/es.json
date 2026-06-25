@@ -1,7 +1,7 @@
 {
   "_meta": {
     "lang": "es",
-    "version": "2.0 · v5.19 motion comic",
+    "version": "2.1 · v6.0 motion comic",
     "duration_total_seconds": 138,
     "nota": "Guion producto-primero: 9 paneles de producto, 1 panel breve de credibilidad, 1 CTA"
   },
@@ -57,8 +57,8 @@
     "bubble": "Sabes lo que cuesta cada plato antes de venderlo."
   },
   "p07_sala": {
-    "caption": "SALA MÓVIL",
-    "text1": "El equipo de sala lo consulta todo desde el bolsillo:",
+    "caption": "VISTA DE SALA",
+    "text1": "El equipo lo consulta todo desde el mismo panel, en cualquier pantalla:",
     "items": ["dietas críticas por mesa", "protocolo de servicio", "alergias señalizadas"],
     "text2": "Sin paseos a cocina. Sin sorpresas en el servicio."
   },
@@ -84,6 +84,6 @@
     "promise": "Demo con tus menús en minutos.",
     "url": "fjmacarmen-blip.github.io/control-gestion-fnb",
     "contact": "LinkedIn · GitHub · email",
-    "footer": "v5.19 · junio 2026 · 0 € coste de operación"
+    "footer": "v6.0 · junio 2026 · 0 € coste de operación"
   }
 }

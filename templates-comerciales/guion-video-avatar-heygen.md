@@ -18,13 +18,13 @@ Así que la he construido. Se llama Queens Bellybutton, es una plataforma multi-
 **[0:14–0:30 · CLIENTE FINAL]** *B-roll: carta-publica.html en móvil + QR*
 Tu cliente final escanea un código QR en la mesa y ve la carta digital, con alérgenos visibles y foto de cada plato. Sin descargar nada, sin login.
 
-**[0:30–0:46 · SALA]** *B-roll: sala-movil.html PWA*
-Tu equipo de sala trabaja con una aplicación móvil instalable que funciona sin conexión: eventos del día, dietas críticas marcadas con pulseras, y la ocupación de los espacios de los próximos treinta días.
+**[0:30–0:46 · SALA]** *B-roll: dashboard/sala.html en móvil*
+Tu equipo de sala abre la vista de sala desde el mismo panel, responsive, en el navegador del móvil o la tablet, sin instalar nada: eventos del día, dietas críticas marcadas con pulseras, y la ocupación de los espacios de los próximos treinta días.
 
 **[0:46–1:02 · DIRECCIÓN]** *B-roll: dashboard + editor de recetas + escandallos*
 El director del establecimiento edita menús, recetas y presupuestos con autoguardado, calcula el escandallo real de cada plato y publica los cambios con un click.
 
-**[1:02–1:14 · SUPERADMIN]** *B-roll: panel superadmin v5.14 (sparklines + chart mensual)*
+**[1:02–1:14 · SUPERADMIN]** *B-roll: panel superadmin (sparklines + chart mensual)*
 Y desde el panel de administración ves los indicadores agregados de todos tus establecimientos: facturación, ocupación, top paquetes y agenda.
 
 **[1:14–1:25 · DIFERENCIAL + CTA]** *cámara frontal, cierre directo*
@@ -48,7 +48,7 @@ Después de tres décadas observándolo, decidí construir la herramienta que si
 Empezamos por tu cliente: escanea un código QR en la mesa y accede a la carta digital, con foto de cada plato, alérgenos visibles y traducción si la necesita. Sin descargar nada, sin login, sin esperas.
 
 **[0:38–1:02 · SALA]**
-Tu equipo de sala trabaja con una aplicación móvil instalable que funciona sin conexión: eventos del día, dietas críticas marcadas con pulseras, ocupación de los espacios de los próximos treinta días, y un simulador de tickets de TPV pensado para formar a personal nuevo en quince minutos.
+Tu equipo de sala abre la vista de sala desde el mismo panel, responsive, en el navegador del móvil o la tablet, sin instalar nada: eventos del día, dietas críticas marcadas con pulseras, ocupación de los espacios de los próximos treinta días, el diseñador de plano de mesas, y un simulador de tickets de TPV pensado para formar a personal nuevo en quince minutos.
 
 **[1:02–1:30 · DIRECCIÓN]**
 El director del establecimiento edita menús, recetas, espacios y presupuestos en un editor visual con autoguardado. La calculadora de escandallos cruza ciento cincuenta y tres recetas con el catálogo de productos y calcula el coste real materia prima por ración, el porcentaje de escandallo y el PVP recomendado por categoría. La carta cambia, el presupuesto cambia, los KPIs cambian. Y todo se publica con un click.
@@ -70,9 +70,9 @@ Si gestionas un grupo hotelero o de restauración y quieres una demo con tus dat
 | Hook | Avatar frontal | Sin B-roll los primeros 6 s — la frase tiene que llevarla la cara |
 | Qué es | `index.html` + `mockups/glass-preview.html` | Captura el landing + un dashboard. 2-3 segundos cada uno |
 | Cliente final | `carta-publica.html?proyecto=miramar` en móvil + QR | Grabar móvil con OBS o usar `mockups/screenshot-modal-open.png` |
-| Sala | `sala-movil.html?proyecto=miramar` | PWA instalada — graba mockup de móvil con la app abierta |
+| Sala | `dashboard/sala.html?proyecto=miramar` | Vista de sala responsive — graba mockup de móvil con la vista abierta en el navegador |
 | Dirección | `dashboard/` + `mockups/screenshot-recetario-1.png` | Editor de recetas + vista de escandallos |
-| Superadmin | Panel v5.14 (verde+negro) con sparklines y chart mensual | Si no tienes captura, hazla antes de grabar |
+| Superadmin | Panel superadmin (verde+negro) con sparklines y chart mensual | Si no tienes captura, hazla antes de grabar |
 | Cierre | Avatar frontal + tu logo + url + email | Pantalla final estática 3 s |
 
 **Tip clave**: las capturas estáticas duran 2-3 s cada una. Para 90 s necesitas ~25-30 imágenes/clips cortos. No te quedes corto.
@@ -133,7 +133,7 @@ HeyGen permite poner imagen o vídeo de fondo y overlay de imagen con timeline s
 
 ## F · Próximos pasos sugeridos
 
-1. **Antes de grabar**: capturar la pantalla del panel superadmin v5.14 (sparklines + chart mensual). Es el plano que más valor comunica y no lo tienes en `/mockups/`.
+1. **Antes de grabar**: capturar la pantalla del panel superadmin (sparklines + chart mensual). Es el plano que más valor comunica y no lo tienes en `/mockups/`.
 2. **Grabar los 3 min** de fuente para el Instant Avatar (una sola toma vale).
 3. **Subir a HeyGen** los assets de la sección C ordenados por carpeta (`hook/`, `cliente-final/`, `sala/`, `direccion/`, `superadmin/`, `cierre/`).
 4. **Renderizar versión LinkedIn 1:1 primero** (es la más corta — sirve de prueba de calidad).
@@ -142,4 +142,4 @@ HeyGen permite poner imagen o vídeo de fondo y overlay de imagen con timeline s
 
 ---
 
-*Guion v1 · Generado para Francisco Javier Martínez Alba · Queens Bellybutton v5.17*
+*Guion v1 · Generado para Francisco Javier Martínez Alba · Queen's Bellybutton v6.0*

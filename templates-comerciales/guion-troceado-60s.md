@@ -13,7 +13,7 @@ Cada pieza es un render independiente que después se concatena con ffmpeg.
 
 > Llevo treinta años dirigiendo hoteles. Y siempre eché de menos una herramienta para gestionar eventos y banquetes que no costara ochocientos euros al mes ni viviera repartida en cinco carpetas distintas. Así que la he construido. Se llama Queens Bellybutton, es una plataforma multi-tenant, está en producción y funciona para cualquier hotel, restaurante o catering con servicio de eventos.
 >
-> Tu cliente final escanea un código QR en la mesa y ve la carta digital, con alérgenos visibles y foto de cada plato. Sin descargar nada, sin login. Tu equipo de sala trabaja con una aplicación móvil instalable que funciona sin conexión: eventos del día, dietas críticas marcadas con pulseras, y la ocupación de los espacios de los próximos treinta días.
+> Tu cliente final escanea un código QR en la mesa y ve la carta digital, con alérgenos visibles y foto de cada plato. Sin descargar nada, sin login. Tu equipo de sala abre la vista de sala desde el mismo panel, responsive, en el navegador del móvil o la tablet, sin instalar nada: eventos del día, dietas críticas marcadas con pulseras, y la ocupación de los espacios de los próximos treinta días.
 
 ### A2 · "Dirección + superadmin + cierre" (~39 s · 84 palabras)
 
@@ -35,7 +35,7 @@ Cada pieza es un render independiente que después se concatena con ffmpeg.
 
 ### B2 · "Sala + dirección" (~52 s · 115 palabras)
 
-> Tu equipo de sala trabaja con una aplicación móvil instalable que funciona sin conexión: eventos del día, dietas críticas marcadas con pulseras, ocupación de los espacios de los próximos treinta días, y un simulador de tickets de TPV pensado para formar a personal nuevo en quince minutos.
+> Tu equipo de sala abre la vista de sala desde el mismo panel, responsive, en el navegador del móvil o la tablet, sin instalar nada: eventos del día, dietas críticas marcadas con pulseras, ocupación de los espacios de los próximos treinta días, y un simulador de tickets de TPV pensado para formar a personal nuevo en quince minutos.
 >
 > El director del establecimiento edita menús, recetas, espacios y presupuestos en un editor visual con autoguardado. La calculadora de escandallos cruza ciento cincuenta y tres recetas con el catálogo de productos y calcula el coste real materia prima por ración, el porcentaje de escandallo y el PVP recomendado por categoría.
 
@@ -75,4 +75,4 @@ Yo los concateno con ffmpeg en la siguiente sesión.
 
 ---
 
-*Generado para Francisco Javier Martínez Alba · Queens Bellybutton*
+*Generado para Francisco Javier Martínez Alba · Queen's Bellybutton v6.0*
