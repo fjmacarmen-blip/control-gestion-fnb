@@ -314,7 +314,7 @@
 </div>
 
 <main>
-  <div class="eyebrow">Queens Bellybutton v5.17 · checklist interactivo</div>
+  <div class="eyebrow">Queens Bellybutton v6.0 · checklist interactivo</div>
   <h1>Prueba cada función<br>y marca lo que falle</h1>
   <p class="lede">
     Cada bloque agrupa funciones relacionadas. Marca cada test con <strong>✓ OK</strong> o <strong>✗ Error</strong>.
@@ -813,12 +813,31 @@ const BLOCKS = [
     ],
   },
   {
+    id: 'b27',
+    title: 'Documentación comercial v6.0',
+    desc: 'Material comercial regenerado para v6.0 (sala = vista responsive integrada, NO app instalable; 3 roles super-admin/director/cliente). Cubre la propuesta económica .docx, su README, los tres guiones de vídeo y el guion de vídeo-promo, más la coherencia transversal de versión.',
+    tests: [
+      { id: 'b27t1', name: 'Propuesta económica .docx se regenera sin errores',
+        desc: 'Desde la raíz del repo: <code>npm install docx --no-save</code> y luego <code>node templates-comerciales/generate-propuesta.js</code>. Debe generar <code>templates-comerciales/PROPUESTA-ECONOMICA.docx</code> (4-5 págs A4, tipografía Calibri, paleta esmeralda+slate, márgenes 2.5 cm) sin lanzar errores.' },
+      { id: 'b27t2', name: 'README de plantillas coherente con el script',
+        desc: 'Abre <a href="templates-comerciales/README.md" target="_blank">templates-comerciales/README.md</a>. La estructura descrita (portada, alcance, calendario, inversión, condiciones), el diseño "Calibri" y los campos buscar/reemplazar ([NOMBRE_CLIENTE], [PRECIO_IMPLANTACION]…) deben corresponder con lo que produce <code>generate-propuesta.js</code>.' },
+      { id: 'b27t3', name: 'Guion avatar HeyGen describe la sala como vista responsive',
+        desc: 'Abre <a href="templates-comerciales/guion-video-avatar-heygen.md" target="_blank">guion-video-avatar-heygen.md</a>. La sección SALA debe decir "vista de sala responsive en el navegador, sin instalar nada" (NO "app", "PWA" ni "instalable"). Aparecen los 3 roles (cliente QR / director / superadmin) y el footer es "Queens Bellybutton v6.0" (sin apóstrofo, como el wordmark del logo).' },
+      { id: 'b27t4', name: 'Guion troceado 60s coherente con el largo',
+        desc: 'Abre <a href="templates-comerciales/guion-troceado-60s.md" target="_blank">guion-troceado-60s.md</a>. Las piezas A1/A2/B1/B2/B3 transmiten el mismo mensaje que el guion largo (sala responsive, escandallos 153 recetas, superadmin agregado), sin referencias a PWA, y cierran con footer v6.0.' },
+      { id: 'b27t5', name: 'Guion vídeo-promo · referencias de archivos válidas',
+        desc: 'Abre <a href="docs/VIDEO-PROMO-GUION-v1.md" target="_blank">docs/VIDEO-PROMO-GUION-v1.md</a>. Todas las rutas citadas existen (dashboard/sala.html, carta-publica.html, presupuesto-evento.html, recetario.html, metricas.html), incluye la nota v6.0 sobre la sala y no menciona instalación de app.' },
+      { id: 'b27t6', name: 'Coherencia transversal de versión',
+        desc: 'Ningún material comercial (pitch, mockups, propuesta, guiones) presenta v5.x como versión actual, menciona "PWA instalable" ni enlaza a archivos inexistentes. La versión visible/footers son v6.0 y concuerdan con <a href="core/version.json" target="_blank">core/version.json</a>.' },
+    ],
+  },
+  {
     id: 'b26',
     title: 'Colores transversales + Versioning visible (v5.17)',
     desc: 'Sistema de colores de dietas aplicado de extremo a extremo (cotizador resumen, vista de sala con infantil) y badge de versión visible en TODOS los HTMLs principales para evitar revisar archivos viejos.',
     tests: [
       { id: 'b26t1', name: 'Badge versión visible en landing',
-        desc: 'Abre <a href="index.html" target="_blank">la landing</a>. Esquina inferior izquierda debe mostrar badge con punto verde "v5.17 · 5 jun 2026". Click → abre <a href="docs/CHANGELOG-v5.11-v5.17.md" target="_blank">CHANGELOG-v5.11-v5.17.md</a> en pestaña nueva.' },
+        desc: 'Abre <a href="index.html" target="_blank">la landing</a>. Esquina inferior izquierda debe mostrar badge con punto verde "v6.0 · 25 jun 2026" (lo lee dinámicamente de <a href="core/version.json" target="_blank">core/version.json</a>). Click → abre el changelog que indica <code>changelog_url</code> (<a href="docs/DETALLE-PROYECTO.md#13--cambios-v60" target="_blank">DETALLE-PROYECTO.md · §13 cambios v6.0</a>) en pestaña nueva.' },
       { id: 'b26t2', name: 'Badge presente también en cotizador, recetario, dashboard',
         desc: 'Abre <a href="core/pages/presupuesto-evento.html?proyecto=miramar" target="_blank">cotizador</a>, <a href="core/pages/recetario.html?proyecto=miramar" target="_blank">recetario</a>, <a href="dashboard/" target="_blank">dashboard</a>, <a href="dashboard/superadmin.html" target="_blank">superadmin</a>, <a href="dashboard/sala.html?proyecto=miramar" target="_blank">vista de sala</a>, <a href="test-checklist.html" target="_blank">este checklist</a>. El badge aparece en todos (17 HTMLs).' },
       { id: 'b26t3', name: 'Badge parpadea si la versión es nueva',
@@ -952,6 +971,7 @@ const LEVEL_MAP = {
   b24: 'admin',     // Panel Superadmin diferenciado
   b25: 'cliente',   // Menús especiales (cliente final los pide en el cotizador)
   b26: 'cliente',   // Colores transversales + versioning visible (para todos)
+  b27: 'admin',     // Documentación comercial v6.0 (propuesta, guiones, coherencia)
 };
 
 // URL de referencia por bloque · fallback cuando un test no trae su propio
@@ -985,6 +1005,7 @@ const BLOCK_URLS = {
   b24: 'dashboard/superadmin.html',
   b25: 'core/pages/presupuesto-evento.html?proyecto=miramar',
   b26: 'core/pages/presupuesto-evento.html?proyecto=miramar',
+  b27: 'templates-comerciales/README.md',
 };
 
 BLOCKS.forEach(b => {

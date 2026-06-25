@@ -427,7 +427,9 @@ SW_VERSION → 5.20.0.
 
 ---
 
-## 13 · Cambios v6.0 (junio 2026) — epic estructural
+## 13 · Cambios v6.0
+
+**Epic estructural · junio 2026.**
 
 ### v6.0.A · Componente compartir universal (`share.js`)
 

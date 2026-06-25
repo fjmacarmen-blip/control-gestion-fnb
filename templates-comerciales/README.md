@@ -72,6 +72,6 @@ La ventaja de generar la plantilla desde código: **versionable en git**, cambio
 
 ## Próximas plantillas (pendientes)
 
-- `EMAIL-OUTREACH.txt` · plantillas de email frío a hoteleros (v5.8)
-- `CONTRATO-SERVICIOS.docx` · contrato real post-firma de propuesta (v5.8)
-- `INFORME-90-DIAS.docx` · reporte de pilotos a los 90 días (v5.9 cuando haya cliente)
+- `EMAIL-OUTREACH.txt` · plantillas de email frío a hoteleros (pendiente)
+- `CONTRATO-SERVICIOS.docx` · contrato real post-firma de propuesta (pendiente)
+- `INFORME-90-DIAS.docx` · reporte de pilotos a los 90 días (pendiente · cuando haya cliente)

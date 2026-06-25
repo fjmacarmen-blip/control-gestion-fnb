@@ -142,4 +142,4 @@ HeyGen permite poner imagen o vídeo de fondo y overlay de imagen con timeline s
 
 ---
 
-*Guion v1 · Generado para Francisco Javier Martínez Alba · Queen's Bellybutton v6.0*
+*Guion v1 · Generado para Francisco Javier Martínez Alba · Queens Bellybutton v6.0*

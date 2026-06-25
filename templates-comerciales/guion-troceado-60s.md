@@ -75,4 +75,4 @@ Yo los concateno con ffmpeg en la siguiente sesión.
 
 ---
 
-*Generado para Francisco Javier Martínez Alba · Queen's Bellybutton v6.0*
+*Generado para Francisco Javier Martínez Alba · Queens Bellybutton v6.0*
