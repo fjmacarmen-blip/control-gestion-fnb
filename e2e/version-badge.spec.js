@@ -15,11 +15,16 @@ test.describe('version badge', () => {
     await expect(badge).toContainText(/v\d+\.\d+/);
   });
 
-  test('badge es link al changelog y abre en pestaña nueva', async ({ page }) => {
+  test('badge es link al changelog y abre en pestaña nueva', async ({ page, request }) => {
+    // El href del badge se alimenta de version.json#changelog_url (fuente de
+    // verdad). Comparamos contra ese valor en vez de hardcodear la ruta, para
+    // que el test no se rompa al mover el destino del changelog (v6.0: pasó de
+    // un CHANGELOG-*.md a docs/DETALLE-PROYECTO.md#13--cambios-v60).
+    const data = await (await request.get('/core/version.json')).json();
     await page.goto('/index.html');
     const badge = page.locator('#qbb-version-badge');
     await expect(badge).toBeVisible({ timeout: 5000 });
-    await expect(badge).toHaveAttribute('href', /CHANGELOG/);
+    await expect(badge).toHaveAttribute('href', data.changelog_url);
     await expect(badge).toHaveAttribute('target', '_blank');
   });
 
