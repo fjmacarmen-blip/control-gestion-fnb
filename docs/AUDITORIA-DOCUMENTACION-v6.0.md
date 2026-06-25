@@ -93,13 +93,13 @@
 - **Fix aplicado:** alineado el heading al ancla canónica pretendida — `## 13 · Cambios v6.0` (slug verificable = exactamente `#13--cambios-v60`), preservando el descriptor en una línea bajo el título (`**Epic estructural · junio 2026.**`). No se tocó `version.json` ni `b26t1` ni este informe: las tres referencias resuelven ahora correctamente. Sin TOC ni enlaces internos que dependieran del heading anterior (verificado).
 - **Coste:** 5 min.
 
-### M3 · 3 páginas nuevas v6.0 sin badge de versión — **REQUIERE DECISIÓN (no auto-fix)**
+### M3 · 3 páginas nuevas v6.0 sin badge de versión — **RESUELTO**
 
 - **Archivo:line:** `core/pages/disenador-sala.html`, `core/pages/factura-servicio.html`, `core/pages/qr-print.html`
-- **Síntoma:** los 17 HTML restantes del repo incluyen `core/js/version-badge.js`; estas 3 páginas nuevas de v6.0 no. Es una asimetría de coherencia.
-- **Por qué NO se auto-fija:** el badge es `position:fixed` inferior-izquierdo. En `factura-servicio.html` (documento de cara a cliente) y `qr-print.html` (página pensada para imprimir) un badge flotante «v6.0» **podría imprimirse encima del documento o de la factura**, lo cual es peor que su ausencia. Solo `disenador-sala.html` (herramienta interna) es candidato claro.
-- **Recomendación:** añadir el badge **solo a `disenador-sala.html`**; en las otras dos, o bien no añadirlo, o añadirlo con `@media print { display:none }`. Decisión de producto, no fix mecánico.
-- **Coste:** 10 min (1 página) · 25 min (las 3 con regla print).
+- **Síntoma:** los 17 HTML restantes del repo incluyen `core/js/version-badge.js`; estas 3 páginas nuevas de v6.0 no. Era una asimetría de coherencia.
+- **Por qué se temía el auto-fix:** el badge es `position:fixed` inferior-izquierdo. En `factura-servicio.html` (documento de cara a cliente) y `qr-print.html` (página pensada para imprimir) se temía que un badge flotante «v6.0» se imprimiera encima del documento.
+- **Resolución:** la preocupación de impresión resultó infundada — `version-badge.js:76` ya incluye `@media print{#qbb-version-badge{display:none!important}}`, así que el badge se auto-oculta al imprimir en cualquier página. Decisión de producto del usuario: añadirlo a las 3. Se insertó `<script src="../js/version-badge.js" defer></script>` antes de `</body>` en las tres páginas. Sin regla print extra (ya la trae el propio badge).
+- **Coste real:** 5 min.
 
 ---
 
@@ -153,7 +153,7 @@ La recomendación original era recapturar `video-promo/public/assets/sala-movil-
 
 **Conclusión:** sin acción sobre los PNG. Una mejora de nitidez real solo tendría sentido como **recaptura global de los 8 assets** si en el futuro se pasa el vídeo a 4K — fuera del alcance de esta auditoría.
 
-**Recomendación derivada (sustituye en utilidad a la 2):** resolver M3 añadiendo el badge de versión a `disenador-sala.html` (y, con `@media print{display:none}`, opcionalmente a las otras dos) para cerrar la única asimetría de coherencia que queda en v6.0.
+**Recomendación derivada (sustituye en utilidad a la 2) — EJECUTADA:** se resolvió M3 añadiendo el badge de versión a las 3 páginas nuevas; el badge ya se auto-oculta al imprimir (`version-badge.js:76`), de modo que la asimetría de coherencia de v6.0 queda cerrada sin riesgo en factura/QR.
 
 ---
 
@@ -172,4 +172,4 @@ La recomendación original era recapturar `video-promo/public/assets/sala-movil-
 
 El material comercial regenerado en v6.0 era sólido en fondo (mensaje, estructura, marca blanca de la propuesta) pero arrastraba el típico **drift de una regeneración rápida**: versión del manifiesto atrasada, un test de QA apuntando a la era v5.17, dos pies con la marca mal escrita y un checklist sin cobertura del propio material. **Los cuatro se han corregido en esta sesión** (A1, A2, A3, M1), más los hitos obsoletos del README (M2), el ancla rota del changelog (M4) y el eyebrow (B1).
 
-Queda **un único punto de decisión** (M3 · badge de versión en 3 páginas nuevas, con matiz de impresión para factura/QR) y la **Recomendación 2 se retira con evidencia técnica** en lugar de ejecutarse a ciegas. **Veredicto: documentación v6.0 coherente y aprobada** tras la remediación.
+El **último punto de decisión** (M3 · badge de versión en 3 páginas nuevas) **también se cerró**: el badge se añadió a las tres y se auto-oculta al imprimir, así que no hay riesgo en factura/QR. La **Recomendación 2 se retira con evidencia técnica** en lugar de ejecutarse a ciegas. **Veredicto: documentación v6.0 coherente y aprobada** tras la remediación.
