@@ -774,8 +774,8 @@ const BLOCKS = [
         desc: 'En el documento abierto, Ctrl+P → Guardar como PDF. Verifica: footer con numeración «1/N», márgenes A4, tablas no cortadas, fuentes correctas.' },
       { id: 'b14t10', name: 'Docs humanizados · prosa fluida',
         desc: 'Lee CASE-STUDY.md y RESUMEN-EJECUTIVO.md. Las 4 lecciones del case study deben estar en prosa continua (no `**Header:** explicación`). El factor diferencial del resumen tampoco debe tener bolds mecánicos.' },
-      { id: 'b14t11', name: 'Landing card v5.3 visible',
-        desc: 'En <a href="index.html" target="_blank">la landing</a> aparece la card 5 «Paquete comercial» con badge rosa v5.3 y 4 links (pitch, mockups, PDFs, case study).' },
+      { id: 'b14t11', name: 'Landing card v6.0 visible',
+        desc: 'En <a href="index.html" target="_blank">la landing</a> aparece la card 5 «Paquete comercial» con badge rosa v6.0 y 4 links (pitch, mockups, PDFs, case study).' },
     ],
   },
   {
@@ -1229,7 +1229,7 @@ function buildPrompt() {
   const ok = getStat('ok'), err = getStat('err'), pend = getStat('pend'), total = getTotalTests();
   const fecha = new Date().toLocaleString('es-ES');
 
-  let txt = '# Reporte de QA · Queens Bellybutton v5.1\n';
+  let txt = '# Reporte de QA · Queens Bellybutton v6.0\n';
   txt += '_Generado_: ' + fecha + '\n\n';
   txt += '## Resumen\n';
   txt += '- Total tests: **' + total + '**\n';
@@ -1252,12 +1252,12 @@ function buildPrompt() {
 
   txt += '## Instrucciones para reparar\n\n';
   txt += 'Hola Claude. He probado la plataforma con el checklist interactivo (test-checklist.html) y he detectado los errores listados arriba. Por favor:\n\n';
-  txt += '1. Crea una rama `fix/v5.1-qa-issues` desde main.\n';
+  txt += '1. Crea una rama `fix/v6.0-qa-issues` desde main.\n';
   txt += '2. Analiza cada error en orden, lee el código implicado, propón la corrección.\n';
   txt += '3. Para cada bug, haz un commit separado con mensaje `fix(<bloque>): <test fallido> · <síntesis fix>`.\n';
   txt += '4. Si algún error es ambiguo o requiere más contexto, no asumas: pregunta antes de tocar nada.\n';
   txt += '5. Tras aplicar todos los fixes, ejecuta los tests (`node --test test/*.test.js`) y los smoke checks (validate-jsons.js + check-security-headers.js).\n';
-  txt += '6. Abre PR a main con título `fix(v5.1): cierre de QA · <n> bugs`.\n';
+  txt += '6. Abre PR a main con título `fix(v6.0): cierre de QA · <n> bugs`.\n';
   txt += '7. NO mergees el PR hasta que yo lo revise.\n';
 
   return txt;
