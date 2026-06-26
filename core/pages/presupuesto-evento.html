@@ -1749,8 +1749,8 @@ const bebPkgs = [
 const bebExtras = [
   { id:'bienvenida', ico:'🥂', name:'Cóctel bienvenida (1h)',   desc:'Barra de cóctel de autor a la llegada de invitados',  price:800,  pp:false },
   { id:'sumiller',   ico:'🍷', name:'Servicio de sumiller',     desc:'Sommelier dedicado durante toda la comida',          price:350,  pp:false },
-  { id:'maridaje',   ico:'🍾', name:'Maridaje por platos',      desc:'Vino seleccionado para cada plato del menú',         price:12,   pp:true  },
-  { id:'barra_cafe', ico:'☕', name:'Barra de café premium',    desc:'Café de especialidad, infusiones y petit fours',     price:4,    pp:true  },
+  { id:'maridaje',   ico:'🍾', name:'Maridaje por platos',      desc:'Vino seleccionado para cada plato del menú',         price:12,   pp:true, alc:true  },
+  { id:'barra_cafe', ico:'☕', name:'Barra de café premium',    desc:'Café de especialidad, infusiones y petit fours',     price:4,    pp:true, food:true },
   { id:'coctelera',  ico:'🍹', name:'Estación de cócteles',     desc:'Live cocktail bar con bartender y 6 cócteles',       price:600,  pp:false },
 ];
 
@@ -1827,15 +1827,17 @@ const fotoOpts = [
   { id:'drone',  ico:'🚁', name:'Reportaje con drone',       desc:'Tomas aéreas y exterior del evento (requiere permiso)', price:350, pp:false },
   { id:'live',   ico:'📺', name:'Retransmisión en directo',  desc:'Streaming para familiares que no pueden asistir',   price:450, pp:false },
 ];
+// v6.0 QA#1 · food:true → la consumen todos los comensales (niños al 100 %; bebés no);
+//            alc:true  → solo adultos. El resto "por pax" sigue facturable (niños 50 %).
 const dulcesOpts = [
-  { id:'tarta',   ico:'🎂', name:'Tarta nupcial / celebración',desc:'Tarta decorada para el número de pax',           price:3.5,  pp:true  },
-  { id:'candy',   ico:'🍬', name:'Mesa de dulces (candy bar)', desc:'Mesa decorada con golosinas, macarons y chuches', price:6,    pp:true  },
+  { id:'tarta',   ico:'🎂', name:'Tarta nupcial / celebración',desc:'Tarta decorada para el número de pax',           price:3.5,  pp:true, food:true },
+  { id:'candy',   ico:'🍬', name:'Mesa de dulces (candy bar)', desc:'Mesa decorada con golosinas, macarons y chuches', price:6,    pp:true, food:true },
   { id:'choco',   ico:'🍫', name:'Fuente de chocolate',       desc:'Fuente de chocolate negro con frutas y marshmallows', price:280, pp:false },
   { id:'helado',  ico:'🍦', name:'Carrito de helados artesanos',desc:'Heladero con 6 sabores artesanos durante 1h',   price:380, pp:false },
-  { id:'gin',     ico:'🍸', name:'Gin tonic de bienvenida',   desc:'Un gin tonic premium para cada invitado al llegar', price:9,  pp:true  },
-  { id:'welcome', ico:'🥂', name:'Copa de cava bienvenida',   desc:'Cava brut con fresas para recibir a los invitados', price:5,  pp:true  },
-  { id:'petitf',  ico:'🍫', name:'Petit fours con café',      desc:'Selección de 4 piezas de repostería fina por pax', price:4,  pp:true  },
-  { id:'after',   ico:'🌮', name:'After party snacks',        desc:'Mesa de snacks salados para la fiesta de noche',   price:8,  pp:true  },
+  { id:'gin',     ico:'🍸', name:'Gin tonic de bienvenida',   desc:'Un gin tonic premium para cada adulto al llegar',   price:9,  pp:true, alc:true  },
+  { id:'welcome', ico:'🥂', name:'Copa de cava bienvenida',   desc:'Cava brut con fresas para recibir a los adultos',   price:5,  pp:true, alc:true  },
+  { id:'petitf',  ico:'🍫', name:'Petit fours con café',      desc:'Selección de 4 piezas de repostería fina por pax', price:4,  pp:true, food:true },
+  { id:'after',   ico:'🌮', name:'After party snacks',        desc:'Mesa de snacks salados para la fiesta de noche',   price:8,  pp:true, food:true },
 ];
 
 // ══════════════════════════════════════════════════
@@ -2647,6 +2649,18 @@ let adultos = 100, ninos = 0, bebes = 0;
 
 function paxTotal()      { return adultos + ninos + bebes; }
 function paxFacturable() { return adultos + ninos * 0.5; }
+// v6.0 QA#1 · Base de cobro por ítem extra (dulces / bebidas extra):
+//   · comida (food:true) → todos los que comen: adultos + niños al 100 % (bebés no consumen)
+//   · alcohol (alc:true) → solo adultos
+//   · resto "por pax"    → pax facturable (niños al 50 %)
+//   · precio fijo (!pp)  → importe absoluto (multiplicador 1)
+function paxComida()     { return adultos + ninos; }
+function paxFor(item) {
+  if (!item.pp)   return 1;
+  if (item.alc)   return adultos;
+  if (item.food)  return paxComida();
+  return paxFacturable();
+}
 
 function changePaxKind(kind, delta) {
   const limits = { adultos:[0,2000], ninos:[0,500], bebes:[0,100] };
@@ -2719,7 +2733,7 @@ function calcTotal() {
 
   // Bebidas
   if (sel.bebPkg) t += sel.bebPkg.ppax * pf;
-  sel.bebExtras.forEach(b => t += b.pp ? b.price*pf : b.price);
+  sel.bebExtras.forEach(b => t += b.price * paxFor(b));   // v6.0 QA#1 · maridaje=alcohol→adultos
 
   // Montaje (silla, mesa: por persona total, no descuenta niños)
   if (sel.tablePkg) t += sel.tablePkg.ppax * pt;
@@ -2738,7 +2752,7 @@ function calcTotal() {
   sel.musica.forEach(m => t += m.pp ? m.price*pf : m.price);
   sel.show.forEach(s  => t += s.pp ? s.price*pf : s.price);
   sel.foto.forEach(f  => t += f.pp ? f.price*pf : f.price);
-  sel.dulces.forEach(d=> t += d.pp ? d.price*pf : d.price);
+  sel.dulces.forEach(d=> t += d.price * paxFor(d));   // v6.0 QA#1 · golosinas→todos los comensales · alcohol→adultos
 
   return t;
 }
@@ -2773,7 +2787,7 @@ function updateSide() {
     { title:'🍽️ Menú',   items: sel.menuPkg ? [{n:sel.menuPkg.name, v: sel.menuPkg.ppax > 0 ? fmtEur(sel.menuPkg.ppax*pf) : 'a calcular'}] : [] },
     { title:'🍷 Bebidas', items: [
       ...(sel.bebPkg ? [{n:sel.bebPkg.name, v:fmtEur(sel.bebPkg.ppax*pf)}] : []),
-      ...sel.bebExtras.map(b=>({n:b.name, v:fmtEur(b.pp?b.price*pf:b.price)}))
+      ...sel.bebExtras.map(b=>({n:b.name, v:fmtEur(b.price*paxFor(b))}))
     ]},
     { title:'🪑 Montaje', items: [
       ...(sel.tablePkg ? [{n:sel.tablePkg.name, v:fmtEur(sel.tablePkg.ppax*pt)}] : []),
@@ -2788,7 +2802,7 @@ function updateSide() {
     ]},
     // v5.4 · dulces movidos a la sección Menú (coherente con su naturaleza gastronómica)
     { title:'🍰 Dulces & Extras gastronómicos', items: [
-      ...sel.dulces.map(d=>({n:d.name, v:fmtEur(d.pp?d.price*pf:d.price)}))
+      ...sel.dulces.map(d=>({n:d.name, v:fmtEur(d.price*paxFor(d))}))
     ]},
     { title:'🎵 Animación, show & recuerdos', items: [
       ...sel.musica.map(m=>({n:m.name, v:fmtEur(m.pp?m.price*pf:m.price)})),
@@ -2858,8 +2872,8 @@ function buildFinalSummary() {
     { t:'🍽️ Gastronomía', rows: [
       ['Menú', sel.menuPkg?.name || '—'],
       ['Bebidas', sel.bebPkg?.name || '—'],
-      ...sel.bebExtras.map(b=>[b.name, fmtEur(b.pp?b.price*pf:b.price)]),
-      ...sel.dulces.map(d=>['🍰 ' + d.name, fmtEur(d.pp?d.price*pf:d.price)]),
+      ...sel.bebExtras.map(b=>[b.name, fmtEur(b.price*paxFor(b))]),
+      ...sel.dulces.map(d=>['🍰 ' + d.name, fmtEur(d.price*paxFor(d))]),
     ]},
     { t:'🪑 Montaje & Decoración', rows: [
       ['Configuración', sel.tablePkg?.name || '—'],
@@ -2945,6 +2959,7 @@ function buildPresupuestoTexto(data, ref) {
   // El presupuesto del cliente muestra TODO partida a partida con su importe,
   // no sólo el nombre. Mismo criterio de cálculo que calcTotal()/updateSide():
   //   · ítems "por pax" (pp:true)  → precio × pax facturable (pf)
+  //   · v6.0 QA#1 · comida (food:true) → adultos + niños (100 %); alcohol (alc:true) → solo adultos
   //   · ítems fijos     (pp:false) → precio absoluto
   //   · paquete de mesa            → ppax × pax total (pt)
   //   · centro de mesa             → fijo + por_mesa × ceil(pt/8)
@@ -2952,6 +2967,7 @@ function buildPresupuestoTexto(data, ref) {
   const pf = data.pf || 0;
   const pt = data.pt || 0;
   const S  = data.sel || {};
+  const paxComidaTxt = (data.adultos || 0) + (data.ninos || 0);   // v6.0 QA#1 · comen adultos + niños (bebés no)
   const COLW = 52;
   const li = (name, val) => {
     const price = (typeof val === 'number') ? fmtEur(val) : String(val);
@@ -2959,7 +2975,13 @@ function buildPresupuestoTexto(data, ref) {
     const gap   = Math.max(1, COLW - left.length - price.length);
     return left + ' '.repeat(gap) + price;
   };
-  const extraVal   = it => (it.pp ? it.price * pf : it.price);   // mismo criterio que calcTotal
+  // v6.0 QA#1 · mismo criterio que calcTotal()/paxFor(): comida→todos los que comen, alcohol→adultos
+  const extraVal = it => {
+    if (!it.pp)  return it.price;
+    if (it.alc)  return it.price * (data.adultos || 0);
+    if (it.food) return it.price * paxComidaTxt;
+    return it.price * pf;
+  };
   const pushSection = (title, rows) => {
     rows = (rows || []).filter(Boolean);
     if (!rows.length) return;
