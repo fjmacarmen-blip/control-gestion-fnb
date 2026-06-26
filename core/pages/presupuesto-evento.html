@@ -460,14 +460,14 @@ body{
    PROGRESS BAR
 ══════════════════════════════════════════════════ */
 .progress-bar {
-  padding:0 36px;
+  padding:0 22px;
   background:var(--dark2); border-bottom:1px solid var(--border);
-  display:flex; align-items:center; gap:0; overflow-x:auto;
+  display:flex; align-items:center; justify-content:safe center; gap:0; overflow-x:auto;
 }
 .progress-bar::-webkit-scrollbar { height:2px; }
 .step-item {
-  display:flex; align-items:center; gap:10px; padding:14px 16px 14px 0;
-  cursor:pointer; white-space:nowrap; transition:var(--t);
+  display:flex; align-items:center; gap:7px; padding:13px 8px 13px 0;
+  cursor:pointer; white-space:nowrap; transition:var(--t); flex-shrink:0;
 }
 .step-item:last-child { padding-right:0; }
 .step-num {
@@ -476,12 +476,12 @@ body{
   font-size:.72rem; font-weight:700; color:var(--muted);
   transition:var(--t); flex-shrink:0;
 }
-.step-label { font-size:.78rem; color:var(--muted); font-weight:500; transition:var(--t); }
+.step-label { font-size:.75rem; color:var(--muted); font-weight:500; transition:var(--t); }
 .step-item.done .step-num  { background:var(--green); border-color:var(--green); color:#fff; }
 .step-item.active .step-num { background:var(--gold); border-color:var(--gold); color:#000; }
 .step-item.active .step-label { color:var(--gold); font-weight:600; }
 .step-item.done .step-label  { color:var(--text); }
-.step-sep { width:20px; height:1px; background:var(--border2); flex-shrink:0; margin-right:6px; }
+.step-sep { width:10px; height:1px; background:var(--border2); flex-shrink:0; margin-right:4px; }
 
 /* ══════════════════════════════════════════════════
    SECTIONS / STEPS
@@ -1010,6 +1010,19 @@ body{
   margin-bottom:20px;
 }
 .nota-box strong { color:var(--gold); }
+/* QA#4 · campos obligatorios + aviso de validación del paso 1 */
+.req-mark { color:#f87171; font-weight:700; margin-left:2px; }
+.req-hint { color:var(--muted); font-size:.72rem; font-weight:400; }
+input.field-error, select.field-error, textarea.field-error {
+  border-color:#f87171 !important; box-shadow:0 0 0 2px rgba(248,113,113,.18);
+}
+.step1-alert {
+  background:rgba(248,113,113,.08); border:1px solid rgba(248,113,113,.35);
+  border-radius:10px; padding:12px 16px; font-size:.82rem; color:#fca5a5; line-height:1.6;
+  margin:0 0 18px; display:none;
+}
+.step1-alert.show { display:block; }
+.step1-alert strong { color:#f87171; }
 /* Gradient placeholders armonizados a navy */
 .g1, .g2, .g3, .g4, .g5, .g6, .g7, .g8, .g9 { background:linear-gradient(135deg,var(--card2),var(--card)); }
 .g1{background:linear-gradient(135deg,#1a2640,#0f2040);}
@@ -1122,6 +1135,9 @@ body{
         <p>Cuéntanos el tipo de evento y los detalles básicos para personalizar tu propuesta al máximo.</p>
       </div>
 
+      <!-- QA#4 · aviso de campos obligatorios (oculto hasta intentar avanzar sin datos) -->
+      <div class="step1-alert" id="step1Alert"></div>
+
       <div class="sub-title">🎊 ¿Qué tipo de evento estás organizando?</div>
       <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px;line-height:1.6;">
         Elige la categoría y después el subtipo concreto. Los menús y servicios disponibles se adaptarán automáticamente.
@@ -1151,13 +1167,13 @@ body{
         <div class="sel-grid cols-3" id="eventTypeGrid-empresa"></div>
       </div>
 
-      <div class="sub-title" style="margin-top:28px;">📋 Detalles del evento</div>
+      <div class="sub-title" style="margin-top:28px;">📋 Detalles del evento <span class="req-hint">· los campos con <span class="req-mark">*</span> son obligatorios para continuar</span></div>
       <div class="form-row">
-        <div class="form-group"><label>Nombre del cliente / empresa</label><input type="text" id="clientName" placeholder="Nombre y apellidos o razón social" oninput="updateSide()"></div>
-        <div class="form-group"><label>Email de contacto</label><input type="email" id="clientEmail" placeholder="email@ejemplo.com"></div>
+        <div class="form-group"><label>Nombre del cliente / empresa <span class="req-mark">*</span></label><input type="text" id="clientName" placeholder="Nombre y apellidos o razón social" oninput="updateSide(); clearReqError(this);"></div>
+        <div class="form-group"><label>Email de contacto <span class="req-mark">*</span></label><input type="email" id="clientEmail" placeholder="email@ejemplo.com" oninput="clearReqError(this);"></div>
       </div>
       <div class="form-row cols-3">
-        <div class="form-group"><label>Fecha del evento</label><input type="date" id="eventDate" oninput="updateSide(); checkAvailability();"></div>
+        <div class="form-group"><label>Fecha del evento <span class="req-mark">*</span></label><input type="date" id="eventDate" oninput="updateSide(); checkAvailability(); clearReqError(this);"></div>
         <div class="form-group"><label>Hora de inicio</label><input type="time" id="eventTime" value="13:00"></div>
         <div class="form-group"><label>Duración estimada</label>
           <select id="eventDuration" oninput="updateSide()">
@@ -1181,7 +1197,7 @@ body{
       <!-- v5.6 · Banner de disponibilidad -->
       <div id="availabilityBanner" style="display:none;"></div>
 
-      <div class="sub-title" style="margin-top:28px;">👥 Asistentes al evento</div>
+      <div class="sub-title" style="margin-top:28px;">👥 Asistentes al evento <span class="req-mark">*</span></div>
       <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px;line-height:1.6;">
         Los <strong style="color:var(--gold);">niños menores de 12 años</strong> tienen un descuento del 50% sobre el precio por pax.
         Los <strong style="color:var(--gold);">bebés</strong> no pagan menú pero necesitan silla alta (se añadirá automáticamente al pedido).
@@ -1307,6 +1323,20 @@ body{
 
       <div class="sub-title">🍽️ Paquetes de menú</div>
       <div class="sel-grid cols-2" id="menuPkgGrid"></div>
+
+      <!-- v6.0 QA#2 · aviso de elección orientativa + acceso al menú infantil -->
+      <div class="nota-box" id="menuOrientativaNota" style="margin-top:16px;">
+        <strong>📝 Elección de platos orientativa.</strong> Dentro de cada menú propuesto puedes pulsar
+        «Ver composición» y elegir los platos de cada sección antes de avanzar. Es una preselección
+        orientativa que podrás ajustar con tu comercial; queda registrada en el presupuesto.
+        <div id="childrenMenuAccess" style="display:none;margin-top:12px;">
+          <button type="button" onclick="showChildrenMenu()"
+            style="background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);padding:9px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;letter-spacing:.3px;">
+            👶 Ver menú infantil
+          </button>
+          <span style="font-size:.8rem;color:var(--muted);margin-left:10px;">Menú complementario para los más pequeños · porciones reducidas y presentación divertida.</span>
+        </div>
+      </div>
 
       <div id="customMenuWrap" style="display:none">
         <div class="sub-title" style="margin-top:28px;">✍️ Selección personalizada de platos</div>
@@ -1741,16 +1771,16 @@ const dishData = {
 };
 
 const bebPkgs = [
-  { id:'bas',  badge:'badge-eco', g:'g4', icon:'🍾', name:'Básica',          ppax:10, desc:'Agua, refrescos, vino de la casa (blanco y tinto) y cerveza durante el servicio de mesa' },
-  { id:'est',  badge:'badge-est', g:'g6', icon:'🍷', name:'Selecta',         ppax:18, desc:'Básica + Cava Brut, vino Rioja Crianza, Albariño y vermut en aperitivo' },
-  { id:'pre',  badge:'badge-pre', g:'g7', icon:'🥂', name:'Premium',         ppax:28, desc:'Selecta + Vino DO Málaga, porrón de champagne y gin tonic de aperitivo' },
-  { id:'open', badge:'badge-lux', g:'g8', icon:'🍸', name:'Open Bar 5h',     ppax:42, desc:'Todo ilimitado: vinos, cava, cócteles, destilados, refrescos y agua durante 5 horas' },
+  { id:'bas',  badge:'badge-eco', g:'g4', icon:'🍾', name:'Básica',          ppax:10, desc:'Agua, refrescos, vino de la casa (blanco y tinto) y cerveza durante el servicio de mesa', img:'../../imagenes/bebidas/bebidas/cervezas.jpg' },
+  { id:'est',  badge:'badge-est', g:'g6', icon:'🍷', name:'Selecta',         ppax:18, desc:'Básica + Cava Brut, vino Rioja Crianza, Albariño y vermut en aperitivo', img:'../../imagenes/bebidas/bebidas/vinos_tintos.jpg' },
+  { id:'pre',  badge:'badge-pre', g:'g7', icon:'🥂', name:'Premium',         ppax:28, desc:'Selecta + Vino DO Málaga, porrón de champagne y gin tonic de aperitivo', img:'../../imagenes/bebidas/bebidas/espumosos.jpg' },
+  { id:'open', badge:'badge-lux', g:'g8', icon:'🍸', name:'Open Bar 5h',     ppax:42, desc:'Todo ilimitado: vinos, cava, cócteles, destilados, refrescos y agua durante 5 horas', img:'../../imagenes/bebidas/bebidas/cocteles.jpg' },
 ];
 const bebExtras = [
   { id:'bienvenida', ico:'🥂', name:'Cóctel bienvenida (1h)',   desc:'Barra de cóctel de autor a la llegada de invitados',  price:800,  pp:false },
   { id:'sumiller',   ico:'🍷', name:'Servicio de sumiller',     desc:'Sommelier dedicado durante toda la comida',          price:350,  pp:false },
-  { id:'maridaje',   ico:'🍾', name:'Maridaje por platos',      desc:'Vino seleccionado para cada plato del menú',         price:12,   pp:true  },
-  { id:'barra_cafe', ico:'☕', name:'Barra de café premium',    desc:'Café de especialidad, infusiones y petit fours',     price:4,    pp:true  },
+  { id:'maridaje',   ico:'🍾', name:'Maridaje por platos',      desc:'Vino seleccionado para cada plato del menú',         price:12,   pp:true, alc:true  },
+  { id:'barra_cafe', ico:'☕', name:'Barra de café premium',    desc:'Café de especialidad, infusiones y petit fours',     price:4,    pp:true, food:true },
   { id:'coctelera',  ico:'🍹', name:'Estación de cócteles',     desc:'Live cocktail bar con bartender y 6 cócteles',       price:600,  pp:false },
 ];
 
@@ -1827,15 +1857,17 @@ const fotoOpts = [
   { id:'drone',  ico:'🚁', name:'Reportaje con drone',       desc:'Tomas aéreas y exterior del evento (requiere permiso)', price:350, pp:false },
   { id:'live',   ico:'📺', name:'Retransmisión en directo',  desc:'Streaming para familiares que no pueden asistir',   price:450, pp:false },
 ];
+// v6.0 QA#1 · food:true → la consumen todos los comensales (niños al 100 %; bebés no);
+//            alc:true  → solo adultos. El resto "por pax" sigue facturable (niños 50 %).
 const dulcesOpts = [
-  { id:'tarta',   ico:'🎂', name:'Tarta nupcial / celebración',desc:'Tarta decorada para el número de pax',           price:3.5,  pp:true  },
-  { id:'candy',   ico:'🍬', name:'Mesa de dulces (candy bar)', desc:'Mesa decorada con golosinas, macarons y chuches', price:6,    pp:true  },
+  { id:'tarta',   ico:'🎂', name:'Tarta nupcial / celebración',desc:'Tarta decorada para el número de pax',           price:3.5,  pp:true, food:true },
+  { id:'candy',   ico:'🍬', name:'Mesa de dulces (candy bar)', desc:'Mesa decorada con golosinas, macarons y chuches', price:6,    pp:true, food:true },
   { id:'choco',   ico:'🍫', name:'Fuente de chocolate',       desc:'Fuente de chocolate negro con frutas y marshmallows', price:280, pp:false },
   { id:'helado',  ico:'🍦', name:'Carrito de helados artesanos',desc:'Heladero con 6 sabores artesanos durante 1h',   price:380, pp:false },
-  { id:'gin',     ico:'🍸', name:'Gin tonic de bienvenida',   desc:'Un gin tonic premium para cada invitado al llegar', price:9,  pp:true  },
-  { id:'welcome', ico:'🥂', name:'Copa de cava bienvenida',   desc:'Cava brut con fresas para recibir a los invitados', price:5,  pp:true  },
-  { id:'petitf',  ico:'🍫', name:'Petit fours con café',      desc:'Selección de 4 piezas de repostería fina por pax', price:4,  pp:true  },
-  { id:'after',   ico:'🌮', name:'After party snacks',        desc:'Mesa de snacks salados para la fiesta de noche',   price:8,  pp:true  },
+  { id:'gin',     ico:'🍸', name:'Gin tonic de bienvenida',   desc:'Un gin tonic premium para cada adulto al llegar',   price:9,  pp:true, alc:true  },
+  { id:'welcome', ico:'🥂', name:'Copa de cava bienvenida',   desc:'Cava brut con fresas para recibir a los adultos',   price:5,  pp:true, alc:true  },
+  { id:'petitf',  ico:'🍫', name:'Petit fours con café',      desc:'Selección de 4 piezas de repostería fina por pax', price:4,  pp:true, food:true },
+  { id:'after',   ico:'🌮', name:'After party snacks',        desc:'Mesa de snacks salados para la fiesta de noche',   price:8,  pp:true, food:true },
 ];
 
 // ══════════════════════════════════════════════════
@@ -1973,7 +2005,8 @@ function renderCompItem(text, asLabel) {
   return html;
 }
 
-function showComposition(pkgId) {
+function showComposition(pkgId, opts) {
+  opts = opts || {};   // v6.0 QA#2 · opts.complementary → menú infantil (no se elige como menú principal)
   const pkg = menuPkgs.find(p => p.id === pkgId);
   if (!pkg || !pkg.composition) return;
 
@@ -2041,10 +2074,11 @@ function showComposition(pkgId) {
       ${sections}
     </div>
     <div class="comp-modal-footer">
-      <button class="btn-comp-confirm" onclick="confirmCompChoices('${pkgId}')">
-        ✓ Confirmar selección y elegir este menú
-      </button>
-      <div class="comp-modal-foot-note">Tus elecciones quedan registradas y aparecen en el contrato y la orden de servicio.</div>
+      ${opts.complementary
+        ? `<button class="btn-comp-confirm" onclick="closeComposition()">✓ Guardar elección del menú infantil</button>
+           <div class="comp-modal-foot-note">Menú complementario para los niños · elección orientativa que queda registrada en el presupuesto. No sustituye al menú principal del evento.</div>`
+        : `<button class="btn-comp-confirm" onclick="confirmCompChoices('${pkgId}')">✓ Confirmar selección y elegir este menú</button>
+           <div class="comp-modal-foot-note">Tus elecciones quedan registradas y aparecen en el contrato y la orden de servicio.</div>`}
     </div>
   `;
   document.getElementById('compModalOverlay').classList.add('open');
@@ -2091,6 +2125,15 @@ function confirmCompChoices(pkgId) {
   }
   closeComposition();
   updateSide();
+}
+
+// v6.0 QA#2 · Menú infantil complementario. Reutiliza el modal de composición
+// pero en modo `complementary`: los niños van con el menú infantil ADEMÁS del
+// menú del evento, así que NO se selecciona como menú principal. Las elecciones
+// quedan en sel.menuPkgChoices['paq_infantil'] y se vuelcan en el presupuesto.
+function showChildrenMenu() {
+  if (!(menuPkgs || []).some(p => p.id === 'paq_infantil')) return;
+  showComposition('paq_infantil', { complementary: true });
 }
 
 function closeComposition() {
@@ -2276,6 +2319,10 @@ function renderMenuPkgs() {
     }
     pkgCard(m, 'menuPkg', 'menuPkgGrid');
   });
+
+  // v6.0 QA#2 · acceso al menú infantil solo si el proyecto tiene paquete infantil
+  const childAccess = document.getElementById('childrenMenuAccess');
+  if (childAccess) childAccess.style.display = (menuPkgs || []).some(p => p.id === 'paq_infantil') ? 'block' : 'none';
 }
 
 // ══════════════════════════════════════════════════
@@ -2389,7 +2436,46 @@ function renderProgress() {
 // ══════════════════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════════════════
+// ── QA#4 · datos mínimos obligatorios del paso 1 ────────────────
+// Sin estos campos no se puede avanzar (ni generar presupuesto), y el paso 7
+// hereda/enlaza estos datos del paso 1 (ver buildFinalSummary + generateBudget).
+function validateStep1() {
+  const v = id => (document.getElementById(id)?.value || '').trim();
+  return [
+    { ok: !!sel.eventType,            label:'el tipo de evento', id:null },
+    { ok: !!v('clientName'),          label:'el nombre del cliente', id:'clientName' },
+    { ok: !!v('clientEmail'),         label:'el email de contacto', id:'clientEmail' },
+    { ok: !!v('eventDate'),           label:'la fecha del evento', id:'eventDate' },
+    { ok: paxTotal() > 0,             label:'el nº de comensales', id:'paxAdultos' },
+  ].filter(c => !c.ok);
+}
+function clearReqError(el) { if (el) el.classList.remove('field-error'); }
+function clearStep1Notice() {
+  document.getElementById('step1Alert')?.classList.remove('show');
+  ['clientName','clientEmail','eventDate','paxAdultos']
+    .forEach(id => document.getElementById(id)?.classList.remove('field-error'));
+}
+function flagStep1Missing(missing) {
+  ['clientName','clientEmail','eventDate','paxAdultos']
+    .forEach(id => document.getElementById(id)?.classList.remove('field-error'));
+  missing.forEach(m => { if (m.id) document.getElementById(m.id)?.classList.add('field-error'); });
+  const box = document.getElementById('step1Alert');
+  if (box) {
+    box.innerHTML = '⚠️ Antes de continuar, completa los datos mínimos del evento: <strong>' +
+      missing.map(m => m.label).join('</strong>, <strong>') + '</strong>.';
+    box.classList.add('show');
+  }
+  const bar = document.querySelector('#step-1 .step-progress-text');
+  if (bar) bar.textContent = 'Faltan datos obligatorios (marcados con *)';
+}
+
 function goStep(n) {
+  // QA#4 · gate: no se avanza más allá del paso 1 sin los datos mínimos
+  if (n !== 1 && n !== '1') {
+    const missing = validateStep1();
+    if (missing.length) { flagStep1Missing(missing); n = 1; }
+    else clearStep1Notice();
+  }
   document.querySelectorAll('.step-section').forEach(s=>s.classList.remove('active'));
   var el = document.getElementById(`step-${n}`);
   if (!el) { console.warn('Step no existe:', n); return; }
@@ -2459,7 +2545,11 @@ function renderSpecialMenusStep() {
     if (n <= 0) return;
     adaptedCount += n;
     var paqKey = DIETA_TO_PAQ_KEY[dietaKey];
-    var paq = paqByKey[paqKey];
+    // v6.0 QA#7b · si la dieta no tiene paquete propio, recurrir al paquete
+    // genérico de adaptación a intolerancias (dieta_key 'generico') cuando el
+    // proyecto lo ofrezca. Miramar tiene paquete específico por dieta, así que
+    // este fallback solo entra en proyectos como Casa Lola.
+    var paq = paqByKey[paqKey] || paqByKey['generico'];
     var color = DIETA_COLORS[dietaKey];
     var label = DIETAS_LABELS[dietaKey];
     breakdown.push(label + ': ' + n);
@@ -2472,12 +2562,16 @@ function renderSpecialMenusStep() {
       return;
     }
 
+    // El paquete genérico de intolerancias es informativo: todas sus secciones
+    // se muestran como lista (sin radios de "elegir 1 de 3").
+    var infoOnly = (paq.dieta_key === 'generico');
+
     // Build composición HTML
     var compHtml = '';
     Object.keys(paq.composition || {}).forEach(function(seccion) {
       var items = paq.composition[seccion];
       if (!Array.isArray(items)) return;
-      if (seccion === 'Garantías y protocolos' || seccion === 'Bodega adaptada') {
+      if (infoOnly || seccion === 'Garantías y protocolos' || seccion === 'Bodega adaptada') {
         compHtml += '<div class="special-comp-sec">' +
           '<div class="special-comp-title">' + escapeHtml(seccion) + '</div>' +
           '<ul class="special-comp-list">' +
@@ -2508,7 +2602,7 @@ function renderSpecialMenusStep() {
         '<div class="special-card-head">' +
           '<span class="special-card-icon">' + paq.icon + '</span>' +
           '<div class="special-card-titles">' +
-            '<div class="special-card-title">' + escapeHtml(paq.name) + '</div>' +
+            '<div class="special-card-title">' + escapeHtml(infoOnly ? (label + ' · ' + paq.name) : paq.name) + '</div>' +
             '<div class="special-card-desc">' + escapeHtml(paq.desc || '') + '</div>' +
           '</div>' +
           '<div class="special-card-pax">' +
@@ -2516,7 +2610,9 @@ function renderSpecialMenusStep() {
           '</div>' +
         '</div>' +
         '<details class="special-comp" open>' +
-          '<summary>Composición del menú · ' + paq.ppax + ' €/pax</summary>' +
+          '<summary>' + (infoOnly
+            ? 'Cómo adaptamos tu menú · sin coste adicional'
+            : 'Composición del menú · ' + paq.ppax + ' €/pax') + '</summary>' +
           compHtml +
         '</details>' +
       '</div>'
@@ -2647,6 +2743,18 @@ let adultos = 100, ninos = 0, bebes = 0;
 
 function paxTotal()      { return adultos + ninos + bebes; }
 function paxFacturable() { return adultos + ninos * 0.5; }
+// v6.0 QA#1 · Base de cobro por ítem extra (dulces / bebidas extra):
+//   · comida (food:true) → todos los que comen: adultos + niños al 100 % (bebés no consumen)
+//   · alcohol (alc:true) → solo adultos
+//   · resto "por pax"    → pax facturable (niños al 50 %)
+//   · precio fijo (!pp)  → importe absoluto (multiplicador 1)
+function paxComida()     { return adultos + ninos; }
+function paxFor(item) {
+  if (!item.pp)   return 1;
+  if (item.alc)   return adultos;
+  if (item.food)  return paxComida();
+  return paxFacturable();
+}
 
 function changePaxKind(kind, delta) {
   const limits = { adultos:[0,2000], ninos:[0,500], bebes:[0,100] };
@@ -2719,7 +2827,7 @@ function calcTotal() {
 
   // Bebidas
   if (sel.bebPkg) t += sel.bebPkg.ppax * pf;
-  sel.bebExtras.forEach(b => t += b.pp ? b.price*pf : b.price);
+  sel.bebExtras.forEach(b => t += b.price * paxFor(b));   // v6.0 QA#1 · maridaje=alcohol→adultos
 
   // Montaje (silla, mesa: por persona total, no descuenta niños)
   if (sel.tablePkg) t += sel.tablePkg.ppax * pt;
@@ -2738,7 +2846,7 @@ function calcTotal() {
   sel.musica.forEach(m => t += m.pp ? m.price*pf : m.price);
   sel.show.forEach(s  => t += s.pp ? s.price*pf : s.price);
   sel.foto.forEach(f  => t += f.pp ? f.price*pf : f.price);
-  sel.dulces.forEach(d=> t += d.pp ? d.price*pf : d.price);
+  sel.dulces.forEach(d=> t += d.price * paxFor(d));   // v6.0 QA#1 · golosinas→todos los comensales · alcohol→adultos
 
   return t;
 }
@@ -2773,7 +2881,7 @@ function updateSide() {
     { title:'🍽️ Menú',   items: sel.menuPkg ? [{n:sel.menuPkg.name, v: sel.menuPkg.ppax > 0 ? fmtEur(sel.menuPkg.ppax*pf) : 'a calcular'}] : [] },
     { title:'🍷 Bebidas', items: [
       ...(sel.bebPkg ? [{n:sel.bebPkg.name, v:fmtEur(sel.bebPkg.ppax*pf)}] : []),
-      ...sel.bebExtras.map(b=>({n:b.name, v:fmtEur(b.pp?b.price*pf:b.price)}))
+      ...sel.bebExtras.map(b=>({n:b.name, v:fmtEur(b.price*paxFor(b))}))
     ]},
     { title:'🪑 Montaje', items: [
       ...(sel.tablePkg ? [{n:sel.tablePkg.name, v:fmtEur(sel.tablePkg.ppax*pt)}] : []),
@@ -2788,7 +2896,7 @@ function updateSide() {
     ]},
     // v5.4 · dulces movidos a la sección Menú (coherente con su naturaleza gastronómica)
     { title:'🍰 Dulces & Extras gastronómicos', items: [
-      ...sel.dulces.map(d=>({n:d.name, v:fmtEur(d.pp?d.price*pf:d.price)}))
+      ...sel.dulces.map(d=>({n:d.name, v:fmtEur(d.price*paxFor(d))}))
     ]},
     { title:'🎵 Animación, show & recuerdos', items: [
       ...sel.musica.map(m=>({n:m.name, v:fmtEur(m.pp?m.price*pf:m.price)})),
@@ -2858,8 +2966,8 @@ function buildFinalSummary() {
     { t:'🍽️ Gastronomía', rows: [
       ['Menú', sel.menuPkg?.name || '—'],
       ['Bebidas', sel.bebPkg?.name || '—'],
-      ...sel.bebExtras.map(b=>[b.name, fmtEur(b.pp?b.price*pf:b.price)]),
-      ...sel.dulces.map(d=>['🍰 ' + d.name, fmtEur(d.pp?d.price*pf:d.price)]),
+      ...sel.bebExtras.map(b=>[b.name, fmtEur(b.price*paxFor(b))]),
+      ...sel.dulces.map(d=>['🍰 ' + d.name, fmtEur(d.price*paxFor(d))]),
     ]},
     { t:'🪑 Montaje & Decoración', rows: [
       ['Configuración', sel.tablePkg?.name || '—'],
@@ -2945,6 +3053,7 @@ function buildPresupuestoTexto(data, ref) {
   // El presupuesto del cliente muestra TODO partida a partida con su importe,
   // no sólo el nombre. Mismo criterio de cálculo que calcTotal()/updateSide():
   //   · ítems "por pax" (pp:true)  → precio × pax facturable (pf)
+  //   · v6.0 QA#1 · comida (food:true) → adultos + niños (100 %); alcohol (alc:true) → solo adultos
   //   · ítems fijos     (pp:false) → precio absoluto
   //   · paquete de mesa            → ppax × pax total (pt)
   //   · centro de mesa             → fijo + por_mesa × ceil(pt/8)
@@ -2952,6 +3061,7 @@ function buildPresupuestoTexto(data, ref) {
   const pf = data.pf || 0;
   const pt = data.pt || 0;
   const S  = data.sel || {};
+  const paxComidaTxt = (data.adultos || 0) + (data.ninos || 0);   // v6.0 QA#1 · comen adultos + niños (bebés no)
   const COLW = 52;
   const li = (name, val) => {
     const price = (typeof val === 'number') ? fmtEur(val) : String(val);
@@ -2959,7 +3069,13 @@ function buildPresupuestoTexto(data, ref) {
     const gap   = Math.max(1, COLW - left.length - price.length);
     return left + ' '.repeat(gap) + price;
   };
-  const extraVal   = it => (it.pp ? it.price * pf : it.price);   // mismo criterio que calcTotal
+  // v6.0 QA#1 · mismo criterio que calcTotal()/paxFor(): comida→todos los que comen, alcohol→adultos
+  const extraVal = it => {
+    if (!it.pp)  return it.price;
+    if (it.alc)  return it.price * (data.adultos || 0);
+    if (it.food) return it.price * paxComidaTxt;
+    return it.price * pf;
+  };
   const pushSection = (title, rows) => {
     rows = (rows || []).filter(Boolean);
     if (!rows.length) return;
@@ -2979,13 +3095,41 @@ function buildPresupuestoTexto(data, ref) {
       });
     } else {
       menuRows.push(li(S.menuPkg.name + ' (' + (S.menuPkg.ppax || 0) + ' €/pax × ' + pf + ')', (S.menuPkg.ppax || 0) * pf));
+      // v6.0 QA#6 · platos orientativos elegidos del menú propuesto
+      const choices = (S.menuPkgChoices || {})[S.menuPkg.id] || {};
+      Object.keys(choices).forEach(secTitle => {
+        const picks = (choices[secTitle] || []).filter(Boolean);
+        if (picks.length) menuRows.push('     ◦ ' + secTitle + ': ' + picks.join(', '));
+      });
     }
+  }
+  // v6.0 QA#6 · menú infantil (paquete complementario, fix #2) · platos elegidos
+  const infChoices = (S.menuPkgChoices || {})['paq_infantil'] || {};
+  const infSecs = Object.keys(infChoices).filter(k => (infChoices[k] || []).filter(Boolean).length);
+  if (infSecs.length) {
+    menuRows.push('  · 👶 Menú infantil');
+    infSecs.forEach(secTitle => {
+      menuRows.push('     ◦ ' + secTitle + ': ' + (infChoices[secTitle] || []).filter(Boolean).join(', '));
+    });
   }
   pushSection('▸ MENÚ', menuRows);
 
   // ▸ DIETAS ESPECIALES
-  const dietasActivas = Object.entries(data.dietas || {}).filter(([, n]) => n > 0);
-  pushSection('▸ DIETAS ESPECIALES', dietasActivas.map(([k, n]) => '  · ' + k + ': ' + n));
+  const dietasActivas = Object.entries(data.dietas || {}).filter(([, n]) => typeof n === 'number' && n > 0);
+  pushSection('▸ DIETAS ESPECIALES', dietasActivas.map(([k, n]) => '  · ' + (DIETAS_LABELS[k] || k) + ': ' + n));
+
+  // ▸ MENÚS ESPECIALES · platos elegidos en el paso 2.5 (v6.0 QA#6)
+  const deslug = s => String(s || '').replace(/-/g, ' ').replace(/^./, c => c.toUpperCase());
+  const spSel = data.specialSelections || {};
+  const spRows = [];
+  Object.keys(spSel).forEach(dietaKey => {
+    const secs = spSel[dietaKey] || {};
+    const picked = Object.keys(secs).filter(k => secs[k]);
+    if (!picked.length) return;
+    spRows.push('  · ' + (DIETAS_LABELS[dietaKey] || dietaKey));
+    picked.forEach(secSlug => spRows.push('     ◦ ' + deslug(secSlug) + ': ' + secs[secSlug]));
+  });
+  pushSection('▸ MENÚS ESPECIALES (platos elegidos)', spRows);
 
   // ▸ BEBIDAS
   pushSection('▸ BEBIDAS', [
@@ -3191,7 +3335,9 @@ function exportPresupuestoData() {
     pt:       paxTotal(),
     pf:       paxFacturable(),
     dietas:   JSON.parse(JSON.stringify(dietas)),  // 🌿 dietas especiales
-    sel:      JSON.parse(JSON.stringify(sel)), // copia profunda
+    sel:      JSON.parse(JSON.stringify(sel)), // copia profunda (incluye sel.menuPkgChoices · platos elegidos)
+    // v6.0 QA#6 · platos elegidos en los menús especiales del paso 2.5 (global aparte de sel)
+    specialSelections: JSON.parse(JSON.stringify(specialSelections || {})),
     total
   };
   sessionStorage.setItem('fnb_presupuesto_actual', JSON.stringify(data));

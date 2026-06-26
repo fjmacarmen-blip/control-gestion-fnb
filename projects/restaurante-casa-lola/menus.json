@@ -318,6 +318,41 @@
           "Personal formado en alergias"
         ]
       }
+    },
+    {
+      "id": "cl_intolerancias",
+      "name": "Adaptación a intolerancias",
+      "ppax": 0,
+      "type": "menu_especial",
+      "scope": "especial",
+      "dieta_key": "generico",
+      "badge": "badge-pre",
+      "icon": "🌿",
+      "color": "#10b981",
+      "desc": "La chef adapta el menú elegido a las intolerancias y alergias de tus invitados, sin coste adicional.",
+      "incl": "Adaptación incluida · Etiquetado en mesa · Protocolo APPCC",
+      "img": "",
+      "composition": {
+        "Cómo lo hacemos": [
+          "Recogemos intolerancias y alergias en la visita técnica o por teléfono",
+          "La chef ajusta los platos del menú elegido a cada caso",
+          "Sustituciones equivalentes en entrante, principal y postre"
+        ],
+        "Intolerancias y alergias que cubrimos": [
+          "Sin gluten / celíacos",
+          "Sin lactosa",
+          "Sin frutos secos",
+          "Vegano y vegetariano",
+          "Halal y kosher (bajo confirmación previa)",
+          "Menú infantil"
+        ],
+        "Garantías y protocolos": [
+          "Cocina con protocolo APPCC y prevención de contaminación cruzada",
+          "Personal de sala formado en alergias alimentarias",
+          "Etiquetado de cada plato adaptado en mesa",
+          "Identificación del comensal acordada con el cliente"
+        ]
+      }
     }
   ]
 }

@@ -904,6 +904,31 @@ const BLOCKS = [
         desc: 'Ctrl+P en superadmin.html. La vista de impresión oculta el sidebar y las acciones, pero mantiene los colores corporativos (no se "rompe" el verde).' },
     ],
   },
+  {
+    id: 'b28',
+    title: 'QA v6.0 · Correcciones aplicadas (re-chequear)',
+    desc: 'Errores detectados en la ronda de QA del cotizador y ya corregidos en la rama fix/v6.0-qa-issues. Cada punto explica QUÉ se arregló y CÓMO volver a comprobarlo, para no perder lo ya revisado. Marca OK cuando confirmes que el arreglo funciona.',
+    tests: [
+      { id: 'b28t1', name: 'QA#1 · Dulces cobran a todos los pax · alcohol solo adultos',
+        desc: '<strong>Arreglo:</strong> los extras de comida y dulces (candy bar, tarta, fuente de chocolate…) ahora multiplican por el total de comensales (niños incluidos al 100%), mientras que las bebidas con alcohol se calculan solo sobre adultos. <em>(commit 19699e4)</em> · <strong>Re-chequear:</strong> en <a href="core/pages/presupuesto-evento.html?proyecto=miramar" target="_blank">el cotizador</a> pon p.ej. 40 adultos + 10 niños, añade un dulce y un paquete de bebida con alcohol: el dulce debe contar 50 pax y el alcohol 40.' },
+      { id: 'b28t2', name: 'QA#2 · Elección orientativa de platos + menú infantil',
+        desc: '<strong>Arreglo:</strong> en los menús propuestos ya se pueden elegir los platos (con aviso de que es orientativo, sujeto a confirmación en visita técnica) y se añadió el modal de menú infantil. <em>(commit b175f9b)</em> · <strong>Re-chequear:</strong> en el paso 2, abre la composición de un menú y comprueba que puedes marcar platos, que aparece el aviso orientativo y el bloque de menú infantil.' },
+      { id: 'b28t3', name: 'QA#3 · La barra de progreso ya no corta «Presupuesto»',
+        desc: '<strong>Arreglo:</strong> ajustada la barra de progreso para que la etiqueta del último paso «Presupuesto» se vea completa, sin recortarse. <em>(commit fca8350)</em> · <strong>Re-chequear:</strong> avanza por los pasos y verifica que «Presupuesto» se lee entero en la barra superior (prueba también en ventana estrecha / móvil).' },
+      { id: 'b28t4', name: 'QA#4 · Datos del paso 1 vinculados al paso 7 + campos obligatorios',
+        desc: '<strong>Arreglo:</strong> los datos del paso 1 (tipo de evento, fecha, comensales…) ahora se enlazan al paso 7, los campos obligatorios llevan asterisco * y no se puede generar el presupuesto sin rellenarlos. <em>(commit 5fdfe71)</em> · <strong>Re-chequear:</strong> rellena el paso 1, llega al paso 7 y comprueba que los datos coinciden; intenta continuar con campos vacíos y verifica que se bloquea y se marcan los * en rojo.' },
+      { id: 'b28t5', name: 'QA#5 · Copia a portapapeles — revisado, NO es bug',
+        desc: '<strong>Revisado:</strong> la opción de copiar el presupuesto al portapapeles funciona como complemento al envío por email. Tras consulta se confirma que NO es una acción obligatoria y no constituye error, por lo que no requiere cambios de código. · <strong>Acción:</strong> marca OK para cerrar el punto.' },
+      { id: 'b28t6', name: 'QA#6 · Presupuesto impreso incluye platos y menús especiales elegidos',
+        desc: '<strong>Arreglo:</strong> la vista imprimible del presupuesto ahora incluye los platos seleccionados en cada menú y las elecciones de menús especiales por dieta. <em>(commit 8d1085c)</em> · <strong>Re-chequear:</strong> configura un evento con platos y un menú especial elegidos, pulsa «Ver presupuesto completo» / imprimir y comprueba que aparecen los platos y las dietas adaptadas.' },
+      { id: 'b28t7', name: 'QA#7a · Casa Lola — el enlace de sala abre la sala correcta',
+        desc: '<strong>Arreglo:</strong> en Casa Lola el enlace «ver sala» abría la sala de Miramar; ahora abre la sala del propio proyecto. <em>(commit 615e189)</em> · <strong>Re-chequear:</strong> en <a href="core/pages/presupuesto-evento.html?proyecto=restaurante-casa-lola" target="_blank">el cotizador de Casa Lola</a> pulsa el enlace de sala y confirma que carga la sala de Casa Lola, no la de Miramar.' },
+      { id: 'b28t8', name: 'QA#7b · Casa Lola — paquete «Adaptación a intolerancias»',
+        desc: '<strong>Arreglo:</strong> Casa Lola no tenía menús especiales, así que el paso 2.5 mostraba «paquete no encontrado» para cada dieta. Se añadió un paquete genérico «Adaptación a intolerancias» (sin coste) y un fallback que lo presenta como información (sin radios) con título por dieta. Miramar no se ve afectado. <em>(commit 67c41bf)</em> · <strong>Re-chequear:</strong> en el cotizador de Casa Lola marca varias dietas en el paso 2, ve al paso 2.5 y comprueba que cada dieta muestra la tarjeta de adaptación con «sin coste adicional» y sin errores.' },
+      { id: 'b28t9', name: 'QA#7c · Tarjetas de bebida con imagen',
+        desc: '<strong>Arreglo:</strong> las 4 tarjetas de paquete de bebida (Básica, Selecta, Premium, Open Bar) salían con el thumb vacío; se les asignó ilustración (cervezas, vinos tintos, espumosos, cócteles) reutilizando las imágenes de imagenes/bebidas/. <em>(commit fbc4805)</em> · <strong>Re-chequear:</strong> en el paso 3 «Bebidas» del cotizador comprueba que las 4 tarjetas muestran su imagen.' },
+    ],
+  },
 ];
 
 // ─────────────────────────────────────────────────────
@@ -972,6 +997,7 @@ const LEVEL_MAP = {
   b25: 'cliente',   // Menús especiales (cliente final los pide en el cotizador)
   b26: 'cliente',   // Colores transversales + versioning visible (para todos)
   b27: 'admin',     // Documentación comercial v6.0 (propuesta, guiones, coherencia)
+  b28: 'cliente',   // QA v6.0 · correcciones del cotizador público (re-chequeo)
 };
 
 // URL de referencia por bloque · fallback cuando un test no trae su propio
@@ -1006,6 +1032,7 @@ const BLOCK_URLS = {
   b25: 'core/pages/presupuesto-evento.html?proyecto=miramar',
   b26: 'core/pages/presupuesto-evento.html?proyecto=miramar',
   b27: 'templates-comerciales/README.md',
+  b28: 'core/pages/presupuesto-evento.html?proyecto=miramar',
 };
 
 BLOCKS.forEach(b => {
