@@ -57,12 +57,7 @@
   <div class="hd-sep">·</div>
   <label style="font-size:12px;color:var(--text-muted)">Espacio:</label>
   <select class="ctrl" id="espacioSel">
-    <option value="interior">Gran Salón Mediterráneo</option>
-    <option value="terraza">Terraza Real</option>
-    <option value="jardines">Jardines y Piscina</option>
-    <option value="carpa">Carpa Climatizada</option>
-    <option value="playa">Chiringuito / Playa</option>
-    <option value="otro">Espacio personalizado</option>
+    <option value="">Cargando espacios…</option>
   </select>
   <button class="btn-sm" id="btnReset" title="Resetear al plano automático">↺ Reset</button>
   <button class="btn-sm" id="btnSeating">🪑 Lista de mesa</button>
@@ -111,30 +106,41 @@
 
 <div id="share-bar"></div>
 
+<script src="../js/loader.js"></script>
 <script src="../js/share.js"></script>
 <script>
 'use strict';
 
-const PLANOS = {
-  interior: { nombre:'Gran Salón Mediterráneo (Interior)', W:850, H:500,
-    accesos:[{x:425,y:0,tipo:'P'},{x:0,y:250,tipo:'C'}],
-    notas:'Salón principal · 850 m² · 9,2 m altura libre' },
-  terraza: { nombre:'Terraza Real (Exterior, frente al mar)', W:850, H:450,
-    accesos:[{x:0,y:225,tipo:'P'},{x:850,y:225,tipo:'J'}],
-    notas:'Terraza con vistas al Mediterráneo · 600 m² · Toldo retráctil' },
-  jardines: { nombre:'Jardines y Piscina (Exterior)', W:900, H:550,
-    accesos:[{x:100,y:0,tipo:'P'},{x:700,y:550,tipo:'B'}],
-    notas:'Jardines subtropicales · 1.200 m²' },
-  carpa: { nombre:'Carpa Climatizada', W:700, H:500,
-    accesos:[{x:350,y:0,tipo:'P'}],
-    notas:'Carpa modular climatizada · 400 m² · Suelo de tarima' },
-  playa: { nombre:'Chiringuito / Playa Privada', W:750, H:400,
-    accesos:[{x:375,y:0,tipo:'P'},{x:375,y:400,tipo:'M'}],
-    notas:'Beach Club privado · 400 m de playa' },
+// v6.0 QA#7a · Los planos se construyen dinámicamente desde
+// establecimiento.espacios del proyecto cargado (boot()). Antes estaban
+// hardcodeados con los espacios de Miramar, por lo que Casa Lola (o cualquier
+// otro proyecto) abría siempre las salas de Miramar. Arranca solo con el
+// espacio "otro" de respaldo para que nada falle si el JSON no carga.
+let PLANOS = {
   otro: { nombre:'Espacio personalizado', W:800, H:500,
     accesos:[{x:400,y:0,tipo:'P'}],
     notas:'Configuración personalizada' },
 };
+
+// Deriva un plano (dimensiones + accesos + notas) desde un espacio del
+// establecimiento.json. Las dimensiones del lienzo escalan con la superficie
+// real (acotadas a un rango usable); el acceso por defecto es una puerta
+// centrada arriba.
+function planoFromEspacio(esp) {
+  const area = Number(esp.superficie_m2) || 200;
+  const W = Math.max(500, Math.min(950, Math.round(Math.sqrt(area) * 30)));
+  const H = Math.round(W / 1.6);
+  const bits = [];
+  if (esp.superficie_m2)      bits.push(esp.superficie_m2 + ' m²');
+  if (esp.capacidad_sentado)  bits.push(esp.capacidad_sentado + ' sentados');
+  if (esp.capacidad_coctel)   bits.push(esp.capacidad_coctel + ' cóctel');
+  return {
+    nombre: esp.nombre || esp.id,
+    W, H,
+    accesos: [{ x: Math.round(W / 2), y: 0, tipo: 'P' }],
+    notas: bits.join(' · ') || 'Espacio del establecimiento',
+  };
+}
 
 const SEAT_STATES = ['libre','dieta','infantil','bebe'];
 const SEAT_COLORS = { libre:'rgba(232,234,240,0.65)', dieta:'#f59e0b', infantil:'#10b981', bebe:'#3b82f6' };
@@ -144,7 +150,7 @@ const PROYECTO = params.get('proyecto') || 'demo';
 const STORAGE_KEY = () => `fnb_sala_${PROYECTO}_${state.espacio}`;
 
 const state = {
-  espacio: params.get('espacio') || 'interior',
+  espacio: params.get('espacio') || 'otro',  // boot() lo fija al espacio real del proyecto
   tool: 'select',
   selected: null,
   items: [],    // {id, type, x, y, label?, seats?, seatStates?}
@@ -459,7 +465,6 @@ document.querySelectorAll('.tool-btn[data-tool]').forEach(btn => {
   });
 });
 
-document.getElementById('espacioSel').value = state.espacio;
 document.getElementById('espacioSel').addEventListener('change', e => {
   state.espacio = e.target.value;
   state.selected = null;
@@ -493,8 +498,56 @@ if (window.fnbShare) {
   }));
 }
 
-if (!load()) autoPlano(state.espacio);
-render();
+// ── Boot · cargar los espacios reales del proyecto (v6.0 QA#7a) ────────
+// Antes el plano se montaba sincrónicamente con PLANOS hardcodeado de
+// Miramar. Ahora se leen establecimiento.espacios del proyecto de la URL
+// (?proyecto=) para que cada cliente vea SUS salas.
+async function initEspacios() {
+  let espacios = [];
+  try {
+    if (window.loadProject) {
+      const data = await window.loadProject(PROYECTO, { keys: ['establecimiento'] });
+      const est = data && data.establecimiento;
+      if (est && Array.isArray(est.espacios)) espacios = est.espacios;
+    }
+  } catch (e) {
+    console.warn('[disenador-sala] No se pudieron cargar los espacios del proyecto "' + PROYECTO + '":', e);
+  }
+
+  // Reconstruir PLANOS desde los espacios reales (+ "otro" siempre disponible).
+  PLANOS = {};
+  espacios.forEach(esp => { if (esp && esp.id) PLANOS[esp.id] = planoFromEspacio(esp); });
+  PLANOS.otro = { nombre:'Espacio personalizado', W:800, H:500,
+    accesos:[{x:400,y:0,tipo:'P'}], notas:'Configuración personalizada' };
+
+  // Repoblar el <select> de espacios.
+  const sel = document.getElementById('espacioSel');
+  sel.innerHTML = '';
+  espacios.forEach(esp => {
+    if (!esp || !esp.id) return;
+    const o = document.createElement('option');
+    o.value = esp.id;
+    o.textContent = esp.nombre || esp.id;
+    sel.appendChild(o);
+  });
+  const oOtro = document.createElement('option');
+  oOtro.value = 'otro';
+  oOtro.textContent = 'Espacio personalizado';
+  sel.appendChild(oOtro);
+
+  // Espacio inicial: el de la URL si es válido para ESTE proyecto; si no, el
+  // primer espacio real (o "otro" si el proyecto no declara espacios).
+  const urlEsp = params.get('espacio');
+  if (urlEsp && PLANOS[urlEsp]) state.espacio = urlEsp;
+  else state.espacio = (espacios[0] && espacios[0].id) ? espacios[0].id : 'otro';
+  sel.value = state.espacio;
+}
+
+(async function boot() {
+  await initEspacios();
+  if (!load()) autoPlano(state.espacio);
+  render();
+})();
 </script>
 <!-- v6.0 · version-badge · badge de versión visible -->
 <script src="../js/version-badge.js" defer></script>
