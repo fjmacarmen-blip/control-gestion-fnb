@@ -3085,13 +3085,41 @@ function buildPresupuestoTexto(data, ref) {
       });
     } else {
       menuRows.push(li(S.menuPkg.name + ' (' + (S.menuPkg.ppax || 0) + ' €/pax × ' + pf + ')', (S.menuPkg.ppax || 0) * pf));
+      // v6.0 QA#6 · platos orientativos elegidos del menú propuesto
+      const choices = (S.menuPkgChoices || {})[S.menuPkg.id] || {};
+      Object.keys(choices).forEach(secTitle => {
+        const picks = (choices[secTitle] || []).filter(Boolean);
+        if (picks.length) menuRows.push('     ◦ ' + secTitle + ': ' + picks.join(', '));
+      });
     }
+  }
+  // v6.0 QA#6 · menú infantil (paquete complementario, fix #2) · platos elegidos
+  const infChoices = (S.menuPkgChoices || {})['paq_infantil'] || {};
+  const infSecs = Object.keys(infChoices).filter(k => (infChoices[k] || []).filter(Boolean).length);
+  if (infSecs.length) {
+    menuRows.push('  · 👶 Menú infantil');
+    infSecs.forEach(secTitle => {
+      menuRows.push('     ◦ ' + secTitle + ': ' + (infChoices[secTitle] || []).filter(Boolean).join(', '));
+    });
   }
   pushSection('▸ MENÚ', menuRows);
 
   // ▸ DIETAS ESPECIALES
-  const dietasActivas = Object.entries(data.dietas || {}).filter(([, n]) => n > 0);
-  pushSection('▸ DIETAS ESPECIALES', dietasActivas.map(([k, n]) => '  · ' + k + ': ' + n));
+  const dietasActivas = Object.entries(data.dietas || {}).filter(([, n]) => typeof n === 'number' && n > 0);
+  pushSection('▸ DIETAS ESPECIALES', dietasActivas.map(([k, n]) => '  · ' + (DIETAS_LABELS[k] || k) + ': ' + n));
+
+  // ▸ MENÚS ESPECIALES · platos elegidos en el paso 2.5 (v6.0 QA#6)
+  const deslug = s => String(s || '').replace(/-/g, ' ').replace(/^./, c => c.toUpperCase());
+  const spSel = data.specialSelections || {};
+  const spRows = [];
+  Object.keys(spSel).forEach(dietaKey => {
+    const secs = spSel[dietaKey] || {};
+    const picked = Object.keys(secs).filter(k => secs[k]);
+    if (!picked.length) return;
+    spRows.push('  · ' + (DIETAS_LABELS[dietaKey] || dietaKey));
+    picked.forEach(secSlug => spRows.push('     ◦ ' + deslug(secSlug) + ': ' + secs[secSlug]));
+  });
+  pushSection('▸ MENÚS ESPECIALES (platos elegidos)', spRows);
 
   // ▸ BEBIDAS
   pushSection('▸ BEBIDAS', [
@@ -3297,7 +3325,9 @@ function exportPresupuestoData() {
     pt:       paxTotal(),
     pf:       paxFacturable(),
     dietas:   JSON.parse(JSON.stringify(dietas)),  // 🌿 dietas especiales
-    sel:      JSON.parse(JSON.stringify(sel)), // copia profunda
+    sel:      JSON.parse(JSON.stringify(sel)), // copia profunda (incluye sel.menuPkgChoices · platos elegidos)
+    // v6.0 QA#6 · platos elegidos en los menús especiales del paso 2.5 (global aparte de sel)
+    specialSelections: JSON.parse(JSON.stringify(specialSelections || {})),
     total
   };
   sessionStorage.setItem('fnb_presupuesto_actual', JSON.stringify(data));
