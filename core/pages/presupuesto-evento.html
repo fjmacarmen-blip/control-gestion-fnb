@@ -2545,7 +2545,11 @@ function renderSpecialMenusStep() {
     if (n <= 0) return;
     adaptedCount += n;
     var paqKey = DIETA_TO_PAQ_KEY[dietaKey];
-    var paq = paqByKey[paqKey];
+    // v6.0 QA#7b · si la dieta no tiene paquete propio, recurrir al paquete
+    // genérico de adaptación a intolerancias (dieta_key 'generico') cuando el
+    // proyecto lo ofrezca. Miramar tiene paquete específico por dieta, así que
+    // este fallback solo entra en proyectos como Casa Lola.
+    var paq = paqByKey[paqKey] || paqByKey['generico'];
     var color = DIETA_COLORS[dietaKey];
     var label = DIETAS_LABELS[dietaKey];
     breakdown.push(label + ': ' + n);
@@ -2558,12 +2562,16 @@ function renderSpecialMenusStep() {
       return;
     }
 
+    // El paquete genérico de intolerancias es informativo: todas sus secciones
+    // se muestran como lista (sin radios de "elegir 1 de 3").
+    var infoOnly = (paq.dieta_key === 'generico');
+
     // Build composición HTML
     var compHtml = '';
     Object.keys(paq.composition || {}).forEach(function(seccion) {
       var items = paq.composition[seccion];
       if (!Array.isArray(items)) return;
-      if (seccion === 'Garantías y protocolos' || seccion === 'Bodega adaptada') {
+      if (infoOnly || seccion === 'Garantías y protocolos' || seccion === 'Bodega adaptada') {
         compHtml += '<div class="special-comp-sec">' +
           '<div class="special-comp-title">' + escapeHtml(seccion) + '</div>' +
           '<ul class="special-comp-list">' +
@@ -2594,7 +2602,7 @@ function renderSpecialMenusStep() {
         '<div class="special-card-head">' +
           '<span class="special-card-icon">' + paq.icon + '</span>' +
           '<div class="special-card-titles">' +
-            '<div class="special-card-title">' + escapeHtml(paq.name) + '</div>' +
+            '<div class="special-card-title">' + escapeHtml(infoOnly ? (label + ' · ' + paq.name) : paq.name) + '</div>' +
             '<div class="special-card-desc">' + escapeHtml(paq.desc || '') + '</div>' +
           '</div>' +
           '<div class="special-card-pax">' +
@@ -2602,7 +2610,9 @@ function renderSpecialMenusStep() {
           '</div>' +
         '</div>' +
         '<details class="special-comp" open>' +
-          '<summary>Composición del menú · ' + paq.ppax + ' €/pax</summary>' +
+          '<summary>' + (infoOnly
+            ? 'Cómo adaptamos tu menú · sin coste adicional'
+            : 'Composición del menú · ' + paq.ppax + ' €/pax') + '</summary>' +
           compHtml +
         '</details>' +
       '</div>'
