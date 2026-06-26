@@ -1308,6 +1308,20 @@ body{
       <div class="sub-title">🍽️ Paquetes de menú</div>
       <div class="sel-grid cols-2" id="menuPkgGrid"></div>
 
+      <!-- v6.0 QA#2 · aviso de elección orientativa + acceso al menú infantil -->
+      <div class="nota-box" id="menuOrientativaNota" style="margin-top:16px;">
+        <strong>📝 Elección de platos orientativa.</strong> Dentro de cada menú propuesto puedes pulsar
+        «Ver composición» y elegir los platos de cada sección antes de avanzar. Es una preselección
+        orientativa que podrás ajustar con tu comercial; queda registrada en el presupuesto.
+        <div id="childrenMenuAccess" style="display:none;margin-top:12px;">
+          <button type="button" onclick="showChildrenMenu()"
+            style="background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);padding:9px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;letter-spacing:.3px;">
+            👶 Ver menú infantil
+          </button>
+          <span style="font-size:.8rem;color:var(--muted);margin-left:10px;">Menú complementario para los más pequeños · porciones reducidas y presentación divertida.</span>
+        </div>
+      </div>
+
       <div id="customMenuWrap" style="display:none">
         <div class="sub-title" style="margin-top:28px;">✍️ Selección personalizada de platos</div>
         <div class="nota-box"><strong>Tip:</strong> Puedes elegir hasta 2 platos por sección. El precio se calcula según el food cost y los costes fijos de tu cocina.</div>
@@ -1975,7 +1989,8 @@ function renderCompItem(text, asLabel) {
   return html;
 }
 
-function showComposition(pkgId) {
+function showComposition(pkgId, opts) {
+  opts = opts || {};   // v6.0 QA#2 · opts.complementary → menú infantil (no se elige como menú principal)
   const pkg = menuPkgs.find(p => p.id === pkgId);
   if (!pkg || !pkg.composition) return;
 
@@ -2043,10 +2058,11 @@ function showComposition(pkgId) {
       ${sections}
     </div>
     <div class="comp-modal-footer">
-      <button class="btn-comp-confirm" onclick="confirmCompChoices('${pkgId}')">
-        ✓ Confirmar selección y elegir este menú
-      </button>
-      <div class="comp-modal-foot-note">Tus elecciones quedan registradas y aparecen en el contrato y la orden de servicio.</div>
+      ${opts.complementary
+        ? `<button class="btn-comp-confirm" onclick="closeComposition()">✓ Guardar elección del menú infantil</button>
+           <div class="comp-modal-foot-note">Menú complementario para los niños · elección orientativa que queda registrada en el presupuesto. No sustituye al menú principal del evento.</div>`
+        : `<button class="btn-comp-confirm" onclick="confirmCompChoices('${pkgId}')">✓ Confirmar selección y elegir este menú</button>
+           <div class="comp-modal-foot-note">Tus elecciones quedan registradas y aparecen en el contrato y la orden de servicio.</div>`}
     </div>
   `;
   document.getElementById('compModalOverlay').classList.add('open');
@@ -2093,6 +2109,15 @@ function confirmCompChoices(pkgId) {
   }
   closeComposition();
   updateSide();
+}
+
+// v6.0 QA#2 · Menú infantil complementario. Reutiliza el modal de composición
+// pero en modo `complementary`: los niños van con el menú infantil ADEMÁS del
+// menú del evento, así que NO se selecciona como menú principal. Las elecciones
+// quedan en sel.menuPkgChoices['paq_infantil'] y se vuelcan en el presupuesto.
+function showChildrenMenu() {
+  if (!(menuPkgs || []).some(p => p.id === 'paq_infantil')) return;
+  showComposition('paq_infantil', { complementary: true });
 }
 
 function closeComposition() {
@@ -2278,6 +2303,10 @@ function renderMenuPkgs() {
     }
     pkgCard(m, 'menuPkg', 'menuPkgGrid');
   });
+
+  // v6.0 QA#2 · acceso al menú infantil solo si el proyecto tiene paquete infantil
+  const childAccess = document.getElementById('childrenMenuAccess');
+  if (childAccess) childAccess.style.display = (menuPkgs || []).some(p => p.id === 'paq_infantil') ? 'block' : 'none';
 }
 
 // ══════════════════════════════════════════════════
